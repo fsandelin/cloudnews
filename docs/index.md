@@ -1,4 +1,4 @@
-# Software Engineering Project
+# CloudNews
 
 GitHub Page for Software Engineering Project
 
