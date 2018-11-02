@@ -1,0 +1,35 @@
+#!/usr/bin/python
+import sys, re, requests
+
+url = 'https://api.github.com/repos/antoncarlsson/cloudnews/issues/'
+
+def find_issue(line):
+    issue_number = re.search('\#([0-9]*)', line)
+    if issue_number is None:
+        print "Need to connect commit to issue"
+        return False
+    issue_number = issue_number.group(1)
+
+    r = requests.get(url+issue_number)
+
+    if 'state' in r.json():
+        if r.json()['state'] == 'open':
+            return True
+        else:
+            print "Need to connect commit to open issue"
+            return False
+
+    print "You shouldn't be here"
+    return False
+
+if len(sys.argv) < 2:
+    sys.exit(1)
+
+commit_msg_filepath = sys.argv[1]
+with open(commit_msg_filepath, 'r') as f:
+    for line in f.readlines():
+
+        if find_issue(line):
+            sys.exit(0)
+
+sys.exit(1)
