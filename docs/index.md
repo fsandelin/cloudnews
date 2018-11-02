@@ -4,6 +4,8 @@ GitHub Page for Software Engineering Project
 * Group name: **carlssonochcarlsson**
 * Project Manager: Kasper Ramström
 
+![Alt text](carlssoncarlsson.jpg)
+
 #### Members:
 * Anton Carlsson
 * Robert Carlsson
