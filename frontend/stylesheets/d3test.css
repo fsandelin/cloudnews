@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0; 
+    background-color: steelblue;
+    overflow: hidden;
+}
+
+#app{
+    background-color: steelblue;
+}
+
+svg.map{
+    margin: auto;
+    display: block;
+    background-color: steelblue;
+}
+
+svg.map path {
+    stroke: white;
+    stroke-width: 0.5px;
+    fill: black;
+}
+
+svg.map path:hover {
+    fill: blue;
+}
