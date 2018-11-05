@@ -30,6 +30,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../styles/App.scss"
-</style>
+<style src="../styles/App.scss" lang="scss" scoped></style>
