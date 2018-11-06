@@ -13,9 +13,9 @@ export default {
     return {
       newsList: [
         { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
+        { id: 1, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
+        { id: 2, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
+        { id: 3, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing"},
       ]
     }
   },

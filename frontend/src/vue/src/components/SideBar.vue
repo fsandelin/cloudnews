@@ -5,6 +5,7 @@
         NEWS
       </li>
       <li
+        @mouseover="mouseOver"
         class="news-item"
         v-for="news in newsList"
         v-bind:news="news"
@@ -24,17 +25,22 @@
 <script>
 export default {
   name: 'sidebar',
-  props: ['newsList']
+  props: ['newsList'],
+  methods: {
+    mouseOver: function() {
+      return
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 
 #sidebar {
-  border-right: 2px solid grey;
   height: 100%;
   width: 250px;
   position: absolute;
+  box-shadow: 5px 0px 10px -2px lightgrey;
 }
 
 ul {
@@ -48,7 +54,7 @@ li {
   justify-content: center;
   align-content: center;
   flex-direction: column;
-  border-bottom: 2px solid grey;
+  border-bottom: 1px solid lightgrey;
   padding: 10px;
 }
 
