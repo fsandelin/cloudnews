@@ -16,3 +16,31 @@ li {
   flex-direction: column;
 }
 
+.setting {
+  .switch {
+    height: 30px;
+    width: 60px;
+
+    span {
+      margin: 0;
+      padding: 0;
+    }
+
+    .background {
+      display: inline-block;
+      background-color: white;
+      border: 1px solid #E1E1E1;
+      height: 30px;
+      width: 60px;
+      border-radius: 50px;
+    }
+
+    .toggle {
+      display: block;
+      height: 30px;
+      width: 30px;
+      border: 1px solid #E1E1E1;
+      border-radius: 50px;
+    }
+  }
+}
