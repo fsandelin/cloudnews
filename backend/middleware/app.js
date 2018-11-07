@@ -1,8 +1,6 @@
 
 // Get configuration things
 require('dotenv').config();
-// Import and instantiate an http server
-const server = require('http').createServer();
 // Import socket.io and hook it up to http-server
 const io = require('socket.io')();
 const MicroserviceConnection = require('./src/MicroserviceConnection');
@@ -20,15 +18,15 @@ io.on('connect', () => {
 });
 io.on('connection', (socket) => {
   clients.push(socket);
-  // console.log(client);
   const ms = new MicroserviceConnection('TT', mock_host, mock_port, {}, (article) => {
-    console.log(`The following article was received: ${article}`);
+    console.log(`Got the following article: ${article.title}`);
+    socket.emit('news', article);
   });
 
   socket.on('disconnect', () => {
     clients.pop();
     console.log('Client disconnected');
-    // ms.disconnect();
+    ms.disconnect();
   });
   socket.on('message', (message) => {
     console.log(`User tried to send a message but this isn\'t a goddamn chat, anyhow, heres what they wrote: ${message}`);
