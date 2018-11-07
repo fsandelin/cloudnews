@@ -2,9 +2,17 @@
   <div id="main-section">
     <svg class="mapContainer">
         <g class="map">
-          <path class="municipality" v-for="municipality in municipalities" :d=municipality>
+          <path
+            class="municipality"
+            v-bind:key="municipality.key"
+            v-for="municipality in municipalities"
+            v-bind:d="municipality.value">
           </path>
-          <path class="county" v-for="county in counties" :d=county>
+          <path
+            class="county"
+            v-bind:key="county.key"
+            v-for="county in counties"
+            v-bind:d="county.value">
           </path>
         </g>
       </svg>
@@ -51,24 +59,24 @@ export default {
 
     const path = d3.geoPath().projection(projection);
 
-    var countyFeatures = topojson.feature(counties, counties.objects.SWE_adm1).features;
-    var municipalityFeatures = topojson.feature(municipalities, municipalities.objects.kommuner).features;
+    const countyFeatures = topojson.feature(counties, counties.objects.SWE_adm1).features;
+    const municipalityFeatures = topojson.feature(municipalities, municipalities.objects.kommuner).features;
 
-    for (var index in countyFeatures) {
-      var countyFeature = countyFeatures[index];
-      this.addCounty(path(countyFeature));
+    for (let index in countyFeatures) {
+      const countyFeature = countyFeatures[index];
+      this.addCounty(path(countyFeature), index);
     }
-    for (var index in municipalityFeatures) {
-      var municipalityFeature = municipalityFeatures[index];
-      this.addMunicipality(path(municipalityFeature));
+    for (let index in municipalityFeatures) {
+      const municipalityFeature = municipalityFeatures[index];
+      this.addMunicipality(path(municipalityFeature), index);
     }
   },
   methods: {
-    addMunicipality: function(municipality) {
-      this.municipalities.push(municipality);
+    addMunicipality: function(municipality, index) {
+      this.municipalities.push({ key: 'municipality-'+index, value: municipality });
     },
-    addCounty: function(county) {
-      this.counties.push(county)
+    addCounty: function(county, index) {
+      this.counties.push({ key: 'county-'+index, value: county })
     }
   }
 }
