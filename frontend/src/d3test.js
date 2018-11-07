@@ -1,6 +1,6 @@
 var swedenMap = newSwedenMap();
 
-d3.select("#app").append(() => swedenMap.node());
+
 
 
 function newSwedenMap(type) {
@@ -46,5 +46,5 @@ function newSwedenMap(type) {
             
         });
 
-    return mapContainer;
+    d3.select("#map").append(() => swedenMap.node());
 }

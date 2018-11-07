@@ -1,3 +1,28 @@
 #main-section {
   flex: 1;
 }
+
+svg.mapContainer {
+  overflow: hidden;
+  border: 3px solid black;
+  background-color: #35495E;
+}
+
+.map {
+  margin: auto;
+  display: block;
+  background-color: steelblue;
+}
+
+path {
+  stroke: white;
+  stroke-width: 0.5px;
+  stroke-opacity: 1;
+  fill: #41B883;
+  fill-opacity: 1;
+}
+
+path:hover {
+  fill: white;
+  fill-opacity: 0.8;
+}
