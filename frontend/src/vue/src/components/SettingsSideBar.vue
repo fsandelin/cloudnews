@@ -1,6 +1,14 @@
 <template>
   <div id="settings-sidebar">
     <ul>
+      <li class="setting">
+        <p>LIVE UPDATES</p>
+        <div class="switch">
+          <span class="background">
+            <span class="toggle"></span>
+          </span>
+        </div>
+        </li>
     </ul>
   </div>
 </template>
