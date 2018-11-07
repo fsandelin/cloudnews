@@ -14,11 +14,11 @@ module.exports = class MicroserviceConnection {
     this.socket.on('connect', () => {
       console.log('User connected');
     });
-    this.socket.on('news_article', (article) => {
+    this.socket.on('news', (article) => {
       this.callback(article);
     });
     this.socket.on('disconnect', () => {
-      console.log('The connection with the client has been disconnected');
+      console.log('The connection with the microservice has been disconnected');
     });
     this.socket.on('reconnection_attempt', () => {
       console.log('Trying to reconnect');

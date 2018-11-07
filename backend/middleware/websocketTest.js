@@ -10,6 +10,9 @@ socket.on('connect', () => {
   console.log('Has now connected to the node middleware');
   readStuffs();
 });
+socket.on('news', (data) => {
+  console.log(`Has received the following news: ${data.title}`);
+});
 
 function readStuffs() {
   const r1 = readline.createInterface({
