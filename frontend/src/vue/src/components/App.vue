@@ -4,11 +4,13 @@
       v-bind:newsList="newsList"
       v-bind:toggleActive="toggleActive"
     ></newssidebar>
+    <mainsection></mainsection>
     <settingssidebar></settingssidebar>
   </div>
 </template>
 
 <script>
+import Main from './Main'
 import NewsSideBar from './NewsSideBar'
 import SettingsSideBar from './SettingsSideBar'
 
@@ -32,6 +34,7 @@ export default {
     }
   },
   components: {
+    'mainsection': Main,
     'newssidebar': NewsSideBar,
     'settingssidebar': SettingsSideBar
   }
