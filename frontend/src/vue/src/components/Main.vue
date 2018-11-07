@@ -1,12 +1,19 @@
 <template>
   <div id="main-section">
-  <div id="mapDiv"><svg class="mapContainer"><g class="map"></g></svg></div>
+    <div id="mapDiv">
+      <svg class="mapContainer">
+          <g class="map">
+          </g>
+        </svg>
+    </div>
   </div>
 </template>
 
 <script>
 import * as d3 from "d3";
 import * as topojson from "topojson";
+import municipalities from '../assets/sweden-municipalities.json'
+import counties from '../assets/sweden-counties.json'
 
 export default {
   name: "main-section",
@@ -15,10 +22,11 @@ export default {
   },
   methods: {
     newSwedenMap: function(type) {
+
       const typeFileName =
         type === "municipalities"
-          ? "src/assets/sweden-municipalities.json"
-          : "src/assets/sweden-counties.json";
+          ? municipalities
+          : counties;
       const SIZE = 1.1;
       const RATIO = 2.1;
       const mapContainerWidth = SIZE * 230;
@@ -45,27 +53,26 @@ export default {
         .geoMercator()
         .scale(SIZE * 900)
         .translate([SIZE * -165, SIZE * 1525]);
+
       const path = d3.geoPath().projection(projection);
 
-      d3.json(typeFileName).then(function(data) {
-        if (typeFileName === "src/assets/sweden-municipalities.json") {
-          map
-            .selectAll("path")
-            .data(topojson.feature(data, data.objects.kommuner).features)
-            .enter()
-            .append("path")
-            .attr("d", path);
-        }
+      if (typeFileName === municipalities) {
+        map
+          .selectAll("path")
+          .data(topojson.feature(typeFileName, typeFileName.objects.kommuner).features)
+          .enter()
+          .append("path")
+          .attr("d", path);
+      }
 
-        if (typeFileName === "src/assets/sweden-counties.json") {
-          map
-            .selectAll("path")
-            .data(topojson.feature(data, data.objects.SWE_adm1).features)
-            .enter()
-            .append("path")
-            .attr("d", path);
-        }
-      });
+      if (typeFileName === counties) {
+        map
+          .selectAll("path")
+          .data(topojson.feature(typeFileName, typeFileName.objects.SWE_adm1).features)
+          .enter()
+          .append("path")
+          .attr("d", path);
+      }
     }
   }
 }
