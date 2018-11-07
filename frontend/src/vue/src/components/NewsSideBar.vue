@@ -16,15 +16,15 @@
 </template>
 
 <script>
-import SideBarNewsItem from './SideBarNewsItem'
+import NewsSideBarItem from './NewsSideBarItem'
 
 export default {
   name: 'sidebar',
   props: ['newsList', 'toggleActive'],
   components: {
-    'newsitem': SideBarNewsItem
+    'newsitem': NewsSideBarItem
   }
 }
 </script>
 
-<style src="../styles/SideBar.scss" lang="scss" scoped></style>
+<style src="../styles/NewsSideBar.scss" lang="scss" scoped></style>

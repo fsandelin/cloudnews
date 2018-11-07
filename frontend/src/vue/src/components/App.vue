@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <sidebar
+    <newssidebar
       v-bind:newsList="newsList"
       v-bind:toggleActive="toggleActive"
-    ></sidebar>
+    ></newssidebar>
+    <settingssidebar></settingssidebar>
   </div>
 </template>
 
 <script>
-import SideBar from './SideBar'
+import NewsSideBar from './NewsSideBar'
+import SettingsSideBar from './SettingsSideBar'
 
 export default {
   name: 'app',
@@ -30,7 +32,8 @@ export default {
     }
   },
   components: {
-    'sidebar': SideBar
+    'newssidebar': NewsSideBar,
+    'settingssidebar': SettingsSideBar
   }
 }
 </script>

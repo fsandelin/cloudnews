@@ -22,4 +22,4 @@ export default {
 }
 </script>
 
-<style src="../styles/SideBarNewsItem.scss" lang="scss" scoped></style>
+<style src="../styles/NewsSideBarItem.scss" lang="scss" scoped></style>
