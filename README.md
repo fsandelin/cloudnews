@@ -14,3 +14,5 @@ chmod +x hook_setup.sh
 ```
 
 in order to set up git hooks
+
+ssh-working hell yeahhhh!!
