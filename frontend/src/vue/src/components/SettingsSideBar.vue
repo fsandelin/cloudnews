@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar">
+  <div id="settings-sidebar">
     <ul>
     </ul>
   </div>

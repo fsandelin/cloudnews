@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar">
+  <div id="news-sidebar">
     <ul>
       <li class="header">
         NEWS
