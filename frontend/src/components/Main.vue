@@ -1,6 +1,8 @@
 <template>
   <div id="main-section">
-    <d3map></d3map>
+    <d3map
+      v-bind:newsList="newsList"
+    ></d3map>
   </div>
 </template>
 
@@ -9,6 +11,7 @@ import Map from './Map'
 
 export default {
   name: "mainsection",
+  props: ['newsList'],
   components: {
     'd3map': Map
   }

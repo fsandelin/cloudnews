@@ -36,3 +36,7 @@ svg.mapContainer g.map path.municipality:hover {
   fill: white;
   fill-opacity: 0.8;
 }
+
+svg.mapContainer g.map circle.notification {
+  fill: #D46868;
+}

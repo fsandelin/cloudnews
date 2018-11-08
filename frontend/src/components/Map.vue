@@ -5,14 +5,24 @@
           class="municipality"
           v-bind:key="municipality.key"
           v-for="municipality in municipalities"
-          v-bind:d="municipality.path">
+          v-bind:d="municipality.path"
+          v-bind:name="municipality.name">
         </path>
         <path
           class="county"
           v-bind:key="county.key"
           v-for="county in counties"
-          v-bind:d="county.path">
+          v-bind:d="county.path"
+          v-bind:name="county.name">
         </path>
+        <circle
+          class="notification"
+          v-bind:key="'notification'+newsItem.id"
+          v-for="newsItem in newsList"
+          v-bind:cx="getLocationOfName(newsItem.locationName).x+'px'"
+          v-bind:cy="getLocationOfName(newsItem.locationName).y+'px'"
+          v-bind:r="'6px'">
+        </circle>
       </g>
     </svg>
 </template>
@@ -25,6 +35,7 @@ import counties from '../assets/sweden-counties.json';
 
 export default {
   name: "d3map",
+  props: ['newsList'],
   data () {
     return {
       municipalities: [],
@@ -55,34 +66,92 @@ export default {
       .scale(SIZE * 900)
       .translate([SIZE * -255 + width/2, (SIZE) * 1525]);
 
-    const path = d3.geoPath().projection(projection);
+    const pathFunction = d3.geoPath().projection(projection);
 
     const countyFeatures = topojson.feature(counties, counties.objects.SWE_adm1).features;
     const municipalityFeatures = topojson.feature(municipalities, municipalities.objects.kommuner).features;
 
     for (let index in countyFeatures) {
       const countyFeature = countyFeatures[index];
-      this.addCounty(index, path(countyFeature), countyFeature.properties.NAME_1);
+      const path = pathFunction(countyFeature);
+      const name = countyFeature.properties.NAME_1.toLowerCase();
+      const location = this.pathToLocation(path);
+      this.addCounty(index, path, name, location);
     }
     for (let index in municipalityFeatures) {
       const municipalityFeature = municipalityFeatures[index];
-      this.addMunicipality(index, path(municipalityFeature), municipalityFeature.properties.KNNAMN);
+      const path = pathFunction(municipalityFeature);
+      const name = municipalityFeature.properties.KNNAMN.toLowerCase();
+      const location = this.pathToLocation(path);
+      this.addMunicipality(index, path, name, location);
     }
   },
   methods: {
-    addMunicipality: function(index, path, name) {
+    addMunicipality: function(index, path, name, location) {
       this.municipalities.push({
         key: 'municipality-'+index,
         name: name,
-        path: path
+        path: path,
+        location: location
         });
     },
-    addCounty: function(index, path, name) {
+    addCounty: function(index, path, name, location) {
       this.counties.push({
         key: 'county-'+index,
         name: name,
-        path: path
+        path: path,
+        location: location
         })
+    },
+    pathToLocation: function(path) {
+      let xMin = undefined;
+      let xMax = undefined;
+      let yMin = undefined;
+      let yMax = undefined;
+      let splitted = path.split(/[LMC]/);
+
+      for (let index in splitted) {
+        const xy = splitted[index].split(",");
+        if (xy.length != 2) {
+          continue;
+        }
+
+        if (xMin === undefined || parseFloat(xy[0]) < xMin) {
+          xMin = parseFloat(xy[0]);
+        }
+        if (xMax === undefined || parseFloat(xy[0]) > xMax) {
+          xMax = parseFloat(xy[0]);
+        }
+        if (yMin === undefined || parseFloat(xy[1]) < yMin) {
+          yMin = parseFloat(xy[1]);
+        }
+        if (yMax === undefined || parseFloat(xy[1]) > yMax) {
+          yMax = parseFloat(xy[1]);
+        }
+      }
+      const xMiddle = xMax-((xMax-xMin)/2);
+      const yMiddle = yMax-((yMax-yMin)/2);
+
+      return {
+        x: xMiddle,
+        y: yMiddle
+      }; 
+    },
+    getLocationOfName: function(name) {
+      for (const index in this.counties) {
+        const county = this.counties[index];
+        if(name.toLowerCase() === county.name) {
+          return {
+            x: county.location.x,
+            y: county.location.y
+          };
+        }
+      }
+
+      return {
+        x: 0,
+        y: 0
+      }
     }
   }
 }
