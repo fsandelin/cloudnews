@@ -5,13 +5,13 @@
           class="municipality"
           v-bind:key="municipality.key"
           v-for="municipality in municipalities"
-          v-bind:d="municipality.value">
+          v-bind:d="municipality.path">
         </path>
         <path
           class="county"
           v-bind:key="county.key"
           v-for="county in counties"
-          v-bind:d="county.value">
+          v-bind:d="county.path">
         </path>
       </g>
     </svg>
@@ -20,8 +20,8 @@
 <script>
 import * as d3 from "d3";
 import * as topojson from "topojson";
-import municipalities from '../assets/sweden-municipalities.json'
-import counties from '../assets/sweden-counties.json'
+import municipalities from '../assets/sweden-municipalities.json';
+import counties from '../assets/sweden-counties.json';
 
 export default {
   name: "d3map",
@@ -62,19 +62,27 @@ export default {
 
     for (let index in countyFeatures) {
       const countyFeature = countyFeatures[index];
-      this.addCounty(path(countyFeature), index);
+      this.addCounty(index, path(countyFeature), countyFeature.properties.NAME_1);
     }
     for (let index in municipalityFeatures) {
       const municipalityFeature = municipalityFeatures[index];
-      this.addMunicipality(path(municipalityFeature), index);
+      this.addMunicipality(index, path(municipalityFeature), municipalityFeature.properties.KNNAMN);
     }
   },
   methods: {
-    addMunicipality: function(municipality, index) {
-      this.municipalities.push({ key: 'municipality-'+index, value: municipality });
+    addMunicipality: function(index, path, name) {
+      this.municipalities.push({
+        key: 'municipality-'+index,
+        name: name,
+        path: path
+        });
     },
-    addCounty: function(county, index) {
-      this.counties.push({ key: 'county-'+index, value: county })
+    addCounty: function(index, path, name) {
+      this.counties.push({
+        key: 'county-'+index,
+        name: name,
+        path: path
+        })
     }
   }
 }
