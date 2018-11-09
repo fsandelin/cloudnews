@@ -11,6 +11,13 @@ svg.mapContainer g.map {
   background-color: steelblue;
 }
 
+svg.mapContainer g.map path.country {
+  stroke: white;
+  stroke-width: 0.5px;
+  stroke-opacity: 1;
+  fill: black;
+  fill-opacity: 0.3;
+} 
 svg.mapContainer g.map path.county {
   stroke: white;
   stroke-width: 0.5px;

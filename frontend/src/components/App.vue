@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       newsList: [
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", locationName: "Uppsala", active: false},
+        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", locationName: "Kalmar", active: false},
         { id: 1, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", locationName: "Dalarna", active: false},
         { id: 2, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", locationName: "Norrbotten", active: false},
         { id: 3, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", locationName: "Jönköping", active: false},

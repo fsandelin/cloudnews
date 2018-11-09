@@ -2,6 +2,13 @@
   <svg class="mapContainer">
       <g class="map">
         <path
+          class="country"
+          v-bind:key="country.key"
+          v-for="country in countries"
+          v-bind:d="country.path"
+          v-bind:name="country.name">
+        </path>
+        <path
           class="municipality"
           v-bind:key="municipality.key"
           v-for="municipality in municipalities"
@@ -32,6 +39,7 @@ import * as d3 from "d3";
 import * as topojson from "topojson";
 import municipalities from '../assets/sweden-municipalities.json';
 import counties from '../assets/sweden-counties.json';
+import countries from '../assets/europe-countries.json';
 
 export default {
   name: "d3map",
@@ -39,7 +47,8 @@ export default {
   data () {
     return {
       municipalities: [],
-      counties: []
+      counties: [],
+      countries: []
     }
   },
   mounted: function() {
@@ -57,7 +66,7 @@ export default {
 
     const zoom = d3
       .zoom()
-      .scaleExtent([0.5, 20])
+      .scaleExtent([0.7, 20])
       .on("zoom", zoomed);
 
     d3.select(".mapContainer").call(zoom);
@@ -70,20 +79,29 @@ export default {
 
     const countyFeatures = topojson.feature(counties, counties.objects.SWE_adm1).features;
     const municipalityFeatures = topojson.feature(municipalities, municipalities.objects.kommuner).features;
+    const countryFeatures = topojson.feature(countries, countries.objects.continent_Europe_subunits).features;
 
-    for (let index in countyFeatures) {
+    for (const index in countyFeatures) {
       const countyFeature = countyFeatures[index];
       const path = pathFunction(countyFeature);
       const name = countyFeature.properties.NAME_1.toLowerCase();
       const location = this.pathToLocation(path);
       this.addCounty(index, path, name, location);
     }
-    for (let index in municipalityFeatures) {
+    for (const index in municipalityFeatures) {
       const municipalityFeature = municipalityFeatures[index];
       const path = pathFunction(municipalityFeature);
       const name = municipalityFeature.properties.KNNAMN.toLowerCase();
       const location = this.pathToLocation(path);
       this.addMunicipality(index, path, name, location);
+    }
+    for (const index in countryFeatures) {
+      const countryFeature = countryFeatures[index];
+      const path = pathFunction(countryFeature);
+      const name = countryFeature.properties.geounit.toLowerCase();
+      const location = this.pathToLocation(path);
+      this.addCountry(index, path, name, location);
+
     }
   },
   methods: {
@@ -103,13 +121,26 @@ export default {
         location: location
         })
     },
+    addCountry: function(index, path, name, location) {
+      this.countries.push({
+        key: 'country-'+index,
+        name: name,
+        path: path,
+        location: location
+      });
+    },
     pathToLocation: function(path) {
+      if (path === null) {
+        return {
+          x: 0,
+          y: 0
+        }
+      }
       let xMin = undefined;
       let xMax = undefined;
       let yMin = undefined;
       let yMax = undefined;
       let splitted = path.split(/[LMC]/);
-
       for (let index in splitted) {
         const xy = splitted[index].split(",");
         if (xy.length != 2) {
