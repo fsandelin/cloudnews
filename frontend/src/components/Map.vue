@@ -2,14 +2,18 @@
   <svg class="mapContainer">
       <g class="map">
         <path
-          class="country"
-          v-bind:key="country.key"
           v-for="country in countries"
+          class="country"
+          v-show="country.active"
+          v-bind:key="country.key"
           v-bind:d="country.path"
           v-bind:name="country.name">
+          <text fill="red">I love SVG!</text>
         </path>
         <path
           class="municipality"
+          v-show="municipality.active"
+          @mouseover="municipalityMouseover(municipality)"
           v-bind:key="municipality.key"
           v-for="municipality in municipalities"
           v-bind:d="municipality.path"
@@ -17,6 +21,8 @@
         </path>
         <path
           class="county"
+          v-show="county.active"
+          @mouseover="countyMouseover(county)"
           v-bind:key="county.key"
           v-for="county in counties"
           v-bind:d="county.path"
@@ -40,15 +46,18 @@ import * as topojson from "topojson";
 import municipalities from '../assets/sweden-municipalities.json';
 import counties from '../assets/sweden-counties.json';
 import countries from '../assets/europe-countries.json';
+import swedishLocations from '../assets/swedishLocations.json';
+
 
 export default {
   name: "d3map",
   props: ['newsList'],
   data () {
     return {
-      municipalities: [],
+      countries: [],
       counties: [],
-      countries: []
+      municipalities: [],
+      cities: []
     }
   },
   mounted: function() {
@@ -81,13 +90,6 @@ export default {
     const municipalityFeatures = topojson.feature(municipalities, municipalities.objects.kommuner).features;
     const countryFeatures = topojson.feature(countries, countries.objects.continent_Europe_subunits).features;
 
-    for (const index in countyFeatures) {
-      const countyFeature = countyFeatures[index];
-      const path = pathFunction(countyFeature);
-      const name = countyFeature.properties.NAME_1.toLowerCase();
-      const location = this.pathToLocation(path);
-      this.addCounty(index, path, name, location);
-    }
     for (const index in municipalityFeatures) {
       const municipalityFeature = municipalityFeatures[index];
       const path = pathFunction(municipalityFeature);
@@ -95,13 +97,28 @@ export default {
       const location = this.pathToLocation(path);
       this.addMunicipality(index, path, name, location);
     }
+    for (const index in countyFeatures) {
+      const countyFeature = countyFeatures[index];
+      const path = pathFunction(countyFeature);
+      const name = countyFeature.properties.NAME_1.toLowerCase();
+      const location = this.pathToLocation(path);
+      let municipalities = [];
+      for (const index in swedishLocations) {
+        const location = swedishLocations[index];
+        if (name === location.name) {
+          municipalities = location.municipalities;
+        }
+      }
+      console.log(municipalities);
+      this.addCounty(index, path, name, location, municipalities);
+    }
+    
     for (const index in countryFeatures) {
       const countryFeature = countryFeatures[index];
       const path = pathFunction(countryFeature);
       const name = countryFeature.properties.geounit.toLowerCase();
       const location = this.pathToLocation(path);
       this.addCountry(index, path, name, location);
-
     }
   },
   methods: {
@@ -110,15 +127,18 @@ export default {
         key: 'municipality-'+index,
         name: name,
         path: path,
-        location: location
+        location: location,
+        active: true
         });
     },
-    addCounty: function(index, path, name, location) {
+    addCounty: function(index, path, name, location, municipalities) {
       this.counties.push({
         key: 'county-'+index,
         name: name,
         path: path,
-        location: location
+        location: location,
+        active: true,
+        municipalities: municipalities
         })
     },
     addCountry: function(index, path, name, location) {
@@ -126,8 +146,22 @@ export default {
         key: 'country-'+index,
         name: name,
         path: path,
-        location: location
+        location: location,
+        active: true
       });
+    },
+    countyMouseover: function(county) {
+      county.active = false;
+    },
+    municipalityMouseover: function(municipality) {
+      for(const index in this.counties) {
+        let county = this.counties[index];
+        if (county.municipalities.includes(municipality.name)) {
+          county.active = false;
+        } else {
+          county.active = true;
+        }
+      }
     },
     pathToLocation: function(path) {
       if (path === null) {
