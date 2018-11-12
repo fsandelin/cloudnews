@@ -3,14 +3,6 @@
 
 #settings-sidebar {
   width: 250px;
-  box-shadow: -5px 0px 10px -2px $lightgrey;
-}
-
-li {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  flex-direction: column;
 }
 
 .setting {
@@ -21,7 +13,6 @@ li {
     .background {
       display: inline-block;
       background-color: white;
-      border: 1px solid $lightgrey;
       height: 30px;
       width: 60px;
       border-radius: 50px;
@@ -31,7 +22,6 @@ li {
       display: block;
       height: 30px;
       width: 30px;
-      border: 1px solid $lightgrey;
       border-radius: 50px;
     }
   }

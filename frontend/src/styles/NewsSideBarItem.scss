@@ -2,20 +2,11 @@
 
 .news-item {
   height: 60px;
-  border-bottom: 1px solid $lightgrey;
   padding: 20px;
   cursor: pointer;
 
   &.active {
     background-color: $darkgreen;
-    box-shadow: 0px 5px 5px -2px $lightgrey;
-  }
-
-  p {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
   }
 
   .title {
