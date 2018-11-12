@@ -5,14 +5,14 @@
       v-bind:toggleActive="toggleActive"
     ></newssidebar>
     <mainsection></mainsection>
-    <settingssidebar></settingssidebar>
+    <drawer></drawer>
   </div>
 </template>
 
 <script>
 import Main from './Main'
 import NewsSideBar from './NewsSideBar'
-import SettingsSideBar from './SettingsSideBar'
+import Drawer from './Drawer'
 
 export default {
   name: 'app',
@@ -36,7 +36,7 @@ export default {
   components: {
     'mainsection': Main,
     'newssidebar': NewsSideBar,
-    'settingssidebar': SettingsSideBar
+    'drawer': Drawer
   }
 }
 </script>
