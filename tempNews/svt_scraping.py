@@ -1,11 +1,23 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
-import os, sys, requests, json
+import os, sys, requests, json, math
 
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
+import pytz
+utc=pytz.UTC
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import urlopen
 
-import urllib2
+#html = urlopen("http://www.google.com/")
+#print(html.read())
+
+
+
 from bs4 import BeautifulSoup
 
 
@@ -25,7 +37,7 @@ params = "?q=auto"#,limit=5,page="
 def get_news(URL, REGION):
 
     # Initiate the Beautiful soup
-    content = urllib2.urlopen(URL).read()
+    content = urlopen(URL).read()
     soup = BeautifulSoup(content, features='lxml')
 
     # Get the article part
@@ -75,7 +87,7 @@ def get_api_news():
 def get_lokal_news(URL):
 
     # Initiate the Beautiful soup
-    content = urllib2.urlopen(URL).read()
+    content = urlopen(URL).read()
     soup = BeautifulSoup(content, features='lxml')
 
     temp = soup.find_all('article')
@@ -85,7 +97,7 @@ def get_lokal_news(URL):
     news_list = []
     for elm in temp:
         news_url = URL_SVT + elm.find('a')['href']
-        print news_url
+        #print(news_url)
         news_list.append(get_news(news_url, "uppsala"))
         
     return news_list
@@ -107,16 +119,21 @@ def reform_api_news(svt_news_list):
 
     for svt_news in svt_news_list:
         news = {}
-        news['title']   = svt_news['title']
-        news['lead']    = svt_news['text']
+        if svt_news['title'] is not None:
+            news['title']   = svt_news['title']
+        #if svt_news['text'] is not None:
+         #   news['lead']    = svt_news['text']
 
         # Body kanske inte behövs
         #news['body']    = svt_news['text']
-
-        news['datetime']  = svt_news['published']
+        if svt_news['published'] is not None:
+            news['datetime']  = svt_news['published']
         #news['imgurl']  = svt_news['title']
-        news['region']  = svt_news['sectionDisplayName']
-        news['url']     = svt_news['teaserURL']
+        if svt_news['sectionDisplayName'] is not None:
+            news['region']  = svt_news['sectionDisplayName']
+        if svt_news['teaserURL'] is not None:
+            news['url']     = svt_news['teaserURL']
+        news['source']  = 'svt'
         json_news = json.dumps(news, indent=4, sort_keys=True, default=str)
         cloud_news.append(json_news)
 
@@ -131,21 +148,34 @@ def reform_api_news_scrape(svt_news_list):
 
     return cloud_news
 
+params = "?q=auto"
 param_limit = ",limit="
 param_page  = ",page="
-def get_lokal_api_news(URL, amount = 5, page = 0): 
+
+def get_lokal_api_news(region = "/nyheter/lokalt/uppsala/", amount = 50, page = 0): 
     global params
-    region_news = {}
-    params_struct = params + param_limit + str(amount) + param_page + str(page)
-    for region in svt_regions:
-        URL_REGION = api + region + params_struct
-        r = requests.get(url = URL_REGION)
-        
-        region_news[region] = r.json(encoding='utf-16')
-        print region_news[region]['auto']['content'][0]['section'], len(region_news[region]['auto']['content'])
-        #print URL_REGION, " amoun: "#, region_news[region]
+    #print("PageNumber: ", page)
+    params_struct = params + param_limit + str(amount) + param_page + str(page)   
+    URL_REGION = api + region + params_struct
+    r = requests.get(url = URL_REGION)
+    
+    region_news = r.json(encoding='utf-8')
+
+    #region_news = region_news['auto']['content']
+    region_news = reform_api_news(region_news['auto']['content'])
+    #print (region_news[0], len(region_news))
+
+    #print URL_REGION, " amoun: "#, region_news[region]
     return region_news
 
+def get_lokal_api_object(region = "/nyheter/lokalt/uppsala/", amount = 50, page = 0):
+    params_struct = params + param_limit + str(amount) + param_page + str(page)   
+    URL_REGION = api + region + params_struct
+    r = requests.get(url = URL_REGION)
+    
+    api_obj = r.json(encoding='utf-16')
+    
+    return api_obj
 
 URL_SVT = "https://www.svt.se"
 
@@ -161,7 +191,52 @@ def check_older_time(time_to_check, target_time):
 def time_range(time_to_check, target_time, days = 0):
     time_diff = time_to_check - target_time
     time_diff = time_diff / timedelta( days = 1)
-    print time_diff
+    print(time_diff)
+
+def check_json_time(json_news, time_date):
+    global utc
+    news_dt = parser.parse(get_dict(json_news)['datetime'])
+    print ("News DT: ", news_dt, "Time: ", time_date)
+    #news_dt = utc.localize(news_dt) 
+    #time_date = utc.localize(time_date) 
+    news_dt   = news_dt.replace(tzinfo=utc)
+    time_date = time_date.replace(tzinfo=utc)
+    print (news_dt > time_date)
+    return news_dt > time_date
+
+def get_dict(json_obj):
+    return json.loads(json_obj)
+
+def get_news_time_range(from_, until_):
+    FIRST = 0
+    LAST = -1
+    # Get max page info from this region
+    start_obj = get_lokal_api_object()
+    items = start_obj['auto']['pagination']['totalAvailableItems']
+    items = int(items)
+    max_pages = math.ceil(items / 50)
+    print( "Maxpage: ", max_pages)
+
+
+    # The loops starts with the most recent news, ends with the oldest
+    # Might need to add a waiting
+    # rannge( target + 1) gives the "target" - value in the end
+    for page_nmr in range(50,100):
+        news_list = get_lokal_api_news( page = page_nmr)
+
+        print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[FIRST])['datetime'], " Len: ", len(news_list))
+        print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[LAST])['datetime'], " Len: ", len(news_list))
+        # Check if the last item is newer then the until time limit
+        #oldest_news_dt = parser.parse(get_dict(news_list[LAST])['datetime'])
+        if check_json_time(news_list[LAST], until_):
+            continue
+        else:
+            break
+    #start_point = get_lokal_api_news( page = page_nmr)
+
+# list with JSON object satisfying the time range
+    return [] 
+
 
 
 def print_json(json_str):
@@ -169,24 +244,21 @@ def print_json(json_str):
     json_obj = json.loads(json_str)
 
     for elm in json_obj:
-        print elm[:6], "\t: \t",json_obj[elm][0:40]
+        print( elm[:6], "\t: \t",json_obj[elm][0:40])
 
-    print ""
+    print ("")
 
 
 
 def main():
-    region_news = get_lokal_api_news(api, amount = 10, page = 0)
-
-    cloud_news = []
-
-    for region in region_news:
-        cloud_news.append(reform_api_news(region_news[region]['auto']['content']))
-
-    for region in cloud_news:
-        for news in region:
-            print_json(news)
+    from_  = datetime(2017, 1, 1)
+    until_ = datetime(2017, 12, 31)
+    api_obj = get_news_time_range(from_, until_)
     
+    #region_news = get_lokal_api_news( page = 363)
+
+    #news_json = json.loads(region_news[-1])
+    #print (news_json['title'])
     #print type(cloud_news)
     #news_info = []
 
