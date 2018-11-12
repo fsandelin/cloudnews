@@ -1,12 +1,9 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
 #settings-sidebar {
   width: 250px;
-  box-shadow: -5px 0px 10px -2px lightgrey;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  box-shadow: -5px 0px 10px -2px $lightgrey;
 }
 
 li {
@@ -21,15 +18,10 @@ li {
     height: 30px;
     width: 60px;
 
-    span {
-      margin: 0;
-      padding: 0;
-    }
-
     .background {
       display: inline-block;
       background-color: white;
-      border: 1px solid #E1E1E1;
+      border: 1px solid $lightgrey;
       height: 30px;
       width: 60px;
       border-radius: 50px;
@@ -39,7 +31,7 @@ li {
       display: block;
       height: 30px;
       width: 30px;
-      border: 1px solid #E1E1E1;
+      border: 1px solid $lightgrey;
       border-radius: 50px;
     }
   }

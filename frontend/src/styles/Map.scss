@@ -1,3 +1,5 @@
+@import 'variables.scss';
+
 svg.mapContainer {
   overflow: hidden;
   background-color: white;
@@ -8,14 +10,13 @@ svg.mapContainer {
 svg.mapContainer g.map {
   margin: auto;
   display: block;
-  background-color: steelblue;
 }
 
 svg.mapContainer g.map path.county {
   stroke: white;
   stroke-width: 0.5px;
   stroke-opacity: 1;
-  fill: #41B883;
+  fill: $darkgreen;
   fill-opacity: 1;
 }
 
@@ -23,7 +24,7 @@ svg.mapContainer g.map path.municipality {
   stroke: white;
   stroke-width: 0.5px;
   stroke-opacity: 1;
-  fill: rgb(60, 122, 94);
+  fill: $darkgreen;
   fill-opacity: 1;
 }
 
