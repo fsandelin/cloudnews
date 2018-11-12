@@ -3,35 +3,66 @@
 require('dotenv').config();
 // Import socket.io and hook it up to http-server
 const io = require('socket.io')();
-const MicroserviceConnection = require('./src/MicroserviceConnection');
+const MicroserviceHandler = require('./src/MicroserviceHandler');
 
 const ws_host = process.env.WS_HOST;
 const ws_port = process.env.WS_PORT;
 const mock_host = process.env.MOCK_HOST;
 const mock_port = process.env.MOCK_PORT;
+const SERVER_PORT = process.env.SERVER_PORT;
 
-const clients = [];
+const availableServices = ['tt', 'svt'];
+const clients = {};
+
+// setInterval(() => { console.log(clients); }, 5000);
 
 // Hook up the websocket server to the http server
-io.on('connect', () => {
-  console.log('Someone connected');
+// Verify the services are available
+io.use((socket, next) => {
+  const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
+  const { services } = JSON.parse(servicesString.trim());
+  let verified = true;
+  let service = null;
+  for (let i = 0; i < services.length; i++) {
+    service = services[i];
+    if (availableServices.indexOf(service) === -1) {
+      verified = false;
+      console.log(`The following service cannot be found: ${service}`);
+      socket.disconnect();
+    }
+  }
+  if (verified) next();
+  else next(new Error('Service not found.'));
 });
+
 io.on('connection', (socket) => {
-  clients.push(socket);
-  const ms = new MicroserviceConnection('TT', mock_host, mock_port, {}, (article) => {
-    console.log(`Got the following article: ${article.title}`);
-    socket.emit('news', article);
+  console.log('Someone connected');
+  const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
+  const { services } = JSON.parse(servicesString.trim());
+
+  clients[socket.id] = {
+    socket,
+    services,
+  };
+  console.log(`Joining the following services: ${services}`);
+  services.forEach((service) => {
+    if (availableServices.includes(service)) {
+      socket.join(service);
+    }
   });
 
   socket.on('disconnect', () => {
-    clients.pop();
+    delete clients[socket.id];
     console.log('Client disconnected');
-    ms.disconnect();
-  });
-  socket.on('message', (message) => {
-    console.log(`User tried to send a message but this isn\'t a goddamn chat, anyhow, heres what they wrote: ${message}`);
+    console.log(clients);
   });
 });
 
+const ms = new MicroserviceHandler((service, data) => {
+  // console.log(`Got data from the following service: ${service}`);
+  io.to(service).emit('news', data);
+});
+
+
+ms.listen(SERVER_PORT);
 io.listen(ws_port);
-// const { services } = JSON.parse(Buffer.from(query_params.services, 'base64').toString().trim());

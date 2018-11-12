@@ -4,7 +4,9 @@ const readline = require('readline');
 
 const hostname = process.env.WS_HOST;
 const port = process.env.WS_PORT;
-const socket = new io(`http://${hostname}:${port}`);
+const services = '{"services": ["tt"]}';
+const bServices = Buffer.from(services).toString('base64');
+const socket = new io(`http://${hostname}:${port}/?services=${bServices}`);
 
 socket.on('connect', () => {
   console.log('Has now connected to the node middleware');
@@ -12,6 +14,9 @@ socket.on('connect', () => {
 });
 socket.on('news', (data) => {
   console.log(`Has received the following news: ${data.title}`);
+});
+socket.on('error', (data) => {
+  console.log(data);
 });
 
 function readStuffs() {
