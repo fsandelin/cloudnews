@@ -2,7 +2,7 @@
 
 svg.mapContainer {
   overflow: hidden;
-  background-color: white;
+  background-color: $white;
   width:100%;
   height:100%;
 }
@@ -13,7 +13,7 @@ svg.mapContainer g.map {
 }
 
 svg.mapContainer g.map path.county {
-  stroke: white;
+  stroke: $white;
   stroke-width: 0.5px;
   stroke-opacity: 1;
   fill: $darkgreen;
@@ -21,7 +21,7 @@ svg.mapContainer g.map path.county {
 }
 
 svg.mapContainer g.map path.municipality {
-  stroke: white;
+  stroke: $white;
   stroke-width: 0.5px;
   stroke-opacity: 1;
   fill: $darkblue;
@@ -29,11 +29,11 @@ svg.mapContainer g.map path.municipality {
 }
 
 svg.mapContainer g.map path.county:hover {
-  fill: white;
+  fill: $white;
   fill-opacity: 0.1;
 }
 
 svg.mapContainer g.map path.municipality:hover {
-  fill: white;
+  fill: $white;
   fill-opacity: 0.8;
 }
