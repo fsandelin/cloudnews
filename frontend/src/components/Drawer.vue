@@ -1,7 +1,9 @@
 <template>
   <div id="drawer" class="bottom-shadow full-shadow flex-centering">
     <slot></slot>
-    <drawerhandle></drawerhandle>
+    <drawerhandle
+      v-bind:closeDrawer="closeDrawer">
+    </drawerhandle>
   </div>
 </template>
 
@@ -10,7 +12,7 @@ import DrawerHandle from './DrawerHandle';
 
 export default {
   name: 'drawer',
-  props: [],
+  props: ['closeDrawer'],
   components: {
     'drawerhandle': DrawerHandle,
   }

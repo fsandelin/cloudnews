@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="active-news-item">
     <p class="title flex-centering">
       {{ getNewsItemByActiveId.title }}
     </p>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'activenewsitem',
   props: ['getNewsItemByActiveId'],

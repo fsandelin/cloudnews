@@ -8,7 +8,9 @@
     ></newssidebar>
     <mainsection></mainsection>
 
-    <drawer v-if="getNewsItemByActiveId !== null || regionSelected">
+    <drawer
+      v-if="getNewsItemByActiveId !== null || regionSelected"
+      v-bind:closeDrawer="closeDrawer">
       <component
         v-if="getNewsItemByActiveId !== null"
         v-bind:getNewsItemByActiveId="getNewsItemByActiveId"
@@ -61,6 +63,10 @@ export default {
       } else {
         this.activeNewsItemId = news.id
       }
+    },
+    closeDrawer: function() {
+      this.activeNewsItemId = null
+      this.regionSelected = false
     }
   },
   components: {
