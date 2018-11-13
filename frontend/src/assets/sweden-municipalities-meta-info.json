@@ -506,7 +506,7 @@
     {
         "key": "municipality-ödeshög",
         "name": "ödeshög",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 459.9298845281293,
         "y": 413.3319739538198,
@@ -518,7 +518,7 @@
     {
         "key": "municipality-ydre",
         "name": "ydre",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 468.55675251162586,
         "y": 424.1154838367938,
@@ -530,7 +530,7 @@
     {
         "key": "municipality-kinda",
         "name": "kinda",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 475.96192738938487,
         "y": 419.83626584758963,
@@ -542,7 +542,7 @@
     {
         "key": "municipality-boxholm",
         "name": "boxholm",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 466.19909914967644,
         "y": 415.79015345037544,
@@ -554,7 +554,7 @@
     {
         "key": "municipality-åtvidaberg",
         "name": "åtvidaberg",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 482.4883405595083,
         "y": 413.09406876274454,
@@ -566,7 +566,7 @@
     {
         "key": "municipality-finspång",
         "name": "finspång",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 477.258636738457,
         "y": 393.93649813972365,
@@ -578,7 +578,7 @@
     {
         "key": "municipality-valdemarsvik",
         "name": "valdemarsvik",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 489.4112681586868,
         "y": 414.0711243737637,
@@ -590,7 +590,7 @@
     {
         "key": "municipality-linköping",
         "name": "linköping",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 474.99743283222375,
         "y": 408.57954577042653,
@@ -602,7 +602,7 @@
     {
         "key": "municipality-norrköping",
         "name": "norrköping",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 484.95315998336446,
         "y": 399.97876823849504,
@@ -614,7 +614,7 @@
     {
         "key": "municipality-söderköping",
         "name": "söderköping",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 488.0181093538986,
         "y": 407.576991745011,
@@ -626,7 +626,7 @@
     {
         "key": "municipality-motala",
         "name": "motala",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 467.11001067588415,
         "y": 399.7812264214068,
@@ -638,7 +638,7 @@
     {
         "key": "municipality-vadstena",
         "name": "vadstena",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 461.30161012053617,
         "y": 406.6116997994442,
@@ -650,7 +650,7 @@
     {
         "key": "municipality-mjölby",
         "name": "mjölby",
-        "county": "södermanland",
+        "county": "östergötland",
         "type": "municipality",
         "x": 465.99548363205355,
         "y": 410.734451247321,
