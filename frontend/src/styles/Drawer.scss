@@ -3,9 +3,16 @@
 
 #drawer {
   width: 400px;
-  height: 600px;
   max-height: 80%;
   margin-left: auto;
   margin-right: 40px;
   background-color: $white;
+
+  &.open {
+    height: 600px;
+  }
+
+  &.closed {
+    height: 40px;
+  }
 }

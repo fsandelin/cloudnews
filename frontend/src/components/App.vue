@@ -9,16 +9,16 @@
     <mainsection></mainsection>
 
     <drawer
-      v-if="getNewsItemByActiveId !== null || regionSelected"
+      v-bind:isOpen="drawerIsOpen"
       v-bind:closeDrawer="closeDrawer">
       <component
         v-if="getNewsItemByActiveId !== null"
         v-bind:getNewsItemByActiveId="getNewsItemByActiveId"
-        v-bind:is="activeNewsItemComponent">
+        v-bind:is="dynamicComponents.activeNewsItemComponent">
       </component>
       <component
         v-if="regionSelected && activeNewsItemId === null"
-        v-bind:is="newslist">
+        v-bind:is="dynamicComponents.newslist">
       </component>
     </drawer>
   </div>
@@ -42,9 +42,12 @@ export default {
         { id: 3, title: "News title 3", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", hover: false},
       ],
       activeNewsItemId: null,
-      activeNewsItemComponent: 'activenewsitem',
-      newsListComponent: 'newslist',
-      regionSelected: false
+      regionSelected: false,
+      drawerIsOpen: false,
+      dynamicComponents: {
+        activeNewsItemComponent: 'activenewsitem',
+        newsListComponent: 'newslist',
+      },
     }
   },
   computed: {
@@ -60,11 +63,17 @@ export default {
     toggleActive: function(news) {
       if (news.id === this.activeNewsItemId) {
         this.activeNewsItemId = null
+        this.closeDrawer()
       } else {
         this.activeNewsItemId = news.id
+        this.openDrawer()
       }
     },
+    openDrawer: function() {
+      this.drawerIsOpen = true
+    },
     closeDrawer: function() {
+      this.drawerIsOpen = false
       this.activeNewsItemId = null
       this.regionSelected = false
     }
