@@ -1,25 +1,25 @@
 <template>
     <ul>
-      <newsitem
+      <newslistitem
         v-for="news in newsList"
         v-bind:news="news"
         v-bind:key="news.id"
-        v-bind:activeNewsItem="activeNewsItem"
+        v-bind:activeNewsItemId="activeNewsItemId"
         v-bind:toggleHover="toggleHover"
         v-bind:toggleActive="toggleActive"
       >
-      </newsitem>
+      </newslistitem>
     </ul>
 </template>
 
 <script>
-import NewsItem from './NewsItem'
+import NewsListItem from './NewsListItem'
 
 export default {
   name: 'sidebar',
-  props: ['newsList', 'activeNewsItem', 'toggleHover', 'toggleActive'],
+  props: ['newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive'],
   components: {
-    'newsitem': NewsItem
+    'newslistitem': NewsListItem
   }
 }
 </script>

@@ -5,7 +5,7 @@
       </div>
       <newslist
         v-bind:newsList="newsList"
-        v-bind:activeNewsItem="activeNewsItem"
+        v-bind:activeNewsItemId="activeNewsItemId"
         v-bind:toggleHover="toggleHover"
         v-bind:toggleActive="toggleActive"
       >
@@ -18,7 +18,7 @@ import NewsList from './NewsList'
 
 export default {
   name: 'sidebar',
-  props: ['newsList', 'activeNewsItem', 'toggleHover', 'toggleActive'],
+  props: ['newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive'],
   components: {
     'newslist': NewsList
   }

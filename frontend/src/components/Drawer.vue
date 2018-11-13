@@ -1,5 +1,6 @@
 <template>
   <div id="drawer" class="bottom-shadow full-shadow flex-centering">
+    <slot></slot>
     <drawerhandle></drawerhandle>
   </div>
 </template>

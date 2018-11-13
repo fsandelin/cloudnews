@@ -2,18 +2,31 @@
   <div id="app">
     <newssidebar
       v-bind:newsList="newsList"
-      v-bind:activeNewsItem="activeNewsItem"
+      v-bind:activeNewsItemId="activeNewsItemId"
       v-bind:toggleHover="toggleHover"
       v-bind:toggleActive="toggleActive"
     ></newssidebar>
     <mainsection></mainsection>
-    <drawer></drawer>
+
+    <drawer v-if="getNewsItemByActiveId !== null || regionSelected">
+      <component
+        v-if="getNewsItemByActiveId !== null"
+        v-bind:getNewsItemByActiveId="getNewsItemByActiveId"
+        v-bind:is="activeNewsItemComponent">
+      </component>
+      <component
+        v-if="regionSelected && activeNewsItemId === null"
+        v-bind:is="newslist">
+      </component>
+    </drawer>
   </div>
 </template>
 
 <script>
 import Main from './Main'
+import ActiveNewsItem from './ActiveNewsItem'
 import NewsSideBar from './NewsSideBar'
+import NewsList from './NewsList'
 import Drawer from './Drawer'
 
 export default {
@@ -21,33 +34,40 @@ export default {
   data () {
     return {
       newsList: [
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
-        { id: 1, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
-        { id: 2, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
-        { id: 3, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
+        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", hover: false},
+        { id: 1, title: "News title 1", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", hover: false},
+        { id: 2, title: "News title 2", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", hover: false},
+        { id: 3, title: "News title 3", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", hover: false},
       ],
-      activeNewsItem: {
-
-      }
+      activeNewsItemId: null,
+      activeNewsItemComponent: 'activenewsitem',
+      newsListComponent: 'newslist',
+      regionSelected: false
     }
   },
   computed: {
+    getNewsItemByActiveId: function() {
+      const newsItem = this.newsList.find(item => item.id === this.activeNewsItemId)
+      return newsItem !== undefined && 'id' in newsItem ? newsItem : null;
+    }
   },
   methods: {
     toggleHover: function(news) {
       news.hover = !news.hover
     },
     toggleActive: function(news) {
-      if (news.id === this.activeNewsItem.id) {
-        this.activeNewsItem = {}
+      if (news.id === this.activeNewsItemId) {
+        this.activeNewsItemId = null
       } else {
-        this.activeNewsItem = news
+        this.activeNewsItemId = news.id
       }
     }
   },
   components: {
     'mainsection': Main,
+    'activenewsitem': ActiveNewsItem,
     'newssidebar': NewsSideBar,
+    'newslist': NewsList,
     'drawer': Drawer
   }
 }
