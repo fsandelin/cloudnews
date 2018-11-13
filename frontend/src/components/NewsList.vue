@@ -1,7 +1,7 @@
 <template>
     <ul>
       <newslistitem
-        v-for="news in newsList"
+        v-for="news in componentNewsList"
         v-bind:news="news"
         v-bind:key="news.id"
         v-bind:activeNewsItemId="activeNewsItemId"
@@ -18,6 +18,12 @@ import NewsListItem from './NewsListItem'
 export default {
   name: 'sidebar',
   props: ['newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive'],
+  data () {
+    return {
+      componentNewsList: this.newsList.map(news => ({
+          ...news, hover: false }))
+    }
+  },
   components: {
     'newslistitem': NewsListItem
   }

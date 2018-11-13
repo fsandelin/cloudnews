@@ -1,0 +1,11 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+#drawer-news-list {
+  .title {
+    color: $darkgrey;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 0;
+  }
+}
