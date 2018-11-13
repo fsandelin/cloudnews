@@ -3,6 +3,7 @@
     <newssidebar
       v-bind:newsList="newsList"
       v-bind:activeNewsItemId="activeNewsItemId"
+      v-bind:selectedRegion="selectedRegion"
       v-bind:toggleHover="toggleHover"
       v-bind:toggleActive="toggleActive"
     ></newssidebar>
@@ -43,13 +44,13 @@ export default {
   data () {
     return {
       newsList: [
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf"},
-        { id: 1, title: "News title 1", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf"},
-        { id: 2, title: "News title 2", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf"},
-        { id: 3, title: "News title 3", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf"},
+        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", region: "Stockholm"},
+        { id: 1, title: "News title 1", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", region: "Uppsala"},
+        { id: 2, title: "News title 2", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", region: "Stockholm"},
+        { id: 3, title: "News title 3", text: "Lorem Ipsum is simply dummy text of the printing", url: "https://yesno.wtf", region: "Skåne"},
       ],
       activeNewsItemId: null,
-      selectedRegion: "Some selected region",
+      selectedRegion: "Stockholm",
       dynamicComponents: {
         activeNewsItemComponent: 'activenewsitem',
         newsListComponent: 'newslist',

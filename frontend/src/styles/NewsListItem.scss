@@ -1,9 +1,18 @@
 @import 'variables.scss';
+@import 'reset.scss';
 
 .news-item {
   height: 60px;
   padding: 20px;
   cursor: pointer;
+
+  &.active, &.hover, &.filter {
+    color: $white;
+  }
+
+  &.filter {
+    background-color: $lightblue;
+  }
 
   &.active {
     background-color: $darkgreen;

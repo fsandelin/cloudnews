@@ -7,6 +7,7 @@
         v-bind:activeNewsItemId="activeNewsItemId"
         v-bind:toggleHover="toggleHover"
         v-bind:toggleActive="toggleActive"
+        v-bind:selectedRegion="selectedRegion"
       >
       </newslistitem>
     </ul>
@@ -17,7 +18,7 @@ import NewsListItem from './NewsListItem'
 
 export default {
   name: 'sidebar',
-  props: ['newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive'],
+  props: ['newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive', 'selectedRegion'],
   data () {
     return {
       componentNewsList: this.newsList.map(news => ({

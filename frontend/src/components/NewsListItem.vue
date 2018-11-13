@@ -5,7 +5,8 @@
     v-on:click="toggleActive(news)"
     v-bind:class="{ hover: news.hover && news.id !== activeNewsItemId,
                     active: news.id === activeNewsItemId,
-                    'bottom-shadow': news.hover }"
+                    'bottom-shadow': news.hover,
+                    filter: news.region === selectedRegion }"
     class="news-item flex-centering light-border-bottom"
     v-bind:key="news.id"
     >
@@ -21,7 +22,7 @@
 <script>
 export default {
   name: 'newslistitem',
-  props: ['activeNewsItemId', 'news', 'toggleHover', 'toggleActive'],
+  props: ['activeNewsItemId', 'news', 'toggleHover', 'toggleActive', 'selectedRegion'],
 }
 </script>
 

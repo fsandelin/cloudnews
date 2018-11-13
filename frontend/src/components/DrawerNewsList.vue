@@ -4,7 +4,7 @@
       {{ selectedRegion }}
     </div>
     <newslist
-      v-bind:newsList="newsList"
+      v-bind:newsList="filteredNewsList"
       v-bind:activeNewsItemId="activeNewsItemId"
       v-bind:toggleHover="toggleHover"
       v-bind:toggleActive="toggleActive">
@@ -18,6 +18,11 @@ import NewsList from './NewsList'
 export default {
   name: 'drawernewslist',
   props: ['selectedRegion', 'newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive'],
+  data () {
+    return {
+      filteredNewsList: this.newsList.filter(news => news.region === this.selectedRegion)
+    }
+  },
   components: {
     'newslist': NewsList,
   }
