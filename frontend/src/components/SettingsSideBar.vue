@@ -1,11 +1,11 @@
 <template>
-  <div id="settings-sidebar">
+  <div id="settings-sidebar" class="left-shadow">
     <ul>
-      <li class="setting">
+      <li class="setting flex-centering">
         <p>LIVE UPDATES</p>
         <div class="switch">
-          <span class="background">
-            <span class="toggle"></span>
+          <span class="background light-border">
+            <span class="toggle light-border"></span>
           </span>
         </div>
         </li>
@@ -21,3 +21,4 @@ export default {
 </script>
 
 <style src="../styles/SettingsSideBar.scss" lang="scss" scoped></style>
+<style src="../styles/Commons.scss" lang="scss" scoped></style>
