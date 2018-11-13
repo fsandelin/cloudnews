@@ -24,6 +24,9 @@ svt_regions = [
 "/nyheter/lokalt/ost/"]
 
 lokal_names = map(methodcaller("split", '/'), svt_regions)
+#lokal_names = map()
+
+print (lokal_names)
 temp_names = []
 
 for url in lokal_names:
