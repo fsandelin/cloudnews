@@ -1,9 +1,9 @@
 require('dotenv').config();
-
 const express = require("express")
 const moment = require("moment")
 
 const app = express()
+
 
 const article = {
     title: "Fake news",
