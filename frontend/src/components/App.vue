@@ -2,6 +2,8 @@
   <div id="app">
     <newssidebar
       v-bind:newsList="newsList"
+      v-bind:activeNewsItem="activeNewsItem"
+      v-bind:toggleHover="toggleHover"
       v-bind:toggleActive="toggleActive"
     ></newssidebar>
     <mainsection></mainsection>
@@ -19,18 +21,28 @@ export default {
   data () {
     return {
       newsList: [
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-        { id: 1, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-        { id: 2, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-        { id: 3, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-      ]
+        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
+        { id: 1, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
+        { id: 2, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
+        { id: 3, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", hover: false},
+      ],
+      activeNewsItem: {
+
+      }
     }
   },
   computed: {
   },
   methods: {
+    toggleHover: function(news) {
+      news.hover = !news.hover
+    },
     toggleActive: function(news) {
-      news.active = !news.active
+      if (news.id === this.activeNewsItem.id) {
+        this.activeNewsItem = {}
+      } else {
+        this.activeNewsItem = news
+      }
     }
   },
   components: {

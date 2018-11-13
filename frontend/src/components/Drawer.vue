@@ -9,8 +9,9 @@ import DrawerHandle from './DrawerHandle';
 
 export default {
   name: 'drawer',
+  props: [],
   components: {
-    'drawerhandle': DrawerHandle
+    'drawerhandle': DrawerHandle,
   }
 }
 </script>
