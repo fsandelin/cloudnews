@@ -1,72 +1,73 @@
-<template>
+<template
+ @keyup.esc="console.log('get')">
   <svg class="mapContainer">
-      <g class="map">
-        <path
-          class="country"
-          v-for="country in countries"
-          v-bind:key="country.key"
-          v-show="country.active"
-          v-bind:d="country.path"
-          v-bind:name="country.name"> 
-        </path>
-        <path
-          class="municipality"
-          v-for="municipality in municipalities"
-          v-bind:key="municipality.key"
-          v-show="municipality.active"
-          v-bind:d="municipality.path"
-          v-bind:name="municipality.name">
-        </path>
-        <path
-          class="county"
-          v-for="county in counties"
-          v-bind:key="county.key"
-          v-show="county.active"
-          v-bind:d="county.path"
-          v-bind:name="county.name"
-          v-on:click="countyClick(county)">
-        </path>
-        <circle
-          class="municipality-notification"
-          v-for="[name, news] of municipalityNews"
-          v-bind:key="'newsNotification'+name"
-          v-bind:cx="munX(name)+'px'"
-          v-bind:cy="munY(name)+'px'"
-          v-bind:r="(4+news.length)+'px'">
-        </circle>
-        <transition-group name="fade" tag="g">
-        <text
-          class="municipality-notification"
-          v-for="[name, news] of municipalityNews"
-          v-bind:key="'newsNotificationText'+name+news.id"
-          v-show="getMunicipalityByName(name).active"
-          v-bind:x="getMunicipalityByName(name).x+'px'"
-          v-bind:y="getMunicipalityByName(name).y+'px'" 
-          v-bind:font-size="(6+news.length)+'px'">
-          {{news.length}}
-        </text>
-        </transition-group>
-        <circle
-          class="county-notification"
-          v-for="[name, news] of countyNews"
-          v-bind:key="'countyNewsNotification'+name"
-          v-show="getCountyByName(name).active"
-          v-bind:cx="getCountyByName(name).x+'px'"
-          v-bind:cy="getCountyByName(name).y+'px'"
-          v-bind:r="(4+news.length)+'px'">
-        </circle>
-        <text
-          class="county-notification"
-          v-for="[name, news] of countyNews"
-          v-bind:key="'countyNewsNotificationText'+name"
-          v-show="getCountyByName(name).active"
-          v-bind:x="getCountyByName(name).x+'px'"
-          v-bind:y="getCountyByName(name).y+'px'" 
-          v-bind:font-size="(6+news.length)+'px'">
-          {{news.length}}
-        </text>
-      </g>
-    </svg>
+    <g class="map">
+      <path
+        class="country"
+        v-for="country in countries"
+        v-bind:key="country.key"
+        v-bind:d="country.path">
+      </path>
+      <path
+        class="municipality"
+        v-for="municipality in municipalities"
+        v-bind:key="municipality.key"
+        v-show="municipality.active"
+        v-bind:d="municipality.path">
+      </path>
+      <path
+        class="county"
+        v-for="county in counties"
+        v-bind:key="county.key"
+        v-show="county.active"
+        v-bind:d="county.path"
+        v-on:click="countyClick(county)">
+      </path>
+      <circle
+        class="circle-municipality"
+        v-for="[name, news] of municipalityNews"
+        v-bind:key="'newsNotification'+name"
+        v-bind:cx="munX(name)+'px'"
+        v-bind:cy="munY(name)+'px'"
+        v-bind:r="(4+(news.length/2))+'px'">
+      </circle>
+      <circle
+        class="circle-county"
+        v-for="[name, news] of countyNews"
+        v-bind:key="'countyNewsNotification'+name"
+        v-show="getCountyByName(name).active"
+        v-bind:cx="getCountyByName(name).x+'px'"
+        v-bind:cy="getCountyByName(name).y+'px'"
+        v-bind:r="(4+news.length/2)+'px'">
+      </circle>
+      <transition-group name="fade" tag="g">
+      <text
+        class="circle-number"
+        v-for="[name, news] of municipalityNews"
+        v-bind:key="'newsNotificationText'+name+news.id"
+        v-show="getMunicipalityByName(name).active"
+        text-anchor="middle"
+        v-bind:x="getMunicipalityByName(name).x+'px'"
+        v-bind:y="getMunicipalityByName(name).y+'px'"
+        v-bind:dy="-1+(4+(news.length/2))/2+'px'"
+        v-bind:font-size="(4+(news.length/2))+'px'">
+        {{news.length}}
+      </text>
+      <text
+        class="circle-number"
+        v-for="[name, news] of countyNews"
+        v-bind:key="'countyNewsNotificationText'+name"
+        v-show="getCountyByName(name).active"
+        text-anchor="middle"
+        v-bind:x="getCountyByName(name).x+'px'"
+        v-bind:y="getCountyByName(name).y+'px'"
+        v-bind:dy="(4+(news.length/2))/3+'px'"
+        v-bind:font-size="(4+(news.length/2))+'px'">
+        {{news.length}}
+      </text>
+      </transition-group>
+    </g>
+  </svg>
 </template>
 
 
@@ -138,7 +139,6 @@ export default {
     this.countries = this.countries.concat(europeCountries);
 
     this.calculateNewsList();
-    console.log(this.municipalityNews);
   },
   methods: {
     munX: function(name) {
@@ -210,6 +210,7 @@ export default {
     },
     countyClick: function(mouseoverCounty) {
       this.counties.map(county => county.active = !(county.name === mouseoverCounty.name));
+      console.log(mouseoverCounty.name);
       this.municipalities.map(municipality => municipality.active = (municipality.county === mouseoverCounty.name));
     }
   }

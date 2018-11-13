@@ -143,7 +143,7 @@ export default {
           location: {
             country: "",
             county: "",
-            municipality: "haparanda",
+            municipality: "ludvika",
             city: ""
           }
         },
@@ -152,7 +152,115 @@ export default {
           location: {
             country: "",
             county: "",
-            municipality: "haparanda",
+            municipality: "ludvika",
+            city: ""
+          }
+        },
+        { 
+          id: 15, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "ludvika",
+            city: ""
+          }
+        },
+        { 
+          id: 16, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "ludvika",
+            city: ""
+          }
+        },
+        { 
+          id: 17, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "ludvika",
+            city: ""
+          }
+        },
+        { 
+          id: 18, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "ludvika",
+            city: ""
+          }
+        },
+        { 
+          id: 19, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 20, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 21, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 22, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 23, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 24, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 25, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
+            city: ""
+          }
+        },
+        { 
+          id: 26, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+          location: {
+            country: "",
+            county: "",
+            municipality: "orsa",
             city: ""
           }
         }

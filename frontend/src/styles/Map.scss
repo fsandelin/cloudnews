@@ -1,14 +1,21 @@
+.fade-enter-active {
+  transition: opacity .9s;
+}
+ 
+.fade-enter {
+  opacity: 0;
+}
+
 svg.mapContainer {
   overflow: hidden;
-  background-color: white;
   width:100%;
   height:100%;
+  background-color: white;
 }
 
 svg.mapContainer g.map {
   margin: auto;
   display: block;
-  background-color: steelblue;
 }
 
 svg.mapContainer g.map path.country {
@@ -30,52 +37,44 @@ svg.mapContainer g.map path.municipality {
   stroke: white;
   stroke-width: 0.5px;
   stroke-opacity: 1;
-  fill: rgb(60, 122, 94);
+  fill: #35495e;
   fill-opacity: 1;
 }
 
 svg.mapContainer g.map path.county:hover {
-  fill: rgb(8, 128, 74);
+  fill: #35495e;
 }
 
 svg.mapContainer g.map path.municipality:hover {
-  fill: white;
-  fill-opacity: 0.8;
+  fill: #7B8693;
 }
 
-svg.mapContainer g.map circle.municipality-notification {
+svg.mapContainer g.map circle.circle-municipality {
   fill: #D46868;
   transition: 0.4s;
 }
 
-svg.mapContainer g.map circle.municipality-notification:hover {
-  fill: rgb(97, 0, 0);
-  transition: 0.1s;
+svg.mapContainer g.map circle.circle-county {
+  fill: #D46868;
 }
 
-svg.mapContainer g.map text.municipality-notification {
+svg.mapContainer g.map circle.circle-municipality:hover {
+  fill: yellow;
+  transition: 0s;
+}
+
+svg.mapContainer g.map circle.circle-county:hover {
+  fill: yellow;
+}
+
+svg.mapContainer g.map .circle-number {
   fill: white;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
   pointer-events: none;
-}
-
-svg.mapContainer g.map circle.county-notification {
-  fill: rgb(211, 57, 57);
-}
-
-svg.mapContainer g.map circle.county-notification:hover {
-  fill: rgb(221, 25, 25);
-}
-
-svg.mapContainer g.map text.county-notification {
-  fill: white;
-  text-align:center;
-  pointer-events: none;
-}
-
-.fade-enter-active {
-  transition: opacity .9s;
-}
- 
-.fade-enter {
-  opacity: 0;
+  border-radius: 12px;
+  background-color: red;
 }
