@@ -35,8 +35,7 @@ svg.mapContainer g.map path.municipality {
 }
 
 svg.mapContainer g.map path.county:hover {
-  fill: white;
-  fill-opacity: 0.1;
+  fill: rgb(8, 128, 74);
 }
 
 svg.mapContainer g.map path.municipality:hover {
@@ -44,6 +43,39 @@ svg.mapContainer g.map path.municipality:hover {
   fill-opacity: 0.8;
 }
 
-svg.mapContainer g.map circle.notification {
+svg.mapContainer g.map circle.municipality-notification {
   fill: #D46868;
+  transition: 0.4s;
+}
+
+svg.mapContainer g.map circle.municipality-notification:hover {
+  fill: rgb(97, 0, 0);
+  transition: 0.1s;
+}
+
+svg.mapContainer g.map text.municipality-notification {
+  fill: white;
+  pointer-events: none;
+}
+
+svg.mapContainer g.map circle.county-notification {
+  fill: rgb(211, 57, 57);
+}
+
+svg.mapContainer g.map circle.county-notification:hover {
+  fill: rgb(221, 25, 25);
+}
+
+svg.mapContainer g.map text.county-notification {
+  fill: white;
+  text-align:center;
+  pointer-events: none;
+}
+
+.fade-enter-active {
+  transition: opacity .9s;
+}
+ 
+.fade-enter {
+  opacity: 0;
 }

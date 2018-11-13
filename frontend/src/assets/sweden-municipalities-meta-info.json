@@ -2,6 +2,7 @@
     {
         "key": "municipality-upplands väsby",
         "name": "upplands väsby",
+        "county": "stockholm",
         "type": "municipality",
         "x": 512.2697891634049,
         "y": 371.713746398485,
@@ -13,6 +14,7 @@
     {
         "key": "municipality-vallentuna",
         "name": "vallentuna",
+        "county": "stockholm",
         "type": "municipality",
         "x": 517.070828736829,
         "y": 369.4838843340002,
@@ -24,6 +26,7 @@
     {
         "key": "municipality-österåker",
         "name": "österåker",
+        "county": "stockholm",
         "type": "municipality",
         "x": 520.4358430807022,
         "y": 372.1786419314608,
@@ -35,6 +38,7 @@
     {
         "key": "municipality-värmdö",
         "name": "värmdö",
+        "county": "stockholm",
         "type": "municipality",
         "x": 524.2723880969652,
         "y": 378.40451071887844,
@@ -46,6 +50,7 @@
     {
         "key": "municipality-järfälla",
         "name": "järfälla",
+        "county": "stockholm",
         "type": "municipality",
         "x": 510.90878017718865,
         "y": 374.135569076209,
@@ -57,6 +62,7 @@
     {
         "key": "municipality-ekerö",
         "name": "ekerö",
+        "county": "stockholm",
         "type": "municipality",
         "x": 508.4010943285698,
         "y": 376.8379921062001,
@@ -68,6 +74,7 @@
     {
         "key": "municipality-huddinge",
         "name": "huddinge",
+        "county": "stockholm",
         "type": "municipality",
         "x": 514.1773450653457,
         "y": 381.5680416112905,
@@ -79,6 +86,7 @@
     {
         "key": "municipality-botkyrka",
         "name": "botkyrka",
+        "county": "stockholm",
         "type": "municipality",
         "x": 510.9516466019513,
         "y": 383.17387581013577,
@@ -90,6 +98,7 @@
     {
         "key": "municipality-salem",
         "name": "salem",
+        "county": "stockholm",
         "type": "municipality",
         "x": 508.6047098461927,
         "y": 380.9954629265551,
@@ -101,6 +110,7 @@
     {
         "key": "municipality-haninge",
         "name": "haninge",
+        "county": "stockholm",
         "type": "municipality",
         "x": 516.9850958873035,
         "y": 386.2672316162286,
@@ -112,6 +122,7 @@
     {
         "key": "municipality-tyresö",
         "name": "tyresö",
+        "county": "stockholm",
         "type": "municipality",
         "x": 518.3782546920918,
         "y": 381.6353407610759,
@@ -123,6 +134,7 @@
     {
         "key": "municipality-upplands-bro",
         "name": "upplands-bro",
+        "county": "stockholm",
         "type": "municipality",
         "x": 508.4010943285698,
         "y": 370.9974660940401,
@@ -134,6 +146,7 @@
     {
         "key": "municipality-nykvarn",
         "name": "nykvarn",
+        "county": "stockholm",
         "type": "municipality",
         "x": 503.83582009134057,
         "y": 382.22898488139094,
@@ -145,6 +158,7 @@
     {
         "key": "municipality-täby",
         "name": "täby",
+        "county": "stockholm",
         "type": "municipality",
         "x": 514.8096248305958,
         "y": 373.5145761385776,
@@ -156,6 +170,7 @@
     {
         "key": "municipality-danderyd",
         "name": "danderyd",
+        "county": "stockholm",
         "type": "municipality",
         "x": 514.4774100386848,
         "y": 375.201643786148,
@@ -167,6 +182,7 @@
     {
         "key": "municipality-sollentuna",
         "name": "sollentuna",
+        "county": "stockholm",
         "type": "municipality",
         "x": 512.430538256265,
         "y": 374.1137799932902,
@@ -178,6 +194,7 @@
     {
         "key": "municipality-stockholm",
         "name": "stockholm",
+        "county": "stockholm",
         "type": "municipality",
         "x": 513.6093649372397,
         "y": 377.72258458063436,
@@ -189,6 +206,7 @@
     {
         "key": "municipality-södertälje",
         "name": "södertälje",
+        "county": "stockholm",
         "type": "municipality",
         "x": 505.6147767189933,
         "y": 384.74144613050134,
@@ -200,6 +218,7 @@
     {
         "key": "municipality-nacka",
         "name": "nacka",
+        "county": "stockholm",
         "type": "municipality",
         "x": 517.4780597720747,
         "y": 378.6767461878428,
@@ -211,6 +230,7 @@
     {
         "key": "municipality-sundbyberg",
         "name": "sundbyberg",
+        "county": "stockholm",
         "type": "municipality",
         "x": 513.030668202943,
         "y": 376.39892051278116,
@@ -222,6 +242,7 @@
     {
         "key": "municipality-solna",
         "name": "solna",
+        "county": "stockholm",
         "type": "municipality",
         "x": 513.9415797291507,
         "y": 376.50948215096673,
@@ -233,6 +254,7 @@
     {
         "key": "municipality-lidingö",
         "name": "lidingö",
+        "county": "stockholm",
         "type": "municipality",
         "x": 516.5457150334856,
         "y": 376.642434537049,
@@ -244,6 +266,7 @@
     {
         "key": "municipality-vaxholm",
         "name": "vaxholm",
+        "county": "stockholm",
         "type": "municipality",
         "x": 517.9817402630366,
         "y": 375.06879375584754,
@@ -255,6 +278,7 @@
     {
         "key": "municipality-norrtälje",
         "name": "norrtälje",
+        "county": "stockholm",
         "type": "municipality",
         "x": 523.3293267521854,
         "y": 359.8074117694191,
@@ -266,6 +290,7 @@
     {
         "key": "municipality-sigtuna",
         "name": "sigtuna",
+        "county": "stockholm",
         "type": "municipality",
         "x": 511.4446104867226,
         "y": 367.58799593951153,
@@ -277,6 +302,7 @@
     {
         "key": "municipality-nynäshamn",
         "name": "nynäshamn",
+        "county": "stockholm",
         "type": "municipality",
         "x": 511.56249315482,
         "y": 389.5758956447331,
@@ -288,6 +314,7 @@
     {
         "key": "municipality-håbo",
         "name": "håbo",
+        "county": "uppsala",
         "type": "municipality",
         "x": 505.49689405089583,
         "y": 368.0335064379875,
@@ -299,6 +326,7 @@
     {
         "key": "municipality-älvkarleby",
         "name": "älvkarleby",
+        "county": "uppsala",
         "type": "municipality",
         "x": 504.6824319804042,
         "y": 337.384341139694,
@@ -310,6 +338,7 @@
     {
         "key": "municipality-knivsta",
         "name": "knivsta",
+        "county": "uppsala",
         "type": "municipality",
         "x": 511.5839263672014,
         "y": 364.34590956316003,
@@ -321,6 +350,7 @@
     {
         "key": "municipality-tierp",
         "name": "tierp",
+        "county": "uppsala",
         "type": "municipality",
         "x": 507.9295636561799,
         "y": 344.11012971786056,
@@ -332,6 +362,7 @@
     {
         "key": "municipality-uppsala",
         "name": "uppsala",
+        "county": "uppsala",
         "type": "municipality",
         "x": 509.8478361643114,
         "y": 357.26738506809363,
@@ -343,6 +374,7 @@
     {
         "key": "municipality-enköping",
         "name": "enköping",
+        "county": "uppsala",
         "type": "municipality",
         "x": 499.2383960355394,
         "y": 366.54387630285225,
@@ -354,6 +386,7 @@
     {
         "key": "municipality-östhammar",
         "name": "östhammar",
+        "county": "uppsala",
         "type": "municipality",
         "x": 516.2885164849095,
         "y": 347.3228439416213,
@@ -365,6 +398,7 @@
     {
         "key": "municipality-vingåker",
         "name": "vingåker",
+        "county": "södermanland",
         "type": "municipality",
         "x": 478.6196457246732,
         "y": 386.317201923683,
@@ -376,6 +410,7 @@
     {
         "key": "municipality-gnesta",
         "name": "gnesta",
+        "county": "södermanland",
         "type": "municipality",
         "x": 499.4634447655436,
         "y": 386.1147872308644,
@@ -387,6 +422,7 @@
     {
         "key": "municipality-nyköping",
         "name": "nyköping",
+        "county": "södermanland",
         "type": "municipality",
         "x": 494.608822161166,
         "y": 393.5204389885307,
@@ -398,6 +434,7 @@
     {
         "key": "municipality-oxelösund",
         "name": "oxelösund",
+        "county": "södermanland",
         "type": "municipality",
         "x": 498.048852748374,
         "y": 398.2644051095458,
@@ -409,6 +446,7 @@
     {
         "key": "municipality-flen",
         "name": "flen",
+        "county": "södermanland",
         "type": "municipality",
         "x": 492.2618854054074,
         "y": 386.28455805707586,
@@ -420,6 +458,7 @@
     {
         "key": "municipality-katrineholm",
         "name": "katrineholm",
+        "county": "södermanland",
         "type": "municipality",
         "x": 484.599511979072,
         "y": 388.1613840734341,
@@ -431,6 +470,7 @@
     {
         "key": "municipality-eskilstuna",
         "name": "eskilstuna",
+        "county": "södermanland",
         "type": "municipality",
         "x": 486.3463187881527,
         "y": 378.3140425834623,
@@ -442,6 +482,7 @@
     {
         "key": "municipality-strängnäs",
         "name": "strängnäs",
+        "county": "södermanland",
         "type": "municipality",
         "x": 497.448722801696,
         "y": 377.3841179028311,
@@ -453,6 +494,7 @@
     {
         "key": "municipality-trosa",
         "name": "trosa",
+        "county": "södermanland",
         "type": "municipality",
         "x": 505.30399513946355,
         "y": 392.03178701890545,
@@ -464,6 +506,7 @@
     {
         "key": "municipality-ödeshög",
         "name": "ödeshög",
+        "county": "södermanland",
         "type": "municipality",
         "x": 459.9298845281293,
         "y": 413.3319739538198,
@@ -475,6 +518,7 @@
     {
         "key": "municipality-ydre",
         "name": "ydre",
+        "county": "södermanland",
         "type": "municipality",
         "x": 468.55675251162586,
         "y": 424.1154838367938,
@@ -486,6 +530,7 @@
     {
         "key": "municipality-kinda",
         "name": "kinda",
+        "county": "södermanland",
         "type": "municipality",
         "x": 475.96192738938487,
         "y": 419.83626584758963,
@@ -497,6 +542,7 @@
     {
         "key": "municipality-boxholm",
         "name": "boxholm",
+        "county": "södermanland",
         "type": "municipality",
         "x": 466.19909914967644,
         "y": 415.79015345037544,
@@ -508,6 +554,7 @@
     {
         "key": "municipality-åtvidaberg",
         "name": "åtvidaberg",
+        "county": "södermanland",
         "type": "municipality",
         "x": 482.4883405595083,
         "y": 413.09406876274454,
@@ -519,6 +566,7 @@
     {
         "key": "municipality-finspång",
         "name": "finspång",
+        "county": "södermanland",
         "type": "municipality",
         "x": 477.258636738457,
         "y": 393.93649813972365,
@@ -530,6 +578,7 @@
     {
         "key": "municipality-valdemarsvik",
         "name": "valdemarsvik",
+        "county": "södermanland",
         "type": "municipality",
         "x": 489.4112681586868,
         "y": 414.0711243737637,
@@ -541,6 +590,7 @@
     {
         "key": "municipality-linköping",
         "name": "linköping",
+        "county": "södermanland",
         "type": "municipality",
         "x": 474.99743283222375,
         "y": 408.57954577042653,
@@ -552,6 +602,7 @@
     {
         "key": "municipality-norrköping",
         "name": "norrköping",
+        "county": "södermanland",
         "type": "municipality",
         "x": 484.95315998336446,
         "y": 399.97876823849504,
@@ -563,6 +614,7 @@
     {
         "key": "municipality-söderköping",
         "name": "söderköping",
+        "county": "södermanland",
         "type": "municipality",
         "x": 488.0181093538986,
         "y": 407.576991745011,
@@ -574,6 +626,7 @@
     {
         "key": "municipality-motala",
         "name": "motala",
+        "county": "södermanland",
         "type": "municipality",
         "x": 467.11001067588415,
         "y": 399.7812264214068,
@@ -585,6 +638,7 @@
     {
         "key": "municipality-vadstena",
         "name": "vadstena",
+        "county": "södermanland",
         "type": "municipality",
         "x": 461.30161012053617,
         "y": 406.6116997994442,
@@ -596,6 +650,7 @@
     {
         "key": "municipality-mjölby",
         "name": "mjölby",
+        "county": "södermanland",
         "type": "municipality",
         "x": 465.99548363205355,
         "y": 410.734451247321,
@@ -607,6 +662,7 @@
     {
         "key": "municipality-aneby",
         "name": "aneby",
+        "county": "jönköping",
         "type": "municipality",
         "x": 460.8193628419557,
         "y": 423.88701229696915,
@@ -618,6 +674,7 @@
     {
         "key": "municipality-gnosjö",
         "name": "gnosjö",
+        "county": "jönköping",
         "type": "municipality",
         "x": 444.81946979927216,
         "y": 439.5852983193515,
@@ -629,6 +686,7 @@
     {
         "key": "municipality-mullsjö",
         "name": "mullsjö",
+        "county": "jönköping",
         "type": "municipality",
         "x": 445.0981015602298,
         "y": 421.67982123572756,
@@ -640,6 +698,7 @@
     {
         "key": "municipality-habo",
         "name": "habo",
+        "county": "jönköping",
         "type": "municipality",
         "x": 448.3666664483868,
         "y": 420.54501783016826,
@@ -651,6 +710,7 @@
     {
         "key": "municipality-gislaved",
         "name": "gislaved",
+        "county": "jönköping",
         "type": "municipality",
         "x": 439.5254663410768,
         "y": 441.57897408852284,
@@ -662,6 +722,7 @@
     {
         "key": "municipality-vaggeryd",
         "name": "vaggeryd",
+        "county": "jönköping",
         "type": "municipality",
         "x": 450.14562307603956,
         "y": 436.01554409137646,
@@ -673,6 +734,7 @@
     {
         "key": "municipality-jönköping",
         "name": "jönköping",
+        "county": "jönköping",
         "type": "municipality",
         "x": 450.4242548369972,
         "y": 425.4286737817206,
@@ -684,6 +746,7 @@
     {
         "key": "municipality-nässjö",
         "name": "nässjö",
+        "county": "jönköping",
         "type": "municipality",
         "x": 458.23666075000205,
         "y": 431.9104002737521,
@@ -695,6 +758,7 @@
     {
         "key": "municipality-värnamo",
         "name": "värnamo",
+        "county": "jönköping",
         "type": "municipality",
         "x": 448.49526572267496,
         "y": 446.61545211880525,
@@ -706,6 +770,7 @@
     {
         "key": "municipality-sävsjö",
         "name": "sävsjö",
+        "county": "jönköping",
         "type": "municipality",
         "x": 457.5615145599893,
         "y": 440.7712960469272,
@@ -717,6 +782,7 @@
     {
         "key": "municipality-vetlanda",
         "name": "vetlanda",
+        "county": "jönköping",
         "type": "municipality",
         "x": 467.76372365351557,
         "y": 439.4230670029435,
@@ -728,6 +794,7 @@
     {
         "key": "municipality-eksjö",
         "name": "eksjö",
+        "county": "jönköping",
         "type": "municipality",
         "x": 467.98877238351986,
         "y": 431.45749287146975,
@@ -739,6 +806,7 @@
     {
         "key": "municipality-tranås",
         "name": "tranås",
+        "county": "jönköping",
         "type": "municipality",
         "x": 461.4302093948244,
         "y": 418.9560067609109,
@@ -750,6 +818,7 @@
     {
         "key": "municipality-uppvidinge",
         "name": "uppvidinge",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 471.76101776263874,
         "y": 449.4902596955725,
@@ -761,6 +830,7 @@
     {
         "key": "municipality-lessebo",
         "name": "lessebo",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 469.4140810068801,
         "y": 458.0922781987281,
@@ -772,6 +842,7 @@
     {
         "key": "municipality-tingsryd",
         "name": "tingsryd",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 463.9378952434432,
         "y": 464.55370939900615,
@@ -783,6 +854,7 @@
     {
         "key": "municipality-alvesta",
         "name": "alvesta",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 455.88972399424335,
         "y": 455.07504624591036,
@@ -794,6 +866,7 @@
     {
         "key": "municipality-älmhult",
         "name": "älmhult",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 450.5421375050947,
         "y": 462.87567731937554,
@@ -805,6 +878,7 @@
     {
         "key": "municipality-markaryd",
         "name": "markaryd",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 441.32585618111085,
         "y": 464.3127815777259,
@@ -816,6 +890,7 @@
     {
         "key": "municipality-växjö",
         "name": "växjö",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 461.93388988578624,
         "y": 452.92601715867886,
@@ -827,6 +902,7 @@
     {
         "key": "municipality-ljungby",
         "name": "ljungby",
+        "county": "kronoberg",
         "type": "municipality",
         "x": 444.5301214321238,
         "y": 455.4630013678956,
@@ -838,6 +914,7 @@
     {
         "key": "municipality-högsby",
         "name": "högsby",
+        "county": "kalmar",
         "type": "municipality",
         "x": 479.1340428218258,
         "y": 446.8613991991523,
@@ -849,6 +926,7 @@
     {
         "key": "municipality-torsås",
         "name": "torsås",
+        "county": "kalmar",
         "type": "municipality",
         "x": 478.8982774856309,
         "y": 467.99312278176455,
@@ -860,6 +938,7 @@
     {
         "key": "municipality-mörbylånga",
         "name": "mörbylånga",
+        "county": "kalmar",
         "type": "municipality",
         "x": 489.6470334948818,
         "y": 466.08855617179154,
@@ -871,6 +950,7 @@
     {
         "key": "municipality-hultsfred",
         "name": "hultsfred",
+        "county": "kalmar",
         "type": "municipality",
         "x": 477.9873659594232,
         "y": 438.33879611183204,
@@ -882,6 +962,7 @@
     {
         "key": "municipality-mönsterås",
         "name": "mönsterås",
+        "county": "kalmar",
         "type": "municipality",
         "x": 486.6463837614917,
         "y": 448.5179586595573,
@@ -893,6 +974,7 @@
     {
         "key": "municipality-emmaboda",
         "name": "emmaboda",
+        "county": "kalmar",
         "type": "municipality",
         "x": 473.35779208504994,
         "y": 461.4356504895146,
@@ -904,6 +986,7 @@
     {
         "key": "municipality-kalmar",
         "name": "kalmar",
+        "county": "kalmar",
         "type": "municipality",
         "x": 482.4776239533177,
         "y": 459.5398439833275,
@@ -915,6 +998,7 @@
     {
         "key": "municipality-nybro",
         "name": "nybro",
+        "county": "kalmar",
         "type": "municipality",
         "x": 478.6410789370546,
         "y": 455.2540755065638,
@@ -926,6 +1010,7 @@
     {
         "key": "municipality-oskarshamn",
         "name": "oskarshamn",
+        "county": "kalmar",
         "type": "municipality",
         "x": 486.23915272624595,
         "y": 439.7365307438504,
@@ -937,6 +1022,7 @@
     {
         "key": "municipality-västervik",
         "name": "västervik",
+        "county": "kalmar",
         "type": "municipality",
         "x": 486.91429891625864,
         "y": 424.93178319231777,
@@ -948,6 +1034,7 @@
     {
         "key": "municipality-vimmerby",
         "name": "vimmerby",
+        "county": "kalmar",
         "type": "municipality",
         "x": 478.34101396371557,
         "y": 430.0152336592465,
@@ -959,6 +1046,7 @@
     {
         "key": "municipality-borgholm",
         "name": "borgholm",
+        "county": "kalmar",
         "type": "municipality",
         "x": 494.3301904002085,
         "y": 449.91457010350405,
@@ -970,6 +1058,7 @@
     {
         "key": "municipality-gotland",
         "name": "gotland",
+        "county": "gotland",
         "type": "municipality",
         "x": 525.0975667736474,
         "y": 436.55420777523864,
@@ -981,6 +1070,7 @@
     {
         "key": "municipality-olofström",
         "name": "olofström",
+        "county": "blekinge",
         "type": "municipality",
         "x": 457.22929976807825,
         "y": 470.7222545009307,
@@ -992,6 +1082,7 @@
     {
         "key": "municipality-karlskrona",
         "name": "karlskrona",
+        "county": "blekinge",
         "type": "municipality",
         "x": 475.3510808365162,
         "y": 471.5856209074004,
@@ -1003,6 +1094,7 @@
     {
         "key": "municipality-ronneby",
         "name": "ronneby",
+        "county": "blekinge",
         "type": "municipality",
         "x": 467.7101406225621,
         "y": 471.0415522676209,
@@ -1014,6 +1106,7 @@
     {
         "key": "municipality-karlshamn",
         "name": "karlshamn",
+        "county": "blekinge",
         "type": "municipality",
         "x": 461.7945740053074,
         "y": 472.2685566949217,
@@ -1025,6 +1118,7 @@
     {
         "key": "municipality-sölvesborg",
         "name": "sölvesborg",
+        "county": "blekinge",
         "type": "municipality",
         "x": 458.7510578471546,
         "y": 477.4415065940598,
@@ -1036,6 +1130,7 @@
     {
         "key": "municipality-svalöv",
         "name": "svalöv",
+        "county": "skåne",
         "type": "municipality",
         "x": 433.73849899811023,
         "y": 481.4181406404956,
@@ -1047,6 +1142,7 @@
     {
         "key": "municipality-staffanstorp",
         "name": "staffanstorp",
+        "county": "skåne",
         "type": "municipality",
         "x": 435.07807477194507,
         "y": 490.56032026228024,
@@ -1058,6 +1154,7 @@
     {
         "key": "municipality-burlöv",
         "name": "burlöv",
+        "county": "skåne",
         "type": "municipality",
         "x": 432.9883365647627,
         "y": 491.1009095735071,
@@ -1069,6 +1166,7 @@
     {
         "key": "municipality-vellinge",
         "name": "vellinge",
+        "county": "skåne",
         "type": "municipality",
         "x": 431.24152975568205,
         "y": 496.36493936112527,
@@ -1080,6 +1178,7 @@
     {
         "key": "municipality-östra göinge",
         "name": "östra göinge",
+        "county": "skåne",
         "type": "municipality",
         "x": 451.01366817748453,
         "y": 471.7563045519812,
@@ -1091,6 +1190,7 @@
     {
         "key": "municipality-örkelljunga",
         "name": "örkelljunga",
+        "county": "skåne",
         "type": "municipality",
         "x": 437.082080129602,
         "y": 471.1508294144211,
@@ -1102,6 +1202,7 @@
     {
         "key": "municipality-bjuv",
         "name": "bjuv",
+        "county": "skåne",
         "type": "municipality",
         "x": 430.9200315699617,
         "y": 478.8790241729165,
@@ -1113,6 +1214,7 @@
     {
         "key": "municipality-kävlinge",
         "name": "kävlinge",
+        "county": "skåne",
         "type": "municipality",
         "x": 432.5168058923728,
         "y": 486.7332414472834,
@@ -1124,6 +1226,7 @@
     {
         "key": "municipality-lomma",
         "name": "lomma",
+        "county": "skåne",
         "type": "municipality",
         "x": 432.45250625522874,
         "y": 489.2393884168938,
@@ -1135,6 +1238,7 @@
     {
         "key": "municipality-svedala",
         "name": "svedala",
+        "county": "skåne",
         "type": "municipality",
         "x": 435.94611987339005,
         "y": 493.6551538222369,
@@ -1146,6 +1250,7 @@
     {
         "key": "municipality-skurup",
         "name": "skurup",
+        "county": "skåne",
         "type": "municipality",
         "x": 440.3827948363311,
         "y": 495.6065956188363,
@@ -1157,6 +1262,7 @@
     {
         "key": "municipality-sjöbo",
         "name": "sjöbo",
+        "county": "skåne",
         "type": "municipality",
         "x": 443.6620763306788,
         "y": 490.5953527143989,
@@ -1168,6 +1274,7 @@
     {
         "key": "municipality-hörby",
         "name": "hörby",
+        "county": "skåne",
         "type": "municipality",
         "x": 443.7156593616322,
         "y": 485.0024822120664,
@@ -1179,6 +1286,7 @@
     {
         "key": "municipality-höör",
         "name": "höör",
+        "county": "skåne",
         "type": "municipality",
         "x": 439.85768113298786,
         "y": 482.2620019969065,
@@ -1190,6 +1298,7 @@
     {
         "key": "municipality-tomelilla",
         "name": "tomelilla",
+        "county": "skåne",
         "type": "municipality",
         "x": 448.1844841431453,
         "y": 491.3323551391279,
@@ -1201,6 +1310,7 @@
     {
         "key": "municipality-bromölla",
         "name": "bromölla",
+        "county": "skåne",
         "type": "municipality",
         "x": 455.82542435709934,
         "y": 476.6321260239906,
@@ -1212,6 +1322,7 @@
     {
         "key": "municipality-osby",
         "name": "osby",
+        "county": "skåne",
         "type": "municipality",
         "x": 449.7169588284124,
         "y": 468.21708308866346,
@@ -1223,6 +1334,7 @@
     {
         "key": "municipality-perstorp",
         "name": "perstorp",
+        "county": "skåne",
         "type": "municipality",
         "x": 437.3928617091317,
         "y": 474.76903253038734,
@@ -1234,6 +1346,7 @@
     {
         "key": "municipality-klippan",
         "name": "klippan",
+        "county": "skåne",
         "type": "municipality",
         "x": 435.53888883814426,
         "y": 476.8945922827754,
@@ -1245,6 +1358,7 @@
     {
         "key": "municipality-åstorp",
         "name": "åstorp",
+        "county": "skåne",
         "type": "municipality",
         "x": 430.87716514519894,
         "y": 476.4727718312938,
@@ -1256,6 +1370,7 @@
     {
         "key": "municipality-båstad",
         "name": "båstad",
+        "county": "skåne",
         "type": "municipality",
         "x": 428.09084753562246,
         "y": 468.83242556459004,
@@ -1267,6 +1382,7 @@
     {
         "key": "municipality-malmö",
         "name": "malmö",
+        "county": "skåne",
         "type": "municipality",
         "x": 431.809509883788,
         "y": 493.03709731613776,
@@ -1278,6 +1394,7 @@
     {
         "key": "municipality-lund",
         "name": "lund",
+        "county": "skåne",
         "type": "municipality",
         "x": 437.3392786781783,
         "y": 490.43467589193995,
@@ -1289,6 +1406,7 @@
     {
         "key": "municipality-landskrona",
         "name": "landskrona",
+        "county": "skåne",
         "type": "municipality",
         "x": 429.9126705880378,
         "y": 483.5174711780345,
@@ -1300,6 +1418,7 @@
     {
         "key": "municipality-helsingborg",
         "name": "helsingborg",
+        "county": "skåne",
         "type": "municipality",
         "x": 427.8229323808555,
         "y": 478.28677174242887,
@@ -1311,6 +1430,7 @@
     {
         "key": "municipality-höganäs",
         "name": "höganäs",
+        "county": "skåne",
         "type": "municipality",
         "x": 425.00446495270694,
         "y": 473.95770568417356,
@@ -1322,6 +1442,7 @@
     {
         "key": "municipality-eslöv",
         "name": "eslöv",
+        "county": "skåne",
         "type": "municipality",
         "x": 437.5857606205639,
         "y": 484.6764599058944,
@@ -1333,6 +1454,7 @@
     {
         "key": "municipality-ystad",
         "name": "ystad",
+        "county": "skåne",
         "type": "municipality",
         "x": 446.4162441216833,
         "y": 495.6268563167415,
@@ -1344,6 +1466,7 @@
     {
         "key": "municipality-trelleborg",
         "name": "trelleborg",
+        "county": "skåne",
         "type": "municipality",
         "x": 435.4317227762375,
         "y": 497.0001439253999,
@@ -1355,6 +1478,7 @@
     {
         "key": "municipality-kristianstad",
         "name": "kristianstad",
+        "county": "skåne",
         "type": "municipality",
         "x": 449.5669263417429,
         "y": 479.5388654022305,
@@ -1366,6 +1490,7 @@
     {
         "key": "municipality-simrishamn",
         "name": "simrishamn",
+        "county": "skåne",
         "type": "municipality",
         "x": 451.4208992127303,
         "y": 492.6876816626417,
@@ -1377,6 +1502,7 @@
     {
         "key": "municipality-ängelholm",
         "name": "ängelholm",
+        "county": "skåne",
         "type": "municipality",
         "x": 431.1236470875846,
         "y": 472.89878467603046,
@@ -1388,6 +1514,7 @@
     {
         "key": "municipality-hässleholm",
         "name": "hässleholm",
+        "county": "skåne",
         "type": "municipality",
         "x": 443.0940962025728,
         "y": 474.8712163588541,
@@ -1399,6 +1526,7 @@
     {
         "key": "municipality-hylte",
         "name": "hylte",
+        "county": "halland",
         "type": "municipality",
         "x": 435.72107114338576,
         "y": 451.2390425189319,
@@ -1410,6 +1538,7 @@
     {
         "key": "municipality-halmstad",
         "name": "halmstad",
+        "county": "halland",
         "type": "municipality",
         "x": 430.941464782343,
         "y": 458.1880419982714,
@@ -1421,6 +1550,7 @@
     {
         "key": "municipality-laholm",
         "name": "laholm",
+        "county": "halland",
         "type": "municipality",
         "x": 434.46722821907633,
         "y": 465.3093843935278,
@@ -1432,6 +1562,7 @@
     {
         "key": "municipality-falkenberg",
         "name": "falkenberg",
+        "county": "halland",
         "type": "municipality",
         "x": 427.17993600941475,
         "y": 449.54245797472265,
@@ -1443,6 +1574,7 @@
     {
         "key": "municipality-varberg",
         "name": "varberg",
+        "county": "halland",
         "type": "municipality",
         "x": 422.5610787412321,
         "y": 445.6089523336087,
@@ -1454,6 +1586,7 @@
     {
         "key": "municipality-kungsbacka",
         "name": "kungsbacka",
+        "county": "halland",
         "type": "municipality",
         "x": 417.6850229244733,
         "y": 436.81645972251874,
@@ -1465,6 +1598,7 @@
     {
         "key": "municipality-härryda",
         "name": "härryda",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 420.13912574213873,
         "y": 430.2398219479327,
@@ -1476,6 +1610,7 @@
     {
         "key": "municipality-partille",
         "name": "partille",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 417.24564207065544,
         "y": 428.46695445943124,
@@ -1487,6 +1622,7 @@
     {
         "key": "municipality-öckerö",
         "name": "öckerö",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 409.3260700957438,
         "y": 428.1705159892747,
@@ -1498,6 +1634,7 @@
     {
         "key": "municipality-stenungsund",
         "name": "stenungsund",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 413.5484129348713,
         "y": 418.017696137602,
@@ -1509,6 +1646,7 @@
     {
         "key": "municipality-tjörn",
         "name": "tjörn",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 409.18675421526495,
         "y": 419.61786220429883,
@@ -1520,6 +1658,7 @@
     {
         "key": "municipality-orust",
         "name": "orust",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 408.8009563924005,
         "y": 414.4478349449837,
@@ -1531,6 +1670,7 @@
     {
         "key": "municipality-sotenäs",
         "name": "sotenäs",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 404.52503052231964,
         "y": 406.80680375424333,
@@ -1542,6 +1682,7 @@
     {
         "key": "municipality-munkedal",
         "name": "munkedal",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 409.56183543193873,
         "y": 400.8685902014613,
@@ -1553,6 +1694,7 @@
     {
         "key": "municipality-tanum",
         "name": "tanum",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 405.7681568404384,
         "y": 398.21986189677216,
@@ -1564,6 +1706,7 @@
     {
         "key": "municipality-dals-ed",
         "name": "dals-ed",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 412.96971620057457,
         "y": 388.53254359691744,
@@ -1575,6 +1718,7 @@
     {
         "key": "municipality-färgelanda",
         "name": "färgelanda",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 415.2202035006171,
         "y": 400.48465746634986,
@@ -1586,6 +1730,7 @@
     {
         "key": "municipality-ale",
         "name": "ale",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 418.595934450681,
         "y": 421.0364561044363,
@@ -1597,6 +1742,7 @@
     {
         "key": "municipality-lerum",
         "name": "lerum",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 420.2570084102362,
         "y": 424.24635486954116,
@@ -1608,6 +1754,7 @@
     {
         "key": "municipality-vårgårda",
         "name": "vårgårda",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 427.4692843765631,
         "y": 420.5289838043211,
@@ -1619,6 +1766,7 @@
     {
         "key": "municipality-bollebygd",
         "name": "bollebygd",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 424.80084943508405,
         "y": 428.10248316175466,
@@ -1630,6 +1778,7 @@
     {
         "key": "municipality-grästorp",
         "name": "grästorp",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 425.5402952622409,
         "y": 409.9894650633564,
@@ -1641,6 +1790,7 @@
     {
         "key": "municipality-essunga",
         "name": "essunga",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 426.9334540670292,
         "y": 414.19306246033705,
@@ -1652,6 +1802,7 @@
     {
         "key": "municipality-karlsborg",
         "name": "karlsborg",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 455.803991144718,
         "y": 401.1315925877798,
@@ -1663,6 +1814,7 @@
     {
         "key": "municipality-gullspång",
         "name": "gullspång",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 450.895785509387,
         "y": 390.98119043468625,
@@ -1674,6 +1826,7 @@
     {
         "key": "municipality-tranemo",
         "name": "tranemo",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 438.60383820867844,
         "y": 435.2972617708415,
@@ -1685,6 +1838,7 @@
     {
         "key": "municipality-bengtsfors",
         "name": "bengtsfors",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 417.24564207065544,
         "y": 387.9148327726235,
@@ -1696,6 +1850,7 @@
     {
         "key": "municipality-mellerud",
         "name": "mellerud",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 421.7787664893126,
         "y": 398.0795024162022,
@@ -1707,6 +1862,7 @@
     {
         "key": "municipality-lilla edet",
         "name": "lilla edet",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 417.7386059554267,
         "y": 415.0658749636293,
@@ -1718,6 +1874,7 @@
     {
         "key": "municipality-mark",
         "name": "mark",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 425.17593065175777,
         "y": 436.83314411487174,
@@ -1729,6 +1886,7 @@
     {
         "key": "municipality-svenljunga",
         "name": "svenljunga",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 432.1202914633177,
         "y": 438.1181432883061,
@@ -1740,6 +1898,7 @@
     {
         "key": "municipality-herrljunga",
         "name": "herrljunga",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 433.2348185071483,
         "y": 419.6782127287745,
@@ -1751,6 +1910,7 @@
     {
         "key": "municipality-vara",
         "name": "vara",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 432.91332032142793,
         "y": 412.3034152524242,
@@ -1762,6 +1922,7 @@
     {
         "key": "municipality-götene",
         "name": "götene",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 439.1718183367843,
         "y": 402.28894693906716,
@@ -1773,6 +1934,7 @@
     {
         "key": "municipality-tibro",
         "name": "tibro",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 451.2601501198701,
         "y": 405.6614300943836,
@@ -1784,6 +1946,7 @@
     {
         "key": "municipality-töreboda",
         "name": "töreboda",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 450.3599551998531,
         "y": 398.7744970594903,
@@ -1795,6 +1958,7 @@
     {
         "key": "municipality-göteborg",
         "name": "göteborg",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 414.55577391679503,
         "y": 428.94428506903625,
@@ -1806,6 +1970,7 @@
     {
         "key": "municipality-mölndal",
         "name": "mölndal",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 417.04202655303254,
         "y": 431.9686499535636,
@@ -1817,6 +1982,7 @@
     {
         "key": "municipality-kungälv",
         "name": "kungälv",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 412.8411169262864,
         "y": 422.74101725249545,
@@ -1828,6 +1994,7 @@
     {
         "key": "municipality-lysekil",
         "name": "lysekil",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 407.01128315855715,
         "y": 409.3615718332678,
@@ -1839,6 +2006,7 @@
     {
         "key": "municipality-uddevalla",
         "name": "uddevalla",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 412.48746892199404,
         "y": 410.5836501607628,
@@ -1850,6 +2018,7 @@
     {
         "key": "municipality-strömstad",
         "name": "strömstad",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 403.26047099181955,
         "y": 389.2505253883588,
@@ -1861,6 +2030,7 @@
     {
         "key": "municipality-vänersborg",
         "name": "vänersborg",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 420.79283871977015,
         "y": 406.01654278353317,
@@ -1872,6 +2042,7 @@
     {
         "key": "municipality-trollhättan",
         "name": "trollhättan",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 420.76068890119814,
         "y": 413.42042679565066,
@@ -1883,6 +2054,7 @@
     {
         "key": "municipality-alingsås",
         "name": "alingsås",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 423.7613386345882,
         "y": 420.7497681621695,
@@ -1894,6 +2066,7 @@
     {
         "key": "municipality-borås",
         "name": "borås",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 430.75928247710146,
         "y": 428.1140945793535,
@@ -1905,6 +2078,7 @@
     {
         "key": "municipality-ulricehamn",
         "name": "ulricehamn",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 438.4430891158182,
         "y": 425.87039238624743,
@@ -1916,6 +2090,7 @@
     {
         "key": "municipality-åmål",
         "name": "åmål",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 424.6079505236518,
         "y": 388.38836652109353,
@@ -1927,6 +2102,7 @@
     {
         "key": "municipality-mariestad",
         "name": "mariestad",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 445.4731827769035,
         "y": 397.44616860973497,
@@ -1938,6 +2114,7 @@
     {
         "key": "municipality-lidköping",
         "name": "lidköping",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 431.2308131494914,
         "y": 403.8807017604238,
@@ -1949,6 +2126,7 @@
     {
         "key": "municipality-skara",
         "name": "skara",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 439.2039681553564,
         "y": 408.16118022428464,
@@ -1960,6 +2138,7 @@
     {
         "key": "municipality-skövde",
         "name": "skövde",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 445.8375473873866,
         "y": 406.5791259545184,
@@ -1971,6 +2150,7 @@
     {
         "key": "municipality-hjo",
         "name": "hjo",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 450.831485872243,
         "y": 411.4036298580253,
@@ -1982,6 +2162,7 @@
     {
         "key": "municipality-tidaholm",
         "name": "tidaholm",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 446.72702570121294,
         "y": 415.55843538756824,
@@ -1993,6 +2174,7 @@
     {
         "key": "municipality-falköping",
         "name": "falköping",
+        "county": "västra götaland",
         "type": "municipality",
         "x": 440.0720132568014,
         "y": 414.70372637278956,
@@ -2004,6 +2186,7 @@
     {
         "key": "municipality-kil",
         "name": "kil",
+        "county": "värmland",
         "type": "municipality",
         "x": 434.45651161288566,
         "y": 369.88506187872497,
@@ -2015,6 +2198,7 @@
     {
         "key": "municipality-eda",
         "name": "eda",
+        "county": "värmland",
         "type": "municipality",
         "x": 417.78147238018937,
         "y": 362.0156392611036,
@@ -2026,6 +2210,7 @@
     {
         "key": "municipality-torsby",
         "name": "torsby",
+        "county": "värmland",
         "type": "municipality",
         "x": 429.71977167660566,
         "y": 337.62268701060555,
@@ -2037,6 +2222,7 @@
     {
         "key": "municipality-storfors",
         "name": "storfors",
+        "county": "värmland",
         "type": "municipality",
         "x": 451.86028006654817,
         "y": 373.4166509340249,
@@ -2048,6 +2234,7 @@
     {
         "key": "municipality-hammarö",
         "name": "hammarö",
+        "county": "värmland",
         "type": "municipality",
         "x": 439.9434139825132,
         "y": 378.14637169189393,
@@ -2059,6 +2246,7 @@
     {
         "key": "municipality-munkfors",
         "name": "munkfors",
+        "county": "värmland",
         "type": "municipality",
         "x": 439.3968670667887,
         "y": 361.8355934448199,
@@ -2070,6 +2258,7 @@
     {
         "key": "municipality-forshaga",
         "name": "forshaga",
+        "county": "värmland",
         "type": "municipality",
         "x": 439.8898309515598,
         "y": 367.24466560582925,
@@ -2081,6 +2270,7 @@
     {
         "key": "municipality-grums",
         "name": "grums",
+        "county": "värmland",
         "type": "municipality",
         "x": 431.1986633309193,
         "y": 375.5894749350799,
@@ -2092,6 +2282,7 @@
     {
         "key": "municipality-årjäng",
         "name": "årjäng",
+        "county": "värmland",
         "type": "municipality",
         "x": 416.52762945587995,
         "y": 374.4519988548085,
@@ -2103,6 +2294,7 @@
     {
         "key": "municipality-sunne",
         "name": "sunne",
+        "county": "värmland",
         "type": "municipality",
         "x": 431.11293048139385,
         "y": 359.6084146875171,
@@ -2114,6 +2306,7 @@
     {
         "key": "municipality-karlstad",
         "name": "karlstad",
+        "county": "värmland",
         "type": "municipality",
         "x": 441.07937423872517,
         "y": 370.84220135966723,
@@ -2125,6 +2318,7 @@
     {
         "key": "municipality-kristinehamn",
         "name": "kristinehamn",
+        "county": "värmland",
         "type": "municipality",
         "x": 449.5990761603149,
         "y": 380.5935497977033,
@@ -2136,6 +2330,7 @@
     {
         "key": "municipality-filipstad",
         "name": "filipstad",
+        "county": "värmland",
         "type": "municipality",
         "x": 449.72767543460304,
         "y": 358.7639939724718,
@@ -2147,6 +2342,7 @@
     {
         "key": "municipality-hagfors",
         "name": "hagfors",
+        "county": "värmland",
         "type": "municipality",
         "x": 441.0793742387252,
         "y": 352.67905103700775,
@@ -2158,6 +2354,7 @@
     {
         "key": "municipality-arvika",
         "name": "arvika",
+        "county": "värmland",
         "type": "municipality",
         "x": 426.11899199653755,
         "y": 363.6772160010586,
@@ -2169,6 +2366,7 @@
     {
         "key": "municipality-säffle",
         "name": "säffle",
+        "county": "värmland",
         "type": "municipality",
         "x": 429.00175906183017,
         "y": 383.0116367027656,
@@ -2180,6 +2378,7 @@
     {
         "key": "municipality-lekeberg",
         "name": "lekeberg",
+        "county": "örebro",
         "type": "municipality",
         "x": 460.92652890386245,
         "y": 382.7500408324207,
@@ -2191,6 +2390,7 @@
     {
         "key": "municipality-laxå",
         "name": "laxå",
+        "county": "örebro",
         "type": "municipality",
         "x": 456.26480521091713,
         "y": 391.1187819404904,
@@ -2202,6 +2402,7 @@
     {
         "key": "municipality-hallsberg",
         "name": "hallsberg",
+        "county": "örebro",
         "type": "municipality",
         "x": 466.1562327249137,
         "y": 388.39184822777224,
@@ -2213,6 +2414,7 @@
     {
         "key": "municipality-degerfors",
         "name": "degerfors",
+        "county": "örebro",
         "type": "municipality",
         "x": 455.0216788927984,
         "y": 383.40898630153583,
@@ -2224,6 +2426,7 @@
     {
         "key": "municipality-hällefors",
         "name": "hällefors",
+        "county": "örebro",
         "type": "municipality",
         "x": 458.4081264490529,
         "y": 364.06673182258135,
@@ -2235,6 +2438,7 @@
     {
         "key": "municipality-ljusnarsberg",
         "name": "ljusnarsberg",
+        "county": "örebro",
         "type": "municipality",
         "x": 463.744996332011,
         "y": 357.66221813927166,
@@ -2246,6 +2450,7 @@
     {
         "key": "municipality-örebro",
         "name": "örebro",
+        "county": "örebro",
         "type": "municipality",
         "x": 468.4924528744817,
         "y": 381.06863568413905,
@@ -2257,6 +2462,7 @@
     {
         "key": "municipality-kumla",
         "name": "kumla",
+        "county": "örebro",
         "type": "municipality",
         "x": 466.59561357873156,
         "y": 384.21101901070244,
@@ -2268,6 +2474,7 @@
     {
         "key": "municipality-askersund",
         "name": "askersund",
+        "county": "örebro",
         "type": "municipality",
         "x": 464.01291148677797,
         "y": 392.7881406614755,
@@ -2279,6 +2486,7 @@
     {
         "key": "municipality-karlskoga",
         "name": "karlskoga",
+        "county": "örebro",
         "type": "municipality",
         "x": 456.97210121950195,
         "y": 375.7242579973491,
@@ -2290,6 +2498,7 @@
     {
         "key": "municipality-nora",
         "name": "nora",
+        "county": "örebro",
         "type": "municipality",
         "x": 462.46972019532024,
         "y": 370.6304206270747,
@@ -2301,6 +2510,7 @@
     {
         "key": "municipality-lindesberg",
         "name": "lindesberg",
+        "county": "örebro",
         "type": "municipality",
         "x": 469.37121458211743,
         "y": 365.58576003084886,
@@ -2312,6 +2522,7 @@
     {
         "key": "municipality-skinnskatteberg",
         "name": "skinnskatteberg",
+        "county": "västmanland",
         "type": "municipality",
         "x": 475.7475952655713,
         "y": 362.5434444923475,
@@ -2323,6 +2534,7 @@
     {
         "key": "municipality-surahammar",
         "name": "surahammar",
+        "county": "västmanland",
         "type": "municipality",
         "x": 482.52049037808035,
         "y": 363.22138031046336,
@@ -2334,6 +2546,7 @@
     {
         "key": "municipality-heby",
         "name": "heby",
+        "county": "uppsala",
         "type": "municipality",
         "x": 497.72735456265366,
         "y": 353.697784610943,
@@ -2345,6 +2558,7 @@
     {
         "key": "municipality-kungsör",
         "name": "kungsör",
+        "county": "västmanland",
         "type": "municipality",
         "x": 481.95251024997435,
         "y": 374.7118519618017,
@@ -2356,6 +2570,7 @@
     {
         "key": "municipality-hallstahammar",
         "name": "hallstahammar",
+        "county": "västmanland",
         "type": "municipality",
         "x": 484.2887303995424,
         "y": 369.4395489779549,
@@ -2367,6 +2582,7 @@
     {
         "key": "municipality-norberg",
         "name": "norberg",
+        "county": "västmanland",
         "type": "municipality",
         "x": 479.56270706945304,
         "y": 353.6055355825964,
@@ -2378,6 +2594,7 @@
     {
         "key": "municipality-västerås",
         "name": "västerås",
+        "county": "västmanland",
         "type": "municipality",
         "x": 490.17214719822505,
         "y": 367.06136432880714,
@@ -2389,6 +2606,7 @@
     {
         "key": "municipality-sala",
         "name": "sala",
+        "county": "västmanland",
         "type": "municipality",
         "x": 488.36104075200035,
         "y": 356.54911337160047,
@@ -2400,6 +2618,7 @@
     {
         "key": "municipality-fagersta",
         "name": "fagersta",
+        "county": "västmanland",
         "type": "municipality",
         "x": 478.99472694134704,
         "y": 357.6047777364705,
@@ -2411,6 +2630,7 @@
     {
         "key": "municipality-köping",
         "name": "köping",
+        "county": "västmanland",
         "type": "municipality",
         "x": 478.53391287514785,
         "y": 369.2580532110078,
@@ -2422,6 +2642,7 @@
     {
         "key": "municipality-arboga",
         "name": "arboga",
+        "county": "västmanland",
         "type": "municipality",
         "x": 477.2693533446477,
         "y": 375.17222705148185,
@@ -2433,6 +2654,7 @@
     {
         "key": "municipality-vansbro",
         "name": "vansbro",
+        "county": "dalarna",
         "type": "municipality",
         "x": 452.29966092036597,
         "y": 340.5714178602028,
@@ -2444,6 +2666,7 @@
     {
         "key": "municipality-malung-sälen",
         "name": "malung-sälen",
+        "county": "dalarna",
         "type": "municipality",
         "x": 437.1463797667461,
         "y": 327.2114303944909,
@@ -2455,6 +2678,7 @@
     {
         "key": "municipality-gagnef",
         "name": "gagnef",
+        "county": "dalarna",
         "type": "municipality",
         "x": 463.0912833543796,
         "y": 340.78834778247585,
@@ -2466,6 +2690,7 @@
     {
         "key": "municipality-leksand",
         "name": "leksand",
+        "county": "dalarna",
         "type": "municipality",
         "x": 464.4522923405958,
         "y": 332.00940098977867,
@@ -2477,6 +2702,7 @@
     {
         "key": "municipality-rättvik",
         "name": "rättvik",
+        "county": "dalarna",
         "type": "municipality",
         "x": 469.58554670593094,
         "y": 315.34114616313775,
@@ -2488,6 +2714,7 @@
     {
         "key": "municipality-orsa",
         "name": "orsa",
+        "county": "dalarna",
         "type": "municipality",
         "x": 459.14757227620976,
         "y": 310.8482415681277,
@@ -2499,6 +2726,7 @@
     {
         "key": "municipality-älvdalen",
         "name": "älvdalen",
+        "county": "dalarna",
         "type": "municipality",
         "x": 435.50673901957225,
         "y": 300.0669257384384,
@@ -2510,6 +2738,7 @@
     {
         "key": "municipality-smedjebacken",
         "name": "smedjebacken",
+        "county": "dalarna",
         "type": "municipality",
         "x": 471.72886794406674,
         "y": 353.63626158030047,
@@ -2521,6 +2750,7 @@
     {
         "key": "municipality-mora",
         "name": "mora",
+        "county": "dalarna",
         "type": "municipality",
         "x": 452.5890092875143,
         "y": 317.24269939542444,
@@ -2532,6 +2762,7 @@
     {
         "key": "municipality-falun",
         "name": "falun",
+        "county": "dalarna",
         "type": "municipality",
         "x": 477.9766493532326,
         "y": 330.73125659023424,
@@ -2543,6 +2774,7 @@
     {
         "key": "municipality-borlänge",
         "name": "borlänge",
+        "county": "dalarna",
         "type": "municipality",
         "x": 470.6786405373802,
         "y": 340.5620451254631,
@@ -2554,6 +2786,7 @@
     {
         "key": "municipality-säter",
         "name": "säter",
+        "county": "dalarna",
         "type": "municipality",
         "x": 475.37251404889753,
         "y": 342.3632049634799,
@@ -2565,6 +2798,7 @@
     {
         "key": "municipality-hedemora",
         "name": "hedemora",
+        "county": "dalarna",
         "type": "municipality",
         "x": 481.1594813918641,
         "y": 343.22585641307273,
@@ -2576,6 +2810,7 @@
     {
         "key": "municipality-avesta",
         "name": "avesta",
+        "county": "dalarna",
         "type": "municipality",
         "x": 486.8392826729239,
         "y": 348.47783370972763,
@@ -2587,6 +2822,7 @@
     {
         "key": "municipality-ludvika",
         "name": "ludvika",
+        "county": "dalarna",
         "type": "municipality",
         "x": 459.26545494430724,
         "y": 349.2182862650161,
@@ -2598,6 +2834,7 @@
     {
         "key": "municipality-ockelbo",
         "name": "ockelbo",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 489.6684667072631,
         "y": 325.09061790538374,
@@ -2609,6 +2846,7 @@
     {
         "key": "municipality-hofors",
         "name": "hofors",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 487.38582958864856,
         "y": 339.7424760486906,
@@ -2620,6 +2858,7 @@
     {
         "key": "municipality-ovanåker",
         "name": "ovanåker",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 476.7228064289231,
         "y": 311.4751062285833,
@@ -2631,6 +2870,7 @@
     {
         "key": "municipality-nordanstig",
         "name": "nordanstig",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 493.42999548019145,
         "y": 286.3555972962805,
@@ -2642,6 +2882,7 @@
     {
         "key": "municipality-ljusdal",
         "name": "ljusdal",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 473.4756747531474,
         "y": 290.62120113828144,
@@ -2653,6 +2894,7 @@
     {
         "key": "municipality-gävle",
         "name": "gävle",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 498.3596343279037,
         "y": 333.9273143458578,
@@ -2664,6 +2906,7 @@
     {
         "key": "municipality-sandviken",
         "name": "sandviken",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 490.49364538394536,
         "y": 339.5451857620476,
@@ -2675,6 +2918,7 @@
     {
         "key": "municipality-söderhamn",
         "name": "söderhamn",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 495.5411668997551,
         "y": 312.78733039947394,
@@ -2686,6 +2930,7 @@
     {
         "key": "municipality-bollnäs",
         "name": "bollnäs",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 486.2820191510086,
         "y": 311.3282188542423,
@@ -2697,6 +2942,7 @@
     {
         "key": "municipality-hudiksvall",
         "name": "hudiksvall",
+        "county": "gävleborg",
         "type": "municipality",
         "x": 493.33354602447525,
         "y": 293.4264275694551,
@@ -2708,6 +2954,7 @@
     {
         "key": "municipality-ånge",
         "name": "ånge",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 475.30821441175345,
         "y": 270.85081627291197,
@@ -2719,6 +2966,7 @@
     {
         "key": "municipality-timrå",
         "name": "timrå",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 503.06422444561167,
         "y": 265.1498078568385,
@@ -2730,6 +2978,7 @@
     {
         "key": "municipality-härnösand",
         "name": "härnösand",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 508.11174596142143,
         "y": 263.23205120773787,
@@ -2741,6 +2990,7 @@
     {
         "key": "municipality-sundsvall",
         "name": "sundsvall",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 496.24846290833995,
         "y": 268.5126020104965,
@@ -2752,6 +3002,7 @@
     {
         "key": "municipality-kramfors",
         "name": "kramfors",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 511.74467546006156,
         "y": 252.79714162058167,
@@ -2763,6 +3014,7 @@
     {
         "key": "municipality-sollefteå",
         "name": "sollefteå",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 495.7769322359501,
         "y": 236.0051277492513,
@@ -2774,6 +3026,7 @@
     {
         "key": "municipality-örnsköldsvik",
         "name": "örnsköldsvik",
+        "county": "västernorrland",
         "type": "municipality",
         "x": 517.4459099535027,
         "y": 232.36800646190443,
@@ -2785,6 +3038,7 @@
     {
         "key": "municipality-ragunda",
         "name": "ragunda",
+        "county": "jämtland",
         "type": "municipality",
         "x": 482.766972320466,
         "y": 246.14520797696287,
@@ -2796,6 +3050,7 @@
     {
         "key": "municipality-bräcke",
         "name": "bräcke",
+        "county": "jämtland",
         "type": "municipality",
         "x": 474.3758696731644,
         "y": 257.4120098047224,
@@ -2807,6 +3062,7 @@
     {
         "key": "municipality-krokom",
         "name": "krokom",
+        "county": "jämtland",
         "type": "municipality",
         "x": 450.69216999176416,
         "y": 222.32394597216296,
@@ -2818,6 +3074,7 @@
     {
         "key": "municipality-strömsund",
         "name": "strömsund",
+        "county": "jämtland",
         "type": "municipality",
         "x": 467.4850918925579,
         "y": 205.78446129439772,
@@ -2829,6 +3086,7 @@
     {
         "key": "municipality-åre",
         "name": "åre",
+        "county": "jämtland",
         "type": "municipality",
         "x": 434.0921470024026,
         "y": 233.94784588465575,
@@ -2840,6 +3098,7 @@
     {
         "key": "municipality-berg",
         "name": "berg",
+        "county": "jämtland",
         "type": "municipality",
         "x": 439.5147497348861,
         "y": 263.9061364005172,
@@ -2851,6 +3110,7 @@
     {
         "key": "municipality-härjedalen",
         "name": "härjedalen",
+        "county": "jämtland",
         "type": "municipality",
         "x": 443.4048777821025,
         "y": 281.7874449952275,
@@ -2862,6 +3122,7 @@
     {
         "key": "municipality-östersund",
         "name": "östersund",
+        "county": "jämtland",
         "type": "municipality",
         "x": 464.1843771858288,
         "y": 243.1154605474818,
@@ -2873,6 +3134,7 @@
     {
         "key": "municipality-nordmaling",
         "name": "nordmaling",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 534.8068119824025,
         "y": 228.16136374261384,
@@ -2884,6 +3146,7 @@
     {
         "key": "municipality-bjurholm",
         "name": "bjurholm",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 529.3949258561097,
         "y": 216.69079759963597,
@@ -2895,6 +3158,7 @@
     {
         "key": "municipality-vindeln",
         "name": "vindeln",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 538.9970050029578,
         "y": 200.1047174575432,
@@ -2906,6 +3170,7 @@
     {
         "key": "municipality-robertsfors",
         "name": "robertsfors",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 559.0584917919086,
         "y": 209.48150831509076,
@@ -2917,6 +3182,7 @@
     {
         "key": "municipality-norsjö",
         "name": "norsjö",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 537.8610447467458,
         "y": 179.845524627362,
@@ -2928,6 +3194,7 @@
     {
         "key": "municipality-malå",
         "name": "malå",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 526.6943410960586,
         "y": 167.37894906857116,
@@ -2939,6 +3206,7 @@
     {
         "key": "municipality-storuman",
         "name": "storuman",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 484.5780787666907,
         "y": 159.58891048890416,
@@ -2950,6 +3218,7 @@
     {
         "key": "municipality-sorsele",
         "name": "sorsele",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 491.2973908482463,
         "y": 149.24434009731817,
@@ -2961,6 +3230,7 @@
     {
         "key": "municipality-dorotea",
         "name": "dorotea",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 478.0838154151393,
         "y": 197.24857098543248,
@@ -2972,6 +3242,7 @@
     {
         "key": "municipality-vännäs",
         "name": "vännäs",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 541.129609634903,
         "y": 217.26344599892002,
@@ -2983,6 +3254,7 @@
     {
         "key": "municipality-vilhelmina",
         "name": "vilhelmina",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 481.11661496710144,
         "y": 180.5562139754228,
@@ -2994,6 +3266,7 @@
     {
         "key": "municipality-åsele",
         "name": "åsele",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 508.7976087576249,
         "y": 207.81414819524423,
@@ -3005,6 +3278,7 @@
     {
         "key": "municipality-umeå",
         "name": "umeå",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 550.0994090165012,
         "y": 216.66750204897596,
@@ -3016,6 +3290,7 @@
     {
         "key": "municipality-lycksele",
         "name": "lycksele",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 520.0607618640283,
         "y": 190.32989027588098,
@@ -3027,6 +3302,7 @@
     {
         "key": "municipality-skellefteå",
         "name": "skellefteå",
+        "county": "västerbotten",
         "type": "municipality",
         "x": 554.2467356122938,
         "y": 183.31487997214674,
@@ -3038,6 +3314,7 @@
     {
         "key": "municipality-arvidsjaur",
         "name": "arvidsjaur",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 533.4243697838049,
         "y": 150.95906106120435,
@@ -3049,6 +3326,7 @@
     {
         "key": "municipality-arjeplog",
         "name": "arjeplog",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 500.8244537517598,
         "y": 121.60675529440323,
@@ -3060,6 +3338,7 @@
     {
         "key": "municipality-jokkmokk",
         "name": "jokkmokk",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 525.3118988974611,
         "y": 98.9992962018797,
@@ -3071,6 +3350,7 @@
     {
         "key": "municipality-överkalix",
         "name": "överkalix",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 589.4722201610552,
         "y": 117.43720203173154,
@@ -3082,6 +3362,7 @@
     {
         "key": "municipality-kalix",
         "name": "kalix",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 595.4306532030728,
         "y": 138.76960203570923,
@@ -3093,6 +3374,7 @@
     {
         "key": "municipality-övertorneå",
         "name": "övertorneå",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 604.764817195154,
         "y": 116.43141749796973,
@@ -3104,6 +3386,7 @@
     {
         "key": "municipality-pajala",
         "name": "pajala",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 594.0267777920938,
         "y": 78.24362053990603,
@@ -3115,6 +3398,7 @@
     {
         "key": "municipality-gällivare",
         "name": "gällivare",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 538.0753768705595,
         "y": 87.41266412820846,
@@ -3126,6 +3410,7 @@
     {
         "key": "municipality-älvsbyn",
         "name": "älvsbyn",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 558.8012932433323,
         "y": 147.02676884827633,
@@ -3137,6 +3422,7 @@
     {
         "key": "municipality-luleå",
         "name": "luleå",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 579.3771771294357,
         "y": 143.06677107796713,
@@ -3148,6 +3434,7 @@
     {
         "key": "municipality-piteå",
         "name": "piteå",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 559.3907065838198,
         "y": 162.53312275831934,
@@ -3159,6 +3446,7 @@
     {
         "key": "municipality-boden",
         "name": "boden",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 567.2031124968246,
         "y": 135.5155509201685,
@@ -3170,6 +3458,7 @@
     {
         "key": "municipality-haparanda",
         "name": "haparanda",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 608.2369976009339,
         "y": 138.4064684541936,
@@ -3181,6 +3470,7 @@
     {
         "key": "municipality-kiruna",
         "name": "kiruna",
+        "county": "norrbotten",
         "type": "municipality",
         "x": 556.7008384299593,
         "y": 43.487473575955164,

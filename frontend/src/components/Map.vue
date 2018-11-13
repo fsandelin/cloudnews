@@ -24,19 +24,63 @@
           v-show="county.active"
           v-bind:d="county.path"
           v-bind:name="county.name"
-          @mouseover="countyMouseover(county)">
+          v-on:click="countyClick(county)">
         </path>
         <circle
-          class="notification"
-          v-bind:key="'notification'+newsItem.id"
-          v-for="newsItem in newsList"
-          v-bind:cx="getLocationOfName(newsItem.locationName).x+'px'"
-          v-bind:cy="getLocationOfName(newsItem.locationName).y+'px'"
-          v-bind:r="'6px'">
+          class="municipality-notification"
+          v-for="[name, news] of municipalityNews"
+          v-bind:key="'newsNotification'+name"
+          v-bind:cx="munX(name)+'px'"
+          v-bind:cy="munY(name)+'px'"
+          v-bind:r="(4+news.length)+'px'">
         </circle>
+        <transition-group name="fade" tag="g">
+        <text
+          class="municipality-notification"
+          v-for="[name, news] of municipalityNews"
+          v-bind:key="'newsNotificationText'+name+news.id"
+          v-show="getMunicipalityByName(name).active"
+          v-bind:x="getMunicipalityByName(name).x+'px'"
+          v-bind:y="getMunicipalityByName(name).y+'px'" 
+          v-bind:font-size="(6+news.length)+'px'">
+          {{news.length}}
+        </text>
+        </transition-group>
+        <circle
+          class="county-notification"
+          v-for="[name, news] of countyNews"
+          v-bind:key="'countyNewsNotification'+name"
+          v-show="getCountyByName(name).active"
+          v-bind:cx="getCountyByName(name).x+'px'"
+          v-bind:cy="getCountyByName(name).y+'px'"
+          v-bind:r="(4+news.length)+'px'">
+        </circle>
+        <text
+          class="county-notification"
+          v-for="[name, news] of countyNews"
+          v-bind:key="'countyNewsNotificationText'+name"
+          v-show="getCountyByName(name).active"
+          v-bind:x="getCountyByName(name).x+'px'"
+          v-bind:y="getCountyByName(name).y+'px'" 
+          v-bind:font-size="(6+news.length)+'px'">
+          {{news.length}}
+        </text>
       </g>
     </svg>
 </template>
+
+
+<script>
+export default {
+
+}
+
+</script>
+
+<style>
+
+</style>
+
 
 <script>
 import * as d3 from "d3";
@@ -44,6 +88,7 @@ import * as topojson from "topojson";
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import europeCountries from '../assets/europe-countries-meta-info.json';
+import * as Velocity from "velocity-animate";
 
 
 export default {
@@ -54,7 +99,11 @@ export default {
       countries: [],
       counties: [],
       municipalities: [],
-      cities: []
+      cities: [],
+      countryNews: [],
+      countyNews: [],
+      municipalityNews: [],
+      cityNews: []
     }
   },
   mounted: function() {
@@ -79,7 +128,7 @@ export default {
     d3.select(".mapContainer").call(zoom.translateTo, 490,255);
     d3.select(".mapContainer").call(zoom.scaleTo, 0.9*SIZE);
 
-    swedishMunicipalities.map(x => x.active = true);
+    swedishMunicipalities.map(x => x.active = false);
     this.municipalities = this.municipalities.concat(swedishMunicipalities);
 
     swedishCounties.map(x => x.active = true);
@@ -87,25 +136,81 @@ export default {
   
     europeCountries.map(x => x.active = true);
     this.countries = this.countries.concat(europeCountries);
+
+    this.calculateNewsList();
+    console.log(this.municipalityNews);
   },
   methods: {
-    countyMouseover: function(mouseoverCounty) {
-      this.counties.map(county => county.active = !(county.name === mouseoverCounty.name));
+    munX: function(name) {
+      const municipality = this.getMunicipalityByName(name);
+      const county = this.getCountyByName(municipality.county);
+      return county.active ? county.x : municipality.x;
     },
-    getLocationOfName: function(name) {
-      for (const county of this.counties) {
-        if(name.toLowerCase() === county.name) {
-          return {
-            x: county.x,
-            y: county.y
-          };
+    munY: function(name) {
+      const municipality = this.getMunicipalityByName(name);
+      const county = this.getCountyByName(municipality.county);
+      return county.active ? county.y : municipality.y;
+    },
+    calculateNewsList: function() {
+      for (const news of this.newsList) {
+        if (news.location.city !== null && news.location.city !== "") {
+          //City news
+
+        } else if (news.location.municipality !== null && news.location.municipality !== "") {
+          //Municipality news
+          const municipality = this.getMunicipalityByName(news.location.municipality);
+          let found = false;
+          let newsForMunicipality = [municipality.name, []];
+          
+          for (let mNews of this.municipalityNews) {
+            if (mNews[0] === municipality.name) {
+              newsForMunicipality = mNews;
+              found = true;
+            }
+          }
+          newsForMunicipality[1].push(news);
+          if (!found) {
+            this.municipalityNews.push(newsForMunicipality);
+          }
+
+          found = false;
+          let newsForCounty = [municipality.county, []];
+          for (let cNews of this.countyNews) {
+            if (cNews[0] === municipality.county) {
+              newsForCounty = cNews;
+              found = true;
+            }
+          }
+          newsForCounty[1].push(news);
+          if(!found) {
+            this.countyNews.push(newsForCounty);
+          }
+        } else if (news.location.county !== null && news.location.county !== "") {
+          //County news
+          
+        } else if (news.location.country !== null && news.location.country !== "") {
+          //Country news
+
         }
       }
-
-      return {
-        x: 0,
-        y: 0
+    },
+    getCountyByName: function(name) {
+      for (const county of this.counties) {
+        if(name.toLowerCase() === county.name) {
+          return county;
+        }
       }
+    },
+    getMunicipalityByName: function(name) {
+      for (const municipality of this.municipalities) {
+        if(name.toLowerCase() === municipality.name) {
+          return municipality;
+        }
+      }
+    },
+    countyClick: function(mouseoverCounty) {
+      this.counties.map(county => county.active = !(county.name === mouseoverCounty.name));
+      this.municipalities.map(municipality => municipality.active = (municipality.county === mouseoverCounty.name));
     }
   }
 }
