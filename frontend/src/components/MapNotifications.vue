@@ -2,42 +2,42 @@
   <g id="mapNotifications">
     <circle
       class="circle-municipality"
-      v-for="[metaData, news] of municipalityNews"
-      v-bind:key="'newsNotification'+metaData.municipality.name"
-      v-bind:cx="metaData.county.active ? metaData.county.x : metaData.municipality.x +'px'"
-      v-bind:cy="metaData.county.active ? metaData.county.y : metaData.municipality.y +'px'"
+      v-for="{municipality, county, news} of municipalityNews"
+      v-bind:key="'newsNotification'+municipality.name"
+      v-bind:cx="county.active ? county.x : municipality.x +'px'"
+      v-bind:cy="county.active ? county.y : municipality.y +'px'"
       v-bind:r="circleSize(news.length)+'px'">
     </circle>
     <circle
       class="circle-county"
-      v-for="[metaData, news] of countyNews"
-      v-bind:key="'countyNewsNotification'+metaData.county.name"
-      v-show="metaData.county.active"
-      v-bind:cx="metaData.county.x+'px'"
-      v-bind:cy="metaData.county.y+'px'"
+      v-for="{county, news} of countyNews"
+      v-bind:key="'countyNewsNotification'+county.name"
+      v-show="county.active"
+      v-bind:cx="county.x+'px'"
+      v-bind:cy="county.y+'px'"
       v-bind:r="circleSize(news.length)+'px'">
     </circle>
     <transition-group name="fade" tag="g">
     <text
       class="circle-number"
-      v-for="[metaData, news] of municipalityNews"
-      v-bind:key="'newsNotificationText'+metaData.municipality.name+news.id"
-      v-show="metaData.municipality.active"
+      v-for="{municipality, news} of municipalityNews"
+      v-bind:key="'newsNotificationText'+municipality.name+news.id"
+      v-show="municipality.active"
       text-anchor="middle"
-      v-bind:x="metaData.municipality.x+'px'"
-      v-bind:y="metaData.municipality.y+'px'"
+      v-bind:x="municipality.x+'px'"
+      v-bind:y="municipality.y+'px'"
       v-bind:dy="yOffset(news.length)+'px'"
       v-bind:font-size="fontSize(news.length)+'px'">
       {{news.length}}
     </text>
     <text
       class="circle-number"
-      v-for="[metaData, news] of countyNews"
-      v-bind:key="'countyNewsNotificationText'+metaData.county.name"
-      v-show="metaData.county.active"
+      v-for="{county, news} of countyNews"
+      v-bind:key="'countyNewsNotificationText'+county.name"
+      v-show="county.active"
       text-anchor="middle"
-      v-bind:x="metaData.county.x+'px'"
-      v-bind:y="metaData.county.y+'px'"
+      v-bind:x="county.x+'px'"
+      v-bind:y="county.y+'px'"
       v-bind:dy="yOffset(news.length)+'px'"
       v-bind:font-size="fontSize(news.length)+'px'">
       {{news.length}}

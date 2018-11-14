@@ -71,13 +71,13 @@ export default {
       for (const news of this.newsList) {
         const municipality = this.getMunicipalityByName(news.location.municipality);
         const county = this.getCountyByName(municipality.county);
-        const newsMetaData = {
+        const newsData = {
           municipality: municipality,
           county: county
         }
-
-        this.addMunicipalityNews({ news, newsMetaData });
-        this.addCountyNews({ news, newsMetaData });
+        this.addCountyNews({ news, newsData });
+        this.addMunicipalityNews({ news, newsData });
+        
       }
     },
   },
