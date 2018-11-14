@@ -80,11 +80,9 @@ export default {
   methods: {
     ...mapActions([
       'closeDrawer',
-      'selectCounty',
       'setActiveNewsItemId',
       'addCountyNews',
-      'addMunicipalityNews',
-      'countyClick'
+      'addMunicipalityNews'
     ]),
     calculateNewsList: function() {
       for (const news of this.newsList) {
