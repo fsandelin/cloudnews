@@ -1,7 +1,7 @@
 <template>
   <div
     id="drawerhandle"
-    class="top-shadow flex-centering">
+    class="flex-centering">
     <div>
       <img
         v-bind:class="{ open: isOpen, closed: !isOpen }"
