@@ -16,20 +16,33 @@ export default new Vuex.Store({
     countyNews: [],
     municipalityNews: [],
     newsList: fakeNewsList,
-    activeNewsItemId: "a",
-    selectedCounty: "a"
+    activeNewsItemId: null,
+    selectedCounty: null
   },
   mutations: {
-    closeDrawer2(state) {
+    closeDrawer(state) {
       state.activeNewsItemId = null
       state.selectedCounty = null
-    }
+    },
+    selectCounty(state, county) {
+      state.selectedCounty = county
+    },
+    setActiveNewsItemId(state, id) {
+      state.activeNewsItemId = id
+    },
   },
   actions: {
-    closeDrawer2: ({ commit }) => commit('closeDrawer2'),
+    closeDrawer: ({ commit }) => commit('closeDrawer'),
+    selectCounty: ({ commit }, county) => commit('selectCounty', county),
+    setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
   },
-  getter: {
-
+  getters: {
+    activeNewsItemId: state => {
+      return state.activeNewsItemId
+    },
+    selectedCounty: state => {
+      return state.selectedCounty
+    },
   },
   strict: true
 })

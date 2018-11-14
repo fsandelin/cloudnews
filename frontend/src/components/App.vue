@@ -57,7 +57,7 @@ import { fakeNewsList } from '../assets/FakeData'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'app',
@@ -69,8 +69,6 @@ export default {
       countyNews: [],
       municipalityNews: [],
       newsList: fakeNewsList,
-      activeNewsItemId: null,
-      selectedCounty: null,
       dynamicComponents: {
         activeNewsItemComponent: 'activenewsitem',
         newsListComponent: 'newslist',
@@ -79,6 +77,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['activeNewsItemId', 'selectedCounty']),
     getNewsItemByActiveId: function() {
       const newsItem = this.newsList.find(item => item.id === this.activeNewsItemId)
       return newsItem !== undefined && 'id' in newsItem ? newsItem : null;
@@ -88,7 +87,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["closeDrawer2"]), 
+    ...mapActions(['closeDrawer', 'selectCounty', 'setActiveNewsItemId']),
     toggleHover: function(news) {
       news.hover = !news.hover
     },
@@ -96,13 +95,8 @@ export default {
       if (news.id === this.activeNewsItemId) {
         this.closeDrawer()
       } else {
-        this.activeNewsItemId = news.id
+        this.setActiveNewsItemId(news.id)
       }
-    },
-    closeDrawer: function() {
-      this.activeNewsItemId = null
-      this.selectedCounty = null
-      this.closeDrawer2();
     },
     countyClick: function(mouseoverCounty) {
       this.counties = this.counties.map(county => ({
@@ -142,8 +136,8 @@ export default {
           _newsList ]
       })
 
-      this.activeNewsItemId = null
-      this.selectedCounty = mouseoverCounty.name
+      this.setActiveNewsItemId(null)
+      this.selectCounty(mouseoverCounty.name)
 
     },
     getMunicipalityByName: function(name) {
