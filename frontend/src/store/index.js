@@ -130,6 +130,10 @@ export default new Vuex.Store({
     activeNewsItemId: state => {
       return state.activeNewsItemId
     },
+    activeNewsItem: state => {
+      const newsItem = state.newsList.find(item => item.id === state.activeNewsItemId)
+      return newsItem !== undefined && 'id' in newsItem ? newsItem : null;
+    },
     selectedCounty: state => {
       return state.selectedCounty
     },

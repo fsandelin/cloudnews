@@ -1,24 +1,27 @@
 <template>
   <div id="active-news-item">
     <p class="title flex-centering">
-      {{ getNewsItemByActiveId.title }}
+      {{ activeNewsItem.title }}
     </p>
     <p class="text flex-centering">
-      {{ getNewsItemByActiveId.text }}
+      {{ activeNewsItem.text }}
     </p>
     <p class="text flex-centering">
-      {{ getNewsItemByActiveId.url }}
+      {{ activeNewsItem.url }}
     </p>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
-  name: 'activenewsitem',
-  props: ['getNewsItemByActiveId'],
+  name: 'drawernewsitem',
+  computed: {
+    ...mapGetters(['activeNewsItem'])
+  }
 }
 </script>
 
-<style src="../styles/ActiveNewsItem.scss" lang="scss" scoped></style>
+<style src="../styles/DrawerNewsItem.scss" lang="scss" scoped></style>
 <style src="../styles/Commons.scss" lang="scss" scoped></style>

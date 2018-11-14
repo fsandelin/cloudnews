@@ -16,13 +16,12 @@
       v-bind:isOpen="drawerIsOpen"
       v-bind:closeDrawer="closeDrawer">
       <component
-        v-if="getNewsItemByActiveId !== null"
-        v-bind:getNewsItemByActiveId="getNewsItemByActiveId"
-        v-bind:is="dynamicComponents.activeNewsItemComponent">
+        v-if="activeNewsItem !== null"
+        v-bind:is="dynamicComponents.drawerNewsItemComponent">
       </component>
 
       <component
-        v-if="selectedCounty !== null && getNewsItemByActiveId === null"
+        v-if="selectedCounty !== null && this.activeNewsItem === null"
         v-bind:selectedCounty="selectedCounty"
         v-bind:newsList="newsList"
         v-bind:activeNewsItemId="activeNewsItemId"
@@ -37,7 +36,7 @@
 
 <script>
 import Main from './Main'
-import ActiveNewsItem from './ActiveNewsItem'
+import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
@@ -48,7 +47,7 @@ export default {
   data () {
     return {
       dynamicComponents: {
-        activeNewsItemComponent: 'activenewsitem',
+        drawerNewsItemComponent: 'drawernewsitem',
         newsListComponent: 'newslist',
         drawerNewsList: 'drawernewslist'
       },
@@ -59,6 +58,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'activeNewsItem',
       'activeNewsItemId',
       'selectedCounty',
       'newsList',
@@ -67,10 +67,6 @@ export default {
       'getMunicipalityByName',
       'getCountyByName'
     ]),
-    getNewsItemByActiveId: function() {
-      const newsItem = this.newsList.find(item => item.id === this.activeNewsItemId)
-      return newsItem !== undefined && 'id' in newsItem ? newsItem : null;
-    },
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
     }
@@ -105,7 +101,7 @@ export default {
   },
   components: {
     'mainsection': Main,
-    'activenewsitem': ActiveNewsItem,
+    'drawernewsitem': DrawerNewsItem,
     'newssidebar': NewsSideBar,
     'drawer': Drawer,
     'drawernewslist': DrawerNewsList
