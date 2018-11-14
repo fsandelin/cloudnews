@@ -57,6 +57,7 @@ import { fakeNewsList } from '../assets/FakeData'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'app',
@@ -87,6 +88,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["closeDrawer2"]), 
     toggleHover: function(news) {
       news.hover = !news.hover
     },
@@ -100,6 +102,7 @@ export default {
     closeDrawer: function() {
       this.activeNewsItemId = null
       this.selectedCounty = null
+      this.closeDrawer2();
     },
     countyClick: function(mouseoverCounty) {
       this.counties = this.counties.map(county => ({
