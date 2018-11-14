@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <newssidebar
-      v-bind:toggleActive="toggleActive"
       v-bind:showFilter="true"
     ></newssidebar>
 
@@ -17,7 +16,6 @@
 
       <component
         v-if="selectedCounty !== null && this.activeNewsItem === null"
-        v-bind:toggleActive="toggleActive"
         v-bind:showFilter="false"
         v-bind:is="dynamicComponents.drawerNewsList">
       </component>
@@ -82,13 +80,6 @@ export default {
         this.addCountyNews({ news, newsMetaData })
       }
     },
-    toggleActive: function(news) {
-      if (news.id === this.activeNewsItemId) {
-        this.closeDrawer()
-      } else {
-        this.setActiveNewsItemId(news.id)
-      }
-    }
   },
   components: {
     'mainsection': Main,

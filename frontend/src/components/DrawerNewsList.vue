@@ -6,8 +6,7 @@
     <div class="news-list">
       <newslist
         v-bind:filteredNewsList="filteredNewsList"
-        v-bind:showFilter="showFilter"
-        v-bind:toggleActive="toggleActive">
+        v-bind:showFilter="showFilter">
       </newslist>
     </div>
   </div>
@@ -19,7 +18,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'drawernewslist',
-  props: ['showFilter', 'toggleActive'],
+  props: ['showFilter'],
   computed: {
     ...mapGetters([
       'selectedCounty',

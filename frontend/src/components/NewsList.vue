@@ -4,7 +4,6 @@
         v-for="news in (filteredNewsList ? filteredNewsList : newsList)"
         v-bind:news="news"
         v-bind:key="news.id"
-        v-bind:toggleActive="toggleActive"
         v-bind:showFilter="showFilter"
       >
       </newslistitem>
@@ -17,7 +16,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'newslist',
-  props: ['filteredNewsList', 'showFilter', 'toggleActive'],
+  props: ['filteredNewsList', 'showFilter'],
   computed: {
     ...mapGetters([
       'newsList',

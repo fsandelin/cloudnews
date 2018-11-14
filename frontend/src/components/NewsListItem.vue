@@ -24,7 +24,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'newslistitem',
-  props: ['showFilter', 'news', 'toggleActive'],
+  props: ['showFilter', 'news'],
   data () {
     return {
       hover: false
@@ -43,6 +43,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'toggleActive'
+    ]),
     toggleHover: function () {
       this.hover = !this.hover
     }

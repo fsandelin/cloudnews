@@ -4,7 +4,6 @@
         NEWS
       </div>
       <newslist
-        v-bind:toggleActive="toggleActive"
         v-bind:showFilter="showFilter"
       >
       </newslist>
@@ -16,7 +15,7 @@ import NewsList from './NewsList'
 
 export default {
   name: 'sidebar',
-  props: ['showFilter', 'toggleActive'],
+  props: ['showFilter'],
   components: {
     'newslist': NewsList
   }

@@ -20,6 +20,10 @@ export default new Vuex.Store({
     selectedCounty: null
   },
   mutations: {
+    toggleActive(state, news) {
+      state.activeNewsItemId = null
+      state.selectedCounty = null
+    },
     closeDrawer(state) {
       state.activeNewsItemId = null
       state.selectedCounty = null
@@ -98,12 +102,16 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    toggleActive: ({ state, dispatch }, news) => {
+      if (news.id === state.activeNewsItemId) dispatch('closeDrawer')
+      else dispatch('setActiveNewsItemId', news.id)
+    },
     closeDrawer: ({ commit }) => commit('closeDrawer'),
     selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
     setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
     addCountyNews: ({ commit }, { news, newsMetaData }) => commit('addCountyNews', { news, newsMetaData }),
     addMunicipalityNews: ({ commit }, { news, newsMetaData }) => commit('addMunicipalityNews', { news, newsMetaData }),
-    countyClick: function({ dispatch }, county) {
+    countyClick: ({ dispatch }, county) => {
       dispatch("selectCounty", county.name);
       dispatch("setActiveNewsItemId", null);
     }
