@@ -1,10 +1,20 @@
 @import 'variables.scss';
+@import 'reset.scss';
+
+.fade-enter-active {
+  transition: opacity .9s;
+}
+
+.fade-enter {
+  opacity: 0;
+}
 
 svg.mapContainer {
   overflow: hidden;
   background-color: $white;
   width:100%;
   height:100%;
+  background-color: $white;
 }
 
 svg.mapContainer g.map {
@@ -12,6 +22,13 @@ svg.mapContainer g.map {
   display: block;
 }
 
+svg.mapContainer g.map path.country {
+  stroke: $white;
+  stroke-width: 0.5px;
+  stroke-opacity: 1;
+  fill: black;
+  fill-opacity: 0.3;
+}
 svg.mapContainer g.map path.county {
   stroke: $white;
   stroke-width: 0.5px;
@@ -29,11 +46,39 @@ svg.mapContainer g.map path.municipality {
 }
 
 svg.mapContainer g.map path.county:hover {
-  fill: $white;
-  fill-opacity: 0.1;
+  fill: $darkblue;
 }
 
 svg.mapContainer g.map path.municipality:hover {
+  fill: $lightblue;
+}
+
+svg.mapContainer g.map circle.circle-municipality {
+  fill: $red;
+  transition: 0.4s;
+}
+
+svg.mapContainer g.map circle.circle-county {
+  fill: $red;
+}
+
+svg.mapContainer g.map circle.circle-municipality:hover {
+  fill: yellow;
+  transition: 0s;
+}
+
+svg.mapContainer g.map circle.circle-county:hover {
+  fill: yellow;
+}
+
+svg.mapContainer g.map .circle-number {
   fill: $white;
-  fill-opacity: 0.8;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  pointer-events: none;
+  border-radius: 12px;
+  background-color: red;
 }

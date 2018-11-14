@@ -1,7 +1,6 @@
 <template>
   <div
     id="drawer"
-    v-bind:class="{ open: isOpen, closed: !isOpen }"
     class="bottom-shadow full-shadow flex-centering">
     <slot></slot>
     <drawerhandle

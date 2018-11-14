@@ -7,7 +7,9 @@
         v-bind:activeNewsItemId="activeNewsItemId"
         v-bind:toggleHover="toggleHover"
         v-bind:toggleActive="toggleActive"
-        v-bind:selectedRegion="selectedRegion"
+        v-bind:getMunicipalityByName="getMunicipalityByName"
+        v-bind:selectedCounty="selectedCounty"
+        v-bind:showFilter="showFilter"
       >
       </newslistitem>
     </ul>
@@ -17,17 +19,17 @@
 import NewsListItem from './NewsListItem'
 
 export default {
-  name: 'sidebar',
-  props: ['newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive', 'selectedRegion'],
-  data () {
-    return {
-      componentNewsList: this.newsList.map(news => ({
+  name: 'newslist',
+  props: ['newsList', 'showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'toggleHover', 'toggleActive', 'selectedCounty'],
+  computed: {
+    componentNewsList: function () {
+      return this.newsList.map(news => ({
           ...news, hover: false }))
     }
   },
   components: {
     'newslistitem': NewsListItem
-  }
+  },
 }
 </script>
 

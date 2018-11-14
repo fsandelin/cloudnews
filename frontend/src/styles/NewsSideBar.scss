@@ -6,11 +6,11 @@
   display: flex;
   z-index: 1;
   flex-direction: column;
-}
 
-.header {
-  height: 100px;
-  background-color: $darkblue;
-  color: $white;
-  padding: 10px;
+  .header {
+    height: 100px;
+    background-color: $darkblue;
+    color: $white;
+    padding: 10px;
+  }
 }

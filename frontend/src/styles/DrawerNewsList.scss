@@ -2,10 +2,18 @@
 @import 'reset.scss';
 
 #drawer-news-list {
+  display: flex;
+  flex-direction: column;
+
   .title {
     color: $darkgrey;
     font-size: 20px;
     font-weight: bold;
     padding: 15px 0;
+  }
+
+  .news-list {
+    flex: 1;
+    overflow-y: scroll;
   }
 }

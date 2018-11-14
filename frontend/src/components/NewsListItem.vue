@@ -6,7 +6,7 @@
     v-bind:class="{ hover: news.hover && news.id !== activeNewsItemId,
                     active: news.id === activeNewsItemId,
                     'bottom-shadow': news.hover,
-                    filter: news.region === selectedRegion }"
+                    filter: this.applyFilter }"
     class="news-item flex-centering light-border-bottom"
     v-bind:key="news.id"
     >
@@ -22,7 +22,14 @@
 <script>
 export default {
   name: 'newslistitem',
-  props: ['activeNewsItemId', 'news', 'toggleHover', 'toggleActive', 'selectedRegion'],
+  props: ['showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'news', 'toggleHover', 'toggleActive', 'selectedCounty'],
+  computed: {
+    applyFilter: function () {
+      const municipality = this.getMunicipalityByName(this.news.location.municipality)
+      const countyName = municipality !== null ? municipality.county : null
+      return this.showFilter && countyName === this.selectedCounty
+    }
+  }
 }
 </script>
 

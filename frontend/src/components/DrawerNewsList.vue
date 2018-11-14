@@ -1,14 +1,19 @@
 <template>
   <div id="drawer-news-list">
     <div class="title light-border-bottom">
-      {{ selectedRegion }}
+      {{ selectedCounty }}
     </div>
-    <newslist
-      v-bind:newsList="filteredNewsList"
-      v-bind:activeNewsItemId="activeNewsItemId"
-      v-bind:toggleHover="toggleHover"
-      v-bind:toggleActive="toggleActive">
-    </newslist>
+    <div class="news-list">
+      <newslist
+        v-bind:newsList="filteredNewsList"
+        v-bind:activeNewsItemId="activeNewsItemId"
+        v-bind:toggleHover="toggleHover"
+        v-bind:selectedCounty="selectedCounty"
+        v-bind:getMunicipalityByName="getMunicipalityByName"
+        v-bind:showFilter="showFilter"
+        v-bind:toggleActive="toggleActive">
+      </newslist>
+    </div>
   </div>
 </template>
 
@@ -17,15 +22,19 @@ import NewsList from './NewsList'
 
 export default {
   name: 'drawernewslist',
-  props: ['selectedRegion', 'newsList', 'activeNewsItemId', 'toggleHover', 'toggleActive'],
-  data () {
-    return {
-      filteredNewsList: this.newsList.filter(news => news.region === this.selectedRegion)
+  props: ['selectedCounty', 'showFilter', 'newsList', 'activeNewsItemId', 'getMunicipalityByName', 'toggleHover', 'toggleActive', 'getMunicipalityByName'],
+  computed: {
+    filteredNewsList: function () {
+      return this.newsList.filter(news => {
+        const municipality = this.getMunicipalityByName(news.location.municipality)
+        const countyName = municipality !== null ? municipality.county : null
+        return countyName === this.selectedCounty
+      })
     }
   },
   components: {
     'newslist': NewsList,
-  }
+  },
 }
 </script>
 
