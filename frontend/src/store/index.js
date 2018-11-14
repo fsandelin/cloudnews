@@ -161,5 +161,5 @@ export default new Vuex.Store({
       return state.municipalities.find(municipality => municipality.name.toLowerCase().trim() === name.toLowerCase().trim());
     }
   },
-  strict: true
+  strict: process.env.NODE_ENV !== 'production'
 })
