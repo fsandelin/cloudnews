@@ -53,22 +53,12 @@ import ActiveNewsItem from './ActiveNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
-import { fakeNewsList } from '../assets/FakeData'
-import europeCountries from '../assets/europe-countries-meta-info.json';
-import swedishCounties from '../assets/sweden-counties-meta-info.json';
-import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'app',
   data () {
     return {
-      counties: swedishCounties.map(x => ({ ...x, active: true })),
-      municipalities: swedishMunicipalities.map(x => ({ ...x, active: false })),
-      countries: europeCountries.map(x => ({ ...x, active: true })),
-      countyNews: [],
-      municipalityNews: [],
-      newsList: fakeNewsList,
       dynamicComponents: {
         activeNewsItemComponent: 'activenewsitem',
         newsListComponent: 'newslist',
@@ -77,7 +67,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['activeNewsItemId', 'selectedCounty']),
+    ...mapGetters([
+      'activeNewsItemId',
+      'selectedCounty',
+      'newsList',
+      'countyNews',
+      'municipalityNews',
+      'countries',
+      'counties',
+      'municipalities'
+    ]),
     getNewsItemByActiveId: function() {
       const newsItem = this.newsList.find(item => item.id === this.activeNewsItemId)
       return newsItem !== undefined && 'id' in newsItem ? newsItem : null;
@@ -87,7 +86,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['closeDrawer', 'selectCounty', 'setActiveNewsItemId']),
+    ...mapActions([
+      'closeDrawer',
+      'selectCounty',
+      'setActiveNewsItemId',
+      'addCountyNews',
+      'addMunicipalityNews'
+    ]),
     toggleHover: function(news) {
       news.hover = !news.hover
     },
@@ -99,46 +104,8 @@ export default {
       }
     },
     countyClick: function(mouseoverCounty) {
-      this.counties = this.counties.map(county => ({
-        ...county,
-        active: !(county.name === mouseoverCounty.name)
-      }));
-
-      this.countyNews = this.countyNews.map(x => {
-        const _metaData = x[0]
-        const _newsList = x[1]
-        return [ {
-          ..._metaData,
-          county: {
-            ..._metaData.county,
-            active: !(_metaData.county.name === mouseoverCounty.name) }
-        },
-          _newsList ]
-      })
-
-      this.municipalities = this.municipalities.map(municipality => ({
-        ...municipality,
-        active: municipality.county === mouseoverCounty.name
-      }));
-
-      this.municipalityNews = this.municipalityNews.map(x => {
-        const _metaData = x[0]
-        const _newsList = x[1]
-        return [ {
-          ..._metaData,
-          county: {
-            ..._metaData.county,
-            active: !(_metaData.county.name === mouseoverCounty.name) },
-          municipality: {
-            ..._metaData.municipality,
-            active: (_metaData.county.name === mouseoverCounty.name) }
-        },
-          _newsList ]
-      })
-
-      this.setActiveNewsItemId(null)
       this.selectCounty(mouseoverCounty.name)
-
+      this.setActiveNewsItemId(null)
     },
     getMunicipalityByName: function(name) {
       if (name === undefined) {
@@ -151,35 +118,6 @@ export default {
         }
       }
     },
-    addMunicipalityNews: function(news, newsMetaData) {
-      let found = false;
-      let newsForMunicipality = [newsMetaData, []];
-
-      for (let mNews of this.municipalityNews) {
-        if (mNews[0].municipality.name === newsMetaData.municipality.name) {
-          newsForMunicipality = mNews;
-          found = true;
-        }
-      }
-      newsForMunicipality[1].push(news);
-      if (!found) {
-        this.municipalityNews.push(newsForMunicipality);
-      }
-    },
-    addCountyNews: function(news, newsMetaData) {
-      let found = false;
-      let newsForCounty = [newsMetaData, []];
-      for (let cNews of this.countyNews) {
-        if (cNews[0].county.name === newsMetaData.county.name) {
-          newsForCounty = cNews;
-          found = true;
-        }
-      }
-      newsForCounty[1].push(news);
-      if(!found) {
-        this.countyNews.push(newsForCounty);
-      }
-    }
   },
   components: {
     'mainsection': Main,

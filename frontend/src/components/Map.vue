@@ -116,8 +116,8 @@ export default {
           county: county
         }
 
-        this.addMunicipalityNews(news, newsMetaData);
-        this.addCountyNews(news, newsMetaData)
+        this.addMunicipalityNews({ news, newsMetaData });
+        this.addCountyNews({ news, newsMetaData })
 
       }
     },
