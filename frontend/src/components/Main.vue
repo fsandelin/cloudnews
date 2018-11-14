@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import Map from './Map'
+import Map from './Map';
+
 export default {
   name: "mainsection",
   components: {

@@ -22,65 +22,21 @@
         v-bind:d="county.path"
         v-on:click="countyClick(county)">
       </path>
-      <circle
-        class="circle-municipality"
-        v-for="[metaData, news] of municipalityNews"
-        v-bind:key="'newsNotification'+metaData.municipality.name"
-        v-bind:cx="metaData.county.active ? metaData.county.x : metaData.municipality.x +'px'"
-        v-bind:cy="metaData.county.active ? metaData.county.y : metaData.municipality.y +'px'"
-        v-bind:r="circleSize(news.length)+'px'">
-      </circle>
-      <circle
-        class="circle-county"
-        v-for="[metaData, news] of countyNews"
-        v-bind:key="'countyNewsNotification'+metaData.county.name"
-        v-show="metaData.county.active"
-        v-bind:cx="metaData.county.x+'px'"
-        v-bind:cy="metaData.county.y+'px'"
-        v-bind:r="circleSize(news.length)+'px'">
-      </circle>
-      <transition-group name="fade" tag="g">
-      <text
-        class="circle-number"
-        v-for="[metaData, news] of municipalityNews"
-        v-bind:key="'newsNotificationText'+metaData.municipality.name+news.id"
-        v-show="metaData.municipality.active"
-        text-anchor="middle"
-        v-bind:x="metaData.municipality.x+'px'"
-        v-bind:y="metaData.municipality.y+'px'"
-        v-bind:dy="yOffset(news.length)+'px'"
-        v-bind:font-size="fontSize(news.length)+'px'">
-        {{news.length}}
-      </text>
-      <text
-        class="circle-number"
-        v-for="[metaData, news] of countyNews"
-        v-bind:key="'countyNewsNotificationText'+metaData.county.name"
-        v-show="metaData.county.active"
-        text-anchor="middle"
-        v-bind:x="metaData.county.x+'px'"
-        v-bind:y="metaData.county.y+'px'"
-        v-bind:dy="yOffset(news.length)+'px'"
-        v-bind:font-size="fontSize(news.length)+'px'">
-        {{news.length}}
-      </text>
-      </transition-group>
+      <mapNotifications>
+      </mapNotifications>
     </g>
   </svg>
 </template>
 
 <script>
 import * as d3 from "d3";
-import * as topojson from "topojson";
-import * as Velocity from "velocity-animate";
+import MapNotifications from './MapNotifications'
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "d3map",
-  data () {
-    return {
-      cityNews: []
-    }
+  components: {
+    'mapNotifications': MapNotifications
   },
   mounted: function() {
     const RATIO = 2.1;
@@ -107,31 +63,15 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'newsList',
-      'countyNews',
-      'municipalityNews',
       'countries',
       'counties',
       'municipalities',
-      'getCountyByName',
-      'getMunicipalityByName'
     ])
   },
   methods: {
     ...mapActions([
-      'countyClick',
-      'addCountyNews',
-      'addMunicipalityNews'
-    ]),
-    circleSize: function(length) {
-      return (4+(length/2));
-    },
-    fontSize: function(length) {
-      return (4+(length/2));
-    },
-    yOffset: function(length) {
-      return (4+(length/2))/3;
-    },
+      'countyClick'
+    ])
   }
 }
 </script>
