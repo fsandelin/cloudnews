@@ -1,5 +1,4 @@
-<template
- @keyup.esc="console.log('get')">
+<template>
   <svg class="mapContainer">
     <g class="map">
       <path
@@ -70,19 +69,6 @@
   </svg>
 </template>
 
-
-<script>
-export default {
-
-}
-
-</script>
-
-<style>
-
-</style>
-
-
 <script>
 import * as d3 from "d3";
 import * as topojson from "topojson";
@@ -90,7 +76,6 @@ import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.jso
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import * as Velocity from "velocity-animate";
-
 
 export default {
   name: "d3map",
