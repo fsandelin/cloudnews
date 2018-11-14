@@ -102,7 +102,11 @@ export default new Vuex.Store({
     selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
     setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
     addCountyNews: ({ commit }, { news, newsMetaData }) => commit('addCountyNews', { news, newsMetaData }),
-    addMunicipalityNews: ({ commit }, { news, newsMetaData }) => commit('addMunicipalityNews', { news, newsMetaData })
+    addMunicipalityNews: ({ commit }, { news, newsMetaData }) => commit('addMunicipalityNews', { news, newsMetaData }),
+    countyClick: function({ dispatch }, county) {
+      dispatch("selectCounty", county.name);
+      dispatch("setActiveNewsItemId", null);
+    }
   },
   getters: {
     countries: state => {
@@ -129,6 +133,14 @@ export default new Vuex.Store({
     selectedCounty: state => {
       return state.selectedCounty
     },
+    getCountyByName: (state) => (name) => {
+      if (name === undefined) return null;
+      return state.counties.find(county => county.name.toLowerCase().trim() === name.toLowerCase().trim());
+    },
+    getMunicipalityByName: (state) => (name) => {
+      if (name === undefined) return null;
+      return state.municipalities.find(municipality => municipality.name.toLowerCase().trim() === name.toLowerCase().trim());
+    }
   },
   strict: true
 })

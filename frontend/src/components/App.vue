@@ -10,17 +10,7 @@
       v-bind:showFilter="true"
     ></newssidebar>
 
-    <mainsection
-      v-bind:newsList="newsList"
-      v-bind:municipalities="municipalities"
-      v-bind:counties="counties"
-      v-bind:countries="countries"
-      v-bind:municipalityNews="municipalityNews"
-      v-bind:countyNews="countyNews"
-      v-bind:countyClick="countyClick"
-      v-bind:addMunicipalityNews="addMunicipalityNews"
-      v-bind:addCountyNews="addCountyNews"
-      v-bind:getMunicipalityByName="getMunicipalityByName">
+    <mainsection>
     </mainsection>
 
     <drawer
@@ -66,6 +56,9 @@ export default {
       },
     }
   },
+  created: function() {
+    this.calculateNewsList();
+  },
   computed: {
     ...mapGetters([
       'activeNewsItemId',
@@ -73,9 +66,8 @@ export default {
       'newsList',
       'countyNews',
       'municipalityNews',
-      'countries',
-      'counties',
-      'municipalities'
+      'getMunicipalityByName',
+      'getCountyByName'
     ]),
     getNewsItemByActiveId: function() {
       const newsItem = this.newsList.find(item => item.id === this.activeNewsItemId)
@@ -91,8 +83,22 @@ export default {
       'selectCounty',
       'setActiveNewsItemId',
       'addCountyNews',
-      'addMunicipalityNews'
+      'addMunicipalityNews',
+      'countyClick'
     ]),
+    calculateNewsList: function() {
+      for (const news of this.newsList) {
+        const municipality = this.getMunicipalityByName(news.location.municipality);
+        const county = this.getCountyByName(municipality.county);
+        const newsMetaData = {
+          municipality: municipality,
+          county: county
+        }
+
+        this.addMunicipalityNews({ news, newsMetaData });
+        this.addCountyNews({ news, newsMetaData })
+      }
+    },
     toggleHover: function(news) {
       news.hover = !news.hover
     },
@@ -102,22 +108,7 @@ export default {
       } else {
         this.setActiveNewsItemId(news.id)
       }
-    },
-    countyClick: function(mouseoverCounty) {
-      this.selectCounty(mouseoverCounty.name)
-      this.setActiveNewsItemId(null)
-    },
-    getMunicipalityByName: function(name) {
-      if (name === undefined) {
-        return null;
-      }
-
-      for (const municipality of this.municipalities) {
-        if(name.toLowerCase().trim() === municipality.name.toLowerCase().trim()) {
-          return municipality;
-        }
-      }
-    },
+    }
   },
   components: {
     'mainsection': Main,

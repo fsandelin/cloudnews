@@ -73,10 +73,10 @@
 import * as d3 from "d3";
 import * as topojson from "topojson";
 import * as Velocity from "velocity-animate";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "d3map",
-  props: ['newsList', 'municipalities', 'getMunicipalityByName', 'countyClick', 'counties', 'countries', 'municipalityNews', 'countyNews', 'addMunicipalityNews', 'addCountyNews'],
   data () {
     return {
       cityNews: []
@@ -104,34 +104,25 @@ export default {
     d3.select(".mapContainer").call(zoom.translateTo, 490,255);
     d3.select(".mapContainer").call(zoom.scaleTo, 0.9*SIZE);
 
-    this.calculateNewsList();
+  },
+  computed: {
+    ...mapGetters([
+      'newsList',
+      'countyNews',
+      'municipalityNews',
+      'countries',
+      'counties',
+      'municipalities',
+      'getCountyByName',
+      'getMunicipalityByName'
+    ])
   },
   methods: {
-    calculateNewsList: function() {
-      for (const news of this.newsList) {
-        const municipality = this.getMunicipalityByName(news.location.municipality);
-        const county = this.getCountyByName(municipality.county);
-        const newsMetaData = {
-          municipality: municipality,
-          county: county
-        }
-
-        this.addMunicipalityNews({ news, newsMetaData });
-        this.addCountyNews({ news, newsMetaData })
-
-      }
-    },
-    getCountyByName: function(name) {
-      if (name === undefined) {
-        return undefined;
-      }
-
-      for (const county of this.counties) {
-        if(name.toLowerCase() === county.name) {
-          return county;
-        }
-      }
-    },
+    ...mapActions([
+      'countyClick',
+      'addCountyNews',
+      'addMunicipalityNews'
+    ]),
     circleSize: function(length) {
       return (4+(length/2));
     },
