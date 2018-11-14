@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <newssidebar
-      v-bind:newsList="newsList"
       v-bind:toggleActive="toggleActive"
       v-bind:showFilter="true"
     ></newssidebar>
@@ -18,10 +17,7 @@
 
       <component
         v-if="selectedCounty !== null && this.activeNewsItem === null"
-        v-bind:selectedCounty="selectedCounty"
-        v-bind:newsList="newsList"
         v-bind:toggleActive="toggleActive"
-        v-bind:getMunicipalityByName="getMunicipalityByName"
         v-bind:showFilter="false"
         v-bind:is="dynamicComponents.drawerNewsList">
       </component>

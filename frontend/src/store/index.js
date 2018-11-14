@@ -121,6 +121,13 @@ export default new Vuex.Store({
     newsList: state => {
       return state.newsList
     },
+    filteredNewsList: (state, getters) => {
+      return state.newsList.filter(news => {
+        const municipality = getters.getMunicipalityByName(news.location.municipality)
+        const countyName = municipality !== null ? municipality.county : null
+        return countyName === state.selectedCounty
+      })
+    },
     countyNews: state => {
       return state.countyNews
     },

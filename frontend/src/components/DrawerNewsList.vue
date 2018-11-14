@@ -5,7 +5,7 @@
     </div>
     <div class="news-list">
       <newslist
-        v-bind:newsList="filteredNewsList"
+        v-bind:filteredNewsList="filteredNewsList"
         v-bind:showFilter="showFilter"
         v-bind:toggleActive="toggleActive">
       </newslist>
@@ -15,18 +15,16 @@
 
 <script>
 import NewsList from './NewsList'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'drawernewslist',
-  props: ['selectedCounty', 'showFilter', 'newsList', 'toggleActive', 'getMunicipalityByName'],
+  props: ['showFilter', 'toggleActive'],
   computed: {
-    filteredNewsList: function () {
-      return this.newsList.filter(news => {
-        const municipality = this.getMunicipalityByName(news.location.municipality)
-        const countyName = municipality !== null ? municipality.county : null
-        return countyName === this.selectedCounty
-      })
-    }
+    ...mapGetters([
+      'selectedCounty',
+      'filteredNewsList',
+    ]),
   },
   components: {
     'newslist': NewsList,
