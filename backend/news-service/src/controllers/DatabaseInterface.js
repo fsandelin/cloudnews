@@ -1,9 +1,10 @@
 const dbConnection = require('./DatabaseHandler');
+require('dotenv').config();
 
-const dbName = 'cloudnews_test';
-const collectionName = 'articles_svt';
+const dbName = process.env.DATABASE_NAME;
+const collectionName = `${process.env.ARTICLES_PREFIX}svt`;
 
-// Pushes an array of articles to the database
+// Pushes an array of articles to the database. Right now uses 'articles_svt' as collection for all.
 function pushArticles(articles, callback) {
   dbConnection.connect((error, client) => {
     if (error) {
@@ -25,6 +26,22 @@ function pushArticles(articles, callback) {
   });
 }
 
+function getTimeSpan(from, until, callback) {
+  dbConnection.connect((error, client) => {
+    if (error) {
+      console.log('Got an error in dbConnection.connect');
+      callback(error, null);
+    }
+    from = from.replace(' ', '+');
+    until = until.replace(' ', '+');
+    const db = client.db(dbName);
+    db.collection(collectionName).find({
+      $and: [{ datetime: { $gte: from } }, { datetime: { $lte: until } }],
+    }).toArray(callback);
+  });
+}
+
 module.exports = {
   pushArticles,
+  getTimeSpan,
 };
