@@ -37,9 +37,9 @@ export default {
       'selectedCounty'
     ]),
     applyFilter: function () {
-      const municipality = this.getMunicipalityByName(this.news.location.municipality)
-      const countyName = municipality !== null ? municipality.county : null
-      return this.showFilter && countyName === this.selectedCounty
+      const municipality = this.getMunicipalityByName(this.news.location.municipality);
+      const countyName = municipality !== null ? municipality.county : null;
+      return this.showFilter && countyName === this.selectedCounty;
     }
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
       'toggleActive'
     ]),
     toggleHover: function () {
-      this.hover = !this.hover
+      this.hover = !this.hover;
     }
   }
 }

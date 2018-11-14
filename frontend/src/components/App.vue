@@ -77,7 +77,7 @@ export default {
         }
 
         this.addMunicipalityNews({ news, newsMetaData });
-        this.addCountyNews({ news, newsMetaData })
+        this.addCountyNews({ news, newsMetaData });
       }
     },
   },
