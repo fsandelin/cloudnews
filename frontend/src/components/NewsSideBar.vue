@@ -1,28 +1,29 @@
 <template>
   <div id="news-sidebar" class="right-shadow">
-    <ul>
-      <li class="header flex-centering bottom-shadow light-border-bottom">
+      <div class="header flex-centering bottom-shadow light-border-bottom">
         NEWS
-      </li>
-      <newsitem
-        v-for="news in newsList"
-        v-bind:news="news"
-        v-bind:key="news.id"
+      </div>
+      <newslist
+        v-bind:newsList="newsList"
+        v-bind:activeNewsItemId="activeNewsItemId"
+        v-bind:selectedCounty="selectedCounty"
+        v-bind:toggleHover="toggleHover"
+        v-bind:getMunicipalityByName="getMunicipalityByName"
         v-bind:toggleActive="toggleActive"
+        v-bind:showFilter="showFilter"
       >
-      </newsitem>
-    </ul>
+      </newslist>
   </div>
 </template>
 
 <script>
-import NewsSideBarItem from './NewsSideBarItem'
+import NewsList from './NewsList'
 
 export default {
   name: 'sidebar',
-  props: ['newsList', 'toggleActive'],
+  props: ['newsList', 'showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'toggleHover', 'toggleActive', 'selectedCounty'],
   components: {
-    'newsitem': NewsSideBarItem
+    'newslist': NewsList
   }
 }
 </script>

@@ -1,0 +1,21 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+#drawerhandle {
+  background-color: $darkgreen;
+  min-height: 40px;
+  margin-top: auto;
+  z-index: 1;
+
+  img {
+    width: 50px;
+
+    &.open {
+      cursor: pointer;
+    }
+
+    &.closed {
+      transform: rotate(180deg);
+    }
+  }
+}

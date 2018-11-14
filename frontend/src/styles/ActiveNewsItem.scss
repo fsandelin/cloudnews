@@ -1,0 +1,13 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+#active-news-item {
+  color: $darkgrey;
+
+  padding: 0 30px;
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}

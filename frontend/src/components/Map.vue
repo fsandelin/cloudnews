@@ -9,7 +9,7 @@
       </path>
       <path
         class="municipality"
-        v-for="municipality in municipalities"
+        v-for="municipality in this.municipalities"
         v-bind:key="municipality.key"
         v-show="municipality.active"
         v-bind:d="municipality.path">
@@ -72,23 +72,13 @@
 <script>
 import * as d3 from "d3";
 import * as topojson from "topojson";
-import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
-import swedishCounties from '../assets/sweden-counties-meta-info.json';
-import europeCountries from '../assets/europe-countries-meta-info.json';
 import * as Velocity from "velocity-animate";
 
 export default {
   name: "d3map",
-  props: ['newsList'],
+  props: ['newsList', 'municipalities', 'getMunicipalityByName', 'countyClick', 'counties', 'countries', 'municipalityNews', 'countyNews', 'addMunicipalityNews', 'addCountyNews'],
   data () {
     return {
-      countries: [],
-      counties: [],
-      municipalities: [],
-      cities: [],
-      countryNews: [],
-      countyNews: [],
-      municipalityNews: [],
       cityNews: []
     }
   },
@@ -114,15 +104,6 @@ export default {
     d3.select(".mapContainer").call(zoom.translateTo, 490,255);
     d3.select(".mapContainer").call(zoom.scaleTo, 0.9*SIZE);
 
-    swedishMunicipalities.map(x => x.active = false);
-    this.municipalities = this.municipalities.concat(swedishMunicipalities);
-
-    swedishCounties.map(x => x.active = true);
-    this.counties = this.counties.concat(swedishCounties);
-  
-    europeCountries.map(x => x.active = true);
-    this.countries = this.countries.concat(europeCountries);
-
     this.calculateNewsList();
   },
   methods: {
@@ -134,9 +115,10 @@ export default {
           municipality: municipality,
           county: county
         }
-        
+
         this.addMunicipalityNews(news, newsMetaData);
         this.addCountyNews(news, newsMetaData)
+
       }
     },
     getCountyByName: function(name) {
@@ -150,22 +132,6 @@ export default {
         }
       }
     },
-    getMunicipalityByName: function(name) {
-      if (name === undefined) {
-        return undefined;
-      }
-
-      for (const municipality of this.municipalities) {
-        if(name.toLowerCase() === municipality.name) {
-          return municipality;
-        }
-      }
-    },
-    countyClick: function(mouseoverCounty) {
-      this.counties.map(county => county.active = !(county.name === mouseoverCounty.name));
-      this.currentName = mouseoverCounty.name;
-      this.municipalities.map(municipality => municipality.active = (municipality.county === mouseoverCounty.name));
-    },
     circleSize: function(length) {
       return (4+(length/2));
     },
@@ -175,34 +141,6 @@ export default {
     yOffset: function(length) {
       return (4+(length/2))/3;
     },
-    addMunicipalityNews: function(news, newsMetaData) {
-      let found = false;
-      let newsForMunicipality = [newsMetaData, []];
-      for (let mNews of this.municipalityNews) {
-        if (mNews[0].municipality.name === newsMetaData.municipality.name) {
-          newsForMunicipality = mNews;
-          found = true;
-        }
-      }
-      newsForMunicipality[1].push(news);
-      if (!found) {
-        this.municipalityNews.push(newsForMunicipality);
-      }
-    },
-    addCountyNews: function(news, newsMetaData) {
-      let found = false;
-      let newsForCounty = [newsMetaData, []];
-      for (let cNews of this.countyNews) {
-        if (cNews[0].county.name === newsMetaData.county.name) {
-          newsForCounty = cNews;
-          found = true;
-        }
-      }
-      newsForCounty[1].push(news);
-      if(!found) {
-        this.countyNews.push(newsForCounty);
-      }
-    }
   }
 }
 </script>
