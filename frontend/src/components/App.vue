@@ -2,15 +2,11 @@
   <div id="app">
     <newssidebar
       v-bind:newsList="newsList"
-      v-bind:activeNewsItemId="activeNewsItemId"
-      v-bind:selectedCounty="selectedCounty"
-      v-bind:getMunicipalityByName="getMunicipalityByName"
       v-bind:toggleActive="toggleActive"
       v-bind:showFilter="true"
     ></newssidebar>
 
-    <mainsection>
-    </mainsection>
+    <mainsection></mainsection>
 
     <drawer
       v-bind:isOpen="drawerIsOpen"
@@ -24,7 +20,6 @@
         v-if="selectedCounty !== null && this.activeNewsItem === null"
         v-bind:selectedCounty="selectedCounty"
         v-bind:newsList="newsList"
-        v-bind:activeNewsItemId="activeNewsItemId"
         v-bind:toggleActive="toggleActive"
         v-bind:getMunicipalityByName="getMunicipalityByName"
         v-bind:showFilter="false"

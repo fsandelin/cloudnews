@@ -6,9 +6,6 @@
     <div class="news-list">
       <newslist
         v-bind:newsList="filteredNewsList"
-        v-bind:activeNewsItemId="activeNewsItemId"
-        v-bind:selectedCounty="selectedCounty"
-        v-bind:getMunicipalityByName="getMunicipalityByName"
         v-bind:showFilter="showFilter"
         v-bind:toggleActive="toggleActive">
       </newslist>
@@ -21,7 +18,7 @@ import NewsList from './NewsList'
 
 export default {
   name: 'drawernewslist',
-  props: ['selectedCounty', 'showFilter', 'newsList', 'activeNewsItemId', 'getMunicipalityByName', 'toggleActive', 'getMunicipalityByName'],
+  props: ['selectedCounty', 'showFilter', 'newsList', 'toggleActive', 'getMunicipalityByName'],
   computed: {
     filteredNewsList: function () {
       return this.newsList.filter(news => {

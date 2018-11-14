@@ -20,15 +20,22 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'newslistitem',
-  props: ['showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'news', 'toggleActive', 'selectedCounty'],
+  props: ['showFilter', 'news', 'toggleActive'],
   data () {
     return {
       hover: false
     }
   },
   computed: {
+    ...mapGetters([
+      'getMunicipalityByName',
+      'activeNewsItemId',
+      'selectedCounty'
+    ]),
     applyFilter: function () {
       const municipality = this.getMunicipalityByName(this.news.location.municipality)
       const countyName = municipality !== null ? municipality.county : null

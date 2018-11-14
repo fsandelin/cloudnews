@@ -4,10 +4,7 @@
         v-for="news in newsList"
         v-bind:news="news"
         v-bind:key="news.id"
-        v-bind:activeNewsItemId="activeNewsItemId"
         v-bind:toggleActive="toggleActive"
-        v-bind:getMunicipalityByName="getMunicipalityByName"
-        v-bind:selectedCounty="selectedCounty"
         v-bind:showFilter="showFilter"
       >
       </newslistitem>
@@ -19,7 +16,7 @@ import NewsListItem from './NewsListItem'
 
 export default {
   name: 'newslist',
-  props: ['newsList', 'showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'toggleActive', 'selectedCounty'],
+  props: ['newsList', 'showFilter', 'toggleActive'],
   components: {
     'newslistitem': NewsListItem
   },
