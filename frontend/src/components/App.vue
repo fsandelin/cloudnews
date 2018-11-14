@@ -4,7 +4,9 @@
       v-bind:newsList="newsList"
       v-bind:toggleActive="toggleActive"
     ></newssidebar>
-    <mainsection></mainsection>
+    <mainsection
+      v-bind:newsList="newsList"
+    ></mainsection>
     <settingssidebar></settingssidebar>
   </div>
 </template>
@@ -13,20 +15,14 @@
 import Main from './Main'
 import NewsSideBar from './NewsSideBar'
 import SettingsSideBar from './SettingsSideBar'
+import { fakeNewsList } from '../assets/FakeData'
 
 export default {
   name: 'app',
   data () {
     return {
-      newsList: [
-        { id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-        { id: 1, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-        { id: 2, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-        { id: 3, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false},
-      ]
+      newsList: fakeNewsList
     }
-  },
-  computed: {
   },
   methods: {
     toggleActive: function(news) {
