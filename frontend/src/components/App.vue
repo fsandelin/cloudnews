@@ -24,8 +24,6 @@ export default {
       newsList: fakeNewsList
     }
   },
-  computed: {
-  },
   methods: {
     toggleActive: function(news) {
       news.active = !news.active
