@@ -1,11 +1,11 @@
 <template>
   <div
     id="drawerhandle"
-    class="flex-centering">
+    class="flex-centering"
+    v-on:click="closeDrawer"
+    v-bind:class="{ open: isOpen, closed: !isOpen }">
     <div>
       <img
-        v-bind:class="{ open: isOpen, closed: !isOpen }"
-        v-on:click="closeDrawer"
         v-bind:src="drawerArrows"
         v-bind:alt="drawerArrowsAlt">
     </div>
