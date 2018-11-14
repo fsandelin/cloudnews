@@ -4,7 +4,6 @@
       v-bind:newsList="newsList"
       v-bind:activeNewsItemId="activeNewsItemId"
       v-bind:selectedCounty="selectedCounty"
-      v-bind:toggleHover="toggleHover"
       v-bind:getMunicipalityByName="getMunicipalityByName"
       v-bind:toggleActive="toggleActive"
       v-bind:showFilter="true"
@@ -27,7 +26,6 @@
         v-bind:selectedCounty="selectedCounty"
         v-bind:newsList="newsList"
         v-bind:activeNewsItemId="activeNewsItemId"
-        v-bind:toggleHover="toggleHover"
         v-bind:toggleActive="toggleActive"
         v-bind:getMunicipalityByName="getMunicipalityByName"
         v-bind:showFilter="false"
@@ -96,9 +94,6 @@ export default {
         this.addMunicipalityNews({ news, newsMetaData });
         this.addCountyNews({ news, newsMetaData })
       }
-    },
-    toggleHover: function(news) {
-      news.hover = !news.hover
     },
     toggleActive: function(news) {
       if (news.id === this.activeNewsItemId) {
