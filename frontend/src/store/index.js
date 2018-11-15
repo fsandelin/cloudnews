@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
+import { isNull } from 'util';
 
 Vue.use(Vuex)
 
@@ -16,7 +17,9 @@ export default new Vuex.Store({
     municipalityNews: [],
     newsList: [],
     activeNewsItemId: null,
-    selectedCounty: null
+    selectedCounty: null,
+    previousActiveNewsItemId: null,
+    previousSelectedCounty: null
   },
   mutations: {
     addNews(state, news) {
@@ -26,9 +29,18 @@ export default new Vuex.Store({
       state.activeNewsItemId = null
       state.selectedCounty = null
     },
-    closeDrawer(state) {
-      state.activeNewsItemId = null
-      state.selectedCounty = null
+    toggleDrawer(state) {
+      if (state.activeNewsItemId !== null || state.selectedCounty !== null) {
+        state.previousActiveNewsItemId = state.activeNewsItemId
+        state.previousSelectedCounty = state.selectedCounty
+        state.activeNewsItemId = null
+        state.selectedCounty = null
+      } else {
+        state.activeNewsItemId = state.previousActiveNewsItemId
+        state.selectedCounty = state.previousSelectedCounty
+        state.previousActiveNewsItemId = null
+        state.previousSelectedCounty = null
+      }
     },
     selectCounty(state, countyName) {
       state.selectedCounty = countyName
@@ -120,10 +132,10 @@ export default new Vuex.Store({
       commit('addNews', { ...news, location })
     },
     toggleActive: ({ state, dispatch }, news) => {
-      if (news.id === state.activeNewsItemId) dispatch('closeDrawer')
+      if (news.id === state.activeNewsItemId) dispatch('toggleDrawer')
       else dispatch('setActiveNewsItemId', news.id)
     },
-    closeDrawer: ({ commit }) => commit('closeDrawer'),
+    toggleDrawer: ({ commit }) => commit('toggleDrawer'),
     selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
     setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
     addCountyNews: ({ commit }, { news, newsData }) => commit('addCountyNews', { news, newsData }),

@@ -8,7 +8,7 @@
 
     <drawer
       v-bind:isOpen="drawerIsOpen"
-      v-bind:closeDrawer="closeDrawer">
+      v-bind:toggleDrawer="toggleDrawer">
       <component
         v-if="activeNewsItem !== null"
         v-bind:is="dynamicComponents.drawerNewsItemComponent">
@@ -49,12 +49,12 @@ export default {
     
     this.calculateNewsList();
 
-    const socket = io('http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=');
+    // const socket = io('http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=');
 
-    socket.on('news', (news) => {
-      this.addNews(news)
-      this.addNews2(news);
-    });
+    // socket.on('news', (news) => {
+    //   this.addNews(news)
+    //   this.addNews2(news);
+    // });
   },
   computed: {
     ...mapGetters([
@@ -74,7 +74,7 @@ export default {
   methods: {
     ...mapActions([
       'addNews',
-      'closeDrawer',
+      'toggleDrawer',
       'setActiveNewsItemId',
       'addCountyNews',
       'addMunicipalityNews'

@@ -2,8 +2,8 @@
   <div
     id="drawerhandle"
     class="flex-centering"
-    v-on:click="closeDrawer"
-    v-bind:class="{ open: isOpen, closed: !isOpen }">
+    v-on:click="toggleDrawer"
+    v-bind:class="{ closed: !isOpen }">
     <div>
       <img
         v-bind:src="drawerArrows"
@@ -17,7 +17,7 @@ import DrawerArrows from '../assets/DrawerArrows.png'
 
 export default {
   name: 'drawerhandle',
-  props: ['isOpen', 'closeDrawer'],
+  props: ['isOpen', 'toggleDrawer'],
   data () {
     return {
       drawerArrows: DrawerArrows,
