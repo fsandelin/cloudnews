@@ -7,11 +7,13 @@ import { isNull } from 'util';
 
 Vue.use(Vuex)
 
+const cleanString = s => s.trim().toLowerCase() 
+
 export default new Vuex.Store({
   state: {
-    countries: europeCountries.map(x => ({ ...x, active: true })),
-    counties: swedishCounties.map(x => ({ ...x, active: true })),
-    municipalities: swedishMunicipalities.map(x => ({ ...x, active: false })),
+    countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+    counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+    municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
     cities: [],
     newsList: [],
     activeNewsItemId: null,
@@ -55,6 +57,9 @@ export default new Vuex.Store({
       if (state.newsList.find(x => x.id === news.id)) return
 
       let location = { ...news.location }
+      for (const key of Object.keys(location)) {
+        location[key] = cleanString(location[key])
+      }
 
       if (state.cities.find(city => city.name === location.city)) {
 
