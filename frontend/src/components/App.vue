@@ -29,7 +29,6 @@ import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
-import io from 'socket.io-client';
 import { mapGetters, mapActions } from 'vuex';
 import { fakeNewsList } from '../assets/FakeData'
 
@@ -46,14 +45,6 @@ export default {
   },
   created: function () {
     fakeNewsList.map(newsItem => this.addNews(newsItem))
-
-    if (false) {
-      const socket = io('http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=');
-
-      socket.on('news', (news) => {
-        this.addNews(news)
-      });
-    }
   },
   computed: {
     ...mapGetters([

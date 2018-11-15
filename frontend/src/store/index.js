@@ -3,10 +3,11 @@ import Vuex from 'vuex'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
+import addWebSocket from './plugins/webSocketConnection.js'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     countries: europeCountries.map(x => ({ ...x, active: true })),
     counties: swedishCounties.map(x => ({ ...x, active: true })),
@@ -155,3 +156,13 @@ export default new Vuex.Store({
   },
   strict: process.env.NODE_ENV !== 'production'
 })
+
+const SERVER = true
+if (SERVER) {
+  const event = 'news'
+  const url = 'http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0='
+  const action = 'addNews'
+  addWebSocket(store)(event, url, action)
+}
+
+export default store;
