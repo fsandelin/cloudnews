@@ -85,16 +85,28 @@ export default new Vuex.Store({
       let location = { ...news.location }
 
       if (state.cities.find(city => city.name === location.city)) {
+
+        const municipalityName = state.counties.find(municipality =>
+          municipality.municipalities.find(city =>
+            city === location.city
+        )).name
+
         location = {
           ...location,
-          municipality: 'city\'s municipality'
+          municipality: municipalityName
         }
       }
 
       if (state.municipalities.find(municipality => municipality.name === location.municipality)) {
+
+        const countyName = state.counties.find(county =>
+          county.municipalities.find(municipality =>
+            municipality === location.municipality
+        )).name
+
         location = {
           ...location,
-          county: 'municipality\'s county'
+          county: countyName
         }
       }
 
@@ -105,7 +117,7 @@ export default new Vuex.Store({
         }
       }
 
-      commit('addNews', news)
+      commit('addNews', { ...news, location })
     },
     toggleActive: ({ state, dispatch }, news) => {
       if (news.id === state.activeNewsItemId) dispatch('closeDrawer')
