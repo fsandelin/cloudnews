@@ -30,6 +30,7 @@ import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
 import { mapGetters, mapActions } from 'vuex';
+import { fakeNewsList } from '../assets/FakeData'
 
 export default {
   name: 'app',
@@ -42,7 +43,8 @@ export default {
       },
     }
   },
-  created: function() {
+  mounted: function () {
+    fakeNewsList.map(newsItem => this.addNews(newsItem))
     this.calculateNewsList();
   },
   computed: {
@@ -62,6 +64,7 @@ export default {
   },
   methods: {
     ...mapActions([
+      'addNews',
       'closeDrawer',
       'setActiveNewsItemId',
       'addCountyNews',
@@ -77,7 +80,7 @@ export default {
         }
         this.addCountyNews({ news, newsData });
         this.addMunicipalityNews({ news, newsData });
-        
+
       }
     },
   },
