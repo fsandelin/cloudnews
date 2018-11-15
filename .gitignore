@@ -1,5 +1,10 @@
 # IDE
 .vscode
+
+# npm
+node_modules/
+
+# python
 *.pyc
 *~
 __pycache__
