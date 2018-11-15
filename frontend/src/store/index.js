@@ -12,8 +12,6 @@ export default new Vuex.Store({
     counties: swedishCounties.map(x => ({ ...x, active: true })),
     municipalities: swedishMunicipalities.map(x => ({ ...x, active: false })),
     cities: [],
-    countyNews: [],
-    municipalityNews: [],
     newsList: [],
     activeNewsItemId: null,
     selectedCounty: null
@@ -34,54 +32,16 @@ export default new Vuex.Store({
       state.selectedCounty = countyName
 
       state.counties.map(county => county.active = !(county.name === countyName));
-
       state.municipalities.map(municipality => municipality.active = municipality.county === countyName)
-
-      state.countyNews.map(newsData => newsData.county.active = !(newsData.county.name === countyName));
-
-      state.municipalityNews.map(newsData => {
-        newsData.county.active = !(newsData.county.name === countyName);
-        newsData.municipality.active = (newsData.county.name === countyName);
-      });
     },
     setActiveNewsItemId(state, id) {
       state.activeNewsItemId = id
     },
-    addCountyNews(state, {news, newsData}) {
-      let newsForCounty = state.countyNews.find(nd => nd.county.name === newsData.county.name);
-
-      let found = newsForCounty === undefined ? false : true;
-
-      if (found) {
-        newsForCounty.news = [ ...newsForCounty.news, news];
-      } else {
-        newsForCounty = {
-          ...newsData,
-          news: [news]
-        };
-        state.countyNews = [ ...state.countyNews, newsForCounty];
-      }
-
-    },
-    addMunicipalityNews(state, { news, newsData }) {
-      let newsForMunicipality = state.municipalityNews.find(nd => nd.municipality.name === newsData.municipality.name);
-
-      let found = newsForMunicipality === undefined ? false : true;
-
-      if (found) {
-        newsForMunicipality.news = [ ...newsForMunicipality.news, news];
-      } else {
-        newsForMunicipality = {
-          ...newsData,
-          news: [news]
-        };
-        state.municipalityNews = [ ...state.municipalityNews, newsForMunicipality];
-      }
-
-    },
   },
   actions: {
     addNews: ({ state, commit }, news) => {
+      if (state.newsList.find(x => x.id === news.id)) return
+
       let location = { ...news.location }
 
       if (state.cities.find(city => city.name === location.city)) {
@@ -126,8 +86,6 @@ export default new Vuex.Store({
     closeDrawer: ({ commit }) => commit('closeDrawer'),
     selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
     setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
-    addCountyNews: ({ commit }, { news, newsData }) => commit('addCountyNews', { news, newsData }),
-    addMunicipalityNews: ({ commit }, { news, newsData }) => commit('addMunicipalityNews', { news, newsData }),
     countyClick: ({ dispatch }, county) => {
       dispatch("selectCounty", county.name);
       dispatch("setActiveNewsItemId", null);
@@ -153,11 +111,28 @@ export default new Vuex.Store({
         return countyName === state.selectedCounty
       })
     },
-    countyNews: state => {
-      return state.countyNews
+    selectedCountyNews: state => {
+      return state.newsList.filter(({ location }) => location.county === state.selectedCounty)
     },
-    municipalityNews: state => {
-      return state.municipalityNews
+    newsByCounty: state => {
+      return state.counties.map(county => {
+
+        return {
+          ...county,
+          news: state.newsList.filter(({ location }) => location.county === county.name)
+        }
+
+      }).filter(({ news }) => news.length > 0)
+    },
+    newsByMunicipality: state => {
+      return state.municipalities.map(municipality => {
+
+        return {
+          ...municipality,
+          news: state.newsList.filter(({ location }) => location.municipality === municipality.name)
+        }
+
+      }).filter(({ news }) => news.length > 0)
     },
     activeNewsItemId: state => {
       return state.activeNewsItemId
