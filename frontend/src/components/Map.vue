@@ -57,7 +57,7 @@ export default {
       .on("zoom", zoomed);
 
     d3.select(".mapContainer").call(zoom);
-    d3.select(".mapContainer").call(zoom.translateTo, 490,255);
+    d3.select(".mapContainer").call(zoom.translateTo, 600,255);
     d3.select(".mapContainer").call(zoom.scaleTo, 0.9*SIZE);
 
   },
