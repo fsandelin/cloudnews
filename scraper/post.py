@@ -1,7 +1,7 @@
 import os, sys, requests, json, math
 
 def post():
-    r = requests.post("http://localhost:5000/getnewstimerange", data = { "from" : "2018-1-6", "until" : "2018-1-10"} )
+    r = requests.post("http://localhost:5000/getnewstimerange", data = { "from" : "2018-5-6", "until" : "2018-5-7"} )
     print(r.status_code, r.reason)
     return r.text
     #print(r.text[:300] + '...')
@@ -17,6 +17,7 @@ def get():
 def main():
     #get()
     json_list = post()
+    #print(json_list)
     json_list = json.loads(json_list)
 
     for elm in json_list:

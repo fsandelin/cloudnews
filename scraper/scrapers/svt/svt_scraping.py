@@ -1,6 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/python3.7
 # -*- coding: iso-8859-15 -*-
 import os, sys, requests, json, math
+import numpy as np
 from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
@@ -17,11 +18,9 @@ except ImportError:
 #print(html.read())
 
 import requests
-
 from bs4 import BeautifulSoup
 
-import asyncio
-
+#import asyncio
 from scrapers.svt.svt_region import lokal_names, svt_regions
 
 URL_SVT = "https://www.svt.se/nyheter/lokalt/orebro/liga-misstanks-ligga-bakom-ny-stold-fran-verktygsbil"
@@ -29,10 +28,19 @@ URL_SVT2 = "https://www.svt.se/nyheter/lokalt/orebro/kraftig-okning-av-stolder-u
 
 
 
-api = "https://api.svt.se/nss-api/page/nyheter/lokalt/sormland/?q=auto,limit=12,page=2"
+#api = "https://api.svt.se/nss-api/page/nyheter/lokalt/sormland/?q=auto,limit=12,page=2"
 api = "https://api.svt.se/nss-api/page"
 
-params = "?q=auto"#,limit=5,page="
+#params = "?q=auto"#,limit=5,page="
+params = "?q=auto"
+param_limit = ",limit="
+param_page  = ",page="
+
+EARLIER = True
+LATER = False
+FIRST = 0
+LAST = -1
+
 
 
 def get_news(URL, REGION):
@@ -142,7 +150,7 @@ def reform_api_news(svt_news_list):
             news['datetime']  = svt_news['published']
         #news['imgurl']  = svt_news['title']
         if svt_news['sectionDisplayName'] is not None:
-            news['region']  = svt_news['sectionDisplayName']
+            news['location']  = { "county" : svt_news['sectionDisplayName'] }
         if svt_news['teaserURL'] is not None:
             news['url']     = svt_news['teaserURL']
         news['source']  = 'svt'
@@ -160,9 +168,7 @@ def reform_api_news_scrape(svt_news_list):
 
     return cloud_news
 
-params = "?q=auto"
-param_limit = ",limit="
-param_page  = ",page="
+
 
 def get_lokal_api_news(region = "/nyheter/lokalt/uppsala/", amount = 50, page = 0): 
     global params
@@ -205,10 +211,7 @@ def time_range(time_to_check, target_time, days = 0):
     time_diff = time_diff / timedelta( days = 1)
     print(time_diff)
 
-EARLIER = True
-LATER = False
-FIRST = 0
-LAST = -1
+
 def check_json_time(json_news, time_date, choice = LATER):
     global utc
     news_dt = parser.parse(get_dict(json_news)['datetime'])
@@ -260,50 +263,56 @@ def get_time_diff(first_item, last_item):
 
     return timedelta.days
 
-async def get_news_time_range(from_, until_):
-    
-    # Get max page info from this region
-    start_obj = get_lokal_api_object()
-    items = start_obj['auto']['pagination']['totalAvailableItems']
-    items = int(items)
-    max_pages = math.ceil(items / 50)
-    print( "Maxpage: ", max_pages)
-
-    obj_list = start_obj['auto']['content']
-    #print(obj_list[0]['published'])
-    page = get_time_diff(obj_list[0], obj_list[-1]) + 1
-
-    time_diff = get_time_diff(obj_list[0], until_)
-
-    #print("TimeDiff in days:", time_diff, "Days per Page:", page, "Suggested Starting Page:", time_diff/page)
-    start_page = math.floor(time_diff/page)
-
-    #test_obj = get_lokal_api_object(page = start_page)
-
-    #sleep(60)
+def get_news_time_range(from_, until_):
+    global svt_regions
     selected_news = []
+    #svt_regions = np.array(svt_regions)
+    #svt_regions = svt_regions[1]
+    svt_regions = [svt_regions[10], svt_regions[13], svt_regions[7], svt_regions[19], svt_regions[5], svt_regions[8]]
+    print (svt_regions)
+    for region in svt_regions:
+        # Get max page info from this region
+        start_obj = get_lokal_api_object(region = region)
+        items = start_obj['auto']['pagination']['totalAvailableItems']
+        items = int(items)
+        max_pages = math.ceil(items / 50)
+        print( "Maxpage: ", max_pages)
+
+        obj_list = start_obj['auto']['content']
+        #print(obj_list[0]['published'])
+        page = get_time_diff(obj_list[0], obj_list[-1]) + 2
+
+        time_diff = get_time_diff(obj_list[0], until_)
+
+        #print("TimeDiff in days:", time_diff, "Days per Page:", page, "Suggested Starting Page:", time_diff/page)
+        start_page = math.floor(time_diff/page)
+
+        #test_obj = get_lokal_api_object(page = start_page)
+
+        #sleep(60)
+        
 
 
-    # The loops starts with the most recent news, ends with the oldest
-    # Might need to add a waiting
-    # rannge( target + 1) gives the "target" - value in the end
-    for page_nmr in range(start_page,max_pages):
-        news_list = get_lokal_api_news( page = page_nmr)
+        # The loops starts with the most recent news, ends with the oldest
+        # Might need to add a waiting
+        # rannge( target + 1) gives the "target" - value in the end
+        
+        for page_nmr in range(start_page,max_pages):
+            news_list = get_lokal_api_news(region = region, page = page_nmr)
 
-        print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[FIRST])['datetime'], " Len: ", len(news_list))
-        #print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[LAST])['datetime'], " Len: ", len(news_list))
-        # Check if the last item is newer then the until time limit
-        #oldest_news_dt = parser.parse(get_dict(news_list[LAST])['datetime'])
-        if check_json_time(news_list[LAST], until_, LATER):
-            continue
-        elif check_json_time(news_list[FIRST], from_, EARLIER):
-            break
-        else:
-            selected_news += filter(lambda x: check_json_time_range(x, from_, until_), news_list)
+            print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[FIRST])['datetime'], " Len: ", len(news_list))
+            #print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[LAST])['datetime'], " Len: ", len(news_list))
+            # Check if the last item is newer then the until time limit
+            #oldest_news_dt = parser.parse(get_dict(news_list[LAST])['datetime'])
+            if check_json_time(news_list[LAST], until_, LATER):
+                continue
+            elif check_json_time(news_list[FIRST], from_, EARLIER):
+                break
+            else:
+                selected_news += filter(lambda x: check_json_time_range(x, from_, until_), news_list)
 
     
-    #start_point = get_lokal_api_news( page = page_nmr)
-    #print(selected_news)
+
     # list with JSON object satisfying the time range
     return selected_news
 
