@@ -257,9 +257,7 @@ def get_news_time_range(from_, until_):
             news_list = get_lokal_api_news(region = region, page = page_nmr)
 
             print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[FIRST])['datetime'], " Len: ", len(news_list))
-            #print("Page: ", page_nmr, "  datetime: ", get_dict(news_list[LAST])['datetime'], " Len: ", len(news_list))
             # Check if the last item is newer then the until time limit
-            #oldest_news_dt = parser.parse(get_dict(news_list[LAST])['datetime'])
             if check_json_time(news_list[LAST], until_, LATER):
                 continue
             elif check_json_time(news_list[FIRST], from_, EARLIER):
