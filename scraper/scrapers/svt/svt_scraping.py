@@ -5,6 +5,8 @@ import numpy as np
 from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
+
+from flask import jsonify
 import pytz
 utc=pytz.UTC
 try:
@@ -245,7 +247,7 @@ def get_news_time_range(from_, until_):
         print( "Maxpage: ", max_pages)
 
         obj_list = start_obj['auto']['content']
-        page = get_time_diff(obj_list[0], obj_list[-1]) + 2
+        page = get_time_diff(obj_list[0], obj_list[-1]) + 1
 
         time_diff = get_time_diff(obj_list[0], until_)
 
@@ -274,7 +276,16 @@ def get_news_time_range(from_, until_):
     return selected_news
 
 def post_news(json_news, URL):
-    r = requests.post("http://bugs.python.org",  service = "svt", json = json_news)
+    headers = {
+    'Content-Type': "application/json",
+    'cache-control': "no-cache",
+    'Postman-Token': "5d45365b-5632-426b-b79c-a17fe9c2f2c4"
+    }
+    print(json.loads(json_news[0])['title'])
+    #json_news = jsonify(json_news)
+    #print(json_news)
+    json_news = [json.loads(news) for news in json_news]
+    r = requests.post(URL,  json = json_news, params = {"service": "svt" }, headers = headers)
     print(r.status_code, r.reason)
 
     print(r.text[:300] + '...')
@@ -296,9 +307,9 @@ def main():
     until_ = datetime(2018, 1, 1)
     api_obj = get_news_time_range(from_, until_)
 
-    json_news = json.loads(api_obj)['datetime']
+    #json_news = json.loads(api_obj)['datetime']
 
-    post_news(json_news, "localhost:3000")
+    post_news(api_obj, "http://localhost:3000")
     print ("First object: ", json.loads(api_obj[FIRST])['datetime'])
 
 
