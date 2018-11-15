@@ -26,10 +26,6 @@ data = r.json()
 
 data = data['releases']
 
-#for message in data:
-#    print(message['title'])
-
-
 find_text = '<ul class="nyh_regional-selector-box__list">'
 find_text2 =  '<li class="nyh_regional-selector-box__list-item">'
 
@@ -37,34 +33,6 @@ URL_SVT = 'https://www.svt.se/nyheter/lokalt/uppsala/'
 
 
 r = requests.get(url = URL_SVT)
-#data = r.text
-#data = data.splitlines()
-
-#for index in range(len(data)):
-#    print(data[index])
 
 for elm in data[0]:
-    print elm
-#print (data[0])
-
-"""
-r = requests.get(url = URL_kommun)
-
-data = r.json()
-
-for elm in data:
-    print(elm)
-
-for kommun in data['results']:
-    print("Namn: " + kommun['namn'] + '\t\t' + "Kod: " + kommun['läns-/kommunkod'])
-    """ 
-    
-# extracting latitude, longitude and formatted address  
-# of the first matching location 
-#latitude = data['results'][0]['geometry']['location']['lat'] 
-#longitude = data['results'][0]['geometry']['location']['lng'] 
-#formatted_address = data['results'][0]['formatted_address'] 
-
-# printing the output 
-#print("Latitude:%s\nLongitude:%s\nFormatted Address:%s"
-#      %(latitude, longitude,formatted_address)) 
+    print (elm)

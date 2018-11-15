@@ -14,13 +14,10 @@ except ImportError:
     # Fall back to Python 2's urllib2
     from urllib2 import urlopen
 
-#html = urlopen("http://www.google.com/")
-#print(html.read())
 
 import requests
 from bs4 import BeautifulSoup
 
-#import asyncio
 from scrapers.svt.svt_region import lokal_names, svt_regions
 
 URL_SVT = "https://www.svt.se/nyheter/lokalt/orebro/liga-misstanks-ligga-bakom-ny-stold-fran-verktygsbil"
@@ -28,10 +25,8 @@ URL_SVT2 = "https://www.svt.se/nyheter/lokalt/orebro/kraftig-okning-av-stolder-u
 
 
 
-#api = "https://api.svt.se/nss-api/page/nyheter/lokalt/sormland/?q=auto,limit=12,page=2"
 api = "https://api.svt.se/nss-api/page"
 
-#params = "?q=auto"#,limit=5,page="
 params = "?q=auto"
 param_limit = ",limit="
 param_page  = ",page="
@@ -111,27 +106,15 @@ def get_lokal_news(URL):
     soup = BeautifulSoup(content, features='lxml')
 
     temp = soup.find_all('article')
-    #temp2 = soup.find_all(attrs={"class" : "nyh_feed-grid__list-item"})
     temp = soup.find_all(attrs={"class" : "nyh_teaser"})
 
     news_list = []
     for elm in temp:
         news_url = URL_SVT + elm.find('a')['href']
-        #print(news_url)
+
         news_list.append(get_news(news_url, "uppsala"))
         
     return news_list
-
-    #print "Size of news:",len(teaser)
-
-# defining a params dict for the parameters to be sent to the API 
-#PARAMS = {'address': location } 
-#PARAMS = {'limit' : '50', 'page' : '10'}
-# sending get request and saving the response as response object 
-#r = requests.get(url = URL, params = PARAMS) 
-
-# extracting data in json format 
-#data = r.json() 
 
 def reform_api_news(svt_news_list):
 
@@ -141,14 +124,10 @@ def reform_api_news(svt_news_list):
         news = {}
         if svt_news['title'] is not None:
             news['title']   = svt_news['title']
-        #if svt_news['text'] is not None:
-         #   news['lead']    = svt_news['text']
 
-        # Body kanske inte behövs
-        #news['body']    = svt_news['text']
+        # Body kanske behövs
         if svt_news['published'] is not None:
             news['datetime']  = svt_news['published']
-        #news['imgurl']  = svt_news['title']
         if svt_news['sectionDisplayName'] is not None:
             news['location']  = { "county" : svt_news['sectionDisplayName'] }
         if svt_news['teaserURL'] is not None:
@@ -172,18 +151,14 @@ def reform_api_news_scrape(svt_news_list):
 
 def get_lokal_api_news(region = "/nyheter/lokalt/uppsala/", amount = 50, page = 0): 
     global params
-    #print("PageNumber: ", page)
     params_struct = params + param_limit + str(amount) + param_page + str(page)   
     URL_REGION = api + region + params_struct
     r = requests.get(url = URL_REGION)
     
     region_news = r.json(encoding='utf-8')
 
-    #region_news = region_news['auto']['content']
     region_news = reform_api_news(region_news['auto']['content'])
-    #print (region_news[0], len(region_news))
 
-    #print URL_REGION, " amoun: "#, region_news[region]
     return region_news
 
 def get_lokal_api_object(region = "/nyheter/lokalt/uppsala/", amount = 50, page = 0):
@@ -215,27 +190,17 @@ def time_range(time_to_check, target_time, days = 0):
 def check_json_time(json_news, time_date, choice = LATER):
     global utc
     news_dt = parser.parse(get_dict(json_news)['datetime'])
-    #print ("News DT: ", news_dt, "Time: ", time_date)
-    #news_dt = utc.localize(news_dt) 
-    #time_date = utc.localize(time_date) 
     news_dt   = news_dt.replace(tzinfo=utc)
     time_date = time_date.replace(tzinfo=utc)   
 
     if choice == EARLIER:
-        #if news_dt < time_date:
-            #print ("The news is earlier")
         return news_dt < time_date
     elif choice == LATER:
-        #if news_dt > time_date:
-            #print ("The news is later")
         return news_dt > time_date
 
 def check_json_time_range(json_news, from_, until_):
     global utc
     news_dt = parser.parse(get_dict(json_news)['datetime'])
-    #print ("News DT: ", news_dt, "Time: ", time_date)
-    #news_dt = utc.localize(news_dt) 
-    #time_date = utc.localize(time_date) 
     news_dt   = news_dt.replace(tzinfo=utc)
     from_ = from_.replace(tzinfo=utc)
     until_ = until_.replace(tzinfo=utc)   
@@ -266,8 +231,6 @@ def get_time_diff(first_item, last_item):
 def get_news_time_range(from_, until_):
     global svt_regions
     selected_news = []
-    #svt_regions = np.array(svt_regions)
-    #svt_regions = svt_regions[1]
     svt_regions = [svt_regions[10], svt_regions[13], svt_regions[7], svt_regions[19], svt_regions[5], svt_regions[8]]
     print (svt_regions)
     for region in svt_regions:
@@ -279,18 +242,11 @@ def get_news_time_range(from_, until_):
         print( "Maxpage: ", max_pages)
 
         obj_list = start_obj['auto']['content']
-        #print(obj_list[0]['published'])
         page = get_time_diff(obj_list[0], obj_list[-1]) + 2
 
         time_diff = get_time_diff(obj_list[0], until_)
 
-        #print("TimeDiff in days:", time_diff, "Days per Page:", page, "Suggested Starting Page:", time_diff/page)
-        start_page = math.floor(time_diff/page)
-
-        #test_obj = get_lokal_api_object(page = start_page)
-
-        #sleep(60)
-        
+        start_page = math.floor(time_diff/page)        
 
 
         # The loops starts with the most recent news, ends with the oldest
@@ -337,43 +293,11 @@ def print_json(json_str):
 def main():
     from_  = datetime(2017, 12, 30)
     until_ = datetime(2018, 1, 1)
-    #get_county_names()
     api_obj = get_news_time_range(from_, until_)
 
-    # String object
-    #print (type(api_obj[FIRST]), api_obj[FIRST])
-    # JSON object
-    #print (type(json.loads(api_obj[FIRST])), json.loads(api_obj[FIRST]))
 
 
     print ("First object: ", json.loads(api_obj[FIRST])['datetime'])
-    #print("Last object: ", json.loads(api_obj[LAST])['datetime'])
-
-    #post_news(json.loads(api_obj[FIRST]), "wepage")
-
-
-    #region_news = get_lokal_api_news( page = 363)
-
-    #news_json = json.loads(region_news[-1])
-    #print (news_json['title'])
-    #print type(cloud_news)
-    #news_info = []
-
-    #for region in cloud_news:
-
-    #dt = parser.parse(news['datetime'])
-    
-        #print cloud_news[0]
-    #URL = "https://www.svt.se/nyheter/lokalt/uppsala/?autosida=1#auto--12"
-    #news_list = get_lokal_news(URL_SVT)
-
-    #for news in news_list:
-    #    print news
-    #print "Uppsala has this many news",len(news_list)
-    #print get_news(URL_SVT, "uppsala")
-
-
-
 
 
 if __name__ == "__main__":
