@@ -3,11 +3,11 @@ import Vuex from 'vuex'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
-import addWebSocket from './plugins/webSocketConnection';
+import addWebSocket from './webSocketConnection';
+import { mutations as m, actions as a } from './constants';
+import { cleanString } from './helpers';
 
 Vue.use(Vuex)
-
-const cleanString = s => s.trim().toLowerCase()
 
 const store = new Vuex.Store({
   state: {
@@ -94,19 +94,19 @@ const store = new Vuex.Store({
         }
       }
 
-      commit('addNews', { ...news, location })
+      commit(m.ADD_NEWS, { ...news, location })
     },
     toggleActive: ({ state, dispatch }, news) => {
-      if (news.id === state.activeNewsItemId) dispatch('toggleDrawer')
-      else dispatch('setActiveNewsItemId', news.id)
-      dispatch('selectCounty', news.location.county)
+      if (news.id === state.activeNewsItemId) dispatch(a.TOGGLE_DRAWER)
+      else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
+      dispatch(a.SELECT_COUNTY, news.location.county)
     },
-    toggleDrawer: ({ commit }) => commit('toggleDrawer'),
-    selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
-    setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
+    toggleDrawer: ({ commit }) => commit(a.TOGGLE_DRAWER),
+    selectCounty: ({ commit }, countyName) => commit(m.SELECT_COUNTY, countyName),
+    setActiveNewsItemId: ({ commit }, id) => commit(a.SELECT_ACTIVE_NEWS_ITEM_ID, id),
     countyClick: ({ dispatch }, county) => {
-      dispatch("selectCounty", county.name);
-      dispatch("setActiveNewsItemId", null);
+      dispatch(a.SELECT_COUNTY, county.name);
+      dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, null);
     }
   },
   getters: {
@@ -178,7 +178,7 @@ const SERVER = true
 if (SERVER) {
   const event = 'news'
   const url = 'http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0='
-  const action = 'addNews'
+  const action = m.ADD_NEWS
   addWebSocket(store)(event, url, action)
 }
 
