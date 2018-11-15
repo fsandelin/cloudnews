@@ -31,47 +31,16 @@ export default new Vuex.Store({
     selectCounty(state, countyName) {
       state.selectedCounty = countyName
 
-      state.counties = state.counties.map(x => ({
-        ...x,
-        active: !(x.name === countyName)
-      }))
-
-      state.municipalities = state.municipalities.map(municipality => ({
-        ...municipality,
-        active: municipality.county === countyName
-      }));
-
-      state.countyNews = state.countyNews.map(newsData => ({
-        ...newsData,
-        county: {
-          ...newsData.county,
-          active: !(newsData.county.name === countyName)
-        }
-      }));
-
-      state.municipalityNews = state.municipalityNews.map(newsData => ({
-        ...newsData,
-        county: {
-          ...newsData.county,
-          active: !(newsData.county.name === countyName) 
-        },
-        municipality: {
-          ...newsData.municipality,
-          active: (newsData.county.name === countyName)
-        }
-      }));
-
-      /* This is with mutation and would replace everything
-      state.selectedCounty = countyName
       state.counties.map(county => county.active = !(county.name === countyName));
+
       state.municipalities.map(municipality => municipality.active = municipality.county === countyName)
+
       state.countyNews.map(newsData => newsData.county.active = !(newsData.county.name === countyName));
+
       state.municipalityNews.map(newsData => {
         newsData.county.active = !(newsData.county.name === countyName);
         newsData.municipality.active = (newsData.county.name === countyName);
       });
-      */
-
     },
     setActiveNewsItemId(state, id) {
       state.activeNewsItemId = id
