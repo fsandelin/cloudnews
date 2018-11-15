@@ -4,12 +4,6 @@
         NEWS
       </div>
       <newslist
-        v-bind:newsList="newsList"
-        v-bind:activeNewsItemId="activeNewsItemId"
-        v-bind:selectedCounty="selectedCounty"
-        v-bind:toggleHover="toggleHover"
-        v-bind:getMunicipalityByName="getMunicipalityByName"
-        v-bind:toggleActive="toggleActive"
         v-bind:showFilter="showFilter"
       >
       </newslist>
@@ -21,7 +15,7 @@ import NewsList from './NewsList'
 
 export default {
   name: 'sidebar',
-  props: ['newsList', 'showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'toggleHover', 'toggleActive', 'selectedCounty'],
+  props: ['showFilter'],
   components: {
     'newslist': NewsList
   }

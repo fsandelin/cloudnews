@@ -1,14 +1,9 @@
 <template>
     <ul>
       <newslistitem
-        v-for="news in componentNewsList"
+        v-for="news in (filteredNewsList ? filteredNewsList : newsList)"
         v-bind:news="news"
         v-bind:key="news.id"
-        v-bind:activeNewsItemId="activeNewsItemId"
-        v-bind:toggleHover="toggleHover"
-        v-bind:toggleActive="toggleActive"
-        v-bind:getMunicipalityByName="getMunicipalityByName"
-        v-bind:selectedCounty="selectedCounty"
         v-bind:showFilter="showFilter"
       >
       </newslistitem>
@@ -17,15 +12,15 @@
 
 <script>
 import NewsListItem from './NewsListItem'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'newslist',
-  props: ['newsList', 'showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'toggleHover', 'toggleActive', 'selectedCounty'],
+  props: ['filteredNewsList', 'showFilter'],
   computed: {
-    componentNewsList: function () {
-      return this.newsList.map(news => ({
-          ...news, hover: false }))
-    }
+    ...mapGetters([
+      'newsList',
+    ]),
   },
   components: {
     'newslistitem': NewsListItem

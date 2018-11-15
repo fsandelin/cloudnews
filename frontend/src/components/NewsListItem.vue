@@ -3,9 +3,9 @@
     @mouseenter="toggleHover(news)"
     @mouseleave="toggleHover(news)"
     v-on:click="toggleActive(news)"
-    v-bind:class="{ hover: news.hover && news.id !== activeNewsItemId,
+    v-bind:class="{ hover: this.hover && news.id !== activeNewsItemId,
                     active: news.id === activeNewsItemId,
-                    'bottom-shadow': news.hover,
+                    'bottom-shadow': this.hover,
                     filter: this.applyFilter }"
     class="news-item flex-centering light-border-bottom"
     v-bind:key="news.id"
@@ -20,14 +20,34 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'newslistitem',
-  props: ['showFilter', 'activeNewsItemId', 'getMunicipalityByName', 'news', 'toggleHover', 'toggleActive', 'selectedCounty'],
+  props: ['showFilter', 'news'],
+  data () {
+    return {
+      hover: false
+    }
+  },
   computed: {
+    ...mapGetters([
+      'getMunicipalityByName',
+      'activeNewsItemId',
+      'selectedCounty'
+    ]),
     applyFilter: function () {
-      const municipality = this.getMunicipalityByName(this.news.location.municipality)
-      const countyName = municipality !== null ? municipality.county : null
-      return this.showFilter && countyName === this.selectedCounty
+      const municipality = this.getMunicipalityByName(this.news.location.municipality);
+      const countyName = municipality !== null ? municipality.county : null;
+      return this.showFilter && countyName === this.selectedCounty;
+    }
+  },
+  methods: {
+    ...mapActions([
+      'toggleActive'
+    ]),
+    toggleHover: function () {
+      this.hover = !this.hover;
     }
   }
 }

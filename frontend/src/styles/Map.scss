@@ -52,33 +52,3 @@ svg.mapContainer g.map path.county:hover {
 svg.mapContainer g.map path.municipality:hover {
   fill: $lightblue;
 }
-
-svg.mapContainer g.map circle.circle-municipality {
-  fill: $red;
-  transition: 0.4s;
-}
-
-svg.mapContainer g.map circle.circle-county {
-  fill: $red;
-}
-
-svg.mapContainer g.map circle.circle-municipality:hover {
-  fill: yellow;
-  transition: 0s;
-}
-
-svg.mapContainer g.map circle.circle-county:hover {
-  fill: yellow;
-}
-
-svg.mapContainer g.map .circle-number {
-  fill: $white;
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-  pointer-events: none;
-  border-radius: 12px;
-  background-color: $red;
-}
