@@ -29,6 +29,7 @@ import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
+import io from 'socket.io-client';
 import { mapGetters, mapActions } from 'vuex';
 import { fakeNewsList } from '../assets/FakeData'
 
@@ -45,7 +46,15 @@ export default {
   },
   mounted: function () {
     fakeNewsList.map(newsItem => this.addNews(newsItem))
+    
     this.calculateNewsList();
+
+    const socket = io('http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=');
+
+    socket.on('news', (news) => {
+      this.addNews(news)
+      this.addNews2(news);
+    });
   },
   computed: {
     ...mapGetters([
@@ -70,8 +79,7 @@ export default {
       'addCountyNews',
       'addMunicipalityNews'
     ]),
-    calculateNewsList: function() {
-      for (const news of this.newsList) {
+    addNews2: function(news) {
         const municipality = this.getMunicipalityByName(news.location.municipality);
         const county = this.getCountyByName(municipality.county);
         const newsData = {
@@ -80,7 +88,10 @@ export default {
         }
         this.addCountyNews({ news, newsData });
         this.addMunicipalityNews({ news, newsData });
-
+    },
+    calculateNewsList: function() {
+      for (const news of this.newsList) {
+        this.addNews2(news);
       }
     },
   },
