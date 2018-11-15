@@ -94,6 +94,7 @@ export default new Vuex.Store({
     toggleActive: ({ state, dispatch }, news) => {
       if (news.id === state.activeNewsItemId) dispatch('toggleDrawer')
       else dispatch('setActiveNewsItemId', news.id)
+      dispatch('selectCounty', news.location.county)
     },
     toggleDrawer: ({ commit }) => commit('toggleDrawer'),
     selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
