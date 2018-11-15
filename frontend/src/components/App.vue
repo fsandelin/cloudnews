@@ -44,17 +44,16 @@ export default {
       },
     }
   },
-  mounted: function () {
+  created: function () {
     fakeNewsList.map(newsItem => this.addNews(newsItem))
-    
-    this.calculateNewsList();
 
-    // const socket = io('http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=');
+    if (false) {
+      const socket = io('http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=');
 
-    // socket.on('news', (news) => {
-    //   this.addNews(news)
-    //   this.addNews2(news);
-    // });
+      socket.on('news', (news) => {
+        this.addNews(news)
+      });
+    }
   },
   computed: {
     ...mapGetters([
@@ -62,8 +61,6 @@ export default {
       'activeNewsItemId',
       'selectedCounty',
       'newsList',
-      'countyNews',
-      'municipalityNews',
       'getMunicipalityByName',
       'getCountyByName'
     ]),
@@ -76,24 +73,7 @@ export default {
       'addNews',
       'toggleDrawer',
       'setActiveNewsItemId',
-      'addCountyNews',
-      'addMunicipalityNews'
     ]),
-    addNews2: function(news) {
-        const municipality = this.getMunicipalityByName(news.location.municipality);
-        const county = this.getCountyByName(municipality.county);
-        const newsData = {
-          municipality: municipality,
-          county: county
-        }
-        this.addCountyNews({ news, newsData });
-        this.addMunicipalityNews({ news, newsData });
-    },
-    calculateNewsList: function() {
-      for (const news of this.newsList) {
-        this.addNews2(news);
-      }
-    },
   },
   components: {
     'mainsection': Main,
