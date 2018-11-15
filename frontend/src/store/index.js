@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
-import { fakeNewsList } from '../assets/FakeData'
 
 Vue.use(Vuex)
 
@@ -15,11 +14,14 @@ export default new Vuex.Store({
     cities: [],
     countyNews: [],
     municipalityNews: [],
-    newsList: fakeNewsList,
+    newsList: [],
     activeNewsItemId: null,
     selectedCounty: null
   },
   mutations: {
+    addNews(state, news) {
+      state.newsList = [ ...state.newsList, news ]
+    },
     toggleActive(state, news) {
       state.activeNewsItemId = null
       state.selectedCounty = null
@@ -65,7 +67,7 @@ export default new Vuex.Store({
       let newsForMunicipality = state.municipalityNews.find(nd => nd.municipality.name === newsData.municipality.name);
 
       let found = newsForMunicipality === undefined ? false : true;
-      
+
       if (found) {
         newsForMunicipality.news = [ ...newsForMunicipality.news, news];
       } else {
@@ -79,6 +81,32 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    addNews: ({ state, commit }, news) => {
+      let location = { ...news.location }
+
+      if (state.cities.find(city => city.name === location.city)) {
+        location = {
+          ...location,
+          municipality: 'city\'s municipality'
+        }
+      }
+
+      if (state.municipalities.find(municipality => municipality.name === location.municipality)) {
+        location = {
+          ...location,
+          county: 'municipality\'s county'
+        }
+      }
+
+      if (state.counties.find(county => county.name === location.county)) {
+        location = {
+          ...location,
+          country: 'sweden'
+        }
+      }
+
+      commit('addNews', news)
+    },
     toggleActive: ({ state, dispatch }, news) => {
       if (news.id === state.activeNewsItemId) dispatch('closeDrawer')
       else dispatch('setActiveNewsItemId', news.id)
