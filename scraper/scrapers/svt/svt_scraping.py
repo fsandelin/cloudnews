@@ -17,8 +17,11 @@ except ImportError:
 
 import requests
 from bs4 import BeautifulSoup
-
-from scrapers.svt.svt_region import lokal_names, svt_regions
+try:
+    # If runing from restapi
+    from scrapers.svt.svt_region import lokal_names, svt_regions
+except ImportError:
+    from svt_region import lokal_names, svt_regions
 
 URL_SVT = "https://www.svt.se/nyheter/lokalt/orebro/liga-misstanks-ligga-bakom-ny-stold-fran-verktygsbil"
 URL_SVT2 = "https://www.svt.se/nyheter/lokalt/orebro/kraftig-okning-av-stolder-ur-hantverksbilar"
@@ -231,7 +234,7 @@ def get_time_diff(first_item, last_item):
 def get_news_time_range(from_, until_):
     global svt_regions
     selected_news = []
-    svt_regions = [svt_regions[10], svt_regions[13], svt_regions[7], svt_regions[19], svt_regions[5], svt_regions[8]]
+    svt_regions = [svt_regions[10]] #, svt_regions[13], svt_regions[7], svt_regions[19], svt_regions[5], svt_regions[8]]
     print (svt_regions)
     for region in svt_regions:
         # Get max page info from this region
@@ -271,7 +274,7 @@ def get_news_time_range(from_, until_):
     return selected_news
 
 def post_news(json_news, URL):
-    r = requests.post("http://bugs.python.org", json = json_news)
+    r = requests.post("http://bugs.python.org",  service = "svt", json = json_news)
     print(r.status_code, r.reason)
 
     print(r.text[:300] + '...')
@@ -293,8 +296,9 @@ def main():
     until_ = datetime(2018, 1, 1)
     api_obj = get_news_time_range(from_, until_)
 
+    json_news = json.loads(api_obj)['datetime']
 
-
+    post_news(json_news, "localhost:3000")
     print ("First object: ", json.loads(api_obj[FIRST])['datetime'])
 
 
