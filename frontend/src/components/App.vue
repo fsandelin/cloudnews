@@ -8,7 +8,7 @@
 
     <drawer
       v-bind:isOpen="drawerIsOpen"
-      v-bind:closeDrawer="closeDrawer">
+      v-bind:toggleDrawer="toggleDrawer">
       <component
         v-if="activeNewsItem !== null"
         v-bind:is="dynamicComponents.drawerNewsItemComponent">
@@ -62,7 +62,7 @@ export default {
   methods: {
     ...mapActions([
       'addNews',
-      'closeDrawer',
+      'toggleDrawer',
       'setActiveNewsItemId',
     ]),
   },

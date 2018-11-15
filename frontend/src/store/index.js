@@ -3,19 +3,23 @@ import Vuex from 'vuex'
 import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
-import addWebSocket from './plugins/webSocketConnection.js'
+import addWebSocket from './plugins/webSocketConnection';
 
 Vue.use(Vuex)
 
+const cleanString = s => s.trim().toLowerCase()
+
 const store = new Vuex.Store({
   state: {
-    countries: europeCountries.map(x => ({ ...x, active: true })),
-    counties: swedishCounties.map(x => ({ ...x, active: true })),
-    municipalities: swedishMunicipalities.map(x => ({ ...x, active: false })),
+    countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+    counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+    municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
     cities: [],
     newsList: [],
     activeNewsItemId: null,
-    selectedCounty: null
+    selectedCounty: null,
+    previousActiveNewsItemId: null,
+    previousSelectedCounty: null
   },
   mutations: {
     addNews(state, news) {
@@ -25,9 +29,18 @@ const store = new Vuex.Store({
       state.activeNewsItemId = null
       state.selectedCounty = null
     },
-    closeDrawer(state) {
-      state.activeNewsItemId = null
-      state.selectedCounty = null
+    toggleDrawer(state) {
+      if (state.activeNewsItemId !== null || state.selectedCounty !== null) {
+        state.previousActiveNewsItemId = state.activeNewsItemId
+        state.previousSelectedCounty = state.selectedCounty
+        state.activeNewsItemId = null
+        state.selectedCounty = null
+      } else {
+        state.activeNewsItemId = state.previousActiveNewsItemId
+        state.selectedCounty = state.previousSelectedCounty
+        state.previousActiveNewsItemId = null
+        state.previousSelectedCounty = null
+      }
     },
     selectCounty(state, countyName) {
       state.selectedCounty = countyName
@@ -44,6 +57,9 @@ const store = new Vuex.Store({
       if (state.newsList.find(x => x.id === news.id)) return
 
       let location = { ...news.location }
+      for (const key of Object.keys(location)) {
+        location[key] = cleanString(location[key])
+      }
 
       if (state.cities.find(city => city.name === location.city)) {
 
@@ -81,10 +97,11 @@ const store = new Vuex.Store({
       commit('addNews', { ...news, location })
     },
     toggleActive: ({ state, dispatch }, news) => {
-      if (news.id === state.activeNewsItemId) dispatch('closeDrawer')
+      if (news.id === state.activeNewsItemId) dispatch('toggleDrawer')
       else dispatch('setActiveNewsItemId', news.id)
+      dispatch('selectCounty', news.location.county)
     },
-    closeDrawer: ({ commit }) => commit('closeDrawer'),
+    toggleDrawer: ({ commit }) => commit('toggleDrawer'),
     selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
     setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
     countyClick: ({ dispatch }, county) => {
