@@ -2,14 +2,14 @@
 // Get configuration things
 require('dotenv').config();
 // Import socket.io and hook it up to http-server
-const io = require('socket.io')();
-const MicroserviceHandler = require('./src/MicroserviceHandler');
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
-const ws_host = process.env.WS_HOST;
-const ws_port = process.env.WS_PORT;
-const mock_host = process.env.MOCK_HOST;
-const mock_port = process.env.MOCK_PORT;
-const SERVER_PORT = process.env.SERVER_PORT;
+const MicroserviceHandler = require('./src/MicroserviceHandler');
+const routes = require('./src/Routes');
+
+const { WS_PORT, SERVER_PORT } = process.env;
 
 const availableServices = ['tt', 'svt'];
 const clients = {};
@@ -18,6 +18,8 @@ const clients = {};
 
 // Hook up the websocket server to the http server
 // Verify the services are available
+app.use('/api', routes);
+
 io.use((socket, next) => {
   const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
   const { services } = JSON.parse(servicesString.trim());
@@ -65,4 +67,5 @@ const ms = new MicroserviceHandler((service, data) => {
 
 
 ms.listen(SERVER_PORT);
-io.listen(ws_port);
+server.listen(WS_PORT);
+console.log(`Listening for sockets and API requests on: ${WS_PORT}`);
