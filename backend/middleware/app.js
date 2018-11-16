@@ -62,7 +62,12 @@ io.on('connection', (socket) => {
 
 const ms = new MicroserviceHandler((service, data) => {
   // console.log(`Got data from the following service: ${service}`);
-  io.to(service).emit('news', data);
+
+  if (Array.isArray(data)) {
+    io.to(service).emit('news_list', data);
+  } else {
+    io.to(service).emit('news', data);
+  }
 });
 
 
