@@ -15,40 +15,42 @@ svg.mapContainer {
   width:100%;
   height:100%;
   background-color: $white;
-}
 
-svg.mapContainer g.map {
-  margin: auto;
-  display: block;
-}
+  g.map {
+    margin: auto;
+    display: block;
 
-svg.mapContainer g.map path.country {
-  stroke: $white;
-  stroke-width: 0.5px;
-  stroke-opacity: 1;
-  fill: black;
-  fill-opacity: 0.3;
-}
-svg.mapContainer g.map path.county {
-  stroke: $white;
-  stroke-width: 0.5px;
-  stroke-opacity: 1;
-  fill: $darkgreen;
-  fill-opacity: 1;
-}
+    path {
+      &.country, &.county, &.municipality {
+        stroke: $white;
+        stroke-width: 0.5px;
+        stroke-opacity: 1;
+      }
 
-svg.mapContainer g.map path.municipality {
-  stroke: $white;
-  stroke-width: 0.5px;
-  stroke-opacity: 1;
-  fill: $darkblue;
-  fill-opacity: 1;
-}
+      &.county, &.municipality {
+        fill-opacity: 1;
+      }
 
-svg.mapContainer g.map path.county:hover {
-  fill: $darkblue;
-}
-
-svg.mapContainer g.map path.municipality:hover {
-  fill: $lightblue;
+      &.country {
+        fill-opacity: 0.3;
+        fill: black;
+      }
+  
+      &.county {
+        fill: $darkgreen;
+      }
+  
+      &.municipality {
+        fill: $darkblue;
+      }
+  
+      &.county:hover {
+        fill: $darkblue;
+      }
+  
+      &.municipality:hover {
+        fill: $lightblue;
+      }
+    }
+  }
 }
