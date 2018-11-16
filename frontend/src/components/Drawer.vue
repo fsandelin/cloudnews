@@ -5,7 +5,7 @@
     <slot></slot>
     <drawerhandle
       v-bind:isOpen="isOpen"
-      v-bind:closeDrawer="closeDrawer">
+      v-bind:toggleDrawer="toggleDrawer">
     </drawerhandle>
   </div>
 </template>
@@ -15,7 +15,7 @@ import DrawerHandle from './DrawerHandle';
 
 export default {
   name: 'drawer',
-  props: ['closeDrawer', 'isOpen'],
+  props: ['toggleDrawer', 'isOpen'],
   components: {
     'drawerhandle': DrawerHandle,
   }
