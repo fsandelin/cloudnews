@@ -31,6 +31,12 @@ const store = new Vuex.Store({
     },
     toggleDrawer(state) {
       if (state.activeNewsItemId !== null || state.selectedCounty !== null) {
+        // Activate the county and deactivate the municipalities
+        for (const county of state.counties) {
+          if (!county.active) county.active = true
+        }
+        state.municipalities.map(municipality => municipality.active = false)
+
         state.previousActiveNewsItemId = state.activeNewsItemId
         state.previousSelectedCounty = state.selectedCounty
         state.activeNewsItemId = null
@@ -40,6 +46,10 @@ const store = new Vuex.Store({
         state.selectedCounty = state.previousSelectedCounty
         state.previousActiveNewsItemId = null
         state.previousSelectedCounty = null
+
+        // Deactivate the county and activate the municipalities
+        state.counties.map(county => county.active = !(county.name === state.selectedCounty));
+        state.municipalities.map(municipality => municipality.active = municipality.county === state.selectedCounty)
       }
     },
     selectCounty(state, countyName) {
