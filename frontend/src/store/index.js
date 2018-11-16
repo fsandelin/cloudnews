@@ -174,8 +174,7 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production'
 })
 
-const SERVER = true
-if (SERVER) {
+if (process.env.SOCKET_CONNECTION) {
   const event = 'news'
   const url = 'http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0='
   const action = m.ADD_NEWS
