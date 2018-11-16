@@ -178,9 +178,10 @@ const store = new Vuex.Store({
 })
 
 if (process.env.SOCKET_CONNECTION) {
+  const baseUrl = 'http://localhost:3020/'
   const events = [
-    { url: 'http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=', event: 'news', action: a.ADD_NEWS },
-    { url: 'http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0=', event: 'news_list', action: a.ADD_NEWS_LIST },
+    { url: `${baseUrl}?services=tt`, event: 'news', action: a.ADD_NEWS },
+    { url: `${baseUrl}?services=tt+svt`, event: 'news_list', action: a.ADD_NEWS_LIST },
   ]
   addWebSocket(store)(events)
 }
