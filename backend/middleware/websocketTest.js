@@ -13,8 +13,10 @@ socket.on('connect', () => {
   readStuffs();
 });
 socket.on('news', (data) => {
-  console.log(`Has received the following news: ${data[0].title}`);
-  console.log(`Has received the following news: ${data[1].title}`);
+  console.log(`Has received the following news items: ${JSON.stringify(data)}`);
+});
+socket.on('news_list', (data) => {
+  console.log(`Has received the following news items: ${data[0].title}`);
 });
 socket.on('error', (data) => {
   console.log(data);
