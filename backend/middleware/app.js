@@ -21,8 +21,8 @@ const clients = {};
 app.use('/api', routes);
 
 io.use((socket, next) => {
-  const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-  const { services } = JSON.parse(servicesString.trim());
+  const servicesString = socket.handshake.query.services
+  const services = servicesString.split('+').map(service => service.trim())
   let verified = true;
   let service = null;
   for (let i = 0; i < services.length; i++) {
@@ -39,8 +39,8 @@ io.use((socket, next) => {
 
 io.on('connection', (socket) => {
   console.log('Someone connected');
-  const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-  const { services } = JSON.parse(servicesString.trim());
+  const servicesString = socket.handshake.query.services
+  const services = servicesString.split('+').map(service => service.trim())
 
   clients[socket.id] = {
     socket,

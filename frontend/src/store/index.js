@@ -96,6 +96,9 @@ const store = new Vuex.Store({
 
       commit(m.ADD_NEWS, { ...news, location })
     },
+    addNewsList: ({ dispatch }, newsList) => {
+      newsList.map(news => dispatch(a.ADD_NEWS, news))
+    },
     toggleActive: ({ state, dispatch }, news) => {
       if (news.id === state.activeNewsItemId) dispatch(a.TOGGLE_DRAWER)
       else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
@@ -174,12 +177,13 @@ const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production'
 })
 
-const SERVER = true
-if (SERVER) {
-  const event = 'news'
-  const url = 'http://localhost:3020/?services=eyJzZXJ2aWNlcyI6IFsidHQiXX0='
-  const action = m.ADD_NEWS
-  addWebSocket(store)(event, url, action)
+if (process.env.SOCKET_CONNECTION) {
+  const baseUrl = 'http://localhost:3020/'
+  const events = [
+    { url: `${baseUrl}?services=tt`, event: 'news', action: a.ADD_NEWS },
+    { url: `${baseUrl}?services=tt+svt`, event: 'news_list', action: a.ADD_NEWS_LIST },
+  ]
+  addWebSocket(store)(events)
 }
 
 export default store;
