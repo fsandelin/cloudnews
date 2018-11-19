@@ -48,11 +48,10 @@ export default {
           : height/500;
 
     
-    let $this = this;
-    function zoomed() {
+    const zoomed = () => {
       d3.select(".map").attr("transform", d3.event.transform);
-      if (d3.event.transform.k !== $this.getZoomValue) {
-        $this.setZoomValue(d3.event.transform.k);
+      if (d3.event.transform.k !== this.getZoomValue) {
+        this.setZoomValue(d3.event.transform.k);
       }
     }
 
