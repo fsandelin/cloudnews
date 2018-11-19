@@ -1,7 +1,6 @@
 #!/usr/bin/python3.7
 # -*- coding: iso-8859-15 -*-
 import os, sys, requests, json, math
-import numpy as np
 from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
@@ -15,7 +14,7 @@ from bs4 import BeautifulSoup
 
 from flask import jsonify
 import pytz
-utc=pytz.UTC
+UTC=pytz.UTC
 
 try:
     # For Python 3.0 and later
@@ -26,12 +25,12 @@ except ImportError:
 
 try:
     # If runing from restapi
-    from scrapers.svt.svt_region import lokal_names, svt_regions, used_regions
+    from scrapers.svt.svt_region import svt_regions, used_regions
     from scrapers.svt.svt_web_scraping import *
     from scrapers.svt.time_checks import *
     from scrapers.svt.constants import *
 except ImportError:
-    from svt_region import lokal_names, svt_regions, used_regions
+    from svt_region import svt_regions, used_regions
     from svt_web_scraping import *
     from time_checks import *
     from constants import *

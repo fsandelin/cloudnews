@@ -62,12 +62,10 @@ def get_news(URL, REGION):
 
     return json_data
 
-def get_tatort_municipality():
+def get_wiki_table(url, filename, data_names, index):
     
-
-
     # Initiate the Beautiful soup
-    content = urlopen("https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_t%C3%A4torter").read()
+    content = urlopen(url).read()
     soup = BeautifulSoup(content, features='lxml')
 
     data = []
@@ -84,20 +82,42 @@ def get_tatort_municipality():
         cols = [ele.text.strip() for ele in cols]
         data.append([ele for ele in cols if ele]) 
     
-    data = [ele[:2] for ele in data[1:]]
-    print(data[1])
+    data = [ele[index[0]:index[1]] for ele in data[1:]]
 
-    f = open("sveriges_tatort.py", "w")
-    f.write("sveriges_tatort = [")
+    group_names = set()
+
     for ele in data:
-        f.write(str(ele) + ",")
-    f.write("]")
-    f.close
-    #print(table)
-    #city_muni = table.findAll("tr")
-    #print(city_muni[1])
-    #for elm in city_muni:
-        
-    #    print (elm.findAll("td"))
+        group_names.add(ele[1])
 
-get_tatort_municipality()
+    
+    f = open(filename, "w")
+
+    f.write(data_names[1] + " = [")
+    first = True
+    for ele in group_names:
+        if first:
+            first = False
+        else:
+            f.write(",\n")
+        f.write("\"" + ele + "\"")
+    f.write("]\n")
+
+    f.write(data_names[0] + " = [")
+    first = True
+    for ele in data:
+        if first:
+            first = False
+        else:
+            f.write(",\n")
+        f.write(str(ele))
+    f.write("]\n")
+
+    f.close
+
+def main():
+    url2 = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_t%C3%A4torter"
+    url = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_kommuner"
+    get_wiki_table(url, "kommun_lan.py", ["kommun_lan", "lan"], [1,3])
+
+if __name__ == "__main__":
+    main()

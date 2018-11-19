@@ -41,11 +41,11 @@ def check_json_time(json_news, time_date, choice = LATER):
         return news_dt > time_date
 
 def check_json_time_range(json_news, from_, until_):
-    global utc
+    global UTC
     news_dt = parser.parse(get_dict(json_news)['datetime'])
-    news_dt   = news_dt.replace(tzinfo=utc)
-    from_ = from_.replace(tzinfo=utc)
-    until_ = until_.replace(tzinfo=utc)   
+    news_dt   = news_dt.replace(tzinfo=UTC)
+    from_ = from_.replace(tzinfo=UTC)
+    until_ = until_.replace(tzinfo=UTC)   
 
     return (news_dt > from_ and news_dt < until_)
 
@@ -55,14 +55,14 @@ def get_time_diff(first_item, last_item):
     # datetime is the key we use
 
     if isinstance(first_item, datetime):
-        first_dt = first_item.replace(tzinfo=utc)    
+        first_dt = first_item.replace(tzinfo=UTC)    
     elif 'published' in first_item:
         first_dt = parser.parse(first_item['published'])
     elif 'datetime' in first_item:
         first_dt = parser.parse(first_item['datetime'])
     
     if isinstance(last_item, datetime):
-        last_dt = last_item.replace(tzinfo=utc)       
+        last_dt = last_item.replace(tzinfo=UTC)       
     elif 'published' in last_item:
         last_dt = parser.parse(last_item['published'])
     elif 'datetime' in last_item:
