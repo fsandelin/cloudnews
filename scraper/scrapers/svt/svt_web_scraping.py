@@ -1,7 +1,7 @@
 
 from bs4 import BeautifulSoup
 from flask import jsonify
-import pytz
+import pytz, json
 utc=pytz.UTC
 
 from dateutil import parser
@@ -61,3 +61,43 @@ def get_news(URL, REGION):
     json_data = json.dumps(news, indent=4, sort_keys=True, default=str)
 
     return json_data
+
+def get_tatort_municipality():
+    
+
+
+    # Initiate the Beautiful soup
+    content = urlopen("https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_t%C3%A4torter").read()
+    soup = BeautifulSoup(content, features='lxml')
+
+    data = []
+
+    # Get the table with information
+    table = soup.find('table', attrs={"class" : "sortable wikitable"})
+    
+
+    table_body = table.find('tbody')
+    rows = table_body.find_all('tr')
+
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        data.append([ele for ele in cols if ele]) 
+    
+    data = [ele[:2] for ele in data[1:]]
+    print(data[1])
+
+    f = open("sveriges_tatort.py", "w")
+    f.write("sveriges_tatort = [")
+    for ele in data:
+        f.write(str(ele) + ",")
+    f.write("]")
+    f.close
+    #print(table)
+    #city_muni = table.findAll("tr")
+    #print(city_muni[1])
+    #for elm in city_muni:
+        
+    #    print (elm.findAll("td"))
+
+get_tatort_municipality()

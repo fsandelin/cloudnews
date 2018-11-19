@@ -1,5 +1,3 @@
-from operator import methodcaller
-
 svt_regions = [
 "/nyheter/lokalt/blekinge/",
 "/nyheter/lokalt/dalarna/",
@@ -44,11 +42,26 @@ used_regions = [svt_regions[0],
                 svt_regions[20]]
 
 
-lokal_names = map(methodcaller("split", '/'), svt_regions)
+svt_lokala_namn = [
+"Blekinge",
+"Dalarna",
+"Gävleborg",
+"Halland",
+"Helsingborg",
+"Jämtland",
+"Jönköping",
+"Norrbotten",
+"Skåne",
+"Småland",
+"Stockholm",
+"Södertälje",
+"Sörmland",
+"Uppsala",
+"Värmland",
+"Väst",
+"Västerbotten",
+"Västernorrland",
+"Västmanland",
+"Örebro",
+"Öst"]
 
-temp_names = []
-
-for url in lokal_names:
-    temp_names.append(url[3])
-
-lokal_names = temp_names

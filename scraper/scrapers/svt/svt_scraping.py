@@ -24,18 +24,17 @@ except ImportError:
     # Fall back to Python 2's urllib2
     from urllib2 import urlopen
 
-
-from constants import *
-
 try:
     # If runing from restapi
     from scrapers.svt.svt_region import lokal_names, svt_regions, used_regions
     from scrapers.svt.svt_web_scraping import *
     from scrapers.svt.time_checks import *
+    from scrapers.svt.constants import *
 except ImportError:
     from svt_region import lokal_names, svt_regions, used_regions
     from svt_web_scraping import *
     from time_checks import *
+    from constants import *
 
 
 def get_lokal_news(URL):
@@ -115,8 +114,6 @@ def get_lokal_api_object(region = "/nyheter/lokalt/uppsala/", amount = 50, page 
     api_obj = r.json(encoding='utf-16')
     
     return api_obj
-
-
 
 def get_news_time_range_region(region, from_, until_):
     # Get max page info from this region
@@ -273,8 +270,6 @@ def get_api_obj():
 
 def main():
     presenting_representing()
-    #get_api_obj()
-
 
 if __name__ == "__main__":
     main() 

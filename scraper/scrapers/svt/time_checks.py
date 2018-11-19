@@ -1,11 +1,15 @@
 from dateutil import parser
 from datetime import datetime, timedelta
 
-from constants import *
+
 import json
 
 import pytz
-utc=pytz.UTC
+
+
+UTC=pytz.UTC
+EARLIER = True
+LATER = False
 
 
 def get_dict(json_obj):
@@ -25,12 +29,11 @@ def time_range(time_to_check, target_time, days = 0):
     time_diff = time_diff / timedelta( days = 1)
     print(time_diff)
 
-
 def check_json_time(json_news, time_date, choice = LATER):
-    global utc
+    global UTC
     news_dt = parser.parse(get_dict(json_news)['datetime'])
-    news_dt   = news_dt.replace(tzinfo=utc)
-    time_date = time_date.replace(tzinfo=utc)   
+    news_dt   = news_dt.replace(tzinfo=UTC)
+    time_date = time_date.replace(tzinfo=UTC)   
 
     if choice == EARLIER:
         return news_dt < time_date
