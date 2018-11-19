@@ -1,6 +1,8 @@
 export const mutations = {
+  ADD_SOCKET_CONNECTIONS: 'addSocketConnections',
   ADD_NEWS: 'addNews',
-  SELECT_COUNTY: 'selectCounty'
+  SELECT_COUNTY: 'selectCounty',
+  ADD_SOCKET_SOURCE: 'addSocketSource'
 }
 
 export const actions = {
@@ -8,7 +10,8 @@ export const actions = {
   ADD_NEWS_LIST: 'addNewsList',
   TOGGLE_DRAWER: 'toggleDrawer',
   SELECT_ACTIVE_NEWS_ITEM_ID: 'setActiveNewsItemId',
-  SELECT_COUNTY: 'selectCounty'
+  SELECT_COUNTY: 'selectCounty',
+  ADD_SOCKET_ID: 'addSocketId',
 }
 
 export const newsSources = {

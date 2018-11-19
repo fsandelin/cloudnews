@@ -24,9 +24,20 @@ const store = new Vuex.Store({
     activeNewsItemId: null,
     selectedCounty: null,
     previousActiveNewsItemId: null,
-    previousSelectedCounty: null
+    previousSelectedCounty: null,
+    socketConnections: []
   },
   mutations: {
+    addSocketSource(state, source) {
+      state.socketConnections = [ ...state.socketConnections, { source, ids: [] }]
+    },
+    addSocketId(state, { source, id }) {
+      state.socketConnections= state.socketConnections.map(connection => {
+        return connection.source === source ?
+          { ...connection, ids: [ ...connection.ids, id ] } :
+          connection
+      })
+    },
     addNews(state, news) {
       state.newsList = [ ...state.newsList, news ]
     },
@@ -68,13 +79,20 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    addNewsSources: (store, newsSources) => {
-      const combinedNewsSources = newsSources.reduce((source, acc) => `${acc}+${source}`)
-      const events = [
-        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS, action: a.ADD_NEWS },
-        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
-      ]
-      addWebSocket(store)(events)
+    addNewsSources: ({ state, dispatch, commit }, newsSources) => {
+
+      newsSources.map(source => {
+        const events = [
+          { url: `${socketServiceUrl}${source}`, event: se.NEWS, action: a.ADD_NEWS },
+          { url: `${socketServiceUrl}${source}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
+        ]
+
+        if (!state.socketConnections.find(connection => connection.source === source)) {
+          commit(m.ADD_SOCKET_SOURCE, source)
+        }
+
+        addWebSocket(dispatch, commit)(source, events)
+      })
     },
     addNews: ({ state, commit }, news) => {
       if (state.newsList.find(x => x.id === news.id)) return
@@ -190,11 +208,11 @@ const store = new Vuex.Store({
     },
     getCountyByName: (state) => (name) => {
       if (name === undefined) return null;
-      return state.counties.find(county => county.name.toLowerCase().trim() === name.toLowerCase().trim());
+      return state.counties.find(county => cleanString(county.name) === cleanString(name));
     },
     getMunicipalityByName: (state) => (name) => {
       if (name === undefined) return null;
-      return state.municipalities.find(municipality => municipality.name.toLowerCase().trim() === name.toLowerCase().trim());
+      return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name));
     }
   },
   strict: process.env.NODE_ENV !== 'production'
