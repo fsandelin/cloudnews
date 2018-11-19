@@ -4,7 +4,6 @@
       class="circle-county"
       v-for="county of newsByCounty"
       v-bind:key="'countyNewsNotification'+county.name"
-      v-show="county.active"
       v-bind:cx="county.x+'px'"
       v-bind:cy="county.y+'px'"
       v-bind:r="circleSize(county.news.length)+'px'">
@@ -14,7 +13,6 @@
         class="circle-number"
         v-for="county of newsByCounty"
         v-bind:key="'countyNewsNotificationText'+county.name"
-        v-show="county.active"
         text-anchor="middle"
         v-bind:x="county.x+'px'"
         v-bind:y="county.y+'px'"
