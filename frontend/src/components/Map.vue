@@ -47,13 +47,18 @@ export default {
           ? width/500
           : height/500;
 
+    
+    let $this = this;
     function zoomed() {
       d3.select(".map").attr("transform", d3.event.transform);
+      if (d3.event.transform.k !== $this.getZoomValue) {
+        $this.setZoomValue(d3.event.transform.k);
+      }
     }
 
     const zoom = d3
       .zoom()
-      .scaleExtent([0.7, 20])
+      .scaleExtent([0.7, 50])
       .on("zoom", zoomed);
 
     d3.select(".mapContainer").call(zoom);
@@ -66,11 +71,13 @@ export default {
       'countries',
       'counties',
       'municipalities',
+      'getZoomValue'
     ])
   },
   methods: {
     ...mapActions([
-      'countyClick'
+      'countyClick',
+      'setZoomValue'
     ])
   }
 }

@@ -38,7 +38,7 @@ export default {
     ]),
     applyFilter: function () {
       const municipality = this.getMunicipalityByName(this.news.location.municipality);
-      const countyName = municipality !== null ? municipality.county : null;
+      const countyName = municipality ? municipality.county : null;
       return this.showFilter && countyName === this.selectedCounty;
     }
   },
