@@ -3,10 +3,9 @@
     <circle
       class="circle-municipality"
       v-for="municipality of newsByMunicipality"
-      v-if="municipality.county === selectedCounty"
       v-bind:key="'newsNotification'+municipality.name"
-      v-bind:cx="municipality.county.active ? municipality.county.x : municipality.x +'px'"
-      v-bind:cy="municipality.county.active ? municipality.county.y : municipality.y +'px'"
+      v-bind:cx="selectedCounty !== municipality.county ? municipality.countyX : municipality.x +'px'"
+      v-bind:cy="selectedCounty !== municipality.county ? municipality.countyY : municipality.y +'px'"
       v-bind:r="circleSize(municipality.news.length)+'px'">
     </circle>
     <circle
@@ -58,17 +57,18 @@ export default {
       'selectedCounty',
       'newsByCounty',
       'newsByMunicipality',
+      'getZoomValue',
     ])
   },
   methods: {
     circleSize: function (length) {
-      return (4+(length/2));
+      return (4+(length/2)) * (1/Math.max(this.getZoomValue/2.5, 1.0));
     },
     fontSize: function (length) {
-      return (4+(length/2));
+      return (4+(length/2)) * (1/Math.max(this.getZoomValue/2.5, 1.0));
     },
     yOffset: function (length) {
-      return (4+(length/2))/3;
+      return (4+(length/2))/3 * (1/Math.max(this.getZoomValue/2.5, 1.0));
     }
   }
 }
