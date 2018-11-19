@@ -1,42 +1,44 @@
 <template>
   <svg class="mapContainer">
     <g class="map">
-      <path
-        class="country"
-        v-for="country in countries"
-        v-bind:key="country.key"
-        v-bind:d="country.path">
-      </path>
-      <path
-        class="municipality"
-        v-for="municipality in this.municipalities"
-        v-bind:key="municipality.key"
-        v-show="municipality.active"
-        v-bind:d="municipality.path">
-      </path>
-      <path
-        class="county"
-        v-for="county in counties"
-        v-bind:key="county.key"
-        v-show="county.active"
-        v-bind:d="county.path"
-        v-on:click="countyClick(county)">
-      </path>
-      <mapNotifications>
-      </mapNotifications>
+      <g>
+        <path
+          class="country"
+          v-for="country in countries"
+          v-bind:key="country.key"
+          v-bind:d="country.path">
+        </path>
+        <path
+          class="municipality"
+          v-for="municipality in this.municipalities"
+          v-bind:key="municipality.key"
+          v-show="municipality.active"
+          v-bind:d="municipality.path">
+        </path>
+        <path
+          class="county"
+          v-for="county in counties"
+          v-bind:key="county.key"
+          v-show="county.active"
+          v-bind:d="county.path"
+          v-on:click="countyClick(county)">
+        </path>
+      </g>
+      <notifications>
+      </notifications>
     </g>
   </svg>
 </template>
 
 <script>
 import * as d3 from "d3";
-import MapNotifications from './MapNotifications'
+import Notifications from './Notifications'
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "d3map",
   components: {
-    'mapNotifications': MapNotifications
+    'notifications': Notifications
   },
   mounted: function() {
     const RATIO = 2.1;
