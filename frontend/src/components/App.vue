@@ -31,6 +31,7 @@ import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
 import { mapGetters, mapActions } from 'vuex';
 import { fakeNewsList } from '../assets/FakeData'
+import { newsSources as ns } from '../store/constants'
 
 export default {
   name: 'app',
@@ -45,6 +46,9 @@ export default {
   },
   created: function () {
     fakeNewsList.map(newsItem => this.addNews(newsItem))
+    if (process.env.SOCKET_CONNECTION) {
+      this.addNewsSources([ns.SVT, ns.TT])
+    }
   },
   computed: {
     ...mapGetters([
@@ -64,6 +68,7 @@ export default {
       'addNews',
       'toggleDrawer',
       'setActiveNewsItemId',
+      'addNewsSources'
     ]),
   },
   components: {

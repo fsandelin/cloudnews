@@ -4,7 +4,12 @@ import europeCountries from '../assets/europe-countries-meta-info.json';
 import swedishCounties from '../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
 import addWebSocket from './webSocketConnection';
-import { mutations as m, actions as a } from './constants';
+import {
+  mutations as m,
+  actions as a,
+  socketEvents as se,
+  socketServiceUrl
+} from './constants';
 import { cleanString } from './helpers';
 
 Vue.use(Vuex)
@@ -25,7 +30,7 @@ const store = new Vuex.Store({
     addNews(state, news) {
       state.newsList = [ ...state.newsList, news ]
     },
-    toggleActive(state, news) {
+    toggleActive(state) {
       state.activeNewsItemId = null
       state.selectedCounty = null
     },
@@ -63,6 +68,14 @@ const store = new Vuex.Store({
     },
   },
   actions: {
+    addNewsSources: (store, newsSources) => {
+      const combinedNewsSources = newsSources.reduce((source, acc) => `${acc}+${source}`)
+      const events = [
+        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS, action: a.ADD_NEWS },
+        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
+      ]
+      addWebSocket(store)(events)
+    },
     addNews: ({ state, commit }, news) => {
       if (state.newsList.find(x => x.id === news.id)) return
 
@@ -186,14 +199,5 @@ const store = new Vuex.Store({
   },
   strict: process.env.NODE_ENV !== 'production'
 })
-
-if (process.env.SOCKET_CONNECTION) {
-  const baseUrl = 'http://localhost:3020/'
-  const events = [
-    { url: `${baseUrl}?services=tt`, event: 'news', action: a.ADD_NEWS },
-    { url: `${baseUrl}?services=tt+svt`, event: 'news_list', action: a.ADD_NEWS_LIST },
-  ]
-  addWebSocket(store)(events)
-}
 
 export default store;

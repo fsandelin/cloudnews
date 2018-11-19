@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const addWebSocket = store => (events) => {
+const addWebSocket = store => events => {
   events.map(({ url, event, action }) => {
     const socket = io(url)
     socket.on(event, (data) => {
