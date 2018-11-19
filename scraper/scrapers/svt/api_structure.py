@@ -2,6 +2,37 @@
 auto	
     name	"auto"
     content	[index]
+        "image": {
+                    "title"         : "Skolsköterskan Eva-Maria Racutanu har träffat många unga utsatta flickor.",
+                    "photographer"  : "SVT",
+                    "id"            : 19923254,
+                    "version"       : 1541438289,
+                    "alternateSrc"  : "https://www.svtstatic.se/image-cms/svtse/1541438289/svts/article19923254.svt/alternates/{image_versions.name}/kropp-jpg",
+                    "url"           : "https://www.svtstatic.se/image-cms/svtse/1541438289/svts/article19923254.svt/BINARY/original/kropp-jpg",
+                    "isVideo"       : false,
+                    "video"         : false
+                }
+
+        "image": {
+                    "title": "Skolsköterskan Eva-Maria Racutanu förklarar hur en könsstympning går till och vilka risker ingreppet kan innebära.",
+                    "photographer": "SVT",
+                    "id": 19922874,
+                    "version": 1541438450,
+                    "alternateSrc": "https://www.svtstatic.se/image-cms/svtse/1541438450/svts/article19922874.svt/alternates/{image_versions.name}/stymp-jpg",
+                    "videoReferences": [
+                        {
+                            "videourl": "http://svtklipp4a-vh.akamaihd.net/i/world/open/20181105/ES-2018-1105-VOD-KONSSTYMPNING-WITHCG.dif/ES-2018-1105-VOD-KONSSTYMPNING-WITHCG.dif_,988,240,348,456,636,1680,2796,.mp4.csmil/master.m3u8?alt=http%3A%2F%2Fswitcher.cdn.svt.se%2FES-2018-1105-VOD-KONSSTYMPNING-WITHCG_8705048a.m3u8",
+                            "spelartyp": "hlswebvtt"
+                        },
+                        {
+                            "videourl": "http://svtklipp4a-vh.akamaihd.net/i/world/open/20181105/ES-2018-1105-VOD-KONSSTYMPNING-WITHCG.dif/ES-2018-1105-VOD-KONSSTYMPNING-WITHCG.dif_,988,240,348,456,636,1680,2796,.mp4.csmil/master.m3u8?alt=http%3A%2F%2Fswitcher.cdn.svt.se%2FES-2018-1105-VOD-KONSSTYMPNING-WITHCG_8705048a.m3u8",
+                            "spelartyp": "ios"
+                        },
+                        {
+                            "videourl": "http://svtklipp4a-vh.akamaihd.net/d/world/open/delivery/20181105/ES-2018-1105-VOD-KONSSTYMPNING-WITHCG.dif/dash-live/ES-2018-1105-VOD-KONSSTYMPNING-WITHCG.dif-5feb635f-9dc6-4122-b246-44f6817686ea-542be6ae-4a39-336d-34bf-10ee999090e2-live.mpd?alt=http%3A%2F%2Fswitcher.cdn.svt.se%2FES-2018-1105-VOD-KONSSTYMPNING-WITHCG_8705048a.mpd",
+                            "spelartyp": "dashhbbtv"
+                        }
+                    ]
         "text"          : "En anställd på en grundskola i Katrineholm åtalas misstänkt för misshandel. Han ska ha slagit till en elev i huvudet eftersom hen var högljudd under en lektion.",
         "standalone"    : false,
         "url"           : "/nyheter/lokalt/sormland/skolpersonal-atalas-for-slag-mot-elev",
