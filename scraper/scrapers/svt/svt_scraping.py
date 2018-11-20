@@ -5,6 +5,7 @@ from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
 
+from scraper.scrapers.location_search import search_text
 
 import uuid
 import random
@@ -63,6 +64,12 @@ def reform_api_news(svt_news_list):
         # Extract the wanted information
         if 'title'              in svt_news:
             news['title']       = svt_news['title']
+
+        if 'vignette'              in svt_news:
+            news['lead']       = svt_news['vignette']
+
+        if 'text'              in svt_news:
+            news['body']       = svt_news['text']
 
         if 'published'          in svt_news:
             news['datetime']    = svt_news['published']

@@ -1,11 +1,12 @@
 try:
-    from scrapers.tatort_kommun import tatort, kommuner
-    from scrapers.kommun_lan import kommun_lan, lan, lan_kommun
+    from scrapers.lan_kommun_tatort import lan, lan_kommun, kommun_tatort
+    from scrapers.svt.svt_web_scraping import get_news
 except ImportError:
-    from tatort_kommun import tatort, kommuner
-    from kommun_lan import kommun_lan, lan, lan_kommun
+    from lan_kommun_tatort import lan, lan_kommun, kommun_tatort
+    from svt.svt_web_scraping import get_news
 
 import json, requests, uuid
+from difflib import SequenceMatcher
 
 api = "https://api.svt.se/nss-api/page"
 URL_SVT = "https://www.svt.se"
@@ -21,27 +22,77 @@ LAST = -1
 
 #from svt_scraping import *
 
-def search_text(text, region = None):
-    # Look for tatort
-    
-    capital_words = [word for word in text.split() if word[0].isupper()]
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
+def city_in_text(city, words):
+    for word in words:
+        if similar(word, city) > 0.8:
+            return True
+    return False
+
+def find_location(region, capital_words):
     location = {}
     # look through county, muni, and then city
     #print (lan_kommun[region])
+    #local_tatort = [city for city in tatort if city[1] in lan_kommun[region]]
+
+    city_found = False
+    for kommun in lan_kommun[region]:
+        try:
+            for city in kommun_tatort[kommun]:
+                if city_in_text(city, capital_words):
+                    location['city'] = city
+                    location['municipality'] = kommun
+                    city_found = True
+                    break
+        except KeyError:
+            pass
+
+        if city_found:
+            break
+
+    return location
+
+def search_text(news):
+    # Look for tatort
     
-    for word in capital_words:
-        for city in tatort:
-            if word == city[0]:
-                location['city'] = city[0]
-                location['municipality'] = city[1]
-                location['county'] = region
-                location['conutry'] = "Sweden"
+    text = news['title'] + " "
+    if 'lead' in news:
+        text += news['lead'] + " "
+    if 'body' in news:
+        text += news['body']
+
+    region  = news['location']['county']
+
+    capital_words = [word for word in text.split() if word[0].isupper()]
+
+    location = find_location(region, capital_words)
+
+    #print (local_tatort)
+    #for word in capital_words:
+    #    for city in local_tatort:
+    #        if word == city[0]:
+    #            location['city'] = city[0]
+    #            location['municipality'] = city[1]
+    #            location['conutry'] = "Sweden"
     
-    if bool(location):
-        print(text)
-        print(capital_words, location)
-        print("")
+    if not bool(location):
+        web_news = get_news(news['url'], region)
+        text = json.loads(web_news)['body']
+        location = find_location(region, [word for word in text.split() if word[0].isupper()])
+
+    location['county'] = region
+    location['country'] = "Sweden"
+
+    news['location'] = location
+
+    #print(text)
+    print(capital_words, location)
+    #print(news['url'])
+    #print("")
+
+    return news
     
 
 def reform_api_news(svt_news_list):
@@ -55,11 +106,11 @@ def reform_api_news(svt_news_list):
         if 'title'              in svt_news:
             news['title']       = svt_news['title']
 
-        if 'lead'              in svt_news:
-            news['lead']       = svt_news['lead']
+        if 'vignette'              in svt_news:
+            news['lead']       = svt_news['vignette']
 
         if 'text'              in svt_news:
-            news['text']       = svt_news['text']
+            news['body']       = svt_news['text']
 
         if 'published'          in svt_news:
             news['datetime']    = svt_news['published']
@@ -80,7 +131,7 @@ def reform_api_news(svt_news_list):
 
     return cloud_news
 
-def get_lokal_api_news(region = "/nyheter/lokalt/stockholm/", amount = 50, page = 0): 
+def get_lokal_api_news(region = "/nyheter/lokalt/dalarna/", amount = 50, page = 1): 
     global params
     params_struct = params + param_limit + str(amount) + param_page + str(page)   
     URL_REGION = api + region + params_struct
@@ -94,14 +145,18 @@ def get_lokal_api_news(region = "/nyheter/lokalt/stockholm/", amount = 50, page 
 
 def test():
     news = get_lokal_api_news()
-    news = [json.loads(ele) for ele in news]
-    print("")
+    news = [json.loads(ele) for ele in news if 'Nyheter från dagen' not in json.loads(ele)['title']]
+    print("Amount of news:", len(news))
+    news = [search_text(ele) for ele in news]
+    amount = 0
     for ele in news:
-        search_text(ele['title'], ele['location']['county'])
-        if 'lead' in ele:
-            search_text(ele['lead'], ele['location']['county'])
-        if 'text' in ele:
-            search_text(ele['text'], ele['location']['county'])
+        if 'city' in ele['location']:
+            amount += 1
+        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
+
+    print("Amount of found cities:", amount)
+    #for ele in news:
+        #search_text(ele)
 
 def add_mun_lan():
     f = open("kommun_lan.py", 'a')
@@ -118,5 +173,22 @@ def add_mun_lan():
                 f.write("\"" + kommun[0] + "\"")
         f.write("],\n")
     f.write("}")
+
+def add_city_mun():
+    f = open("tarta.py", 'a')
+    f.write("kommun_tatort = {")
+    for k in kommuner:
+        f.write("\"" + k + "\":" + "[")
+        first = True
+        for city in tatort:
+            if city[1] in k:
+                if first:
+                    first = False
+                else:
+                    f.write(",")
+                f.write("\"" + city[0] + "\"")
+        f.write("],\n")
+    f.write("}")
+
 
 test()

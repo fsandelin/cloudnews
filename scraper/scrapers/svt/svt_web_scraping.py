@@ -117,6 +117,7 @@ def get_wiki_table(url, filename, data_names, index):
 def main():
     url2 = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_t%C3%A4torter"
     url = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_kommuner"
+    apan = "http://kodapan.se/geodata/data/2015-06-26/platser.osm.xml"
     get_wiki_table(url, "kommun_lan.py", ["kommun_lan", "lan"], [1,3])
 
 if __name__ == "__main__":
