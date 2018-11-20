@@ -5,12 +5,30 @@ export const mutations = {
 }
 
 export const actions = {
-  ADD_NEWS_SOURCE: 'addNewsSource',
   ADD_NEWS: 'addNews',
   ADD_NEWS_LIST: 'addNewsList',
-  TOGGLE_DRAWER: 'toggleDrawer',
+  ADD_NEWS_SOURCE: 'addNewsSource',
+  COUNTY_CLICK: 'countyClick',
   SELECT_ACTIVE_NEWS_ITEM_ID: 'setActiveNewsItemId',
   SELECT_COUNTY: 'selectCounty',
+  SET_ZOOM_VALUE: 'setZoomValue',
+  TOGGLE_ACTIVE: 'toggleActive',
+  TOGGLE_DRAWER: 'toggleDrawer',
+}
+
+export const getters = {
+  ACTIVE_NEWS_ITEM: 'activeNewsItem',
+  ACTIVE_NEWS_ITEM_ID: 'activeNewsItemId',
+  COUNTIES: 'counties',
+  COUNTRIES: 'countries',
+  COUNTY_BY_NAME: 'countyByName',
+  FILTERED_NEWS_LIST: 'filteredNewsList',
+  MUNICIPALITIES: 'municipalities',
+  NEWS_BY_COUNTY: 'newsByCounty',
+  NEWS_BY_MUNICIPALITY: 'newsByMunicipality',
+  NEWS_LIST: 'newsList',
+  SELECTED_COUNTY: 'selectedCounty',
+  ZOOM_VALUE: 'zoomValue',
 }
 
 export const newsSources = {

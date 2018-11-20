@@ -49,26 +49,27 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { getters as g } from '../store/constants'
 
 export default {
   name: "mapNotifications",
   computed: {
     ...mapGetters([
-      'selectedCounty',
-      'newsByCounty',
-      'newsByMunicipality',
-      'getZoomValue',
+      g.SELECTED_COUNTY,
+      g.NEWS_BY_COUNTY,
+      g.NEWS_BY_MUNICIPALITY,
+      g.ZOOM_VALUE
     ])
   },
   methods: {
     circleSize: function (length) {
-      return (4+(length/2)) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return (4+(length/2)) * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
     fontSize: function (length) {
-      return (4+(length/2)) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return (4+(length/2)) * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
     yOffset: function (length) {
-      return (4+(length/2))/3 * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return (4+(length/2))/3 * (1/Math.max(this.zoomValue/2.5, 1.0));
     }
   }
 }
