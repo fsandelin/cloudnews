@@ -5,8 +5,6 @@ import { cleanString } from '../helpers';
 import {
   mutations as m,
   actions as a,
-  socketEvents as se,
-  socketServiceUrl
 } from '../constants';
 
 const state = {
@@ -15,6 +13,7 @@ const state = {
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
   cities: [],
   selectedCounty: null,
+  previousSelectedCounty: null,
 }
 
 const getters = {
@@ -30,7 +29,7 @@ const getters = {
   selectedCounty: state => {
     return state.selectedCounty
   },
-  countyByName: (state) => (name = "") => {
+  countyByName: state => (name = "") => {
     return state.counties.find(county => cleanString(county.name) === cleanString(name));
   },
   municipalityByName: (state) => (name = "") => {
