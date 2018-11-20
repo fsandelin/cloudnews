@@ -8,7 +8,7 @@
 
     <drawer
       v-bind:isOpen="drawerIsOpen"
-      v-bind:closeDrawer="closeDrawer">
+      v-bind:toggleDrawer="toggleDrawer">
       <component
         v-if="activeNewsItem !== null"
         v-bind:is="dynamicComponents.drawerNewsItemComponent">
@@ -30,6 +30,7 @@ import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
 import { mapGetters, mapActions } from 'vuex';
+import { fakeNewsList } from '../assets/FakeData'
 
 export default {
   name: 'app',
@@ -42,8 +43,8 @@ export default {
       },
     }
   },
-  created: function() {
-    this.calculateNewsList();
+  created: function () {
+    fakeNewsList.map(newsItem => this.addNews(newsItem))
   },
   computed: {
     ...mapGetters([
@@ -51,8 +52,6 @@ export default {
       'activeNewsItemId',
       'selectedCounty',
       'newsList',
-      'countyNews',
-      'municipalityNews',
       'getMunicipalityByName',
       'getCountyByName'
     ]),
@@ -62,24 +61,10 @@ export default {
   },
   methods: {
     ...mapActions([
-      'closeDrawer',
+      'addNews',
+      'toggleDrawer',
       'setActiveNewsItemId',
-      'addCountyNews',
-      'addMunicipalityNews'
     ]),
-    calculateNewsList: function() {
-      for (const news of this.newsList) {
-        const municipality = this.getMunicipalityByName(news.location.municipality);
-        const county = this.getCountyByName(municipality.county);
-        const newsData = {
-          municipality: municipality,
-          county: county
-        }
-        this.addCountyNews({ news, newsData });
-        this.addMunicipalityNews({ news, newsData });
-        
-      }
-    },
   },
   components: {
     'mainsection': Main,
