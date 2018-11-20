@@ -169,12 +169,14 @@ const store = new Vuex.Store({
     selectedCountyNews: state => {
       return state.newsList.filter(({ location }) => location.county === state.selectedCounty)
     },
-    newsByCounty: state => {
+    newsByCounty: (state, getters) => {
       return state.counties.map(county => {
 
         return {
           ...county,
-          news: state.newsList.filter(({ location }) => location.county === county.name)
+          news: state.newsList.filter(({ location }) => {
+            return location.county === county.name;
+          })
         }
 
       }).filter(({ news }) => news.length > 0)
