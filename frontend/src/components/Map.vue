@@ -34,6 +34,10 @@
 import * as d3 from "d3";
 import Notifications from './Notifications'
 import { mapGetters, mapActions } from 'vuex';
+import {
+  getters as g,
+  actions as a
+} from '../store/constants'
 
 export default {
   name: "d3map",
@@ -49,10 +53,10 @@ export default {
           ? width/500
           : height/500;
 
-    
+
     const zoomed = () => {
       d3.select(".map").attr("transform", d3.event.transform);
-      if (d3.event.transform.k !== this.getZoomValue) {
+      if (d3.event.transform.k !== this.zoomValue) {
         this.setZoomValue(d3.event.transform.k);
       }
     }
@@ -69,16 +73,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'countries',
-      'counties',
-      'municipalities',
-      'getZoomValue'
+      g.COUNTRIES,
+      g.COUNTIES,
+      g.MUNICIPALITIES,
+      g.ZOOM_VALUE
     ])
   },
   methods: {
     ...mapActions([
-      'countyClick',
-      'setZoomValue'
+      a.COUNTY_CLICK,
+      a.SET_ZOOM_VALUE
     ])
   }
 }

@@ -14,6 +14,8 @@ import { cleanString } from './helpers';
 
 Vue.use(Vuex)
 
+let socketConnections = []
+
 const store = new Vuex.Store({
   state: {
     countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
@@ -72,13 +74,17 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    addNewsSources: (store, newsSources) => {
-      const combinedNewsSources = newsSources.reduce((source, acc) => `${acc}+${source}`)
+    addNewsSource: ({ dispatch }, source) => {
       const events = [
-        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS, action: a.ADD_NEWS },
-        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
+        { url: `${socketServiceUrl}${source}`, event: se.NEWS, action: a.ADD_NEWS },
+        { url: `${socketServiceUrl}${source}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
       ]
-      addWebSocket(store)(events)
+      socketConnections = [ ...socketConnections, { source, sockets: addWebSocket(dispatch)(events) } ]
+    },
+    removeNewsSource: ({}, source) => {
+      const socketConnection = socketConnections.find(connection => connection.source === source)
+      socketConnection.sockets.map(socket => socket.disconnect())
+      socketConnections = socketConnections.filter(connection => connection.source !== source)
     },
     addNews: ({ state, commit }, news) => {
       if (state.newsList.find(x => x.id === news.id)) return
@@ -155,7 +161,7 @@ const store = new Vuex.Store({
     },
     filteredNewsList: (state, getters) => {
       return state.newsList.filter(news => {
-        const municipality = getters.getMunicipalityByName(news.location.municipality)
+        const municipality = getters.municipalityByName(news.location.municipality)
         const countyName = municipality ? municipality.county : null
         return countyName === state.selectedCounty
       })
@@ -184,7 +190,7 @@ const store = new Vuex.Store({
 
       }).filter(({ news }) => news.length > 0)
         .map(municipality => {
-          const county = getters.getCountyByName(municipality.county);
+          const county = getters.countyByName(municipality.county);
           return {
             ...municipality,
             countyX: county.x,
@@ -202,13 +208,13 @@ const store = new Vuex.Store({
     selectedCounty: state => {
       return state.selectedCounty
     },
-    getCountyByName: (state) => (name = "") => {
-      return state.counties.find(county => county.name.toLowerCase().trim() === name.toLowerCase().trim());
+    countyByName: (state) => (name = "") => {
+      return state.counties.find(county => cleanString(county.name) === cleanString(name));
     },
-    getMunicipalityByName: (state) => (name = "") => {
-      return state.municipalities.find(municipality => municipality.name.toLowerCase().trim() === name.toLowerCase().trim());
+    municipalityByName: (state) => (name = "") => {
+      return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name));
     },
-    getZoomValue: (state) => {
+    zoomValue: (state) => {
       return state.zoomValue;
     }
   },

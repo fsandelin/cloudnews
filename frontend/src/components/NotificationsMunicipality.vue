@@ -37,20 +37,25 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import {
+  newsSources as ns,
+  getters as g,
+  actions as a
+} from '../store/constants'
 
 export default {
   name: "notificationsMunicipality",
   props: ['circleSize', 'fontSize', 'yOffset'],
   computed: {
     ...mapGetters([
-      'selectedCounty',
-      'newsByMunicipality',
-      'getZoomValue'
+      g.SELECTED_COUNTY,
+      g.NEWS_BY_MUNICIPALITY,
+      g.ZOOM_VALUE
     ])
   },
   methods: {
     lineWidth: function() {
-      return 1.0 * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
     }
   }
 }

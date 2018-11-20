@@ -21,6 +21,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import {
+  getters as g,
+  actions as a
+} from '../store/constants'
 
 export default {
   name: 'newslistitem',
@@ -32,19 +36,18 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getMunicipalityByName',
-      'activeNewsItemId',
-      'selectedCounty'
+      g.COUNTY_BY_NAME,
+      g.ACTIVE_NEWS_ITEM_ID,
+      g.SELECTED_COUNTY
     ]),
     applyFilter: function () {
-      const municipality = this.getMunicipalityByName(this.news.location.municipality);
-      const countyName = municipality ? municipality.county : null;
-      return this.showFilter && countyName === this.selectedCounty;
+      const county = this.countyByName(this.news.location.county);
+      return this.showFilter && county === this.selectedCounty;
     }
   },
   methods: {
     ...mapActions([
-      'toggleActive'
+      a.TOGGLE_ACTIVE
     ]),
     toggleHover: function () {
       this.hover = !this.hover;

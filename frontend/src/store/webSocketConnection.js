@@ -1,11 +1,13 @@
 import io from 'socket.io-client';
 
-const addWebSocket = store => events => {
-  events.map(({ url, event, action }) => {
+const addWebSocket = dispatch => events => {
+  return events.map(({ url, event, action }) => {
     const socket = io(url)
     socket.on(event, (data) => {
-      store.dispatch(action, data)
+      dispatch(action, data)
     });
+
+    return socket
   })
 }
 

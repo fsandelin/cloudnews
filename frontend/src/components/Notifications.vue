@@ -27,12 +27,16 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import NotificationsCity from './NotificationsCity';
 import NotificationsMunicipality from './NotificationsMunicipality';
 import NotificationsCounty from './NotificationsCounty';
 import NotificationsCountry from './NotificationsCountry';
-
+import { mapGetters, mapActions } from 'vuex';
+import {
+  newsSources as ns,
+  getters as g,
+  actions as a
+} from '../store/constants'
 
 export default {
   name: "notifications",
@@ -44,18 +48,18 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getZoomValue',
+      g.ZOOM_VALUE,
     ])
   },
   methods: {
     circleSize: function (length) {
-      return Math.min(9,(4+(length/7))) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return Math.min(9,(4+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
     fontSize: function (length) {
-      return Math.min(10,(5+(length/7))) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return Math.min(10,(5+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
     yOffset: function (length) {
-      return Math.min(10,(5+(length/7))/3) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return Math.min(10,(5+(length/7))/3) * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
   }
 }
