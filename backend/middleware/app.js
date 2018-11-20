@@ -1,6 +1,10 @@
 
-// Get configuration things
+// Some imports
 require('dotenv').config();
+const uuid = require('uuid/v4');
+const winston = require('winston');
+const rq = require('request');
+
 // Import socket.io and hook it up to http-server
 const app = require('express')();
 const server = require('http').Server(app);
@@ -9,17 +13,28 @@ const io = require('socket.io')(server);
 const MicroserviceHandler = require('./src/MicroserviceHandler');
 const routes = require('./src/Routes');
 
+// Get environment variables
 const { WS_PORT, SERVER_PORT } = process.env;
+const { NEWS_SERVICE_HOST, NEWS_SERVICE_PORT } = process.env;
 
+// Mock available services
 const availableServices = ['tt', 'svt'];
+
+// Keep track of clients and requests
 const clients = {};
+const requests = {};
 
-// setInterval(() => { console.log(clients); }, 5000);
+// Define logging
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'middleware.log' }),
+  ],
+});
 
-// Hook up the websocket server to the http server
-// Verify the services are available
 app.use('/api', routes);
 
+// Verify that the requested services are available
 io.use((socket, next) => {
   const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
   const { services } = JSON.parse(servicesString.trim());
@@ -29,7 +44,7 @@ io.use((socket, next) => {
     service = services[i];
     if (availableServices.indexOf(service) === -1) {
       verified = false;
-      console.log(`The following service cannot be found: ${service}`);
+      logger.error(`Tried to subscribe to the following unknown service: ${service}`);
       socket.disconnect();
     }
   }
@@ -38,15 +53,16 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('Someone connected');
+  logger.debug('Someone connected');
   const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
   const { services } = JSON.parse(servicesString.trim());
+  const clientId = uuid();
 
-  clients[socket.id] = {
+  clients[clientId] = {
     socket,
     services,
   };
-  console.log(`Joining the following services: ${services}`);
+  logger.debug(`Joining the following services: ${services}`);
   services.forEach((service) => {
     if (availableServices.includes(service)) {
       socket.join(service);
@@ -55,14 +71,35 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     delete clients[socket.id];
-    console.log('Client disconnected');
-    console.log(clients);
+    logger.info('Client disconnected');
+    logger.debug(clients);
+  });
+
+  socket.on('timespan_request', (requestedResource) => {
+    const requestId = uuid();
+    const request = {
+      requestId,
+      clientId,
+      requestedResource,
+    };
+    requests[requestId] = request;
+    rq.post({
+      url: `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/request/timespan`,
+      body: request,
+      json: true,
+    }, (error, response) => {
+      if (error) {
+        logger.error(`Received an error when trying to post request to news-service: ${error}`);
+        delete requests[requestId];
+        logger.error(`Removed request with id: ${requestId}`);
+      } else if (response.statusCode === 200) {
+        logger.debug('Successfully posted request');
+      }
+    });
   });
 });
 
 const ms = new MicroserviceHandler((service, data) => {
-  // console.log(`Got data from the following service: ${service}`);
-
   if (Array.isArray(data)) {
     io.to(service).emit('news_list', data);
   } else {
@@ -73,4 +110,4 @@ const ms = new MicroserviceHandler((service, data) => {
 
 ms.listen(SERVER_PORT);
 server.listen(WS_PORT);
-console.log(`Listening for sockets and API requests on: ${WS_PORT}`);
+logger.info(`Listening for sockets and API requests on: ${WS_PORT}`);

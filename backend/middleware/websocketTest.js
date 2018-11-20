@@ -30,7 +30,7 @@ function readStuffs() {
 
   r1.question('Input something to send to server: ', (answer) => {
     console.log(`Your message is: ${answer}`);
-    socket.emit('message', `${answer}`);
+    socket.emit('timespan_request', `${answer}`);
     r1.close();
     readStuffs();
   });
