@@ -14,6 +14,8 @@ import { cleanString } from './helpers';
 
 Vue.use(Vuex)
 
+let socketConnections = []
+
 const store = new Vuex.Store({
   state: {
     countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
@@ -72,13 +74,23 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    addNewsSources: (store, newsSources) => {
-      const combinedNewsSources = newsSources.reduce((source, acc) => `${acc}+${source}`)
+    addNewsSource: ({ dispatch }, source) => {
       const events = [
-        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS, action: a.ADD_NEWS },
-        { url: `${socketServiceUrl}${combinedNewsSources}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
+        { url: `${socketServiceUrl}${source}`, event: se.NEWS, action: a.ADD_NEWS },
+        { url: `${socketServiceUrl}${source}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
       ]
-      addWebSocket(store)(events)
+      socketConnections = [ ...socketConnections, { source, sockets: addWebSocket(dispatch)(events) } ]
+    },
+    addNewsSources: ({ dispatch }, sources) => {
+
+      sources.map(source => {
+        dispatch(a.ADD_NEWS_SOURCE, source)
+      })
+    },
+    removeNewsSource: ({}, source) => {
+      const socketConnection = socketConnections.find(connection => connection.source === source)
+      socketConnection.sockets.map(socket => socket.disconnect())
+      socketConnections = socketConnections.filter(connection => connection.source !== source)
     },
     addNews: ({ state, commit }, news) => {
       if (state.newsList.find(x => x.id === news.id)) return
@@ -201,10 +213,10 @@ const store = new Vuex.Store({
       return state.selectedCounty
     },
     getCountyByName: (state) => (name = "") => {
-      return state.counties.find(county => county.name.toLowerCase().trim() === name.toLowerCase().trim());
+      return state.counties.find(county => cleanString(county.name) === cleanString(name));
     },
     getMunicipalityByName: (state) => (name = "") => {
-      return state.municipalities.find(municipality => municipality.name.toLowerCase().trim() === name.toLowerCase().trim());
+      return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name));
     },
     getZoomValue: (state) => {
       return state.zoomValue;
