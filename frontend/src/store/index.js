@@ -14,6 +14,8 @@ import { cleanString } from './helpers';
 
 Vue.use(Vuex)
 
+let socketConnections = []
+
 const store = new Vuex.Store({
   state: {
     countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })),
@@ -25,19 +27,8 @@ const store = new Vuex.Store({
     selectedCounty: null,
     previousActiveNewsItemId: null,
     previousSelectedCounty: null,
-    socketConnections: []
   },
   mutations: {
-    addSocketSource(state, source) {
-      state.socketConnections = [ ...state.socketConnections, { source, ids: [] }]
-    },
-    addSocketId(state, { source, id }) {
-      state.socketConnections= state.socketConnections.map(connection => {
-        return connection.source === source ?
-          { ...connection, ids: [ ...connection.ids, id ] } :
-          connection
-      })
-    },
     addNews(state, news) {
       state.newsList = [ ...state.newsList, news ]
     },
@@ -79,20 +70,23 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    addNewsSources: ({ state, dispatch, commit }, newsSources) => {
+    addNewsSource: ({ dispatch }, source) => {
+      const events = [
+        { url: `${socketServiceUrl}${source}`, event: se.NEWS, action: a.ADD_NEWS },
+        { url: `${socketServiceUrl}${source}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
+      ]
+      socketConnections = [ ...socketConnections, { source, sockets: addWebSocket(dispatch)(events) } ]
+    },
+    addNewsSources: ({ dispatch }, sources) => {
 
-      newsSources.map(source => {
-        const events = [
-          { url: `${socketServiceUrl}${source}`, event: se.NEWS, action: a.ADD_NEWS },
-          { url: `${socketServiceUrl}${source}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
-        ]
-
-        if (!state.socketConnections.find(connection => connection.source === source)) {
-          commit(m.ADD_SOCKET_SOURCE, source)
-        }
-
-        addWebSocket(dispatch, commit)(source, events)
+      sources.map(source => {
+        dispatch(a.ADD_NEWS_SOURCE, source)
       })
+    },
+    removeNewsSource: ({}, source) => {
+      const socketConnection = socketConnections.find(connection => connection.source === source)
+      socketConnection.sockets.map(socket => socket.disconnect())
+      socketConnections = socketConnections.filter(connection => connection.source !== source)
     },
     addNews: ({ state, commit }, news) => {
       if (state.newsList.find(x => x.id === news.id)) return
