@@ -169,11 +169,7 @@ const store = new Vuex.Store({
         return {
           ...county,
           news: state.newsList.filter(({ location }) => {
-            if (county.name === getters.selectedCounty) {
-              return location.county === county.name && location.municipality === "";
-            } else {
-              return location.county === county.name;
-            }
+            return location.county === county.name;
           })
         }
 

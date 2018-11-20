@@ -1,7 +1,17 @@
 <template>
   <g id="notificationsMunicipality">
+    <line
+      v-for="municipality of newsByMunicipality"
+      v-bind:key="'municipalityLine'+municipality.name"
+      v-show="municipality.active"
+      v-bind:x1="municipality.countyX+'px'"
+      v-bind:y1="municipality.countyY+'px'"
+      v-bind:x2="municipality.x+'px'"
+      v-bind:y2="municipality.y+'px'"
+      v-bind:stroke-width="lineWidth()+'px'">
+    </line>
     <circle
-      class="circle-municipality"
+      class="municipality-circle"
       v-for="municipality of newsByMunicipality"
       v-bind:key="'newsNotification'+municipality.name"
       v-bind:cx="selectedCounty !== municipality.county ? municipality.countyX : municipality.x +'px'"
@@ -10,8 +20,7 @@
     </circle>
     <transition-group name="fade" tag="g">
       <text
-        class="circle-number"
-        v-if="municipality.county === selectedCounty"
+        class="municipality-number"
         v-for="municipality of newsByMunicipality"
         v-bind:key="'newsNotificationText'+municipality.name+municipality.news.id"
         v-show="municipality.active"
@@ -35,10 +44,16 @@ export default {
   computed: {
     ...mapGetters([
       'selectedCounty',
-      'newsByMunicipality'
+      'newsByMunicipality',
+      'getZoomValue'
     ])
   },
+  methods: {
+    lineWidth: function() {
+      return 1.0 * (1/Math.max(this.getZoomValue/2.5, 1.0));
+    }
+  }
 }
 </script>
 
-<style src="../styles/MapNotifications.scss" lang="scss" scoped></style>
+<style src="../styles/NotificationsMunicipality.scss" lang="scss" scoped></style>

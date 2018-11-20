@@ -49,16 +49,14 @@ export default {
   },
   methods: {
     circleSize: function (length) {
-      return (4+(length/2)) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return Math.min(9,(4+(length/7))) * (1/Math.max(this.getZoomValue/2.5, 1.0));
     },
     fontSize: function (length) {
-      return (4+(length/2)) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+      return Math.min(10,(5+(length/7))) * (1/Math.max(this.getZoomValue/2.5, 1.0));
     },
     yOffset: function (length) {
-      return (4+(length/2))/3 * (1/Math.max(this.getZoomValue/2.5, 1.0));
-    }
+      return Math.min(10,(5+(length/7))/3) * (1/Math.max(this.getZoomValue/2.5, 1.0));
+    },
   }
 }
 </script>
-
-<style src="../styles/MapNotifications.scss" lang="scss" scoped></style>

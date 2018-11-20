@@ -12,4 +12,4 @@ export default {
 }
 </script>
 
-<style src="../styles/MapNotifications.scss" lang="scss" scoped></style>
+<style src="../styles/NotificationsCity.scss" lang="scss" scoped></style>

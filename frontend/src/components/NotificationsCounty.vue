@@ -1,26 +1,25 @@
 <template>
   <g id="notificationsCounty">
     <circle
-      class="circle-county"
+      class="county-circle"
       v-for="county of newsByCounty"
       v-bind:key="'countyNewsNotification'+county.name"
       v-bind:cx="county.x+'px'"
       v-bind:cy="county.y+'px'"
+      v-bind:stroke-width="strokeWidth()+'px'"
       v-bind:r="circleSize(county.news.length)+'px'">
     </circle>
-    <transition-group name="fade" tag="g">
-      <text
-        class="circle-number"
-        v-for="county of newsByCounty"
-        v-bind:key="'countyNewsNotificationText'+county.name"
-        text-anchor="middle"
-        v-bind:x="county.x+'px'"
-        v-bind:y="county.y+'px'"
-        v-bind:dy="yOffset(county.news.length)+'px'"
-        v-bind:font-size="fontSize(county.news.length)+'px'">
-        {{county.news.length}}
-      </text>
-    </transition-group>
+    <text
+      class="county-number"
+      v-for="county of newsByCounty"
+      v-bind:key="'countyNewsNotificationText'+county.name"
+      text-anchor="middle"
+      v-bind:x="county.x+'px'"
+      v-bind:y="county.y+'px'"
+      v-bind:dy="yOffset(county.news.length)+'px'"
+      v-bind:font-size="fontSize(county.news.length)+'px'">
+      {{county.news.length}}
+    </text>
   </g>
 </template>
 
@@ -33,10 +32,16 @@ export default {
   computed: {
     ...mapGetters([
       'selectedCounty',
-      'newsByCounty'
+      'newsByCounty',
+      'getZoomValue'
     ])
   },
+  methods: {
+    strokeWidth: function() {
+      return 1.0 * (1/Math.max(this.getZoomValue/2.5, 1.0));
+    }
+  }
 }
 </script>
 
-<style src="../styles/MapNotifications.scss" lang="scss" scoped></style>
+<style src="../styles/NotificationsCounty.scss" lang="scss" scoped></style>
