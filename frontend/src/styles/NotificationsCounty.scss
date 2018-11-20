@@ -1,0 +1,25 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+svg.mapContainer g.map {
+  circle {
+
+    &.county-circle {
+      stroke: $white;
+      fill: $darkblue;
+      transition: 0s;
+    }
+
+    &.county-circle:hover {
+      fill: yellow;
+    }
+  }
+
+  text {
+    &.county-number {
+      fill: $white;
+      pointer-events: none;
+      border-radius: 12px;
+    }
+  }
+}

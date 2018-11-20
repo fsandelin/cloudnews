@@ -1,0 +1,37 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+svg.mapContainer g.map {
+  circle {
+
+    &.municipality-circle {
+      fill: $white;
+      transition: 0.2s;
+    }
+
+    &.municipality-circle:hover {
+      fill: yellow;
+      transition: 0s;
+    }
+  }
+
+  text {
+    &.municipality-number {
+      fill: $black;
+      font-weight: bolder;
+      pointer-events: none;
+      border-radius: 12px;
+    }
+  }
+
+  line {
+    stroke: $white;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
