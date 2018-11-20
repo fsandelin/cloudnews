@@ -1,35 +1,29 @@
 {
-  "name": "cloudnews-backend",
-  "version": "0.0.1",
-  "description": "Backend for CloudNews web application",
+  "name": "news-service",
+  "version": "1.0.0",
+  "description": "Central service for handling flow of news",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "prettier": "prettier --write src/**/*.js",
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/antoncarlsson/cloudnews.git"
+    "url": "git+https://github.com/antoncarlsson/cloudnews.git"
   },
-  "author": "",
+  "author": "carlsson&carlsson",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/antoncarlsson/cloudnews/issues"
   },
   "homepage": "https://github.com/antoncarlsson/cloudnews#readme",
-  "engines": {
-    "node": "9.7.1"
-  },
   "dependencies": {
     "dotenv": "6.1.0",
     "express": "4.16.4",
-    "request": "2.88.0",
-    "socket.io": "2.1.1",
-    "socket.io-client": "2.1.1",
-    "websocket": "1.0.28"
+    "mongodb": "3.1.9"
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",

@@ -6,10 +6,7 @@
   min-height: 40px;
   margin-top: auto;
   z-index: 1;
-
-  &.open {
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   img {
     transition: 0.1s;

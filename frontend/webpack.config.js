@@ -92,7 +92,8 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        SOCKET_CONNECTION: '"true"'
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
@@ -104,5 +105,16 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
+  ])
+}
+
+if (process.env.NODE_ENV === 'development' && process.env.SOCKET_CONNECTION === 'true') {
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"',
+        SOCKET_CONNECTION: '"true"'
+      }
+    }),
   ])
 }
