@@ -27,4 +27,13 @@ router.get('/timespan', (req, res) => {
   });
 });
 
+router.post('/request/timespan', (req, res) => {
+  const { requestId, clientId, requestedResources} = req.params;
+  if (requestedResources.length === 0) {
+    res.status(500).send(`500 internal server error: ${error}`);
+  } else {
+    res.sendStatus(200);
+  }
+});
+
 module.exports = router;
