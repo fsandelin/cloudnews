@@ -28,9 +28,9 @@ router.get('/timespan', (req, res) => {
 });
 
 router.post('/request/timespan', (req, res) => {
-  const { requestId, clientId, requestedResources} = req.params;
+  const { requestId, clientId, requestedResources} = req.body;
   if (requestedResources.length === 0) {
-    res.status(500).send(`500 internal server error: ${error}`);
+    res.sendStatus(400);
   } else {
     res.sendStatus(200);
   }
