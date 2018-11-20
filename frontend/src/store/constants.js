@@ -1,6 +1,7 @@
 export const mutations = {
   ADD_NEWS: 'addNews',
   SELECT_COUNTY: 'selectCounty',
+  SET_ZOOM_VALUE: 'setZoomValue'
 }
 
 export const actions = {

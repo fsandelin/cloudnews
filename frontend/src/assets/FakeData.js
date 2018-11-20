@@ -9,6 +9,24 @@ export const fakeNewsList = [
     }
   },
   {
+    id: 3423, title: "2131", text: "abbbddd", active: false,
+    location: {
+      country: "",
+      county: "norrbotten",
+      municipality: "",
+      city: ""
+    }
+  },
+  {
+    id: 2432, title: "avc", text: "qweqwe", active: false,
+    location: {
+      country: "",
+      county: "norrbotten",
+      municipality: "",
+      city: ""
+    }
+  },
+  {
     id: 1, title: "News title 1", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
     location: {
       country: "",

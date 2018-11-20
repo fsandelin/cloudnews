@@ -9,6 +9,9 @@
     <p class="text flex-centering">
       {{ activeNewsItem.url }}
     </p>
+    <img
+      v-bind:src="activeNewsItem.imgurl"
+      v-if="activeNewsItem.imgurl">
   </div>
 </template>
 

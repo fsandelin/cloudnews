@@ -32,14 +32,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getMunicipalityByName',
+      'getCountyByName',
       'activeNewsItemId',
       'selectedCounty'
     ]),
     applyFilter: function () {
-      const municipality = this.getMunicipalityByName(this.news.location.municipality);
-      const countyName = municipality !== null ? municipality.county : null;
-      return this.showFilter && countyName === this.selectedCounty;
+      const county = this.getCountyByName(this.news.location.county);
+      return this.showFilter && county === this.selectedCounty;
     }
   },
   methods: {

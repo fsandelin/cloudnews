@@ -42,6 +42,8 @@ svg.mapContainer {
   
       &.municipality {
         fill: $darkblue;
+        stroke-width: 0.1px;
+        stroke: $white;
       }
   
       &.county:hover {

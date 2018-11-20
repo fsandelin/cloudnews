@@ -18,7 +18,7 @@ let socketConnections = []
 
 const store = new Vuex.Store({
   state: {
-    countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+    countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
     counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
     municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
     cities: [],
@@ -27,6 +27,7 @@ const store = new Vuex.Store({
     selectedCounty: null,
     previousActiveNewsItemId: null,
     previousSelectedCounty: null,
+    zoomValue: 1
   },
   mutations: {
     addNews(state, news) {
@@ -67,6 +68,9 @@ const store = new Vuex.Store({
     },
     setActiveNewsItemId(state, id) {
       state.activeNewsItemId = id
+    },
+    setZoomValue(state, value) {
+      state.zoomValue = value;
     },
   },
   actions: {
@@ -129,7 +133,7 @@ const store = new Vuex.Store({
         }
       }
 
-      commit(m.ADD_NEWS, { ...news, location })
+      commit(m.ADD_NEWS, { ...news, location });
     },
     addNewsList: ({ dispatch }, newsList) => {
       newsList.map(news => dispatch(a.ADD_NEWS, news))
@@ -145,7 +149,8 @@ const store = new Vuex.Store({
     countyClick: ({ dispatch }, county) => {
       dispatch(a.SELECT_COUNTY, county.name);
       dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, null);
-    }
+    },
+    setZoomValue: ({ commit }, value) => commit(m.SET_ZOOM_VALUE, value),
   },
   getters: {
     countries: state => {
@@ -163,7 +168,7 @@ const store = new Vuex.Store({
     filteredNewsList: (state, getters) => {
       return state.newsList.filter(news => {
         const municipality = getters.getMunicipalityByName(news.location.municipality)
-        const countyName = municipality !== null ? municipality.county : null
+        const countyName = municipality ? municipality.county : null
         return countyName === state.selectedCounty
       })
     },
@@ -180,15 +185,22 @@ const store = new Vuex.Store({
 
       }).filter(({ news }) => news.length > 0)
     },
-    newsByMunicipality: state => {
+    newsByMunicipality: (state, getters) => {
       return state.municipalities.map(municipality => {
-
         return {
           ...municipality,
           news: state.newsList.filter(({ location }) => location.municipality === municipality.name)
         }
 
       }).filter(({ news }) => news.length > 0)
+        .map(municipality => {
+          const county = getters.getCountyByName(municipality.county);
+          return {
+            ...municipality,
+            countyX: county.x,
+            countyY: county.y
+          }
+        });
     },
     activeNewsItemId: state => {
       return state.activeNewsItemId
@@ -200,13 +212,14 @@ const store = new Vuex.Store({
     selectedCounty: state => {
       return state.selectedCounty
     },
-    getCountyByName: (state) => (name) => {
-      if (name === undefined) return null;
+    getCountyByName: (state) => (name = "") => {
       return state.counties.find(county => cleanString(county.name) === cleanString(name));
     },
-    getMunicipalityByName: (state) => (name) => {
-      if (name === undefined) return null;
+    getMunicipalityByName: (state) => (name = "") => {
       return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name));
+    },
+    getZoomValue: (state) => {
+      return state.zoomValue;
     }
   },
   strict: process.env.NODE_ENV !== 'production'
