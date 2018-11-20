@@ -1,68 +1,45 @@
 
-// Get configuration things
+// Some imports
 require('dotenv').config();
+
+const winston = require('winston');
+
 // Import socket.io and hook it up to http-server
-const io = require('socket.io')();
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
 const MicroserviceHandler = require('./src/MicroserviceHandler');
+const routes = require('./src/Routes');
 
-const ws_host = process.env.WS_HOST;
-const ws_port = process.env.WS_PORT;
-const mock_host = process.env.MOCK_HOST;
-const mock_port = process.env.MOCK_PORT;
-const SERVER_PORT = process.env.SERVER_PORT;
+// Apply the eventlisteners specified in SocketEvents.js
+require('./src/SocketEvents').applyEventListeners(io);
 
-const availableServices = ['tt', 'svt'];
-const clients = {};
+// Get environment variables
+const { WS_PORT, SERVER_PORT } = process.env;
 
-// setInterval(() => { console.log(clients); }, 5000);
-
-// Hook up the websocket server to the http server
-// Verify the services are available
-io.use((socket, next) => {
-  const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-  const { services } = JSON.parse(servicesString.trim());
-  let verified = true;
-  let service = null;
-  for (let i = 0; i < services.length; i++) {
-    service = services[i];
-    if (availableServices.indexOf(service) === -1) {
-      verified = false;
-      console.log(`The following service cannot be found: ${service}`);
-      socket.disconnect();
-    }
-  }
-  if (verified) next();
-  else next(new Error('Service not found.'));
+// Define logging
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'middleware_root.log' }),
+  ],
 });
 
-io.on('connection', (socket) => {
-  console.log('Someone connected');
-  const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-  const { services } = JSON.parse(servicesString.trim());
+app.use('/api', routes);
 
-  clients[socket.id] = {
-    socket,
-    services,
-  };
-  console.log(`Joining the following services: ${services}`);
-  services.forEach((service) => {
-    if (availableServices.includes(service)) {
-      socket.join(service);
-    }
-  });
+// Verify that the requested services are available
 
-  socket.on('disconnect', () => {
-    delete clients[socket.id];
-    console.log('Client disconnected');
-    console.log(clients);
-  });
-});
 
 const ms = new MicroserviceHandler((service, data) => {
-  // console.log(`Got data from the following service: ${service}`);
-  io.to(service).emit('news', data);
+  if (Array.isArray(data)) {
+    io.to(service).emit('news_list', data);
+  } else {
+    io.to(service).emit('news', data);
+  }
 });
 
 
 ms.listen(SERVER_PORT);
-io.listen(ws_port);
+server.listen(WS_PORT);
+logger.info(`Listening for sockets and API requests on: ${WS_PORT}`);
