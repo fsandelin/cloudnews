@@ -2,6 +2,14 @@ const express = require('express');
 const db = require('./controllers/DatabaseInterface');
 
 const router = express.Router();
+const requests = {};
+
+function handleRequest(request) {
+  console.log('Is now in handlerequest');
+  const requestedResource = request.requestedResources[0];
+  const { service, from, until } = requestedResource;
+  db.checkCompletion(service, from, until);
+}
 
 router.post('/new_articles', (req, res) => {
   const { services, startDate, endDate } = req.params;
@@ -25,6 +33,21 @@ router.get('/timespan', (req, res) => {
       res.json(documents);
     }
   });
+});
+
+router.post('/request/timespan', (req, res) => {
+  const { requestId, clientId, requestedResources } = req.body;
+  console.log('Should handle timespan');
+  if (requestedResources.length === 0) {
+    res.sendStatus(400);
+  } else {
+    res.sendStatus(200);
+    requests[requestId] = {
+      requestId,
+      requestedResources,
+    };
+    handleRequest(requests[requestId]);
+  }
 });
 
 module.exports = router;
