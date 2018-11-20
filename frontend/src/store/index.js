@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import europeCountries from '../assets/europe-countries-meta-info.json';
-import swedishCounties from '../assets/sweden-counties-meta-info.json';
-import swedishMunicipalities from '../assets/sweden-municipalities-meta-info.json';
 import addWebSocket from './webSocketConnection';
 import {
   mutations as m,
@@ -11,6 +8,7 @@ import {
   socketServiceUrl
 } from './constants';
 import { cleanString } from './helpers';
+import locations from './modules/locations';
 
 Vue.use(Vuex)
 
@@ -18,13 +16,8 @@ let socketConnections = []
 
 const store = new Vuex.Store({
   state: {
-    countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
-    counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
-    municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
-    cities: [],
     newsList: [],
     activeNewsItemId: null,
-    selectedCounty: null,
     previousActiveNewsItemId: null,
     previousSelectedCounty: null,
     zoomValue: 1
@@ -35,36 +28,30 @@ const store = new Vuex.Store({
     },
     toggleActive(state) {
       state.activeNewsItemId = null
-      state.selectedCounty = null
+      state.locations.selectedCounty = null
     },
     toggleDrawer(state) {
-      if (state.activeNewsItemId !== null || state.selectedCounty !== null) {
+      if (state.activeNewsItemId !== null || state.locations.selectedCounty !== null) {
         // Activate the county and deactivate the municipalities
-        for (const county of state.counties) {
+        for (const county of state.locations.counties) {
           if (!county.active) county.active = true
         }
-        state.municipalities.map(municipality => municipality.active = false)
+        state.locations.municipalities.map(municipality => municipality.active = false)
 
         state.previousActiveNewsItemId = state.activeNewsItemId
-        state.previousSelectedCounty = state.selectedCounty
+        state.previousSelectedCounty = state.locations.selectedCounty
         state.activeNewsItemId = null
-        state.selectedCounty = null
+        state.locations.selectedCounty = null
       } else {
         state.activeNewsItemId = state.previousActiveNewsItemId
-        state.selectedCounty = state.previousSelectedCounty
+        state.locations.selectedCounty = state.previousSelectedCounty
         state.previousActiveNewsItemId = null
         state.previousSelectedCounty = null
 
         // Deactivate the county and activate the municipalities
-        state.counties.map(county => county.active = !(county.name === state.selectedCounty));
-        state.municipalities.map(municipality => municipality.active = municipality.county === state.selectedCounty)
+        state.locations.counties.map(county => county.active = !(county.name === state.locations.selectedCounty));
+        state.locations.municipalities.map(municipality => municipality.active = municipality.county === state.locations.selectedCounty)
       }
-    },
-    selectCounty(state, countyName) {
-      state.selectedCounty = countyName
-
-      state.counties.map(county => county.active = !(county.name === countyName));
-      state.municipalities.map(municipality => municipality.active = municipality.county === countyName)
     },
     setActiveNewsItemId(state, id) {
       state.activeNewsItemId = id
@@ -93,10 +80,9 @@ const store = new Vuex.Store({
       for (const key of Object.keys(location)) {
         location[key] = cleanString(location[key])
       }
+      if (state.locations.cities.find(city => city.name === location.city)) {
 
-      if (state.cities.find(city => city.name === location.city)) {
-
-        const municipalityName = state.counties.find(municipality =>
+        const municipalityName = state.locations.counties.find(municipality =>
           municipality.municipalities.find(city =>
             city === location.city
         )).name
@@ -107,9 +93,9 @@ const store = new Vuex.Store({
         }
       }
 
-      if (state.municipalities.find(municipality => municipality.name === location.municipality)) {
+      if (state.locations.municipalities.find(municipality => municipality.name === location.municipality)) {
 
-        const countyName = state.counties.find(county =>
+        const countyName = state.locations.counties.find(county =>
           county.municipalities.find(municipality =>
             municipality === location.municipality
         )).name
@@ -120,7 +106,7 @@ const store = new Vuex.Store({
         }
       }
 
-      if (state.counties.find(county => county.name === location.county)) {
+      if (state.locations.counties.find(county => county.name === location.county)) {
         location = {
           ...location,
           country: 'sweden'
@@ -138,24 +124,10 @@ const store = new Vuex.Store({
       dispatch(a.SELECT_COUNTY, news.location.county)
     },
     toggleDrawer: ({ commit }) => commit(a.TOGGLE_DRAWER),
-    selectCounty: ({ commit }, countyName) => commit(m.SELECT_COUNTY, countyName),
     setActiveNewsItemId: ({ commit }, id) => commit(a.SELECT_ACTIVE_NEWS_ITEM_ID, id),
-    countyClick: ({ dispatch }, county) => {
-      dispatch(a.SELECT_COUNTY, county.name);
-      dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, null);
-    },
     setZoomValue: ({ commit }, value) => commit(m.SET_ZOOM_VALUE, value),
   },
   getters: {
-    countries: state => {
-      return state.countries
-    },
-    counties: state => {
-      return state.counties
-    },
-    municipalities: state => {
-      return state.municipalities
-    },
     newsList: state => {
       return state.newsList
     },
@@ -163,14 +135,14 @@ const store = new Vuex.Store({
       return state.newsList.filter(news => {
         const municipality = getters.municipalityByName(news.location.municipality)
         const countyName = municipality ? municipality.county : null
-        return countyName === state.selectedCounty
+        return countyName === state.locations.selectedCounty
       })
     },
     selectedCountyNews: state => {
-      return state.newsList.filter(({ location }) => location.county === state.selectedCounty)
+      return state.newsList.filter(({ location }) => location.county === state.locations.selectedCounty)
     },
     newsByCounty: state => {
-      return state.counties.map(county => {
+      return state.locations.counties.map(county => {
 
         return {
           ...county,
@@ -180,7 +152,8 @@ const store = new Vuex.Store({
       }).filter(({ news }) => news.length > 0)
     },
     newsByMunicipality: (state, getters) => {
-      return state.municipalities.map(municipality => {
+
+      return state.locations.municipalities.map(municipality => {
         return {
           ...municipality,
           news: state.newsList.filter(({ location }) => location.municipality === municipality.name)
@@ -203,18 +176,12 @@ const store = new Vuex.Store({
       const newsItem = state.newsList.find(item => item.id === state.activeNewsItemId)
       return newsItem !== undefined && 'id' in newsItem ? newsItem : null;
     },
-    selectedCounty: state => {
-      return state.selectedCounty
-    },
-    countyByName: (state) => (name = "") => {
-      return state.counties.find(county => cleanString(county.name) === cleanString(name));
-    },
-    municipalityByName: (state) => (name = "") => {
-      return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name));
-    },
     zoomValue: (state) => {
       return state.zoomValue;
     }
+  },
+  modules: {
+    locations
   },
   strict: process.env.NODE_ENV !== 'production'
 })
