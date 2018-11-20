@@ -5,7 +5,7 @@ from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
 
-from scraper.scrapers.location_search import search_text
+#from scraper.scrapers.location_search import search_text
 
 import uuid
 import random
@@ -36,6 +36,7 @@ except ImportError:
     from time_checks import *
     from constants import *
 
+from location_search import search_text
 
 def get_lokal_news(URL):
 
@@ -65,11 +66,11 @@ def reform_api_news(svt_news_list):
         if 'title'              in svt_news:
             news['title']       = svt_news['title']
 
-        if 'vignette'              in svt_news:
-            news['lead']       = svt_news['vignette']
+        if 'vignette'           in svt_news:
+            news['lead']        = svt_news['vignette']
 
-        if 'text'              in svt_news:
-            news['body']       = svt_news['text']
+        if 'text'               in svt_news:
+            news['body']        = svt_news['text']
 
         if 'published'          in svt_news:
             news['datetime']    = svt_news['published']
@@ -239,9 +240,28 @@ def presenting_representing():
     from_  = until_ - timedelta(days = 5)
 
     # Collect all news in a list
-    news_list = get_news_selected_regions(used_regions, from_, until_)
+    news_list = get_news_selected_regions(used_regions[:10], from_, until_)
     
+
+    # Find the news
+
+    news_list = [json.loads(ele) for ele in news_list if 'Nyheter från dagen' not in json.loads(ele)['title']]
+    print("Amount of news:", len(news_list))
+    news_list = [search_text(ele) for ele in news_list]
+    amount = 0
+    for ele in news_list:
+        if 'city' in ele['location']:
+            amount += 1
+        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
+
+    print("Amount of found cities:", amount)
+    #for ele in news:
+        #search_text(ele)
+
+    news_list = [json.dumps(ele, indent=4, sort_keys=True, default=str) for ele in news_list]
+
     # collect region names from the news, or store in different lists
+    
     news_dict_list = []
     region_names = set()
     for news in news_list:

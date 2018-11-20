@@ -3,7 +3,7 @@ try:
     from scrapers.svt.svt_web_scraping import get_news
 except ImportError:
     from lan_kommun_tatort import lan, lan_kommun, kommun_tatort
-    from svt.svt_web_scraping import get_news
+    from svt_web_scraping import get_news
 
 import json, requests, uuid
 from difflib import SequenceMatcher
@@ -38,12 +38,21 @@ def find_location(region, capital_words):
     #local_tatort = [city for city in tatort if city[1] in lan_kommun[region]]
 
     city_found = False
+
+    if region == 'Sörmland':
+        region = 'Södermanland'
+        
     for kommun in lan_kommun[region]:
         try:
             for city in kommun_tatort[kommun]:
                 if city_in_text(city, capital_words):
                     location['city'] = city
-                    location['municipality'] = kommun
+                    kommun = kommun.split()[:-1]
+                    if kommun[0][-1] == 's':
+                        kommun[0] = kommun[0][:-1]
+                    location['municipality'] = kommun[0]
+                    #print(kommun)
+
                     city_found = True
                     break
         except KeyError:
@@ -79,8 +88,9 @@ def search_text(news):
     
     if not bool(location):
         web_news = get_news(news['url'], region)
-        text = json.loads(web_news)['body']
-        location = find_location(region, [word for word in text.split() if word[0].isupper()])
+        if 'body' in json.loads(web_news):
+            text = json.loads(web_news)['body']
+            location = find_location(region, [word for word in text.split() if word[0].isupper()])
 
     location['county'] = region
     location['country'] = "Sweden"
@@ -88,7 +98,7 @@ def search_text(news):
     news['location'] = location
 
     #print(text)
-    print(capital_words, location)
+    #print(capital_words, location)
     #print(news['url'])
     #print("")
 
@@ -152,43 +162,11 @@ def test():
     for ele in news:
         if 'city' in ele['location']:
             amount += 1
-        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
+        #print (json.dumps(ele, indent=4, sort_keys=True, default=str))
 
     print("Amount of found cities:", amount)
     #for ele in news:
         #search_text(ele)
 
-def add_mun_lan():
-    f = open("kommun_lan.py", 'a')
-    f.write("lan_kommun = {")
-    for l in lan:
-        f.write("\"" + l + "\":" + "[")
-        first = True
-        for kommun in kommun_lan:
-            if kommun[1] in l:
-                if first:
-                    first = False
-                else:
-                    f.write(",")
-                f.write("\"" + kommun[0] + "\"")
-        f.write("],\n")
-    f.write("}")
+#test()
 
-def add_city_mun():
-    f = open("tarta.py", 'a')
-    f.write("kommun_tatort = {")
-    for k in kommuner:
-        f.write("\"" + k + "\":" + "[")
-        first = True
-        for city in tatort:
-            if city[1] in k:
-                if first:
-                    first = False
-                else:
-                    f.write(",")
-                f.write("\"" + city[0] + "\"")
-        f.write("],\n")
-    f.write("}")
-
-
-test()
