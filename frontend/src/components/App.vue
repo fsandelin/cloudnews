@@ -55,9 +55,6 @@ export default {
       'activeNewsItem',
       'activeNewsItemId',
       'selectedCounty',
-      'newsList',
-      'getMunicipalityByName',
-      'getCountyByName'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
@@ -67,7 +64,6 @@ export default {
     ...mapActions([
       'addNews',
       'toggleDrawer',
-      'setActiveNewsItemId',
       'addNewsSources'
     ]),
   },
