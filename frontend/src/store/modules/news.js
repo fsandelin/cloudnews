@@ -17,9 +17,8 @@ const getters = {
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
     return state.newsList.filter(news => {
-      const municipality = rootGetters.municipalityByName(news.location.municipality)
-      const countyName = municipality ? municipality.county : null
-      return countyName === rootState.locations.selectedCounty
+      const county = rootGetters.countyByName(news.location.county)
+      return county ? county.name === rootState.locations.selectedCounty : false
     })
   },
   selectedCountyNews: (state, getters, rootState) => {

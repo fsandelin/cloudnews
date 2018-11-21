@@ -3,10 +3,10 @@
     <p class="title flex-centering">
       {{ activeNewsItem.title }}
     </p>
-    <p class="text flex-centering">
-      {{ activeNewsItem.text }}
+    <p class="flex-centering">
+      {{ activeNewsItem.lead }}
     </p>
-    <p class="text flex-centering">
+    <p class="flex-centering">
       {{ activeNewsItem.url }}
     </p>
     <img
