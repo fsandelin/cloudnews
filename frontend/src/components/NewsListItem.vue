@@ -13,8 +13,8 @@
     <p class="title flex-centering">
       {{ news.title }}
     </p>
-    <p class="text flex-centering">
-      {{ news.text }}
+    <p class="source flex-centering">
+      {{ news.source }}
     </p>
   </li>
 </template>
@@ -41,8 +41,7 @@ export default {
       g.SELECTED_COUNTY
     ]),
     applyFilter: function () {
-      const county = this.countyByName(this.news.location.county);
-      return this.showFilter && county === this.selectedCounty;
+      return this.showFilter && this.news.location.county === this.selectedCounty;
     }
   },
   methods: {
