@@ -4,6 +4,9 @@
 # npm
 node_modules/
 
+# logs
+*.log
+
 # python
 *.pyc
 *~
