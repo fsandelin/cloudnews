@@ -52,6 +52,19 @@ const mutations = {
     state.counties.map(county => county.active = !(county.name === countyName));
     state.municipalities.map(municipality => municipality.active = municipality.county === countyName)
   },
+  openDrawer(state) {
+    state.selectedCounty = state.previousSelectedCounty
+    state.previousSelectedCounty = null
+    state.counties.map(county => county.active = !(county.name === state.selectedCounty));
+    state.municipalities.map(municipality => municipality.active = municipality.county === state.selectedCounty)
+  },
+  closeDrawer(state) {
+    state.counties.map(county => county.active = true)
+    state.municipalities.map(municipality => municipality.active = false)
+
+    state.previousSelectedCounty = state.selectedCounty
+    state.selectedCounty = null
+  },
 }
 
 export default {

@@ -120,6 +120,14 @@ const mutations = {
   setActiveNewsItemId(state, id) {
     state.activeNewsItemId = id
   },
+  openDrawer(state) {
+    state.activeNewsItemId = state.previousActiveNewsItemId
+    state.previousActiveNewsItemId = null
+  },
+  closeDrawer(state) {
+    state.previousActiveNewsItemId = state.activeNewsItemId
+    state.activeNewsItemId = null
+  },
 }
 
 export default {

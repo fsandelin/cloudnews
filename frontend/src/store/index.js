@@ -21,25 +21,6 @@ const store = new Vuex.Store({
       state.news.activeNewsItemId = null
       state.locations.selectedCounty = null
     },
-    openDrawer(state) {
-      state.locations.selectedCounty = state.locations.previousSelectedCounty
-      state.locations.previousSelectedCounty = null
-      state.locations.counties.map(county => county.active = !(county.name === state.locations.selectedCounty));
-      state.locations.municipalities.map(municipality => municipality.active = municipality.county === state.locations.selectedCounty)
-
-      state.news.activeNewsItemId = state.news.previousActiveNewsItemId
-      state.news.previousActiveNewsItemId = null
-    },
-    closeDrawer(state) {
-      state.locations.counties.map(county => county.active = true)
-      state.locations.municipalities.map(municipality => municipality.active = false)
-
-      state.locations.previousSelectedCounty = state.locations.selectedCounty
-      state.locations.selectedCounty = null
-
-      state.news.previousActiveNewsItemId = state.news.activeNewsItemId
-      state.news.activeNewsItemId = null
-    },
   },
   actions: {
     addNewsSource: ({ dispatch }, source) => {
