@@ -1,5 +1,6 @@
 import {
   mutations as m,
+  actions as a,
 } from '../constants';
 
 const state = {
@@ -20,6 +21,11 @@ const actions = {
     } else {
       commit(m.OPEN_DRAWER)
     }
+  },
+  toggleActive: ({ rootState, dispatch }, news) => {
+    if (news.id === rootState.news.activeNewsItemId) dispatch(a.TOGGLE_DRAWER)
+    else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
+    dispatch(a.SELECT_COUNTY, news.location.county)
   },
 }
 

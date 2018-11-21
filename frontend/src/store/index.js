@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import addWebSocket from './webSocketConnection';
 import {
-  mutations as m,
   actions as a,
   socketEvents as se,
   socketServiceUrl
@@ -16,12 +15,6 @@ Vue.use(Vuex)
 let socketConnections = []
 
 const store = new Vuex.Store({
-  mutations: {
-    toggleActive(state) {
-      state.news.activeNewsItemId = null
-      state.locations.selectedCounty = null
-    },
-  },
   actions: {
     addNewsSource: ({ dispatch }, source) => {
       const events = [
@@ -34,11 +27,6 @@ const store = new Vuex.Store({
       const socketConnection = socketConnections.find(connection => connection.source === source)
       socketConnection.sockets.map(socket => socket.disconnect())
       socketConnections = socketConnections.filter(connection => connection.source !== source)
-    },
-    toggleActive: ({ state, dispatch }, news) => {
-      if (news.id === state.news.activeNewsItemId) dispatch(a.TOGGLE_DRAWER)
-      else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
-      dispatch(a.SELECT_COUNTY, news.location.county)
     },
   },
   modules: {

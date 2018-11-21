@@ -128,6 +128,9 @@ const mutations = {
     state.previousActiveNewsItemId = state.activeNewsItemId
     state.activeNewsItemId = null
   },
+  toggleActive(state) {
+    state.activeNewsItemId = null
+  },
 }
 
 export default {

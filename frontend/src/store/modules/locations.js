@@ -65,6 +65,9 @@ const mutations = {
     state.previousSelectedCounty = state.selectedCounty
     state.selectedCounty = null
   },
+  toggleActive(state) {
+    state.selectedCounty = null
+  },
 }
 
 export default {
