@@ -9,15 +9,13 @@ import {
 } from './constants';
 import locations from './modules/locations';
 import news from './modules/news';
+import gui from './modules/gui';
 
 Vue.use(Vuex)
 
 let socketConnections = []
 
 const store = new Vuex.Store({
-  state: {
-    zoomValue: 1
-  },
   mutations: {
     toggleActive(state) {
       state.news.activeNewsItemId = null
@@ -41,9 +39,6 @@ const store = new Vuex.Store({
 
       state.news.previousActiveNewsItemId = state.news.activeNewsItemId
       state.news.activeNewsItemId = null
-    },
-    setZoomValue(state, value) {
-      state.zoomValue = value;
     },
   },
   actions: {
@@ -71,16 +66,11 @@ const store = new Vuex.Store({
         commit(m.CLOSE_DRAWER)
       }
     },
-    setZoomValue: ({ commit }, value) => commit(m.SET_ZOOM_VALUE, value),
-  },
-  getters: {
-    zoomValue: (state) => {
-      return state.zoomValue;
-    }
   },
   modules: {
     locations,
-    news
+    news,
+    gui
   },
   strict: process.env.NODE_ENV !== 'production'
 })
