@@ -59,13 +59,6 @@ const store = new Vuex.Store({
       else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
       dispatch(a.SELECT_COUNTY, news.location.county)
     },
-    toggleDrawer: ({ state, commit }) => {
-      if (state.news.activeNewsItemId !== null || state.locations.selectedCounty !== null) {
-        commit(m.OPEN_DRAWER)
-      } else {
-        commit(m.CLOSE_DRAWER)
-      }
-    },
   },
   modules: {
     locations,
