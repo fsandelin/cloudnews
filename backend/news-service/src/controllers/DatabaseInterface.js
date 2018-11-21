@@ -79,7 +79,7 @@ function checkCompletion(service, from, until, callback) {
   dbConnection.connect((error, client) => {
     const db = client.db(dbName);
     const query = {
-      service: 'tt',
+      service,
     };
     db.collection(scraperMetaCollection).find(query).toArray((err, results) => {
       const needed = getNeededSpans(results, from, until);
