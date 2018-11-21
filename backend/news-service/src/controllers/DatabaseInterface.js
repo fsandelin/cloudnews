@@ -42,14 +42,48 @@ function getTimeSpan(from, until, callback) {
   });
 }
 
-function checkCompletion(service, from, until) {
-  console.log('Is in DatabaseInterface');
+function getNeededSpans(availableSpans, requestFrom, requestUntil) {
+  const missingSpans = [];
+  let tentFrom = new Date(requestFrom);
+  const until = new Date(requestUntil);
+  for (let i = 0; i < availableSpans.length; i += 1) {
+    const currentDateFrom = new Date(availableSpans[i].from);
+    const currentDateUntil = new Date(availableSpans[i].until);
+    if (tentFrom < currentDateFrom) {
+      if (until < currentDateFrom) {
+        missingSpans.push({ from: tentFrom, until });
+        return missingSpans;
+      }
+      missingSpans.push({ from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
+      if (until <= currentDateUntil) {
+        return missingSpans;
+      }
+      tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
+      continue;
+    }
+    if (tentFrom >= currentDateFrom) {
+      if (tentFrom > currentDateUntil) {
+        continue;
+      }
+      if (until <= currentDateUntil) {
+        return missingSpans;
+      }
+      tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
+    }
+  }
+  missingSpans.push({ from: tentFrom, until });
+  return missingSpans;
+}
+
+function checkCompletion(service, from, until, callback) {
   dbConnection.connect((error, client) => {
     const db = client.db(dbName);
-    db.collection(scraperMetaCollection).findOne({
-      service,
-    }, {}, (data) => {
-      console.log(`Got data for service: ${service}, and the results are: ${data}`);
+    const query = {
+      service: 'tt',
+    };
+    db.collection(scraperMetaCollection).find(query).toArray((err, results) => {
+      const needed = getNeededSpans(results, from, until);
+      callback(needed);
     });
   });
 }
