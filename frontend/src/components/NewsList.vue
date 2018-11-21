@@ -13,13 +13,14 @@
 <script>
 import NewsListItem from './NewsListItem'
 import { mapGetters } from 'vuex';
+import { getters as g } from '../store/constants'
 
 export default {
   name: 'newslist',
   props: ['filteredNewsList', 'showFilter'],
   computed: {
     ...mapGetters([
-      'newsList',
+      g.NEWS_LIST,
     ]),
   },
   components: {

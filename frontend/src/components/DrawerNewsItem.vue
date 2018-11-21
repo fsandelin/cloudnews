@@ -3,22 +3,28 @@
     <p class="title flex-centering">
       {{ activeNewsItem.title }}
     </p>
-    <p class="text flex-centering">
-      {{ activeNewsItem.text }}
+    <p class="flex-centering">
+      {{ activeNewsItem.lead }}
     </p>
-    <p class="text flex-centering">
+    <p class="flex-centering">
       {{ activeNewsItem.url }}
     </p>
+    <img
+      v-bind:src="activeNewsItem.imgurl"
+      v-if="activeNewsItem.imgurl">
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { getters as g } from '../store/constants'
 
 export default {
   name: 'drawernewsitem',
   computed: {
-    ...mapGetters(['activeNewsItem'])
+    ...mapGetters([
+      g.ACTIVE_NEWS_ITEM
+    ])
   }
 }
 </script>
