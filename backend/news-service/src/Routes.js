@@ -8,7 +8,15 @@ function handleRequest(request) {
   console.log('Is now in handlerequest');
   const requestedResource = request.requestedResources[0];
   const { service, from, until } = requestedResource;
-  db.checkCompletion(service, from, until);
+  console.log(`In handleRequest, the service requested is: ${service}`);
+  db.checkCompletion(service, from, until, (timespan) => {
+    if (timespan.length === 0) {
+      console.log('Already have all we need.');
+      console.log('Should now do db-stuffs to get all related articles');
+    } else {
+      console.log('Should now tell scraper that we need some shit');
+    }
+  });
 }
 
 router.post('/new_articles', (req, res) => {
@@ -37,14 +45,15 @@ router.get('/timespan', (req, res) => {
 
 router.post('/request/timespan', (req, res) => {
   const { requestId, clientId, requestedResources } = req.body;
-  console.log('Should handle timespan');
+  const reqResources = JSON.parse(requestedResources);
+  console.log(`Should get a requestedResource: ${reqResources}`);
   if (requestedResources.length === 0) {
     res.sendStatus(400);
   } else {
     res.sendStatus(200);
     requests[requestId] = {
       requestId,
-      requestedResources,
+      requestedResources: reqResources,
     };
     handleRequest(requests[requestId]);
   }
