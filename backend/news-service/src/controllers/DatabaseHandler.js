@@ -9,14 +9,12 @@ const state = {
 
 function connect(callback) {
   if (state.db) {
-    console.log('state.db already exists, returning callback');
     callback(null, state.db);
     return;
   }
 
   MongoClient.connect(uri, (err, db) => {
     state.db = db;
-    console.log('Has successfully connected to db and set state.db to the connection. ');
     callback(err, db);
   });
 }
