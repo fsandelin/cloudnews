@@ -15,14 +15,15 @@
 <script>
 import NewsList from './NewsList'
 import { mapGetters } from 'vuex';
+import { getters as g } from '../store/constants'
 
 export default {
   name: 'drawernewslist',
   props: ['showFilter'],
   computed: {
     ...mapGetters([
-      'selectedCounty',
-      'filteredNewsList',
+      g.SELECTED_COUNTY,
+      g.FILTERED_NEWS_LIST,
     ]),
   },
   components: {
