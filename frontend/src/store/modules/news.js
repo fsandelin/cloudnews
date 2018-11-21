@@ -15,7 +15,7 @@ const getters = {
   newsList: state => {
     return state.newsList
   },
-  filteredNewsList: ({ state, getters, rootState, rootGetters }) => {
+  filteredNewsList: (state, getters, rootState, rootGetters) => {
     return state.newsList.filter(news => {
       const municipality = rootGetters.municipalityByName(news.location.municipality)
       const countyName = municipality ? municipality.county : null

@@ -23,28 +23,24 @@ const store = new Vuex.Store({
       state.news.activeNewsItemId = null
       state.locations.selectedCounty = null
     },
-    toggleDrawer(state) {
-      if (state.news.activeNewsItemId !== null || state.locations.selectedCounty !== null) {
-        // Activate the county and deactivate the municipalities
-        for (const county of state.locations.counties) {
-          if (!county.active) county.active = true
-        }
-        state.locations.municipalities.map(municipality => municipality.active = false)
+    openDrawer(state) {
+      state.locations.selectedCounty = state.locations.previousSelectedCounty
+      state.locations.previousSelectedCounty = null
+      state.locations.counties.map(county => county.active = !(county.name === state.locations.selectedCounty));
+      state.locations.municipalities.map(municipality => municipality.active = municipality.county === state.locations.selectedCounty)
 
-        state.news.previousActiveNewsItemId = state.news.activeNewsItemId
-        state.locations.previousSelectedCounty = state.locations.selectedCounty
-        state.news.activeNewsItemId = null
-        state.locations.selectedCounty = null
-      } else {
-        state.news.activeNewsItemId = state.news.previousActiveNewsItemId
-        state.locations.selectedCounty = state.locations.previousSelectedCounty
-        state.news.previousActiveNewsItemId = null
-        state.locations.previousSelectedCounty = null
+      state.news.activeNewsItemId = state.news.previousActiveNewsItemId
+      state.news.previousActiveNewsItemId = null
+    },
+    closeDrawer(state) {
+      state.locations.counties.map(county => county.active = true)
+      state.locations.municipalities.map(municipality => municipality.active = false)
 
-        // Deactivate the county and activate the municipalities
-        state.locations.counties.map(county => county.active = !(county.name === state.locations.selectedCounty));
-        state.locations.municipalities.map(municipality => municipality.active = municipality.county === state.locations.selectedCounty)
-      }
+      state.locations.previousSelectedCounty = state.locations.selectedCounty
+      state.locations.selectedCounty = null
+
+      state.news.previousActiveNewsItemId = state.news.activeNewsItemId
+      state.news.activeNewsItemId = null
     },
     setZoomValue(state, value) {
       state.zoomValue = value;
@@ -68,7 +64,13 @@ const store = new Vuex.Store({
       else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
       dispatch(a.SELECT_COUNTY, news.location.county)
     },
-    toggleDrawer: ({ commit }) => commit(a.TOGGLE_DRAWER),
+    toggleDrawer: ({ state, commit }) => {
+      if (state.news.activeNewsItemId !== null || state.locations.selectedCounty !== null) {
+        commit(m.OPEN_DRAWER)
+      } else {
+        commit(m.CLOSE_DRAWER)
+      }
+    },
     setZoomValue: ({ commit }, value) => commit(m.SET_ZOOM_VALUE, value),
   },
   getters: {
