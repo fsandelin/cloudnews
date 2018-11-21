@@ -73,7 +73,7 @@ export default {
     },
     animate: function(countyName) {
       let el = this.$refs['countyNewsNotification-'+countyName];
-      let r = parseFloat(el[0].attributes[4].value, 10);
+      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
       Velocity(el,  { r: r*1.5}, { duration: 80 });
       Velocity(el,  { r: r }, { duration: 40 });
     }
