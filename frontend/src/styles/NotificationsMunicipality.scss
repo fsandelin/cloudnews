@@ -6,12 +6,10 @@ svg.mapContainer g.map {
 
     &.municipality-circle {
       fill: $white;
-      transition: 0.2s;
     }
 
     &.municipality-circle:hover {
       fill: yellow;
-      transition: 0s;
     }
   }
 
