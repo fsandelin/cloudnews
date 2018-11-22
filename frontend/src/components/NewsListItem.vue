@@ -13,8 +13,9 @@
     <p class="title flex-centering">
       {{ news.title }}
     </p>
-    <p class="source flex-centering">
-      {{ news.source }}
+    <p class="subtitle flex-centering">
+      <span>{{ news.source }}</span>
+      <span>{{ news.timestamp }}</span>
     </p>
   </li>
 </template>
