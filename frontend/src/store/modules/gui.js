@@ -1,8 +1,3 @@
-import {
-  mutations as m,
-  actions as a,
-} from '../constants';
-
 const state = {
   zoomValue: 1
 }
@@ -14,18 +9,18 @@ const getters = {
 }
 
 const actions = {
-  setZoomValue: ({ commit }, value) => commit(m.SET_ZOOM_VALUE, value),
+  setZoomValue: ({ commit }, value) => commit('setZoomValue', value),
   toggleDrawer: ({ rootState, commit }) => {
     if (rootState.news.activeNewsItemId !== null || rootState.locations.selectedCounty !== null) {
-      commit(m.CLOSE_DRAWER)
+      commit('closeDrawer')
     } else {
-      commit(m.OPEN_DRAWER)
+      commit('openDrawer')
     }
   },
   toggleActive: ({ rootState, dispatch }, news) => {
-    if (news.id === rootState.news.activeNewsItemId) dispatch(a.TOGGLE_DRAWER)
-    else dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, news.id)
-    dispatch(a.SELECT_COUNTY, news.location.county)
+    if (news.id === rootState.news.activeNewsItemId) dispatch('toggleDrawer')
+    else dispatch('setActiveNewsItemId', news.id)
+    dispatch('selectCounty', news.location.county)
   },
 }
 

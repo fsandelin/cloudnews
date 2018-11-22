@@ -64,20 +64,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "notificationsMunicipality",
   props: ['circleSize', 'fontSize', 'yOffset'],
   computed: {
     ...mapGetters([
-      g.SELECTED_COUNTY,
-      g.NEWS_BY_MUNICIPALITY,
-      g.ZOOM_VALUE
+      'selectedCounty',
+      'newsByMunicipality',
+      'zoomValue'
     ])
   },
   data: function() {
@@ -96,7 +91,7 @@ export default {
         }
 
         this.previousMunicipalityNewsLength.map(previousMunicipality => {
-          if (municipality.name === previousMunicipality.name && 
+          if (municipality.name === previousMunicipality.name &&
               municipality.news.length !== previousMunicipality.length) {
                 this.animate(municipality.name);
                 previousMunicipality.length = municipality.news.length;
@@ -141,7 +136,7 @@ export default {
     },
     textLeave: function(el, done, municipality) {
       Velocity(el, {x: municipality.countyX, y: municipality.countyY}, {duration: 300}, {complete: done});
-    }    
+    }
   }
 }
 </script>

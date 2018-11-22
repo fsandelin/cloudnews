@@ -32,11 +32,6 @@ import NotificationsMunicipality from './NotificationsMunicipality';
 import NotificationsCounty from './NotificationsCounty';
 import NotificationsCountry from './NotificationsCountry';
 import { mapGetters, mapActions } from 'vuex';
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "notifications",
@@ -48,7 +43,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      g.ZOOM_VALUE,
+      'zoomValue',
     ])
   },
   methods: {

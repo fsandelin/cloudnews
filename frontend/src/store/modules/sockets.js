@@ -1,7 +1,5 @@
 import addWebSocket from '../webSocketConnection';
 import {
-  actions as a,
-  mutations as m,
   socketEvents as se,
   newsSources as ns,
   socketServiceUrl
@@ -10,10 +8,7 @@ import {
 let socketConnections = []
 
 const state = {
-  newsSources: [
-    { name: ns.SVT, active: false },
-    { name: ns.TT, active: false },
-  ]
+  newsSources: ns.map(source => ({ name: source, active: false}))
 }
 
 const getters = {
@@ -25,26 +20,26 @@ const getters = {
 const actions = {
   toggleNewsSource: ({ dispatch, state }, source) => {
     if (state.newsSources.find(s => s.name === source.name && s.active)) {
-      dispatch(a.DEACTIVATE_NEWS_SOURCE, source)
+      dispatch('deactivateNewsSource', source)
     } else {
-      dispatch(a.ACTIVATE_NEWS_SOURCE, source)
+      dispatch('activateNewsSource', source)
     }
   },
   activateNewsSource: ({ dispatch, commit }, source) => {
     const events = [
-      { url: `${socketServiceUrl}${source.name}`, event: se.NEWS, action: a.ADD_NEWS },
-      { url: `${socketServiceUrl}${source.name}`, event: se.NEWS_LIST, action: a.ADD_NEWS_LIST },
+      { url: `${socketServiceUrl}${source.name}`, event: se.NEWS, action: 'addNews' },
+      { url: `${socketServiceUrl}${source.name}`, event: se.NEWS_LIST, action: 'addNewsList' },
     ]
     socketConnections = [ ...socketConnections, { source: source.name, sockets: addWebSocket(dispatch)(events) } ]
 
-    commit(m.ACTIVATE_NEWS_SOURCE, source)
+    commit('activateNewsSource', source)
   },
   deactivateNewsSource: ({ commit }, source) => {
     const socketConnection = socketConnections.find(connection => connection.source === source.name)
     socketConnection.sockets.map(socket => socket.disconnect())
     socketConnections = socketConnections.filter(connection => connection.source !== source.name)
 
-    commit(m.DEACTIVATE_NEWS_SOURCE, source)
+    commit('deactivateNewsSource', source)
   },
 }
 

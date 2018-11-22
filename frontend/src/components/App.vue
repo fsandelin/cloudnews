@@ -37,11 +37,6 @@ import DrawerNewsList from './DrawerNewsList'
 import ToggleButtons from './ToggleButtons'
 import { mapGetters, mapActions } from 'vuex';
 import { fakeNewsList } from '../assets/FakeData'
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: 'app',
@@ -59,10 +54,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      g.ACTIVE_NEWS_ITEM,
-      g.ACTIVE_NEWS_ITEM_ID,
-      g.SELECTED_COUNTY,
-      g.NEWS_SOURCES
+      'activeNewsItem',
+      'activeNewsItemId',
+      'selectedCounty',
+      'newsSources'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
@@ -70,9 +65,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      a.ADD_NEWS,
-      a.TOGGLE_DRAWER,
-      a.TOGGLE_NEWS_SOURCE,
+      'addNews',
+      'toggleDrawer',
+      'toggleNewsSource',
     ]),
   },
   components: {

@@ -17,13 +17,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getters as g } from '../store/constants'
 
 export default {
   name: 'drawernewsitem',
   computed: {
     ...mapGetters([
-      g.ACTIVE_NEWS_ITEM
+      'activeNewsItem'
     ])
   }
 }

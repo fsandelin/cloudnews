@@ -27,19 +27,14 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Velocity from "velocity-animate";
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "notificationsCounty",
   props: ['circleSize', 'fontSize', 'yOffset'],
   computed: {
     ...mapGetters([
-      g.NEWS_BY_COUNTY,
-      g.ZOOM_VALUE
+      'newsByCounty',
+      'zoomValue'
     ])
   },
   data: function() {

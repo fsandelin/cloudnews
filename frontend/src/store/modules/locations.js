@@ -2,10 +2,6 @@ import europeCountries from '../../assets/europe-countries-meta-info.json';
 import swedishCounties from '../../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../../assets/sweden-municipalities-meta-info.json';
 import { cleanString } from '../helpers';
-import {
-  mutations as m,
-  actions as a,
-} from '../constants';
 
 const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
@@ -38,10 +34,10 @@ const getters = {
 }
 
 const actions = {
-  selectCounty: ({ commit }, countyName) => commit(m.SELECT_COUNTY, countyName),
+  selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
   countyClick: ({ dispatch }, county) => {
-    dispatch(a.SELECT_COUNTY, county.name);
-    dispatch(a.SELECT_ACTIVE_NEWS_ITEM_ID, null);
+    dispatch('selectCounty', county.name);
+    dispatch('setActiveNewsItemId', null);
   },
 }
 
