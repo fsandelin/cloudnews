@@ -30,7 +30,7 @@ import Velocity from "velocity-animate";
 
 export default {
   name: "notificationsCounty",
-  props: ['circleSize', 'fontSize', 'yOffset'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects'],
   computed: {
     ...mapGetters([
       'newsByCounty',
@@ -43,9 +43,7 @@ export default {
     }
   },
   mounted: function() {
-    this.previousCountyNewsLength = this.newsByCounty.map(county => ({
-      name: county.name, length: county.news.length
-    }));
+    this.previousCountyNewsLength = this.calculateNewsLengthForObjects(this.newsByCounty)
   },
   watch: {
     newsByCounty: function(newsByCounty) {

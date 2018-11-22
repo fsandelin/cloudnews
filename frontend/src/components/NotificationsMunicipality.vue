@@ -67,7 +67,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "notificationsMunicipality",
-  props: ['circleSize', 'fontSize', 'yOffset'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects'],
   computed: {
     ...mapGetters([
       'selectedCounty',
@@ -81,9 +81,7 @@ export default {
     }
   },
   mounted: function() {
-    this.previousMunicipalityNewsLength = this.newsByMunicipality.map(municipality => ({
-      name: municipality.name, length: municipality.news.length
-    }));
+    this.previousMunicipalityNewsLength = this.calculateNewsLengthForObjects(this.newsByMunicipality)
   },
   watch: {
     newsByMunicipality: function(newsByMunicipality) {
