@@ -42,7 +42,7 @@ function getTimeSpan(from, until, callback) {
   });
 }
 
-function getNeededSpans(availableSpans, requestFrom, requestUntil) {
+function getNeededSpans(service, availableSpans, requestFrom, requestUntil) {
   const missingSpans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
@@ -51,10 +51,10 @@ function getNeededSpans(availableSpans, requestFrom, requestUntil) {
     const currentDateUntil = new Date(availableSpans[i].until);
     if (tentFrom < currentDateFrom) {
       if (until < currentDateFrom) {
-        missingSpans.push({ from: tentFrom, until });
+        missingSpans.push({ service, from: tentFrom, until });
         return missingSpans;
       }
-      missingSpans.push({ from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
+      missingSpans.push({ service, from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
       if (until <= currentDateUntil) {
         return missingSpans;
       }
@@ -71,18 +71,19 @@ function getNeededSpans(availableSpans, requestFrom, requestUntil) {
       tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
     }
   }
-  missingSpans.push({ from: tentFrom, until });
+  missingSpans.push({ service, from: tentFrom, until });
   return missingSpans;
 }
 
-function checkCompletion(service, from, until, callback) {
+function checkCompletion(requestedResource, callback) {
+  const { service, from, until } = requestedResource;
   dbConnection.connect((error, client) => {
     const db = client.db(dbName);
     const query = {
       service,
     };
     db.collection(scraperMetaCollection).find(query).toArray((err, results) => {
-      const needed = getNeededSpans(results, from, until);
+      const needed = getNeededSpans(service, results, from, until);
       callback(needed);
     });
   });

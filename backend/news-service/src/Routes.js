@@ -1,28 +1,11 @@
 const express = require('express');
 const db = require('./controllers/DatabaseInterface');
+const { addRequest, requests } = require('./Requests');
 
 const router = express.Router();
-const requests = {};
-
-function handleRequest(request) {
-  console.log('Is now in handlerequest');
-  const requestedResource = request.requestedResources[0];
-  const { service, from, until } = requestedResource;
-  console.log(`In handleRequest, the service requested is: ${service}`);
-  db.checkCompletion(service, from, until, (timespan) => {
-    if (timespan.length === 0) {
-      console.log('Already have all we need.');
-      console.log('Should now do db-stuffs to get all related articles');
-    } else {
-      console.log('Should now tell scraper that we need some shit');
-    }
-  });
-}
 
 router.post('/new_articles', (req, res) => {
   const { services, startDate, endDate } = req.params;
-  // const servicesString = Buffer.from(req.params.services, 'base64').toString();
-  // const { servicesArray } = JSON.parse(servicesString.trim());
   db.pushArticles(req.body.articles, (error) => {
     if (error) {
       res.status(500).send(`500 internal server error: ${error}`);
@@ -44,6 +27,9 @@ router.get('/timespan', (req, res) => {
 });
 
 router.post('/request/timespan', (req, res) => {
+  setInterval(() => {
+    console.log(requests);
+  }, 5000);
   const { requestId, clientId, requestedResources } = req.body;
   const reqResources = JSON.parse(requestedResources);
   console.log(`Should get a requestedResource: ${reqResources}`);
@@ -51,11 +37,7 @@ router.post('/request/timespan', (req, res) => {
     res.sendStatus(400);
   } else {
     res.sendStatus(200);
-    requests[requestId] = {
-      requestId,
-      requestedResources: reqResources,
-    };
-    handleRequest(requests[requestId]);
+    addRequest(requestId, reqResources);
   }
 });
 
