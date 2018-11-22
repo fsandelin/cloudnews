@@ -20,6 +20,8 @@
         v-bind:is="dynamicComponents.drawerNewsList">
       </component>
     </drawer>
+
+    <togglebuttons></togglebuttons>
   </div>
 </template>
 
@@ -29,6 +31,7 @@ import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
+import ToggleButtons from './ToggleButtons'
 import { mapGetters, mapActions } from 'vuex';
 import { fakeNewsList } from '../assets/FakeData'
 import {
@@ -77,7 +80,8 @@ export default {
     'drawernewsitem': DrawerNewsItem,
     'newssidebar': NewsSideBar,
     'drawer': Drawer,
-    'drawernewslist': DrawerNewsList
+    'drawernewslist': DrawerNewsList,
+    'togglebuttons': ToggleButtons
   }
 }
 </script>
