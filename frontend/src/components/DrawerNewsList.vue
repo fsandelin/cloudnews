@@ -3,12 +3,10 @@
     <div class="title light-border-bottom">
       {{ selectedCounty }}
     </div>
-    <div class="news-list">
-      <newslist
-        v-bind:filteredNewsList="filteredNewsList"
-        v-bind:showFilter="showFilter">
-      </newslist>
-    </div>
+    <newslist
+      v-bind:filteredNewsList="filteredNewsList"
+      v-bind:showFilter="showFilter">
+    </newslist>
   </div>
 </template>
 
