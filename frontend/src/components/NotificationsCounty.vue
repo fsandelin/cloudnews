@@ -43,18 +43,19 @@ export default {
     }
   },
   mounted: function() {
-    this.previousCountyNewsLength = this.newsByCounty.map((county) => ({ name: county.name, length: county.news.length }));
+    this.previousCountyNewsLength = this.newsByCounty.map(county => ({
+      name: county.name, length: county.news.length
+    }));
   },
   watch: {
     newsByCounty: function(newsByCounty) {
       for (const county of newsByCounty) {
-        if (!(this.previousCountyNewsLength.map((c)=>(c.name)).includes(county.name))){
-          this.previousCountyNewsLength.push({name: county.name, length: county.news.length});
+        if (!(this.previousCountyNewsLength.map(c => c.name.includes(county.name)))) {
+          this.previousCountyNewsLength.push({ name: county.name, length: county.news.length });
         }
 
         this.previousCountyNewsLength.map(previousCounty => {
-          if (county.name === previousCounty.name && 
-              county.news.length !== previousCounty.length) {
+          if (county.name === previousCounty.name && county.news.length !== previousCounty.length) {
             this.animate(county.name);
             previousCounty.length = county.news.length;
           }

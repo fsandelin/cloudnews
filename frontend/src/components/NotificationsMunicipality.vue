@@ -81,7 +81,9 @@ export default {
     }
   },
   mounted: function() {
-    this.previousMunicipalityNewsLength = this.newsByMunicipality.map((municipality) => ({ name: municipality.name, length: municipality.news.length }));
+    this.previousMunicipalityNewsLength = this.newsByMunicipality.map(municipality => ({
+      name: municipality.name, length: municipality.news.length
+    }));
   },
   watch: {
     newsByMunicipality: function(newsByMunicipality) {
@@ -107,35 +109,72 @@ export default {
     animate: function(municipalityName) {
       let el = this.$refs['newsNotification-'+municipalityName];
       let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
-      Velocity(el,  { r: r*1.5}, { duration: 80 });
+      Velocity(el,  { r: r*1.5 }, { duration: 80 });
       Velocity(el,  { r: r }, { duration: 40 });
     },
     lineBeforeEnter: function(el, done, municipality) {
-      Velocity(el, {x1: municipality.countyX, y1: municipality.countyY, x2: municipality.countyX, y2: municipality.countyY}, {duration: 0});
+      Velocity(el, {
+        x1: municipality.countyX,
+        y1: municipality.countyY,
+        x2: municipality.countyX,
+        y2: municipality.countyY },
+        { duration: 0 });
     },
     lineEnter: function(el, done, municipality) {
-      Velocity(el, {x2: municipality.x, y2: municipality.y}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x2: municipality.x,
+        y2: municipality.y },
+        { duration: 300 },
+        { complete: done });
     },
     lineLeave: function(el, done, municipality) {
-      Velocity(el, {x1: municipality.countyX, y1: municipality.countyY, x2: municipality.countyX, y2: municipality.countyY}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x1: municipality.countyX,
+        y1: municipality.countyY,
+        x2: municipality.countyX,
+        y2: municipality.countyY },
+        { duration: 300 },
+        { complete: done });
     },
     circleBeforeEnter: function(el, done, municipality) {
-      Velocity(el, {cx: municipality.countyX, cy: municipality.countyY}, {duration: 0});
+      Velocity(el, {
+        cx: municipality.countyX,
+        cy: municipality.countyY },
+        { duration: 0 });
     },
     circleEnter: function(el, done, municipality) {
-      Velocity(el, {cx: municipality.x, cy: municipality.y}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        cx: municipality.x,
+        cy: municipality.y },
+        { duration: 300 },
+        { complete: done });
     },
     circleLeave: function(el, done, municipality) {
-      Velocity(el, {cx: municipality.countyX, cy: municipality.countyY}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        cx: municipality.countyX,
+        cy: municipality.countyY },
+        { duration: 300 },
+        { complete: done });
     },
     textBeforeEnter: function(el, done, municipality) {
-      Velocity(el, {x: municipality.countyX, y: municipality.countyY}, {duration: 0});
+      Velocity(el, {
+        x: municipality.countyX,
+        y: municipality.countyY },
+        { duration: 0 });
     },
     textEnter: function(el, done, municipality) {
-      Velocity(el, {x: municipality.x, y: municipality.y}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x: municipality.x,
+        y: municipality.y },
+        { duration: 300 },
+        { complete: done });
     },
     textLeave: function(el, done, municipality) {
-      Velocity(el, {x: municipality.countyX, y: municipality.countyY}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x: municipality.countyX,
+        y: municipality.countyY },
+        { duration: 300 },
+        { complete: done });
     }
   }
 }
