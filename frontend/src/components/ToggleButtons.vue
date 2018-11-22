@@ -12,11 +12,6 @@
 <script>
 import ToggleButton from './ToggleButton'
 
-const item = {
-  active: false,
-  toggleActive: (item) => item.active = !item.active
-}
-
 export default {
   name: 'togglebuttons',
   props: ['items', 'toggleActive'],
