@@ -2,8 +2,9 @@
   <div class="toggle-buttons flex-centering">
     <togglebutton
       v-for="item in items"
-      v-bind:key="item.text"
-      v-bind:item="item">
+      v-bind:key="item.name"
+      v-bind:item="item"
+      v-bind:toggleActive="toggleActive">
     </togglebutton>
   </div>
 </template>
@@ -18,14 +19,7 @@ const item = {
 
 export default {
   name: 'togglebuttons',
-  data () {
-    return {
-      items: [
-        { ...item, text: 'SVT' },
-        { ...item, text: 'TT' }
-      ]
-    }
-  },
+  props: ['items', 'toggleActive'],
   components: {
     'togglebutton': ToggleButton
   }

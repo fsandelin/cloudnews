@@ -21,7 +21,10 @@
       </component>
     </drawer>
 
-    <togglebuttons></togglebuttons>
+    <togglebuttons
+      v-bind:items="newsSources"
+      v-bind:toggleActive="toggleNewsSource">
+    </togglebuttons>
   </div>
 </template>
 
@@ -53,16 +56,13 @@ export default {
   },
   created: function () {
     fakeNewsList.map(newsItem => this.addNews(newsItem))
-    if (process.env.SOCKET_CONNECTION) {
-      this.addNewsSource(ns.SVT)
-      this.addNewsSource(ns.TT)
-    }
   },
   computed: {
     ...mapGetters([
       g.ACTIVE_NEWS_ITEM,
       g.ACTIVE_NEWS_ITEM_ID,
-      g.SELECTED_COUNTY
+      g.SELECTED_COUNTY,
+      g.NEWS_SOURCES
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
@@ -72,7 +72,7 @@ export default {
     ...mapActions([
       a.ADD_NEWS,
       a.TOGGLE_DRAWER,
-      a.ADD_NEWS_SOURCE
+      a.TOGGLE_NEWS_SOURCE,
     ]),
   },
   components: {
