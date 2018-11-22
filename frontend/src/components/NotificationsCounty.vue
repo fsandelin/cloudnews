@@ -30,7 +30,7 @@ import Velocity from "velocity-animate";
 
 export default {
   name: "notificationsCounty",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'animate'],
   computed: {
     ...mapGetters([
       'newsByCounty',
@@ -54,7 +54,8 @@ export default {
 
         this.previousCountyNewsLength.map(previousCounty => {
           if (county.name === previousCounty.name && county.news.length !== previousCounty.length) {
-            this.animate(county.name);
+            const el = this.$refs[`countyNewsNotification-${county.name}`];
+            this.animate(el);
             previousCounty.length = county.news.length;
           }
         });
@@ -65,12 +66,6 @@ export default {
     strokeWidth: function() {
       return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
-    animate: function(countyName) {
-      let el = this.$refs['countyNewsNotification-'+countyName];
-      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
-      Velocity(el,  { r: r*1.5}, { duration: 80 });
-      Velocity(el,  { r: r }, { duration: 40 });
-    }
   }
 }
 </script>

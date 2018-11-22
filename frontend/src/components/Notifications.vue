@@ -8,6 +8,7 @@
 
     <notificationsMunicipality
       v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
+      v-bind:animate="animate"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
       v-bind:yOffset="yOffset">
@@ -15,6 +16,7 @@
 
     <notificationsCounty
       v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
+      v-bind:animate="animate"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
       v-bind:yOffset="yOffset">
@@ -53,6 +55,11 @@ export default {
       return list.map(obj => ({
         name: obj.name, length: obj.news.length
       }))
+    },
+    animate: function(el) {
+      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
+      Velocity(el,  { r: r*1.5 }, { duration: 80 });
+      Velocity(el,  { r: r }, { duration: 40 });
     },
     circleSize: function (length) {
       return Math.min(9,(4+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));

@@ -67,7 +67,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "notificationsMunicipality",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'animate'],
   computed: {
     ...mapGetters([
       'selectedCounty',
@@ -93,7 +93,8 @@ export default {
         this.previousMunicipalityNewsLength.map(previousMunicipality => {
           if (municipality.name === previousMunicipality.name &&
               municipality.news.length !== previousMunicipality.length) {
-                this.animate(municipality.name);
+                const el = this.$refs[`newsNotification-${municipality.name}`];
+                this.animate(el);
                 previousMunicipality.length = municipality.news.length;
               }
         });
@@ -103,12 +104,6 @@ export default {
   methods: {
     lineWidth: function() {
       return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
-    },
-    animate: function(municipalityName) {
-      let el = this.$refs['newsNotification-'+municipalityName];
-      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
-      Velocity(el,  { r: r*1.5 }, { duration: 80 });
-      Velocity(el,  { r: r }, { duration: 40 });
     },
     lineBeforeEnter: function(el, done, municipality) {
       Velocity(el, {
