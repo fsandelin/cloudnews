@@ -1,9 +1,10 @@
 <template>
   <div class="toggle-button">
+    <span class="text">{{ item.text }}</span>
     <div
       class="background flex-centering"
-      v-bind:class="{ active: active }"
-      v-on:click="toggleActive">
+      v-bind:class="{ active: item.active }"
+      v-on:click="item.toggleActive(item)">
       <div class="circle full-shadow"></div>
     </div>
   </div>
@@ -12,16 +13,7 @@
 <script>
 export default {
   name: 'togglebutton',
-  data () {
-    return {
-      active: false
-    }
-  },
-  methods: {
-    toggleActive: function() {
-      this.active = !this.active
-    }
-  }
+  props: ['item'],
 }
 </script>
 
