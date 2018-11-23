@@ -67,7 +67,7 @@ export default {
     ]),
     itemClicked: function(news) {
       const county = this.countyByName(news.location.county);
-      this.transition(county.x, county.y)
+      if (this.selectedCounty !== county.name) this.transition(county.x, county.y);
       this.toggleActive(news)
     },
     toggleHover: function () {
