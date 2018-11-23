@@ -30,7 +30,7 @@ import Velocity from "velocity-animate";
 
 export default {
   name: "notificationsCounty",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'animate'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthforObjects', 'animate'],
   computed: {
     ...mapGetters([
       'newsByCounty',
@@ -47,19 +47,7 @@ export default {
   },
   watch: {
     newsByCounty: function(newsByCounty) {
-      for (const county of newsByCounty) {
-        if (!(this.previousCountyNewsLength.map(c => c.name.includes(county.name)))) {
-          this.previousCountyNewsLength.push({ name: county.name, length: county.news.length });
-        }
-
-        this.previousCountyNewsLength.map(previousCounty => {
-          if (county.name === previousCounty.name && county.news.length !== previousCounty.length) {
-            const el = this.$refs[`countyNewsNotification-${county.name}`];
-            this.animate(el);
-            previousCounty.length = county.news.length;
-          }
-        });
-      }
+      this.updateNewsLengthforObjects(newsByCounty, this.previousCountyNewsLength, this.$refs, 'countyNewsNotification-')
     }
   },
   methods: {

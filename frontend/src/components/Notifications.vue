@@ -8,6 +8,7 @@
 
     <notificationsMunicipality
       v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
+      v-bind:updateNewsLengthforObjects="updateNewsLengthforObjects"
       v-bind:animate="animate"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
@@ -16,6 +17,7 @@
 
     <notificationsCounty
       v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
+      v-bind:updateNewsLengthforObjects="updateNewsLengthforObjects"
       v-bind:animate="animate"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
@@ -51,6 +53,22 @@ export default {
     ])
   },
   methods: {
+    updateNewsLengthforObjects: function (list, lenList, refs, refPrefix) {
+      list.map(obj => {
+        if (!(lenList.map(m => m.name).includes(obj.name))){
+          lenList.push({name: obj.name, length: obj.news.length});
+        }
+
+        lenList.map(prevObj => {
+          if (obj.name === prevObj.name &&
+              obj.news.length !== prevObj.length) {
+                const el = refs[`${refPrefix}${obj.name}`];
+                this.animate(el);
+                prevObj.length = obj.news.length;
+              }
+        });
+      })
+    },
     calculateNewsLengthForObjects: function (list) {
       return list.map(obj => ({
         name: obj.name, length: obj.news.length

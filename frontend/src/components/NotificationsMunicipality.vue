@@ -67,7 +67,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "notificationsMunicipality",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'animate'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthforObjects', 'animate'],
   computed: {
     ...mapGetters([
       'selectedCounty',
@@ -85,20 +85,7 @@ export default {
   },
   watch: {
     newsByMunicipality: function(newsByMunicipality) {
-      for (const municipality of newsByMunicipality) {
-        if (!(this.previousMunicipalityNewsLength.map((m)=>(m.name)).includes(municipality.name))){
-          this.previousMunicipalityNewsLength.push({name: municipality.name, length: municipality.news.length});
-        }
-
-        this.previousMunicipalityNewsLength.map(previousMunicipality => {
-          if (municipality.name === previousMunicipality.name &&
-              municipality.news.length !== previousMunicipality.length) {
-                const el = this.$refs[`newsNotification-${municipality.name}`];
-                this.animate(el);
-                previousMunicipality.length = municipality.news.length;
-              }
-        });
-      }
+      this.updateNewsLengthforObjects(newsByMunicipality, this.previousMunicipalityNewsLength, this.$refs, 'newsNotification-')
     }
   },
   methods: {
