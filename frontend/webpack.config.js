@@ -107,14 +107,3 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 }
-
-if (process.env.NODE_ENV === 'development' && process.env.SOCKET_CONNECTION === 'true') {
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"development"',
-        SOCKET_CONNECTION: '"true"'
-      }
-    }),
-  ])
-}
