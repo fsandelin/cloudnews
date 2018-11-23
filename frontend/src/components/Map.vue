@@ -34,10 +34,6 @@
 import * as d3 from "d3";
 import Notifications from './Notifications'
 import { mapGetters, mapActions } from 'vuex';
-import {
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "d3map",
@@ -73,16 +69,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      g.COUNTRIES,
-      g.COUNTIES,
-      g.MUNICIPALITIES,
-      g.ZOOM_VALUE
+      'countries',
+      'counties',
+      'municipalities',
+      'zoomValue'
     ])
   },
   methods: {
     ...mapActions([
-      a.COUNTY_CLICK,
-      a.SET_ZOOM_VALUE
+      'countyClick',
+      'setZoomValue'
     ])
   }
 }

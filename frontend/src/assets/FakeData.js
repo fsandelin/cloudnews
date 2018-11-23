@@ -1,6 +1,8 @@
 export const fakeNewsList = [
   {
-    id: 0, title: "News title 0", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 0, title: "News title 0", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -9,7 +11,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 3423, title: "2131", text: "abbbddd", active: false,
+    id: 3423, title: "2131", lead: "abbbddd", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "tt",
     location: {
       country: "",
       county: "norrbotten",
@@ -18,7 +22,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 2432, title: "avc", text: "qweqwe", active: false,
+    id: 2432, title: "avc", lead: "qweqwe", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "norrbotten",
@@ -27,7 +33,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 1, title: "News title 1", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 1, title: "News title 1", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -36,7 +44,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 2, title: "News title 2", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 2, title: "News title 2", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -45,7 +55,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 3, title: "News title 3", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 3, title: "News title 3", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -54,7 +66,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 4, title: "News title 4", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 4, title: "News title 4", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -63,7 +77,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 5, title: "News title 5", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 5, title: "News title 5", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -72,7 +88,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 6, title: "News title 6", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 6, title: "News title 6", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -81,7 +99,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 7, title: "News title 7", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 7, title: "News title 7", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -90,7 +110,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 8, title: "News title 8", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 8, title: "News title 8", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -99,7 +121,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 9, title: "News title 9", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 9, title: "News title 9", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -108,7 +132,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 10, title: "News title 10", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 10, title: "News title 10", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "tt",
     location: {
       country: "",
       county: "",
@@ -117,7 +143,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 11, title: "News title 11", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 11, title: "News title 11", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -126,7 +154,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 12, title: "News title 12", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 12, title: "News title 12", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -135,7 +165,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 13, title: "News title 13", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 13, title: "News title 13", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -144,7 +176,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 14, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 14, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -153,7 +187,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 15, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 15, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -162,7 +198,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 16, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 16, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -171,7 +209,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 17, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 17, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -180,7 +220,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 18, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 18, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -189,7 +231,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 19, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 19, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -198,7 +242,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 20, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 20, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "tt",
     location: {
       country: "",
       county: "",
@@ -207,7 +253,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 21, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 21, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -216,7 +264,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 22, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 22, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -225,7 +275,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 23, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 23, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",
@@ -234,7 +286,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 24, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 24, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "tt",
     location: {
       country: "",
       county: "",
@@ -243,7 +297,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 25, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 25, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "tt",
     location: {
       country: "",
       county: "",
@@ -252,7 +308,9 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 26, title: "News title 14", text: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 26, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
     location: {
       country: "",
       county: "",

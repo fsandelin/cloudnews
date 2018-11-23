@@ -13,18 +13,15 @@
     <p class="title flex-centering">
       {{ news.title }}
     </p>
-    <p class="text flex-centering">
-      {{ news.text }}
+    <p class="subtitle flex-centering">
+      <span>{{ news.source }}</span>
+      <span>{{ news.timestamp }}</span>
     </p>
   </li>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import {
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: 'newslistitem',
@@ -36,9 +33,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-      g.COUNTY_BY_NAME,
-      g.ACTIVE_NEWS_ITEM_ID,
-      g.SELECTED_COUNTY
+      'countyByName',
+      'activeNewsItemId',
+      'selectedCounty'
     ]),
     applyFilter: function () {
       return this.showFilter && this.news.location.county === this.selectedCounty;
@@ -46,7 +43,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      a.TOGGLE_ACTIVE
+      'toggleActive'
     ]),
     toggleHover: function () {
       this.hover = !this.hover;

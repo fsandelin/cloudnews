@@ -1,9 +1,4 @@
 import { cleanString } from '../helpers';
-import {
-  mutations as m,
-  actions as a,
-  socketEvents as se,
-} from '../constants';
 
 const state = {
   newsList: [],
@@ -17,9 +12,8 @@ const getters = {
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
     return state.newsList.filter(news => {
-      const municipality = rootGetters.municipalityByName(news.location.municipality)
-      const countyName = municipality ? municipality.county : null
-      return countyName === rootState.locations.selectedCounty
+      const county = rootGetters.countyByName(news.location.county)
+      return county ? county.name === rootState.locations.selectedCounty : false
     })
   },
   selectedCountyNews: (state, getters, rootState) => {
@@ -105,12 +99,12 @@ const actions = {
       }
     }
 
-    commit(m.ADD_NEWS, { ...news, location });
+    commit('addNews', { ...news, location });
   },
   addNewsList: ({ dispatch }, newsList) => {
-    newsList.map(news => dispatch(a.ADD_NEWS, news))
+    newsList.map(news => dispatch('addNews', news))
   },
-  setActiveNewsItemId: ({ commit }, id) => commit(a.SELECT_ACTIVE_NEWS_ITEM_ID, id),
+  setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
 }
 
 const mutations = {

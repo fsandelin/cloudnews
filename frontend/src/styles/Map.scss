@@ -32,24 +32,23 @@ svg.mapContainer {
       }
 
       &.country {
-        fill-opacity: 0.3;
-        fill: black;
+        fill: $lightgrey;
       }
-  
+
       &.county {
         fill: $darkgreen;
       }
-  
+
       &.municipality {
         fill: $darkblue;
         stroke-width: 0.1px;
         stroke: $white;
       }
-  
+
       &.county:hover {
         fill: $darkblue;
       }
-  
+
       &.municipality:hover {
         fill: $lightblue;
       }
