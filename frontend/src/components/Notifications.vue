@@ -9,7 +9,6 @@
     <notificationsMunicipality
       v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
       v-bind:updateNewsLengthforObjects="updateNewsLengthforObjects"
-      v-bind:animate="animate"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
       v-bind:yOffset="yOffset">
@@ -18,7 +17,6 @@
     <notificationsCounty
       v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
       v-bind:updateNewsLengthforObjects="updateNewsLengthforObjects"
-      v-bind:animate="animate"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
       v-bind:yOffset="yOffset">

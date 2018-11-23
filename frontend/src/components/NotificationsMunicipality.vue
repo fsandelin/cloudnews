@@ -67,7 +67,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "notificationsMunicipality",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthforObjects', 'animate'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthforObjects'],
   computed: {
     ...mapGetters([
       'selectedCounty',
