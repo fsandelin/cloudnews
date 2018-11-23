@@ -30,7 +30,7 @@ import Velocity from "velocity-animate";
 
 export default {
   name: "notificationsCounty",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthforObjects'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects'],
   computed: {
     ...mapGetters([
       'newsByCounty',
@@ -47,7 +47,7 @@ export default {
   },
   watch: {
     newsByCounty: function(newsByCounty) {
-      this.updateNewsLengthforObjects(newsByCounty, this.previousCountyNewsLength, this.$refs, 'countyNewsNotification-')
+      this.updateNewsLengthForObjects(newsByCounty, this.previousCountyNewsLength, this.$refs, 'countyNewsNotification-')
     }
   },
   methods: {
