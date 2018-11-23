@@ -1,6 +1,7 @@
 
 
-lan = ["Dalarna",
+lan = [
+"Dalarna",
 "Jämtland",
 "Skåne",
 "Värmland",
@@ -20,12 +21,35 @@ lan = ["Dalarna",
 "Uppsala",
 "Västmanland",
 "Västra Götaland",
-"Örebro"]
+"Örebro"
+]
 
+lan_full = [
+"Dalarnas län",
+"Jämtlands län",
+"Skåne län",
+"Värmlands län",
+"Västernorrlands län",
+"Östergötlands län",
+"Jönköpings län",
+"Hallands län",
+"Kalmar län",
+"Västerbottens län",
+"Norrbottens län",
+"Södermanlands län",
+"Gävleborgs län",
+"Gotlands län",
+"Kronobergs län",
+"Blekinge län",
+"Stockholms län",
+"Uppsala län",
+"Västmanlands län",
+"Västra Götalands län",
+"Örebro län"
+]
 
-
-
-lan_kommun = {"Dalarna":["Avesta kommun","Borlänge kommun","Falu kommun","Gagnefs kommun","Hedemora kommun","Leksands kommun","Ludvika kommun","Malung-Sälens kommun","Mora kommun","Orsa kommun","Rättviks kommun","Smedjebackens kommun","Säters kommun","Vansbro kommun","Älvdalens kommun"],
+lan_kommun = {
+"Dalarna":["Avesta kommun","Borlänge kommun","Falu kommun","Gagnefs kommun","Hedemora kommun","Leksands kommun","Ludvika kommun","Malung-Sälens kommun","Mora kommun","Orsa kommun","Rättviks kommun","Smedjebackens kommun","Säters kommun","Vansbro kommun","Älvdalens kommun"],
 "Jämtland":["Bergs kommun","Bräcke kommun","Härjedalens kommun","Krokoms kommun","Ragunda kommun","Strömsunds kommun","Åre kommun","Östersunds kommun"],
 "Skåne":["Bjuvs kommun","Bromölla kommun","Burlövs kommun","Båstads kommun","Eslövs kommun","Helsingborgs kommun","Hässleholms kommun","Höganäs kommun","Hörby kommun","Höörs kommun","Klippans kommun","Kristianstads kommun","Kävlinge kommun","Landskrona kommun","Lomma kommun","Lunds kommun","Malmö kommun","Osby kommun","Perstorps kommun","Simrishamns kommun","Sjöbo kommun","Skurups kommun","Staffanstorps kommun","Svalövs kommun","Svedala kommun","Tomelilla kommun","Trelleborgs kommun","Vellinge kommun","Ystads kommun","Åstorps kommun","Ängelholms kommun","Örkelljunga kommun","Östra Göinge kommun"],
 "Värmland":["Arvika kommun","Eda kommun","Filipstads kommun","Forshaga kommun","Grums kommun","Hagfors kommun","Hammarö kommun","Karlstads kommun","Kils kommun","Kristinehamns kommun","Munkfors kommun","Storfors kommun","Sunne kommun","Säffle kommun","Torsby kommun","Årjängs kommun"],
@@ -48,9 +72,8 @@ lan_kommun = {"Dalarna":["Avesta kommun","Borlänge kommun","Falu kommun","Gagne
 "Örebro":["Askersunds kommun","Degerfors kommun","Hallsbergs kommun","Hällefors kommun","Karlskoga kommun","Kumla kommun","Laxå kommun","Lekebergs kommun","Lindesbergs kommun","Ljusnarsbergs kommun","Nora kommun","Örebro kommun"]
 }
 
-
-
-kommun_tatort = {"Upplands Väsby kommun":["Löwenströmska lasarettet"],
+kommun_tatort = {
+"Upplands Väsby kommun":["Löwenströmska lasarettet"],
 "Årjängs kommun":["Töcksfors","Årjäng"],
 "Stenungsunds kommun":["Jörlanda","Spekeröd","Stenungsund","Stenungsön","Stora Höga","Svartehallen","Svenshögen","Ucklum","Ödsmål"],
 "Nordanstigs kommun":["Bergsjö","Gnarp","Harmånger","Hassela","Ilsbo","Jättendal","Stocka","Strömsbruk"],

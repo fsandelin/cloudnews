@@ -1,3 +1,16 @@
+
+URL_API = "https://api.svt.se/nss-api/page"
+URL_SVT = "https://www.svt.se"
+
+params = "?q=auto"
+param_limit = ",limit="
+param_page  = ",page="
+
+EARLIER = True
+LATER = False
+FIRST = 0
+LAST = -1
+
 svt_regions = [
 "/nyheter/lokalt/blekinge/",
 "/nyheter/lokalt/dalarna/",
@@ -19,8 +32,8 @@ svt_regions = [
 "/nyheter/lokalt/vasternorrland/",
 "/nyheter/lokalt/vastmanland/", 
 "/nyheter/lokalt/orebro/", 
-"/nyheter/lokalt/ost/"]
-
+"/nyheter/lokalt/ost/"
+]
 
 used_regions = [svt_regions[0], 
                 svt_regions[1],
@@ -39,8 +52,8 @@ used_regions = [svt_regions[0],
                 svt_regions[17],
                 svt_regions[18],
                 svt_regions[19],
-                svt_regions[20]]
-
+                svt_regions[20]
+                ]
 
 svt_lokala_namn = [
 "Blekinge",
@@ -63,5 +76,6 @@ svt_lokala_namn = [
 "Västernorrland",
 "Västmanland",
 "Örebro",
-"Öst"]
+"Öst"
+]
 

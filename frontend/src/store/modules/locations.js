@@ -9,7 +9,7 @@ import {
 
 const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
-  counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+  counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "västra götaland"),
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
   cities: [],
   selectedCounty: null,
