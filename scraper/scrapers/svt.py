@@ -127,7 +127,7 @@ def reform_api_news_scrape(svt_news_list):
 
     return cloud_news
 
-def get_region_api_news(region="/nyheter/lokalt/uppsala/", page=0, amount=50, full_object=False): 
+def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50, full_object=False): 
     params_struct = params + param_limit + str(amount) + param_page + str(page)   
     r = requests.get(url = URL_API + region + params_struct)
     
@@ -141,7 +141,7 @@ def get_region_api_news(region="/nyheter/lokalt/uppsala/", page=0, amount=50, fu
 
 def get_news_region(from_, until_, region):
     # Get max page info from this region
-    start_obj = get_region_api_news(region = region, full_object=True)
+    start_obj = get_api_news_region(region = region, full_object=True)
     items = start_obj['auto']['pagination']['totalAvailableItems']
     items = int(items)
     max_pages = math.ceil(items / 50)
@@ -167,11 +167,11 @@ def get_news_region(from_, until_, region):
     while True:
 
         if page_nmr <= start_page:
-            news_list = get_region_api_news(region=region, page=page_nmr)
+            news_list = get_api_news_region(region=region, page=page_nmr)
             print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list))
-            if check_json_time(news_list[FIRST], until_, LATER):
-
-        news_list = get_region_api_news(region=region, page=page_nmr)
+            if check_json_time(news_list[FIRST], until_, EARLIER):
+                
+        news_list = get_api_news_region(region=region, page=page_nmr)
 
         print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list))
 
@@ -182,7 +182,7 @@ def get_news_region(from_, until_, region):
             break
 
     for page_nmr in range(start_page,max_pages):
-        news_list = get_region_api_news(region=region, page=page_nmr)
+        news_list = get_api_news_region(region=region, page=page_nmr)
 
         print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list))
         # Check if the last item is newer then the until time limit
