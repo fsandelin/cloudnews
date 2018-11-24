@@ -1,5 +1,5 @@
-from .lan_kommun_tatort import lan, lan_kommun, kommun_tatort
-from .constants import FIRST, LAST, EARLIER, LATER
+from scrapers.data.lan_kommun_tatort import lan, lan_kommun, kommun_tatort
+from scrapers.data.constants import FIRST, LAST, EARLIER, LATER
 
 import json
 import requests
@@ -47,11 +47,11 @@ def find_location(region, capital_words):
         if city_found:
             break
 
-    return location
+    return (city_found, location)
 
 def search_cloud_news(news):
 
-    found = False
+    city_found = False
     
     # Look for tatort    
     text = news['title'] + " "
@@ -64,7 +64,7 @@ def search_cloud_news(news):
 
     capital_words = [word for word in text.split() if word[0].isupper()]
 
-    location = find_location(region, capital_words)
+    city_found, location = find_location(region, capital_words)
 
     #print (local_tatort)
     #for word in capital_words:
@@ -74,7 +74,7 @@ def search_cloud_news(news):
     #            location['municipality'] = city[1]
     #            location['conutry'] = "Sweden"
     
-    if not bool(location):
+    if False: #not bool(location):
         web_news = get_news(news['url'], region)
         if 'body' in json.loads(web_news):
             text = json.loads(web_news)['body']
@@ -90,5 +90,5 @@ def search_cloud_news(news):
     #print(news['url'])
     #print("")
 
-    return (found, news)
+    return (city_found, news)
     

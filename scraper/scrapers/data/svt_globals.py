@@ -6,11 +6,6 @@ params = "?q=auto"
 param_limit = ",limit="
 param_page  = ",page="
 
-EARLIER = True
-LATER = False
-FIRST = 0
-LAST = -1
-
 svt_regions = [
 "/nyheter/lokalt/blekinge/",
 "/nyheter/lokalt/dalarna/",

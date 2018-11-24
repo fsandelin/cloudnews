@@ -12,7 +12,7 @@ from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
 from bs4 import BeautifulSoup
-from flask import jsonify
+#from flask import jsonify
 
 import pytz
 UTC=pytz.UTC
@@ -26,15 +26,18 @@ except ImportError:
 
 try:
     # If runing from restapi
-    from scrapers.svt.svt_region import svt_regions, used_regions
-    from scrapers.svt.time_checks import *
-    from scrapers.svt.constants import *
-    from scrapers.util.constants import FIRST, LAST, LATER, EARLIER, param_limit, param_page, params
+    from scrapers.data.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
+    from scrapers.data.constants import FIRST, LAST, LATER, EARLIER, BEFORE, AFTER
+    from scrapers.util.location_search import search_cloud_news
+    from scrapers.util.time_checks import *
 except ImportError:
-    from util.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
+    from data.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
     from util.location_search import search_cloud_news
-    from util.constants import FIRST, LAST, LATER, EARLIER
+    from data.constants import FIRST, LAST, LATER, EARLIER, BEFORE, AFTER
     from util.time_checks import *
+
+BEFORE = True
+AFTER = False
 
 def get_news(url, region):
 
@@ -62,7 +65,6 @@ def get_news(url, region):
     if pict is not None:
         img_url = pict.find(attrs={"class" : "pic__img pic__img--preloaded pic__img--wide "})['src']
 
-    #img_url = "fin.jpg"
     # A parser making a datetime from the SVT time convention
     dt = parser.parse(date)
 
@@ -79,7 +81,6 @@ def get_news(url, region):
         news['imgurl'] = img_url
     news['region'] = region
     news['url']   = url
-    #json_data = json.dumps(news, indent=4, sort_keys=True, default=str)
 
     return news
 
@@ -127,21 +128,26 @@ def reform_api_news_scrape(svt_news_list):
 
     return cloud_news
 
-def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50, full_object=False): 
+def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50): 
     params_struct = params + param_limit + str(amount) + param_page + str(page)   
     r = requests.get(url = URL_API + region + params_struct)
     
     region_news = r.json(encoding='utf-16')
 
-    if full_object:
-        return region_news
-
     region_news = reform_api_news(region_news['auto']['content'])
+    return region_news
+
+def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
+    params_struct = params + param_limit + str(amount) + param_page + str(page)   
+    r = requests.get(url = URL_API + region + params_struct)
+    
+    region_news = r.json(encoding='utf-16')
+
     return region_news
 
 def get_news_region(from_, until_, region):
     # Get max page info from this region
-    start_obj = get_api_news_region(region = region, full_object=True)
+    start_obj = get_api_object(region = region)
     items = start_obj['auto']['pagination']['totalAvailableItems']
     items = int(items)
     max_pages = math.ceil(items / 50)
@@ -149,10 +155,9 @@ def get_news_region(from_, until_, region):
     print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
 
     obj_list = start_obj['auto']['content']
+
     page = get_time_diff(obj_list[0], obj_list[-1])
-
     time_diff = get_time_diff(obj_list[0], until_)
-
     start_page = math.floor(time_diff/page)
 
     # page 1 is the starting page, anything lower also works but is redundant        
@@ -166,33 +171,39 @@ def get_news_region(from_, until_, region):
     page_nmr = start_page
     while True:
 
-        if page_nmr <= start_page:
+        if page_nmr <= start_page and page_nmr >= 2:
             news_list = get_api_news_region(region=region, page=page_nmr)
-            print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list))
-            if check_json_time(news_list[FIRST], until_, EARLIER):
-                
+            print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list), until_)
+            if check_time(news_list[FIRST], BEFORE, until_):
+                page_nmr -= 1
+                continue
+
         news_list = get_api_news_region(region=region, page=page_nmr)
 
         print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list))
 
         # Check if the last item is newer then the until time limit
-        if check_json_time(news_list[LAST], until_, LATER):
+        if check_time(news_list[LAST], AFTER, until_):
+            page_nmr += 1
             continue
-        elif check_json_time(news_list[FIRST], from_, EARLIER):
-            break
-
-    for page_nmr in range(start_page,max_pages):
-        news_list = get_api_news_region(region=region, page=page_nmr)
-
-        print("Page: ", page_nmr, "  datetime: ", news_list[FIRST]['datetime'], " Len: ", len(news_list))
-        # Check if the last item is newer then the until time limit
-        if check_json_time(news_list[LAST], until_, LATER):
-            continue
-        elif check_json_time(news_list[FIRST], from_, EARLIER):
+        elif check_time(news_list[FIRST], BEFORE, from_):
             break
         else:
-            selected_news += filter(lambda x: check_json_time_range(x, from_, until_), news_list)
+            page_nmr += 1
+            selected_news += filter(lambda x: check_time_range(x, from_, until_), news_list)
+            """
+            news_list = filter(lambda x: check_time_range(x, from_, until_), news_list)
+            located_news_list = []
+            for news in news_list:
+                city_found, news = search_cloud_news(news)
+                if False: #not city_found:
+                    located_news_list.append(search_cloud_news(get_news(news['url'], region)))
+                else:
+                    located_news_list.append(news)
 
+            #selected_news += map(search_cloud_news(), news_list)
+            selected_news += located_news_list
+            """
     print("")
     return selected_news
 

@@ -1,7 +1,16 @@
-from app import app
+import json
+import requests
+import random
+from time import sleep
+#from app import app
 
+from dateutil import parser
+from datetime import datetime, timedelta
 
-from scrapers.svt import svt_scraping
+from scrapers.util.location_search import search_cloud_news
+from scrapers.data.constants import FIRST, LAST
+from scrapers.data.svt_globals import used_regions
+from scrapers.svt import get_news_selected_regions, get_api_object
 
 def post_news(json_news, URL):
 
@@ -17,7 +26,6 @@ def post_news(json_news, URL):
     
     r = requests.post(URL,  json = json_news[3], params = {"service": "tt" }, headers = headers)
     print(r.status_code, r.reason)
-
     print(r.text[:300] + '...')
     print(r.json)
 
@@ -62,14 +70,12 @@ def presenting_representing():
     from_  = until_ - timedelta(days = 5)
 
     # Collect all news in a list
-    news_list = get_news_selected_regions(used_regions[:10], from_, until_)
-    
+    news_list = get_news_selected_regions(from_, until_,used_regions[:1])
 
     # Find the news
-
-    news_list = [json.loads(ele) for ele in news_list if 'Nyheter från dagen' not in json.loads(ele)['title']]
+    news_list = [ele for ele in news_list if 'Nyheter från dagen' not in ele['title']]
     print("Amount of news:", len(news_list))
-    news_list = [search_text(ele) for ele in news_list]
+    news_list = [search_cloud_news(ele)[1] for ele in news_list]
     amount = 0
     for ele in news_list:
         if 'city' in ele['location']:
@@ -102,7 +108,6 @@ def presenting_representing():
     #    print ("{:30}{:15}{:.20}".format(news['datetime'], news['location']['county'], news['title']))
 
     random_posts(news_sorted_date)
-    pass
 
 def test_time_range():
     from_  = datetime(2017, 12, 30)
@@ -114,7 +119,7 @@ def test_time_range():
     print ("First object: ", json.loads(api_obj[FIRST])['datetime'])
 
 def get_api_obj():
-    print(get_lokal_api_object())
+    print(get_api_object())
 
 def main():
     presenting_representing()
