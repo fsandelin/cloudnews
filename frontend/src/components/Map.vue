@@ -23,6 +23,15 @@
           v-bind:d="county.path"
           v-on:click="countyClick(county)">
         </path>
+        <circle
+          class="city"
+          v-for="city in cities"
+          v-bind:key="city.key"
+          v-show="city.active"
+          v-bind:cx="XYFromLatLong(city.latitude, city.longitude)[0]+'px'"
+          v-bind:cy="XYFromLatLong(city.latitude, city.longitude)[1]+'px'"
+          v-bind:r="1+'px'">
+        </circle>
       </g>
       <notifications>
       </notifications>
@@ -33,7 +42,7 @@
 <script>
 import * as d3 from "d3";
 import Notifications from './Notifications'
-import { mapZoom, transitionToCounty, initialZoom, sizeOfCurrentWindow } from '../store/d3Zoom';
+import { mapZoom, transitionToCounty, initialZoom, sizeOfCurrentWindow, XYFromLatLong} from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -55,6 +64,7 @@ export default {
       'countries',
       'counties',
       'municipalities',
+      'cities',
       'zoomValue',
       'selectedCounty',
       'countyByName',
@@ -64,7 +74,8 @@ export default {
     ...mapActions([
       'countyClick',
       'setZoomValue',
-    ])
+    ]),
+    XYFromLatLong: (latitude, longitude) => (XYFromLatLong(latitude, longitude))
   }
 }
 </script>

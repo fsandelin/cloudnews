@@ -1,29 +1,33 @@
 import europeCountries from '../../assets/europe-countries-meta-info.json';
 import swedishCounties from '../../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../../assets/sweden-municipalities-meta-info.json';
+import swedishCities from '../../assets/swede-cities-meta-info.json';
 import { cleanString } from '../helpers';
 
 const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
   counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
-  cities: [],
+  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   selectedCounty: null,
   previousSelectedCounty: null,
 }
 
 const getters = {
   countries: state => {
-    return state.countries
+    return state.countries;
   },
   counties: state => {
-    return state.counties
+    return state.counties;
   },
   municipalities: state => {
-    return state.municipalities
+    return state.municipalities;
+  },
+  cities: state => {
+    return state.cities;
   },
   selectedCounty: state => {
-    return state.selectedCounty
+    return state.selectedCounty;
   },
   countyByName: state => (name = "") => {
     return state.counties.find(county => cleanString(county.name) === cleanString(name));

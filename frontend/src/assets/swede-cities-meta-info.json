@@ -1,0 +1,730 @@
+[
+  {
+    "name": "Stockholm",
+    "key": "Sweden-city-Stockholm",
+    "population": 1250400,
+    "latitude": 59.330,
+    "longitude": 18.070
+  },
+  {
+    "name": "Goteborg",
+    "key": "Sweden-city-Goteborg",
+    "population": 510300,
+    "latitude": 57.720,
+    "longitude": 12.010
+  },
+  {
+    "name": "Malmo",
+    "key": "Sweden-city-Malmo",
+    "population": 258600,
+    "latitude": 55.610,
+    "longitude": 13.020
+  },
+  {
+    "name": "Uppsala",
+    "key": "Sweden-city-Uppsala",
+    "population": 127400,
+    "latitude": 59.860,
+    "longitude": 17.640
+  },
+  {
+    "name": "Vasteras",
+    "key": "Sweden-city-Vasteras",
+    "population": 105700,
+    "latitude": 59.620,
+    "longitude": 16.540
+  },
+  {
+    "name": "Orebro",
+    "key": "Sweden-city-Orebro",
+    "population": 97700,
+    "latitude": 59.280,
+    "longitude": 15.220
+  },
+  {
+    "name": "Linkoping",
+    "key": "Sweden-city-Linkoping",
+    "population": 96100,
+    "latitude": 58.410,
+    "longitude": 15.630
+  },
+  {
+    "name": "Helsingborg",
+    "key": "Sweden-city-Helsingborg",
+    "population": 90400,
+    "latitude": 56.050,
+    "longitude": 12.700
+  },
+  {
+    "name": "Jonkoping",
+    "key": "Sweden-city-Jonkoping",
+    "population": 83100,
+    "latitude": 57.780,
+    "longitude": 14.170
+  },
+  {
+    "name": "Norrkoping",
+    "key": "Sweden-city-Norrkoping",
+    "population": 82900,
+    "latitude": 58.600,
+    "longitude": 16.170
+  },
+  {
+    "name": "Lund",
+    "key": "Sweden-city-Lund",
+    "population": 75800,
+    "latitude": 55.710,
+    "longitude": 13.200
+  },
+  {
+    "name": "Umea",
+    "key": "Sweden-city-Umea",
+    "population": 73200,
+    "latitude": 63.830,
+    "longitude": 20.240
+  },
+  {
+    "name": "Gavle",
+    "key": "Sweden-city-Gavle",
+    "population": 68300,
+    "latitude": 60.690,
+    "longitude": 17.130
+  },
+  {
+    "name": "Boras",
+    "key": "Sweden-city-Boras",
+    "population": 62900,
+    "latitude": 57.730,
+    "longitude": 12.940
+  },
+  {
+    "name": "Sodertalje",
+    "key": "Sweden-city-Sodertalje",
+    "population": 60200,
+    "latitude": 59.200,
+    "longitude": 17.630
+  },
+  {
+    "name": "Eskilstuna",
+    "key": "Sweden-city-Eskilstuna",
+    "population": 58600,
+    "latitude": 59.370,
+    "longitude": 16.510
+  },
+  {
+    "name": "Taby",
+    "key": "Sweden-city-Taby",
+    "population": 58400,
+    "latitude": 59.500,
+    "longitude": 18.070
+  },
+  {
+    "name": "Karlstad",
+    "key": "Sweden-city-Karlstad",
+    "population": 57300,
+    "latitude": 59.380,
+    "longitude": 13.510
+  },
+  {
+    "name": "Halmstad",
+    "key": "Sweden-city-Halmstad",
+    "population": 55200,
+    "latitude": 56.670,
+    "longitude": 12.860
+  },
+  {
+    "name": "Vaxjo",
+    "key": "Sweden-city-Vaxjo",
+    "population": 53100,
+    "latitude": 56.880,
+    "longitude": 14.800
+  },
+  {
+    "name": "Sundsvall",
+    "key": "Sweden-city-Sundsvall",
+    "population": 48300,
+    "latitude": 62.400,
+    "longitude": 17.330
+  },
+  {
+    "name": "Lulea",
+    "key": "Sweden-city-Lulea",
+    "population": 45400,
+    "latitude": 65.600,
+    "longitude": 22.160
+  },
+  {
+    "name": "Trollhattan",
+    "key": "Sweden-city-Trollhattan",
+    "population": 44400,
+    "latitude": 58.290,
+    "longitude": 12.300
+  },
+  {
+    "name": "Ostersund",
+    "key": "Sweden-city-Ostersund",
+    "population": 43000,
+    "latitude": 63.180,
+    "longitude": 14.650
+  },
+  {
+    "name": "Borlange",
+    "key": "Sweden-city-Borlange",
+    "population": 38900,
+    "latitude": 60.490,
+    "longitude": 15.440
+  },
+  {
+    "name": "Upplands-vasby",
+    "key": "Sweden-city-Upplands-vasby",
+    "population": 36600,
+    "latitude": 59.530,
+    "longitude": 	17.920
+  },
+  {
+    "name": "Tumba",
+    "key": "Sweden-city-Tumba",
+    "population": 35600,
+    "latitude": 59.200,
+    "longitude": 17.810
+  },
+  {
+    "name": "Falun",
+    "key": "Sweden-city-Falun",
+    "population": 35300,
+    "latitude": 60.610,
+    "longitude": 15.620
+  },
+  {
+    "name": "Kalmar",
+    "key": "Sweden-city-Kalmar",
+    "population": 34400,
+    "latitude": 56.670,
+    "longitude": 16.360
+  },
+  {
+    "name": "Skovde",
+    "key": "Sweden-city-Skovde",
+    "population": 32600,
+    "latitude": 58.380,
+    "longitude": 13.840
+  },
+  {
+    "name": "Karlskrona",
+    "key": "Sweden-city-Karlskrona",
+    "population": 32300,
+    "latitude": 56.180,
+    "longitude": 15.590
+  },
+  {
+    "name": "Kristianstad",
+    "key": "Sweden-city-Kristianstad",
+    "population": 32100,
+    "latitude": 56.030,
+    "longitude": 14.150
+  },
+  {
+    "name": "Skelleftea",
+    "key": "Sweden-city-Skelleftea",
+    "population": 31100,
+    "latitude": 64.760,
+    "longitude": 20.990
+  },
+  {
+    "name": "Lidingo",
+    "key": "Sweden-city-Lidingo",
+    "population": 30900,
+    "latitude": 59.370,
+    "longitude": 18.150
+  },
+  {
+    "name": "Uddevalla",
+    "key": "Sweden-city-Uddevalla",
+    "population": 30200,
+    "latitude": 58.350,
+    "longitude": 11.930
+  },
+  {
+    "name": "Motala",
+    "key": "Sweden-city-Motala",
+    "population": 29800,
+    "latitude": 58.540,
+    "longitude": 15.040
+  },
+  {
+    "name": "Ornskoldsvik",
+    "key": "Sweden-city-Ornskoldsvik",
+    "population": 27900,
+    "latitude": 63.300,
+    "longitude": 18.720
+  },
+  {
+    "name": "Landskrona",
+    "key": "Sweden-city-Landskrona",
+    "population": 27800,
+    "latitude": 55.880,
+    "longitude": 12.830
+  },
+  {
+    "name": "Nykoping",
+    "key": "Sweden-city-Nykoping",
+    "population": 27400,
+    "latitude": 58.760,
+    "longitude": 17.020
+  },
+  {
+    "name": "Karlskoga",
+    "key": "Sweden-city-Karlskoga",
+    "population": 27400,
+    "latitude": 59.330,
+    "longitude": 14.500
+  },
+  {
+    "name": "Vallentuna",
+    "key": "Sweden-city-Vallentuna",
+    "population": 26400,
+    "latitude": 59.540,
+    "longitude": 18.080
+  },
+  {
+    "name": "Akersberga",
+    "key": "Sweden-city-Akersberga",
+    "population": 26400,
+    "latitude": 59.480,
+    "longitude": 18.310
+  },
+  {
+    "name": "Varberg",
+    "key": "Sweden-city-Varberg",
+    "population": 25700,
+    "latitude": 57.110,
+    "longitude": 12.250
+  },
+  {
+    "name": "Trelleborg",
+    "key": "Sweden-city-Trelleborg",
+    "population": 25400,
+    "latitude": 55.380,
+    "longitude": 13.150
+  },
+  {
+    "name": "Lidkoping",
+    "key": "Sweden-city-Lidkoping",
+    "population": 24600,
+    "latitude": 58.510,
+    "longitude": 13.160
+  },
+  {
+    "name": "Marsta",
+    "key": "Sweden-city-Marsta",
+    "population": 23000,
+    "latitude": 59.630,
+    "longitude": 17.840
+  },
+  {
+    "name": "Alingsas",
+    "key": "Sweden-city-Alingsas",
+    "population": 22700,
+    "latitude": 57.930,
+    "longitude": 12.540
+  },
+  {
+    "name": "Angelholm",
+    "key": "Sweden-city-Angelholm",
+    "population": 22300,
+    "latitude": 56.250,
+    "longitude": 12.870
+  },
+  {
+    "name": "Sandviken",
+    "key": "Sweden-city-Sandviken",
+    "population": 22300,
+    "latitude": 60.620,
+    "longitude": 16.770
+  },
+  {
+    "name": "Pitea",
+    "key": "Sweden-city-Pitea",
+    "population": 22100,
+    "latitude": 65.320,
+    "longitude": 21.510
+  },
+  {
+    "name": "Visby",
+    "key": "Sweden-city-Visby",
+    "population": 22000,
+    "latitude": 57.640,
+    "longitude": 18.300
+  },
+  {
+    "name": "Vanersborg",
+    "key": "Sweden-city-Vanersborg",
+    "population": 21700,
+    "latitude": 58.370,
+    "longitude": 12.330
+  },
+  {
+    "name": "Boo",
+    "key": "Sweden-city-Boo",
+    "population": 21500,
+    "latitude": 59.310,
+    "longitude": 18.140
+  },
+  {
+    "name": "Katrineholm",
+    "key": "Sweden-city-Katrineholm",
+    "population": 21100,
+    "latitude": 58.990,
+    "longitude": 16.200
+  },
+  {
+    "name": "Kungalv",
+    "key": "Sweden-city-Kungalv",
+    "population": 21000,
+    "latitude": 57.870,
+    "longitude": 11.990
+  },
+  {
+    "name": "Vastervik",
+    "key": "Sweden-city-Vastervik",
+    "population": 20100,
+    "latitude": 57.760,
+    "longitude": 16.630
+  },
+  {
+    "name": "Enkoping",
+    "key": "Sweden-city-Enkoping",
+    "population": 19700,
+    "latitude": 59.650,
+    "longitude": 17.090
+  },
+  {
+    "name": "Falkenberg",
+    "key": "Sweden-city-Falkenberg",
+    "population": 18500,
+    "latitude": 56.900,
+    "longitude": 12.510
+  },
+  {
+    "name": "Boden",
+    "key": "Sweden-city-Boden",
+    "population": 18400,
+    "latitude": 65.830,
+    "longitude": 21.700
+  },
+  {
+    "name": "Kungsbacka",
+    "key": "Sweden-city-Kungsbacka",
+    "population": 18300,
+    "latitude": 57.510,
+    "longitude": 12.100
+  },
+  {
+    "name": "Karlshamn",
+    "key": "Sweden-city-Karlshamn",
+    "population": 18200,
+    "latitude": 56.170,
+    "longitude": 14.870
+  },
+  {
+    "name": "Kiruna",
+    "key": "Sweden-city-Kiruna",
+    "population": 18100,
+    "latitude": 67.860,
+    "longitude": 20.220
+  },
+  {
+    "name": "Varnamo",
+    "key": "Sweden-city-Varnamo",
+    "population": 17900,
+    "latitude": 57.180,
+    "longitude": 14.050
+  },
+  {
+    "name": "Ystad",
+    "key": "Sweden-city-Ystad",
+    "population": 17200,
+    "latitude": 55.440,
+    "longitude": 13.840
+  },
+  {
+    "name": "Hassleholm",
+    "key": "Sweden-city-Hassleholm",
+    "population": 17200,
+    "latitude": 56.160,
+    "longitude": 13.760
+  },
+  {
+    "name": "Kristinehamn",
+    "key": "Sweden-city-Kristinehamn",
+    "population": 17200,
+    "latitude": 59.320,
+    "longitude": 14.110
+  },
+  {
+    "name": "Harnosand",
+    "key": "Sweden-city-Harnosand",
+    "population": 17200,
+    "latitude": 62.640,
+    "longitude": 17.930
+  },
+  {
+    "name": "Norrtalje",
+    "key": "Sweden-city-Norrtalje",
+    "population": 16800,
+    "latitude": 59.770,
+    "longitude": 18.700
+  },
+  {
+    "name": "Koping",
+    "key": "Sweden-city-Koping",
+    "population": 16800,
+    "latitude": 59.520,
+    "longitude": 15.990
+  },
+  {
+    "name": "Oskarshamn",
+    "key": "Sweden-city-Oskarshamn",
+    "population": 16700,
+    "latitude": 57.260,
+    "longitude": 16.450
+  },
+  {
+    "name": "Nassjo",
+    "key": "Sweden-city-Nassjo",
+    "population": 16100,
+    "latitude": 57.660,
+    "longitude": 14.700
+  },
+  {
+    "name": "Eslov",
+    "key": "Sweden-city-Eslov",
+    "population": 15800,
+    "latitude": 55.840,
+    "longitude": 13.300
+  },
+  {
+    "name": "Lerum",
+    "key": "Sweden-city-Lerum",
+    "population": 15800,
+    "latitude": 57.770,
+    "longitude": 12.280
+  },
+  {
+    "name": "Falkoping",
+    "key": "Sweden-city-Falkoping",
+    "population": 15100,
+    "latitude": 58.170,
+    "longitude": 13.560
+  },
+  {
+    "name": "Mariestad",
+    "key": "Sweden-city-Mariestad",
+    "population": 14900,
+    "latitude": 58.710,
+    "longitude": 13.820
+  },
+  {
+    "name": "Hudiksvall",
+    "key": "Sweden-city-Hudiksvall",
+    "population": 14700,
+    "latitude": 61.740,
+    "longitude": 17.110
+  },
+  {
+    "name": "Vasterhaninge",
+    "key": "Sweden-city-Vasterhaninge",
+    "population": 14500,
+    "latitude": 59.120,
+    "longitude": 18.080
+  },
+  {
+    "name": "Molnlycke",
+    "key": "Sweden-city-Molnlycke",
+    "population": 14400,
+    "latitude": 57.650,
+    "longitude": 12.130
+  },
+  {
+    "name": "Avesta",
+    "key": "Sweden-city-Avesta",
+    "population": 14300,
+    "latitude": 60.160,
+    "longitude": 16.180
+  },
+  {
+    "name": "Ljungby",
+    "key": "Sweden-city-Ljungby",
+    "population": 14300,
+    "latitude": 56.840,
+    "longitude": 13.940
+  },
+  {
+    "name": "Kinna",
+    "key": "Sweden-city-Kinna",
+    "population": 14200,
+    "latitude": 57.500,
+    "longitude": 12.650
+  },
+  {
+    "name": "Staffanstorp",
+    "key": "Sweden-city-Staffanstorp",
+    "population": 14100,
+    "latitude": 55.650,
+    "longitude": 13.200
+  },
+  {
+    "name": "Tranas",
+    "key": "Sweden-city-Tranas",
+    "population": 13900,
+    "latitude": 58.040,
+    "longitude": 14.970
+  },
+  {
+    "name": "Ludvika",
+    "key": "Sweden-city-Ludvika",
+    "population": 13800,
+    "latitude": 60.140,
+    "longitude": 15.180
+  },
+  {
+    "name": "Arvika",
+    "key": "Sweden-city-Arvika",
+    "population": 13700,
+    "latitude": 59.670,
+    "longitude": 12.590
+  },
+  {
+    "name": "Nynashamn",
+    "key": "Sweden-city-Nynashamn",
+    "population": 13500,
+    "latitude": 58.910,
+    "longitude": 17.950
+  },
+  {
+    "name": "Hoganas",
+    "key": "Sweden-city-Hoganas",
+    "population": 13500,
+    "latitude": 56.200,
+    "longitude": 12.550
+  },
+  {
+    "name": "Balsta",
+    "key": "Sweden-city-Balsta",
+    "population": 13400,
+    "latitude": 59.590,
+    "longitude": 17.490
+  },
+  {
+    "name": "Skoghall",
+    "key": "Sweden-city-Skoghall",
+    "population": 12800,
+    "latitude": 59.340,
+    "longitude": 13.480
+  },
+  {
+    "name": "Kumla",
+    "key": "Sweden-city-Kumla",
+    "population": 12700,
+    "latitude": 59.130,
+    "longitude": 15.130
+  },
+  {
+    "name": "Strangnas",
+    "key": "Sweden-city-Strangnas",
+    "population": 12400,
+    "latitude": 59.380,
+    "longitude": 17.020
+  },
+  {
+    "name": "Bollnas",
+    "key": "Sweden-city-Bollnas",
+    "population": 12300,
+    "latitude": 61.350,
+    "longitude": 16.390
+  },
+  {
+    "name": "Vetlanda",
+    "key": "Sweden-city-Vetlanda",
+    "population": 12200,
+    "latitude": 57.430,
+    "longitude": 15.080
+  },
+  {
+    "name": "Finspang",
+    "key": "Sweden-city-Finspang",
+    "population": 12200,
+    "latitude": 58.710,
+    "longitude": 15.780
+  },
+  {
+    "name": "Soderhamn",
+    "key": "Sweden-city-Soderhamn",
+    "population": 12200,
+    "latitude": 61.310,
+    "longitude": 17.080
+  },
+  {
+    "name": "Nybro",
+    "key": "Sweden-city-Nybro",
+    "population": 12100,
+    "latitude": 56.750,
+    "longitude": 15.910
+  },
+  {
+    "name": "Sala",
+    "key": "Sweden-city-Sala",
+    "population": 12000,
+    "latitude": 59.930,
+    "longitude": 16.600
+  },
+  {
+    "name": "Ronneby",
+    "key": "Sweden-city-Ronneby",
+    "population": 11700,
+    "latitude": 56.210,
+    "longitude": 15.280
+  },
+  {
+    "name": "Mjolby",
+    "key": "Sweden-city-Mjolby",
+    "population": 11600,
+    "latitude": 58.330,
+    "longitude": 15.130
+  },
+  {
+    "name": "Lindome",
+    "key": "Sweden-city-Lindome",
+    "population": 10800,
+    "latitude": 57.560,
+    "longitude": 12.090
+  },
+  {
+    "name": "Skara",
+    "key": "Sweden-city-Skara",
+    "population": 10700,
+    "latitude": 58.380,
+    "longitude": 13.440
+  },
+  {
+    "name": "Oxelosund",
+    "key": "Sweden-city-Oxelosund",
+    "population": 10700,
+    "latitude": 58.670,
+    "longitude": 17.130
+  },
+  {
+    "name": "Fagersta",
+    "key": "Sweden-city-Fagersta",
+    "population": 10600,
+    "latitude": 60.000,
+    "longitude": 15.810
+  },
+  {
+    "name": "Timra",
+    "key": "Sweden-city-Timra",
+    "population": 10200,
+    "latitude": 62.480,
+    "longitude": 17.320
+  }
+]
