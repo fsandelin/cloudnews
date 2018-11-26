@@ -33,7 +33,7 @@
 <script>
 import * as d3 from "d3";
 import Notifications from './Notifications'
-import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
+import { mapZoom, transitionToCounty, initialZoom, sizeOfCurrentWindow } from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -57,7 +57,7 @@ export default {
       'municipalities',
       'zoomValue',
       'selectedCounty',
-      'countyByName'
+      'countyByName',
     ])
   },
   methods: {

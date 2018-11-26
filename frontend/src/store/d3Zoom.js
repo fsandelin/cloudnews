@@ -1,7 +1,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import * as d3 from "d3";
 
-const sizeOfCurrentWindow = () => { 
+export const sizeOfCurrentWindow = () => { 
   const ratio = 2.1;
   const width = d3.select("#main-section").node().getBoundingClientRect().width;
   const height = d3.select("#main-section").node().getBoundingClientRect().height;
@@ -29,7 +29,7 @@ export const transitionToCounty = (mapZoom, county) => {
   const x = county.x;
   const y = county.y;
   const size = sizeOfCurrentWindow();
-  const newZoomValue = 3.0*size;
+  const newZoomValue = 1.25*size;
   const xOffset = (100*(size/newZoomValue))
   d3.select(".mapContainer").transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
                             .transition().duration(200).call(mapZoom.scaleTo, newZoomValue);
@@ -39,7 +39,7 @@ export const longTransitionToCounty = (mapZoom, county) => {
   const x = county.x;
   const y = county.y;
   const size = sizeOfCurrentWindow()
-  const newZoomValue = 3.0*size;
+  const newZoomValue = 1.25*size;
   const xOffset = (100*(size/newZoomValue))
   d3.select(".mapContainer").transition().duration(350).call(mapZoom.scaleTo, 1)
                             .transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
@@ -49,7 +49,17 @@ export const longTransitionToCounty = (mapZoom, county) => {
 
 export const initialZoom = (mapZoom) => {
   const size = sizeOfCurrentWindow();
-  d3.select(".mapContainer").call(mapZoom.translateTo, 550,255);
-  d3.select(".mapContainer").call(mapZoom.scaleTo, 0.5*size);
-  d3.select(".mapContainer").transition().duration(750).call(mapZoom.scaleTo, 0.9*size);
+  const xy = XYFromLatLong(62.86, 23);
+  console.log(xy);
+  const x = xy[0];
+  const y = xy[1];
+  d3.select(".mapContainer").call(mapZoom.translateTo, x,y);
+  d3.select(".mapContainer").call(mapZoom.scaleTo, 0.2*size);
+  d3.select(".mapContainer").transition().duration(750).call(mapZoom.scaleTo, 0.45*size);
+}
+
+const projection = d3.geoMercator().scale(2000).translate([-705.9955609952726, 3262.481908764047])
+
+export const XYFromLatLong = (lat, long) => {
+  return projection([long,lat])
 }
