@@ -1,13 +1,17 @@
 <template>
   <div id="active-news-item">
-    <p class="title flex-centering">
-      {{ activeNewsItem.title }}
-    </p>
+    <div class="header flex-centering">
+      <p class="title">
+        {{ activeNewsItem.title }}
+      </p>
+      <i class="material-icons"
+        v-on:click="() => activeNewsItem.url ? openLink : null"
+        v-bind:class="{ url: activeNewsItem.url }">
+        {{ activeNewsItem.url ? 'link' : 'link_off' }}
+      </i>
+    </div>
     <p class="flex-centering">
       {{ activeNewsItem.lead }}
-    </p>
-    <p class="flex-centering">
-      {{ activeNewsItem.url }}
     </p>
     <img
       v-bind:src="activeNewsItem.imgurl"
@@ -24,6 +28,15 @@ export default {
     ...mapGetters([
       'activeNewsItem'
     ])
+  },
+  methods: {
+    openLink: function () {
+      if (this.activeNewsItem.url.startsWith('http')) {
+        window.open(this.activeNewsItem.url, '_blank')
+      } else {
+        window.open(`https://${this.activeNewsItem.url}`, '_blank')
+      }
+    }
   }
 }
 </script>
