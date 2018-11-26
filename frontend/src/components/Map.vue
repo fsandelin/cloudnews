@@ -62,13 +62,6 @@ export default {
     ])
   },
   methods: {
-    zoomed: function() {
-      d3.select(".map").attr("transform", d3.event.transform);
-      
-      if (d3.event.transform.k !== this.zoomValue) {
-        this.setZoomValue(d3.event.transform.k);
-      }
-    },
     ...mapActions([
       'countyClick',
       'setZoomValue',
