@@ -2,7 +2,7 @@
   <li
     @mouseenter="toggleHover(news)"
     @mouseleave="toggleHover(news)"
-    v-on:click="toggleActive(news)"
+    v-on:click="itemClicked(news)"
     v-bind:class="{ hover: this.hover && news.id !== activeNewsItemId,
                     active: news.id === activeNewsItemId,
                     'bottom-shadow': this.hover,
@@ -22,20 +22,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { mapZoom, longTransitionToCounty } from '../store/d3Zoom';
 
 export default {
   name: 'newslistitem',
   props: ['showFilter', 'news'],
   data () {
     return {
-      hover: false
+      hover: false,
+      mapZoom: mapZoom(this.setZoomValue)
     }
   },
   computed: {
     ...mapGetters([
       'countyByName',
       'activeNewsItemId',
-      'selectedCounty'
+      'selectedCounty',
+      'zoomValue'
     ]),
     applyFilter: function () {
       return this.showFilter && this.news.location.county === this.selectedCounty;
@@ -43,8 +46,14 @@ export default {
   },
   methods: {
     ...mapActions([
-      'toggleActive'
+      'toggleActive',
+      'setZoomValue'
     ]),
+    itemClicked: function(news) {
+      const county = this.countyByName(news.location.county);
+      if (this.selectedCounty !== county.name) longTransitionToCounty(this.mapZoom, county);
+      this.toggleActive(news)
+    },
     toggleHover: function () {
       this.hover = !this.hover;
     }

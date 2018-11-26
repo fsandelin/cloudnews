@@ -33,6 +33,7 @@
 <script>
 import * as d3 from "d3";
 import Notifications from './Notifications'
+import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -40,45 +41,29 @@ export default {
   components: {
     'notifications': Notifications
   },
-  mounted: function() {
-    const RATIO = 2.1;
-    const width = d3.select("#main-section").node().getBoundingClientRect().width;
-    const height = d3.select("#main-section").node().getBoundingClientRect().height;
-    const SIZE =
-        width * RATIO < height
-          ? width/500
-          : height/500;
-
-
-    const zoomed = () => {
-      d3.select(".map").attr("transform", d3.event.transform);
-      if (d3.event.transform.k !== this.zoomValue) {
-        this.setZoomValue(d3.event.transform.k);
-      }
+  data () {
+    return {
+      mapZoom: mapZoom(this.setZoomValue)
     }
-
-    const zoom = d3
-      .zoom()
-      .scaleExtent([0.7, 50])
-      .on("zoom", zoomed);
-
-    d3.select(".mapContainer").call(zoom);
-    d3.select(".mapContainer").call(zoom.translateTo, 600,255);
-    d3.select(".mapContainer").call(zoom.scaleTo, 0.9*SIZE);
-
+  },
+  mounted: function() {
+    d3.select(".mapContainer").call(this.mapZoom).on("dblclick.zoom", () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))));
+    initialZoom(this.mapZoom);
   },
   computed: {
     ...mapGetters([
       'countries',
       'counties',
       'municipalities',
-      'zoomValue'
+      'zoomValue',
+      'selectedCounty',
+      'countyByName'
     ])
   },
   methods: {
     ...mapActions([
       'countyClick',
-      'setZoomValue'
+      'setZoomValue',
     ])
   }
 }
