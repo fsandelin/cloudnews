@@ -5,7 +5,7 @@
         {{ activeNewsItem.title }}
       </p>
       <i class="material-icons"
-        v-on:click="() => activeNewsItem.url ? openLink : null"
+        v-on:click="() => activeNewsItem.url ? openLink() : null"
         v-bind:class="{ url: activeNewsItem.url }">
         {{ activeNewsItem.url ? 'link' : 'link_off' }}
       </i>
