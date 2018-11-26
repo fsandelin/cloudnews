@@ -36,5 +36,6 @@ socket.on('error', (data) => {
   console.log(data);
 });
 socket.on('complete_request', (message) => {
-  console.log(`Getting the following articles since I sent request ${message.requestId}: \n${message.articles[0].title}`);
+  console.log(`Getting the following articles since I sent request ${message.requestId}:`);
+  console.log(message.articles);
 });
