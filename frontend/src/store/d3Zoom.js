@@ -15,10 +15,6 @@ const sizeOfCurrentWindow = () => {
 export const mapZoom = (setZoomValue) => {
   return d3
     .zoom()
-    .wheelDelta(() => {
-      let deltaY = d3.event.deltaY > 0 ? 125 : -125
-      return -deltaY * (1) / 500;
-    })
     .scaleExtent([0.2, 50])
     .on("zoom", () => {
       d3.select(".map").attr("transform", d3.event.transform);

@@ -32,7 +32,6 @@
 
 <script>
 import * as d3 from "d3";
-import panzoom from "panzoom";
 import Notifications from './Notifications'
 import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
