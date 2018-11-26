@@ -28,22 +28,32 @@ module.exports = class MicroserviceHandler {
     });
 
     this.app.post('/complete_request', (req, res) => {
-      logger.info('Should try to complete quest');
-      const { requestId, articles } = req.body;
+      logger.info('Should try to complete part of request');
+      const { service, requestId, articles } = req.body;
       const timespanRequest = requests[requestId];
       if (!timespanRequest) {
-        logger.error('Cannot find request. Could it have already been completed?');
+        logger.error(`Cannot find request ${requestId}. Could it have already been completed?`);
         res.status(400).send('Could not complete the request as it does not exist');
         return;
       }
-      const { clientId } = timespanRequest;
+      const { clientId, requestedResources } = timespanRequest;
       const client = clients[clientId];
       const message = {
         requestId,
         articles,
       };
       client.socket.emit('complete_request', message);
-      delete requests[requestId];
+      requestedResources.forEach((element) => {
+        if (element.service === service) {
+          element.completed = true;
+          timespanRequest.incompleteResources -= 1;
+        }
+      });
+      if (timespanRequest.incompleteResources === 0) {
+        console.log('Removing request');
+        delete requests[requestId];
+      }
+
       res.status(200).send('Successfully completed request ');
     });
   }
