@@ -21,7 +21,7 @@ const actions = {
     if (news.id === rootState.news.activeNewsItemId) dispatch('toggleDrawer')
     else dispatch('setActiveNewsItemId', news.id)
     dispatch('selectCounty', news.location.county)
-  },
+  }
 }
 
 const mutations = {
