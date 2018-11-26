@@ -1,12 +1,12 @@
 const express = require('express');
 const db = require('./controllers/DatabaseInterface');
-const { addRequest, requests } = require('./Requests');
+const { addRequest, checkRequestsCompletion } = require('./Requests');
 
 const router = express.Router();
 
 router.post('/new_articles', (req, res) => {
-  const { services, startDate, endDate } = req.params;
-  db.pushArticles(req.body.articles, (error) => {
+  const { service } = req.query;
+  db.pushArticles(service, req.body.articles, (error) => {
     if (error) {
       res.status(500).send(`500 internal server error: ${error}`);
     } else {
@@ -16,8 +16,8 @@ router.post('/new_articles', (req, res) => {
 });
 
 router.get('/timespan', (req, res) => {
-  const { from, until } = req.query;
-  db.getTimeSpan(from, until, (error, documents) => {
+  const { service, from, until } = req.query;
+  db.getTimeSpan(service, from, until, (error, documents) => {
     if (error) {
       res.status(500).send(`500 internal server error: ${error}`);
     } else {
@@ -26,12 +26,14 @@ router.get('/timespan', (req, res) => {
   });
 });
 
+router.get('/run_check', (req, res) => {
+  res.send('ok');
+  checkRequestsCompletion();
+});
+
 router.post('/request/timespan', (req, res) => {
-  setInterval(() => {
-    console.log(requests);
-  }, 5000);
   const { requestId, clientId, requestedResources } = req.body;
-  const reqResources = JSON.parse(requestedResources);
+  const reqResources = requestedResources;
   console.log(`Should get a requestedResource: ${reqResources}`);
   if (requestedResources.length === 0) {
     res.sendStatus(400);
