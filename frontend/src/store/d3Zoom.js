@@ -31,7 +31,7 @@ export const transitionToCounty = (mapZoom, county) => {
   const size = sizeOfCurrentWindow();
   const newZoomValue = 3.0*size;
   const xOffset = (100*(size/newZoomValue))
-  d3.select(".mapContainer").transition().duration(450).call(mapZoom.translateTo, x+ xOffset, y)
+  d3.select(".mapContainer").transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
                             .transition().duration(200).call(mapZoom.scaleTo, newZoomValue);
 }
 
@@ -42,7 +42,7 @@ export const longTransitionToCounty = (mapZoom, county) => {
   const newZoomValue = 3.0*size;
   const xOffset = (100*(size/newZoomValue))
   d3.select(".mapContainer").transition().duration(350).call(mapZoom.scaleTo, 1)
-                            .transition().duration(450).call(mapZoom.translateTo, x+ xOffset, y)
+                            .transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
                             .transition().duration(350).call(mapZoom.scaleTo, newZoomValue);
                  
 }
