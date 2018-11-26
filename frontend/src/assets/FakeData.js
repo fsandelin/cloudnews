@@ -2,6 +2,7 @@ export const fakeNewsList = [
   {
     id: 0, title: "News title 0", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
     timestamp: "2018-04-24 13:44",
+    url: "https://svt.se",
     source: "svt",
     location: {
       country: "",
@@ -13,6 +14,7 @@ export const fakeNewsList = [
   {
     id: 3423, title: "2131", lead: "abbbddd", active: false,
     timestamp: "2018-04-24 13:44",
+    url: "tt.se",
     source: "tt",
     location: {
       country: "",
@@ -134,6 +136,7 @@ export const fakeNewsList = [
   {
     id: 10, title: "News title 10", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
     timestamp: "2018-04-24 13:44",
+    url: "tt.se",
     source: "tt",
     location: {
       country: "",
@@ -233,6 +236,7 @@ export const fakeNewsList = [
   {
     id: 19, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
     timestamp: "2018-04-24 13:44",
+    url: "svt.se",
     source: "svt",
     location: {
       country: "",
@@ -255,6 +259,7 @@ export const fakeNewsList = [
   {
     id: 21, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
     timestamp: "2018-04-24 13:44",
+    url: "svt.se",
     source: "svt",
     location: {
       country: "",
