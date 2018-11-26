@@ -14,14 +14,24 @@
 
     i {
       margin: auto 0;
+      color: $darkgrey;
 
-      &.url {
+      &.back {
         cursor: pointer;
       }
 
-      &:not(.url) {
-        cursor: not-allowed;
+      &.url {
+        &.exists {
+          cursor: pointer;
+        }
+
+        &:not(.exists) {
+          cursor: not-allowed;
+          color: $lightgrey;
+        }
+
       }
+
     }
 
     .title {
