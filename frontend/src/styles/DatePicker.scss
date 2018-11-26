@@ -1,0 +1,43 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+#date-picker {
+  width: 300px;
+  height: 250px;
+  margin: 20px;
+
+  .header {
+    height: 50px;
+    color: $darkgreen;
+
+    &.flex-centering {
+      flex-direction: row;
+    }
+
+    .year-month {
+      &.flex-centering {
+        flex-direction: row;
+      }
+      i {
+        margin: auto 0;
+      }
+      .previous {
+        transform: scale(-1, 1);
+      }
+
+      p {
+        span {
+          display: block;
+        }
+      }
+    }
+  }
+  .calendar {
+    background-color: blue;
+    flex: 1;
+  }
+  .footer {
+    background-color: red;
+    height: 30px;
+  }
+}
