@@ -63,8 +63,21 @@ function applyEventListeners(io) {
       const request = {
         requestId,
         clientId,
-        requestedResources,
       };
+      let reqRes = null;
+      try {
+        reqRes = JSON.parse(requestedResources);
+        reqRes.forEach((res) => {
+          res.completed = false;
+        });
+      } catch (exception) {
+        console.log('Cannot parse requestedResources, probably wrong format');
+        return;
+      }
+      request.requestedResources = reqRes;
+      request.incompleteResources = reqRes.length;
+
+      setInterval(() => { console.log(requests); }, 5000);
       requests[requestId] = request;
       logger.info(requests);
       rq.post({
