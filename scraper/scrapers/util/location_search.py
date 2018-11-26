@@ -30,7 +30,14 @@ def find_location(region, capital_words):
 
     if region == 'Sörmland':
         region = 'Södermanland'
-        
+
+    if region == 'Väst':
+        region = 'Västra Götaland'
+
+    if region == 'Öst':
+        region = 'Östergötland'
+
+
     for kommun in lan_kommun[region]:
         try:
             for city in kommun_tatort[kommun]:
@@ -38,7 +45,7 @@ def find_location(region, capital_words):
                     kommun_name = get_kommun_name(kommun)
                     location['city'] = city
                     location['municipality'] = kommun_name
-                    print("Kommun short name:", kommun_name, "Kommun full name:", kommun)
+                    #print("Kommun short name:", kommun_name, "Kommun full name:", kommun)
                     city_found = True
                     break
         except KeyError:
@@ -60,6 +67,8 @@ def search_cloud_news(news):
     if 'body' in news:
         text += news['body']
 
+    if 'location' not in news:
+        print(news)
     region  = news['location']['county']
 
     capital_words = [word for word in text.split() if word[0].isupper()]
@@ -74,12 +83,7 @@ def search_cloud_news(news):
     #            location['municipality'] = city[1]
     #            location['conutry'] = "Sweden"
     
-    if False: #not bool(location):
-        web_news = get_news(news['url'], region)
-        if 'body' in json.loads(web_news):
-            text = json.loads(web_news)['body']
-            location = find_location(region, [word for word in text.split() if word[0].isupper()])
-
+  
     location['county'] = region
     location['country'] = "Sweden"
 

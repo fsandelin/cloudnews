@@ -2,7 +2,7 @@ import json
 import requests
 import random
 from time import sleep
-#from app import app
+from app import app
 
 from dateutil import parser
 from datetime import datetime, timedelta
@@ -24,7 +24,7 @@ def post_news(json_news, URL):
 
     json_news = [json.loads(news) for news in json_news]
     
-    r = requests.post(URL,  json = json_news[3], params = {"service": "tt" }, headers = headers)
+    r = requests.post(URL,  json = json_news[3], params = {"service": "svt" }, headers = headers)
     print(r.status_code, r.reason)
     print(r.text[:300] + '...')
     print(r.json)
@@ -67,25 +67,12 @@ def presenting_representing():
     #used_regions = [svt_regions[0],svt_regions[1]]
 
     until_ = datetime.now()
-    from_  = until_ - timedelta(days = 5)
+    from_  = until_ - timedelta(days = 14)
 
     # Collect all news in a list
     news_list = get_news_selected_regions(from_, until_,used_regions[:1])
 
-    # Find the news
-    news_list = [ele for ele in news_list if 'Nyheter från dagen' not in ele['title']]
-    print("Amount of news:", len(news_list))
-    news_list = [search_cloud_news(ele)[1] for ele in news_list]
-    amount = 0
-    for ele in news_list:
-        if 'city' in ele['location']:
-            amount += 1
-        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
-
-    print("Amount of found cities:", amount)
-    #for ele in news:
-        #search_text(ele)
-
+    print("News:", len(news_list))
     news_list = [json.dumps(ele, indent=4, sort_keys=True, default=str) for ele in news_list]
 
     # collect region names from the news, or store in different lists

@@ -43,12 +43,12 @@ used_regions = [svt_regions[0],
                 svt_regions[13],
                 svt_regions[14],
                 svt_regions[15],
-                svt_regions[16],
                 svt_regions[17],
                 svt_regions[18],
                 svt_regions[19],
                 svt_regions[20]
                 ]
+# find where svt_region[16] is "väst"
 
 svt_lokala_namn = [
 "Blekinge",
