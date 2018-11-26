@@ -2,11 +2,11 @@ const dbConnection = require('./DatabaseHandler');
 require('dotenv').config();
 
 const dbName = process.env.DATABASE_NAME;
-const collectionName = `${process.env.ARTICLES_PREFIX}svt`;
+
 const scraperMetaCollection = 'prefetched';
 
-// Pushes an array of articles to the database. Right now uses 'articles_svt' as collection for all.
-function pushArticles(articles, callback) {
+// Pushes an array of articles to the database. Right now uses articles_${service} as collection for all. DOES NO DATACHECK WHATSOEVER
+function pushArticles(service, articles, callback) {
   dbConnection.connect((error, client) => {
     if (error) {
       console.log('Got an error in dbconnection.connect');
@@ -14,27 +14,30 @@ function pushArticles(articles, callback) {
       return;
     }
     const db = client.db(dbName);
+    const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     db.collection(collectionName).insertMany(articles, (err, res) => {
       if (err) {
         console.log('Got an error in insertMany');
         callback(error);
         return;
       }
-      console.log('Articles added to database!');
+      console.log(`Articles added to database collection ${collectionName}`);
       console.log(articles);
       callback();
     });
   });
 }
 
-function getTimeSpan(from, until, callback) {
+// Gets all articles for a given service in a given timespan and calls callback on it.
+function getArticles(service, from, until, callback) {
+  if (!service) service = 'svt';
   dbConnection.connect((error, client) => {
     if (error) {
-      console.log('Got an error in dbConnection.connect');
       callback(error, null);
     }
     from = from.replace(' ', '+');
     until = until.replace(' ', '+');
+    const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     const db = client.db(dbName);
     db.collection(collectionName).find({
       $and: [{ datetime: { $gte: from } }, { datetime: { $lte: until } }],
@@ -42,7 +45,8 @@ function getTimeSpan(from, until, callback) {
   });
 }
 
-function getNeededSpans(service, availableSpans, requestFrom, requestUntil) {
+// Returns an array of timespans that are missing to fulfill a requested timespan for a given service and timespans already available.
+function computeMissingSpans(service, availableSpans, requestFrom, requestUntil) {
   const missingSpans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
@@ -75,15 +79,16 @@ function getNeededSpans(service, availableSpans, requestFrom, requestUntil) {
   return missingSpans;
 }
 
-function checkCompletion(requestedResource, callback) {
+// Applies a callback function to the timespans needed to complete a requested resource.
+function getMissingTimespans(requestedResource, callback) {
   const { service, from, until } = requestedResource;
   dbConnection.connect((error, client) => {
     const db = client.db(dbName);
     const query = {
       service,
     };
-    db.collection(scraperMetaCollection).find(query).toArray((err, results) => {
-      const needed = getNeededSpans(service, results, from, until);
+    db.collection(scraperMetaCollection).find(query).sort({ from: 1 }).toArray((err, results) => {
+      const needed = computeMissingSpans(service, results, from, until);
       callback(needed);
     });
   });
@@ -91,6 +96,6 @@ function checkCompletion(requestedResource, callback) {
 
 module.exports = {
   pushArticles,
-  getTimeSpan,
-  checkCompletion,
+  getArticles,
+  getMissingTimespans,
 };
