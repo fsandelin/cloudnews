@@ -27,19 +27,14 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Velocity from "velocity-animate";
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "notificationsCounty",
-  props: ['circleSize', 'fontSize', 'yOffset'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects'],
   computed: {
     ...mapGetters([
-      g.NEWS_BY_COUNTY,
-      g.ZOOM_VALUE
+      'newsByCounty',
+      'zoomValue'
     ])
   },
   data: function() {
@@ -48,35 +43,17 @@ export default {
     }
   },
   mounted: function() {
-    this.previousCountyNewsLength = this.newsByCounty.map((county) => ({ name: county.name, length: county.news.length }));
+    this.previousCountyNewsLength = this.calculateNewsLengthForObjects(this.newsByCounty)
   },
   watch: {
     newsByCounty: function(newsByCounty) {
-      for (const county of newsByCounty) {
-        if (!(this.previousCountyNewsLength.map((c)=>(c.name)).includes(county.name))){
-          this.previousCountyNewsLength.push({name: county.name, length: county.news.length});
-        }
-
-        this.previousCountyNewsLength.map(previousCounty => {
-          if (county.name === previousCounty.name && 
-              county.news.length !== previousCounty.length) {
-            this.animate(county.name);
-            previousCounty.length = county.news.length;
-          }
-        });
-      }
+      this.updateNewsLengthForObjects(newsByCounty, this.previousCountyNewsLength, this.$refs, 'countyNewsNotification-')
     }
   },
   methods: {
     strokeWidth: function() {
       return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
-    animate: function(countyName) {
-      let el = this.$refs['countyNewsNotification-'+countyName];
-      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
-      Velocity(el,  { r: r*1.5}, { duration: 80 });
-      Velocity(el,  { r: r }, { duration: 40 });
-    }
   }
 }
 </script>

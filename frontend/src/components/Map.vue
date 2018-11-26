@@ -21,7 +21,7 @@
           v-bind:key="county.key"
           v-show="county.active"
           v-bind:d="county.path"
-          v-on:click="countyMapClick(county)">
+          v-on:click="countyClick(county)">
         </path>
       </g>
       <notifications>
@@ -34,43 +34,32 @@
 import * as d3 from "d3";
 import panzoom from "panzoom";
 import Notifications from './Notifications'
+import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
-import {
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "d3map",
   components: {
     'notifications': Notifications
   },
+  data () {
+    return {
+      mapZoom: mapZoom(this.setZoomValue)
+    }
+  },
   mounted: function() {
-    const size = this.sizeOfCurrentWindow();
-
-    d3.select(".mapContainer").call(this.mapZoom);
-    d3.select(".mapContainer").call(this.mapZoom.translateTo, 550,255);
-    d3.select(".mapContainer").call(this.mapZoom.scaleTo, 0.5*size);
-    d3.select(".mapContainer").transition().duration(750).call(this.mapZoom.scaleTo, 0.9*size);
+    d3.select(".mapContainer").call(this.mapZoom).on("dblclick.zoom", () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))));
+    initialZoom(this.mapZoom);
   },
   computed: {
     ...mapGetters([
-      g.COUNTRIES,
-      g.COUNTIES,
-      g.MUNICIPALITIES,
-      g.ZOOM_VALUE
+      'countries',
+      'counties',
+      'municipalities',
+      'zoomValue',
+      'selectedCounty',
+      'countyByName'
     ])
-  },
-  data: function() {
-    return {
-      mapZoom: d3.zoom()
-                .wheelDelta(() => {
-                  let deltaY = d3.event.deltaY > 0 ? 125 : -125
-                  return -deltaY * (1) / 500;
-                })
-                .scaleExtent([0.2, 50])
-                .on("zoom", this.zoomed)
-    }
   },
   methods: {
     zoomed: function() {
@@ -81,32 +70,9 @@ export default {
       }
     },
     ...mapActions([
-      a.COUNTY_CLICK,
-      a.SET_ZOOM_VALUE
-    ]),
-    countyMapClick: function(county) {
-      this.countyClick(county)
-      this.transition(county.x, county.y);
-    },
-    sizeOfCurrentWindow() { 
-      const ratio = 2.1;
-      const width = d3.select("#main-section").node().getBoundingClientRect().width;
-      const height = d3.select("#main-section").node().getBoundingClientRect().height;
-      const size =
-        width * ratio < height
-          ? width/500
-          : height/500;
-      return size;
-    },
-    transition(x, y) {
-      const size = this.sizeOfCurrentWindow()
-      const newZoomValue = 3.0*size;
-      const xOffset = (100*(size/newZoomValue))
-      if (this.zoomValue < newZoomValue) {
-        d3.select(".mapContainer").transition().duration(450).call(this.mapZoom.translateTo, x+ xOffset, y)
-                                  .transition().duration(200).call(this.mapZoom.scaleTo, newZoomValue);
-      }                     
-    }
+      'countyClick',
+      'setZoomValue',
+    ])
   }
 }
 </script>

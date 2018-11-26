@@ -64,20 +64,15 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "notificationsMunicipality",
-  props: ['circleSize', 'fontSize', 'yOffset'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects'],
   computed: {
     ...mapGetters([
-      g.SELECTED_COUNTY,
-      g.NEWS_BY_MUNICIPALITY,
-      g.ZOOM_VALUE
+      'selectedCounty',
+      'newsByMunicipality',
+      'zoomValue'
     ])
   },
   data: function() {
@@ -86,62 +81,81 @@ export default {
     }
   },
   mounted: function() {
-    this.previousMunicipalityNewsLength = this.newsByMunicipality.map((municipality) => ({ name: municipality.name, length: municipality.news.length }));
+    this.previousMunicipalityNewsLength = this.calculateNewsLengthForObjects(this.newsByMunicipality)
   },
   watch: {
     newsByMunicipality: function(newsByMunicipality) {
-      for (const municipality of newsByMunicipality) {
-        if (!(this.previousMunicipalityNewsLength.map((m)=>(m.name)).includes(municipality.name))){
-          this.previousMunicipalityNewsLength.push({name: municipality.name, length: municipality.news.length});
-        }
-
-        this.previousMunicipalityNewsLength.map(previousMunicipality => {
-          if (municipality.name === previousMunicipality.name && 
-              municipality.news.length !== previousMunicipality.length) {
-                this.animate(municipality.name);
-                previousMunicipality.length = municipality.news.length;
-              }
-        });
-      }
+      this.updateNewsLengthForObjects(newsByMunicipality, this.previousMunicipalityNewsLength, this.$refs, 'newsNotification-')
     }
   },
   methods: {
     lineWidth: function() {
       return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
     },
-    animate: function(municipalityName) {
-      let el = this.$refs['newsNotification-'+municipalityName];
-      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
-      Velocity(el,  { r: r*1.5}, { duration: 80 });
-      Velocity(el,  { r: r }, { duration: 40 });
-    },
     lineBeforeEnter: function(el, done, municipality) {
-      Velocity(el, {x1: municipality.countyX, y1: municipality.countyY, x2: municipality.countyX, y2: municipality.countyY}, {duration: 0});
+      Velocity(el, {
+        x1: municipality.countyX,
+        y1: municipality.countyY,
+        x2: municipality.countyX,
+        y2: municipality.countyY },
+        { duration: 0 });
     },
     lineEnter: function(el, done, municipality) {
-      Velocity(el, {x2: municipality.x, y2: municipality.y}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x2: municipality.x,
+        y2: municipality.y },
+        { duration: 300 },
+        { complete: done });
     },
     lineLeave: function(el, done, municipality) {
-      Velocity(el, {x1: municipality.countyX, y1: municipality.countyY, x2: municipality.countyX, y2: municipality.countyY}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x1: municipality.countyX,
+        y1: municipality.countyY,
+        x2: municipality.countyX,
+        y2: municipality.countyY },
+        { duration: 300 },
+        { complete: done });
     },
     circleBeforeEnter: function(el, done, municipality) {
-      Velocity(el, {cx: municipality.countyX, cy: municipality.countyY}, {duration: 0});
+      Velocity(el, {
+        cx: municipality.countyX,
+        cy: municipality.countyY },
+        { duration: 0 });
     },
     circleEnter: function(el, done, municipality) {
-      Velocity(el, {cx: municipality.x, cy: municipality.y}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        cx: municipality.x,
+        cy: municipality.y },
+        { duration: 300 },
+        { complete: done });
     },
     circleLeave: function(el, done, municipality) {
-      Velocity(el, {cx: municipality.countyX, cy: municipality.countyY}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        cx: municipality.countyX,
+        cy: municipality.countyY },
+        { duration: 300 },
+        { complete: done });
     },
     textBeforeEnter: function(el, done, municipality) {
-      Velocity(el, {x: municipality.countyX, y: municipality.countyY}, {duration: 0});
+      Velocity(el, {
+        x: municipality.countyX,
+        y: municipality.countyY },
+        { duration: 0 });
     },
     textEnter: function(el, done, municipality) {
-      Velocity(el, {x: municipality.x, y: municipality.y}, {duration: 300}, {complete: done});
+      Velocity(el, {
+        x: municipality.x,
+        y: municipality.y },
+        { duration: 300 },
+        { complete: done });
     },
     textLeave: function(el, done, municipality) {
-      Velocity(el, {x: municipality.countyX, y: municipality.countyY}, {duration: 300}, {complete: done});
-    }    
+      Velocity(el, {
+        x: municipality.countyX,
+        y: municipality.countyY },
+        { duration: 300 },
+        { complete: done });
+    }
   }
 }
 </script>

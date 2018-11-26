@@ -1,9 +1,4 @@
 import { cleanString } from '../helpers';
-import {
-  mutations as m,
-  actions as a,
-  socketEvents as se,
-} from '../constants';
 
 const state = {
   newsList: [],
@@ -104,12 +99,12 @@ const actions = {
       }
     }
 
-    commit(m.ADD_NEWS, { ...news, location });
+    commit('addNews', { ...news, location });
   },
   addNewsList: ({ dispatch }, newsList) => {
-    newsList.map(news => dispatch(a.ADD_NEWS, news))
+    newsList.map(news => dispatch('addNews', news))
   },
-  setActiveNewsItemId: ({ commit }, id) => commit(a.SELECT_ACTIVE_NEWS_ITEM_ID, id),
+  setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
 }
 
 const mutations = {

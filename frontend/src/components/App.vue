@@ -20,6 +20,11 @@
         v-bind:is="dynamicComponents.drawerNewsList">
       </component>
     </drawer>
+
+    <togglebuttons
+      v-bind:items="newsSources"
+      v-bind:toggleActive="toggleNewsSource">
+    </togglebuttons>
   </div>
 </template>
 
@@ -29,13 +34,9 @@ import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
 import DrawerNewsList from './DrawerNewsList'
+import ToggleButtons from './ToggleButtons'
 import { mapGetters, mapActions } from 'vuex';
 import { fakeNewsList } from '../assets/FakeData'
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: 'app',
@@ -50,16 +51,13 @@ export default {
   },
   created: function () {
     fakeNewsList.map(newsItem => this.addNews(newsItem))
-    if (process.env.SOCKET_CONNECTION) {
-      this.addNewsSource(ns.SVT)
-      this.addNewsSource(ns.TT)
-    }
   },
   computed: {
     ...mapGetters([
-      g.ACTIVE_NEWS_ITEM,
-      g.ACTIVE_NEWS_ITEM_ID,
-      g.SELECTED_COUNTY
+      'activeNewsItem',
+      'activeNewsItemId',
+      'selectedCounty',
+      'newsSources'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
@@ -67,9 +65,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      a.ADD_NEWS,
-      a.TOGGLE_DRAWER,
-      a.ADD_NEWS_SOURCE
+      'addNews',
+      'toggleDrawer',
+      'toggleNewsSource',
     ]),
   },
   components: {
@@ -77,7 +75,8 @@ export default {
     'drawernewsitem': DrawerNewsItem,
     'newssidebar': NewsSideBar,
     'drawer': Drawer,
-    'drawernewslist': DrawerNewsList
+    'drawernewslist': DrawerNewsList,
+    'togglebuttons': ToggleButtons
   }
 }
 </script>
