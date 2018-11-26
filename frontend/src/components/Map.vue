@@ -49,7 +49,7 @@ export default {
     const size = this.sizeOfCurrentWindow();
 
     d3.select(".mapContainer").call(this.mapZoom);
-    d3.select(".mapContainer").call(this.mapZoom.translateTo, 600,255);
+    d3.select(".mapContainer").call(this.mapZoom.translateTo, 550,255);
     d3.select(".mapContainer").call(this.mapZoom.scaleTo, 0.5*size);
     d3.select(".mapContainer").transition().duration(750).call(this.mapZoom.scaleTo, 0.9*size);
   },
