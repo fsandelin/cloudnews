@@ -1,7 +1,7 @@
 import europeCountries from '../../assets/europe-countries-meta-info.json';
 import swedishCounties from '../../assets/sweden-counties-meta-info.json';
 import swedishMunicipalities from '../../assets/sweden-municipalities-meta-info.json';
-import swedishCities from '../../assets/swede-cities-meta-info.json';
+import swedishCities from '../../assets/sweden-cities-meta-info.json';
 import { cleanString } from '../helpers';
 
 const state = {
