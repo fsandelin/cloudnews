@@ -73,6 +73,7 @@
 
           .day {
             flex: 1;
+            cursor: pointer;
 
             &.current-month {
               color: $darkblue;
@@ -80,6 +81,11 @@
 
             &:not(.current-month) {
               color: $superlightblue;
+            }
+
+            &:hover {
+              background-color: $lightgreen;
+              color: white;
             }
 
           }
