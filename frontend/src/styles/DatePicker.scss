@@ -11,16 +11,35 @@
     color: $darkgreen;
 
     i {
-      background-color: red;
-      margin: auto 0;
+      margin: auto 10px;
+      cursor: pointer;
+    }
+
+    .year-month {
+      flex: 1;
+
+      p {
+        margin: 0 10px;
+
+        .year {
+          font-size: 10px;
+        }
+
+        .month {
+          font-weight: bold;
+        }
+      }
+
+      .previous {
+        transform: scale(-1, 1);
+      }
     }
   }
+
   .calendar {
-    background-color: blue;
     flex: 1;
   }
   .footer {
-    background-color: red;
     height: 30px;
   }
 }
