@@ -2,10 +2,10 @@ const R = require('request');
 const db = require('./controllers/DatabaseInterface');
 require('dotenv').config();
 
-const { MIDDLEWARE_HOST, MIDDLEWARE_PORT } = process.env;
+const { MIDDLEWARE_HOST, MIDDLEWARE_PORT, SCRAPER_PORT } = process.env;
 const MIDDLEWARE_ROUTE = '/complete_request';
 const COMPLETE_REQUEST_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}${MIDDLEWARE_ROUTE}`;
-
+const SCRAPER_URL = `http://localhost:${SCRAPER_PORT}/getnews/daterange`;
 
 const requests = {};
 
@@ -14,7 +14,19 @@ const requests = {};
 function scrapeRequestedResources(neededTimespans) {
   console.log(`We need to scrape for ${neededTimespans.length} missing timespans`);
   console.log(neededTimespans);
-  // Todo: Send some API call to scraper
+  const options = {
+    url: SCRAPER_URL,
+    body: neededTimespans,
+    json: true,
+  };
+  R.post(options, (error, response) => {
+    if (error) {
+      console.log('Got a goddamn error');
+      console.log(error);
+    } else {
+      console.log(response);
+    }
+  });
 }
 
 
