@@ -1,0 +1,9 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+
+circle {
+  &.city {
+    fill:$black;
+  }
+}

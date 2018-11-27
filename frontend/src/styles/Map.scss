@@ -20,12 +20,6 @@ svg.mapContainer {
     margin: auto;
     display: block;
 
-    circle {
-      &.city {
-        fill:black;
-      }
-    }
-
     path {
       &.country, &.county, &.municipality {
         stroke: $white;

@@ -1,730 +1,1250 @@
 [
   {
-    "name": "Stockholm",
     "key": "Sweden-city-Stockholm",
+    "name": "stockholm",
     "population": 1250400,
-    "latitude": 59.330,
-    "longitude": 18.070
+    "type": "city",
+    "x": -75.23356932452191,
+    "y": 674.8745882239018,
+    "longitude": 18.07,
+    "latitude": 59.33,
+    "county": "stockholm",
+    "municipality": "stockholm"
   },
   {
-    "name": "Goteborg",
     "key": "Sweden-city-Goteborg",
+    "name": "goteborg",
     "population": 510300,
-    "latitude": 57.720,
-    "longitude": 12.010
+    "type": "city",
+    "x": -286.76747466623465,
+    "y": 782.533027743923,
+    "longitude": 12.01,
+    "latitude": 57.72,
+    "county": "västra götaland",
+    "municipality": "göteborg"
   },
   {
-    "name": "Malmo",
     "key": "Sweden-city-Malmo",
+    "name": "malmo",
     "population": 258600,
-    "latitude": 55.610,
-    "longitude": 13.020
+    "type": "city",
+    "x": -251.5118237759492,
+    "y": 916.6037252610286,
+    "longitude": 13.02,
+    "latitude": 55.61,
+    "county": "null",
+    "municipality": "malmö"
   },
   {
-    "name": "Uppsala",
     "key": "Sweden-city-Uppsala",
+    "name": "uppsala",
     "population": 127400,
-    "latitude": 59.860,
-    "longitude": 17.640
+    "type": "city",
+    "x": -90.24340089167322,
+    "y": 638.319344146687,
+    "longitude": 17.64,
+    "latitude": 59.86,
+    "county": "uppsala",
+    "municipality": "uppsala"
   },
   {
-    "name": "Vasteras",
     "key": "Sweden-city-Vasteras",
+    "name": "vasteras",
     "population": 105700,
-    "latitude": 59.620,
-    "longitude": 16.540
+    "type": "city",
+    "x": -128.64064443554844,
+    "y": 654.9440936492642,
+    "longitude": 16.54,
+    "latitude": 59.62,
+    "county": "västmanland",
+    "municipality": "västerås"
   },
   {
-    "name": "Orebro",
     "key": "Sweden-city-Orebro",
+    "name": "orebro",
     "population": 97700,
-    "latitude": 59.280,
-    "longitude": 15.220
+    "type": "city",
+    "x": -174.71733668819866,
+    "y": 678.2936664677618,
+    "longitude": 15.22,
+    "latitude": 59.28,
+    "county": "örebro",
+    "municipality": "örebro"
   },
   {
-    "name": "Linkoping",
     "key": "Sweden-city-Linkoping",
+    "name": "linkoping",
     "population": 96100,
-    "latitude": 58.410,
-    "longitude": 15.630
+    "type": "city",
+    "x": -160.40563682184518,
+    "y": 736.9972929004598,
+    "longitude": 15.63,
+    "latitude": 58.41,
+    "county": "östergötland",
+    "municipality": "linköping"
   },
   {
-    "name": "Helsingborg",
     "key": "Sweden-city-Helsingborg",
+    "name": "helsingborg",
     "population": 90400,
-    "latitude": 56.050,
-    "longitude": 12.700
+    "type": "city",
+    "x": -262.68193098871296,
+    "y": 889.2573488127123,
+    "longitude": 12.7,
+    "latitude": 56.05,
+    "county": "skåne",
+    "municipality": "null"
   },
   {
-    "name": "Jonkoping",
     "key": "Sweden-city-Jonkoping",
+    "name": "jonkoping",
     "population": 83100,
-    "latitude": 57.780,
-    "longitude": 14.170
+    "type": "city",
+    "x": -211.36925098007964,
+    "y": 778.6081051333144,
+    "longitude": 14.17,
+    "latitude": 57.78,
+    "county": "jönköping",
+    "municipality": "jönköping"
   },
   {
-    "name": "Norrkoping",
     "key": "Sweden-city-Norrkoping",
+    "name": "norrkoping",
     "population": 82900,
-    "latitude": 58.600,
-    "longitude": 16.170
+    "type": "city",
+    "x": -141.55608090030637,
+    "y": 724.3021096600801,
+    "longitude": 16.17,
+    "latitude": 58.6,
+    "county": "östergötland",
+    "municipality": "norrköping"
   },
   {
-    "name": "Lund",
     "key": "Sweden-city-Lund",
+    "name": "lund",
     "population": 75800,
-    "latitude": 55.710,
-    "longitude": 13.200
+    "type": "city",
+    "x": -245.22863846876965,
+    "y": 910.4157363796025,
+    "longitude": 13.2,
+    "latitude": 55.71,
+    "county": "null",
+    "municipality": "lund"
   },
   {
-    "name": "Umea",
     "key": "Sweden-city-Umea",
+    "name": "umea",
     "population": 73200,
-    "latitude": 63.830,
-    "longitude": 20.240
+    "type": "city",
+    "x": 0.5137202120318989,
+    "y": 344.1610024933457,
+    "longitude": 20.24,
+    "latitude": 63.83,
+    "county": "västerbotten",
+    "municipality": "umeå"
   },
   {
-    "name": "Gavle",
     "key": "Sweden-city-Gavle",
+    "name": "gavle",
     "population": 68300,
-    "latitude": 60.690,
-    "longitude": 17.130
+    "type": "city",
+    "x": -108.04575926201528,
+    "y": 579.8843417936141,
+    "longitude": 17.13,
+    "latitude": 60.69,
+    "county": "gävleborg",
+    "municipality": "gävle"
   },
   {
-    "name": "Boras",
     "key": "Sweden-city-Boras",
+    "name": "boras",
     "population": 62900,
-    "latitude": 57.730,
-    "longitude": 12.940
+    "type": "city",
+    "x": -254.30435057914013,
+    "y": 781.8793261522824,
+    "longitude": 12.94,
+    "latitude": 57.73,
+    "county": "västra götaland",
+    "municipality": "borås"
   },
   {
-    "name": "Sodertalje",
     "key": "Sweden-city-Sodertalje",
+    "name": "sodertalje",
     "population": 60200,
-    "latitude": 59.200,
-    "longitude": 17.630
+    "type": "city",
+    "x": -90.59246674207202,
+    "y": 683.7537625335435,
+    "longitude": 17.63,
+    "latitude": 59.2,
+    "county": "stockholm",
+    "municipality": "södertälje"
   },
   {
-    "name": "Eskilstuna",
     "key": "Sweden-city-Eskilstuna",
+    "name": "eskilstuna",
     "population": 58600,
-    "latitude": 59.370,
-    "longitude": 16.510
+    "type": "city",
+    "x": -129.68784198674496,
+    "y": 672.1357013781658,
+    "longitude": 16.51,
+    "latitude": 59.37,
+    "county": "södermanland",
+    "municipality": "eskilstuna"
   },
   {
-    "name": "Taby",
     "key": "Sweden-city-Taby",
+    "name": "taby",
     "population": 58400,
-    "latitude": 59.500,
-    "longitude": 18.070
+    "type": "city",
+    "x": -75.23356932452191,
+    "y": 663.2119568685175,
+    "longitude": 18.07,
+    "latitude": 59.5,
+    "county": "stockholm",
+    "municipality": "täby"
   },
   {
-    "name": "Karlstad",
     "key": "Sweden-city-Karlstad",
+    "name": "karlstad",
     "population": 57300,
-    "latitude": 59.380,
-    "longitude": 13.510
+    "type": "city",
+    "x": -234.4075971064048,
+    "y": 671.4504751359136,
+    "longitude": 13.51,
+    "latitude": 59.38,
+    "county": "värmland",
+    "municipality": "karlstad"
   },
   {
-    "name": "Halmstad",
     "key": "Sweden-city-Halmstad",
+    "name": "halmstad",
     "population": 55200,
-    "latitude": 56.670,
-    "longitude": 12.860
+    "type": "city",
+    "x": -257.09687738233106,
+    "y": 850.1892550717371,
+    "longitude": 12.86,
+    "latitude": 56.67,
+    "county": "halland",
+    "municipality": "halmstad"
   },
   {
-    "name": "Vaxjo",
     "key": "Sweden-city-Vaxjo",
+    "name": "vaxjo",
     "population": 53100,
-    "latitude": 56.880,
-    "longitude": 14.800
+    "type": "city",
+    "x": -189.37810240495105,
+    "y": 836.8108506817389,
+    "longitude": 14.8,
+    "latitude": 56.88,
+    "county": "kronoberg",
+    "municipality": "växjö"
   },
   {
-    "name": "Sundsvall",
     "key": "Sweden-city-Sundsvall",
+    "name": "sundsvall",
     "population": 48300,
-    "latitude": 62.400,
-    "longitude": 17.330
+    "type": "city",
+    "x": -101.06444225403811,
+    "y": 454.57157832139546,
+    "longitude": 17.33,
+    "latitude": 62.4,
+    "county": "västernorrland",
+    "municipality": "sundsvall"
   },
   {
-    "name": "Lulea",
     "key": "Sweden-city-Lulea",
+    "name": "lulea",
     "population": 45400,
-    "latitude": 65.600,
-    "longitude": 22.160
+    "type": "city",
+    "x": 67.5343634886143,
+    "y": 199.4499550140995,
+    "longitude": 22.16,
+    "latitude": 65.6,
+    "county": "norrbotten",
+    "municipality": "luleå"
   },
   {
-    "name": "Trollhattan",
     "key": "Sweden-city-Trollhattan",
+    "name": "trollhattan",
     "population": 44400,
-    "latitude": 58.290,
-    "longitude": 12.300
+    "type": "city",
+    "x": -276.6445650046675,
+    "y": 744.98007100739,
+    "longitude": 12.3,
+    "latitude": 58.29,
+    "county": "västra götaland",
+    "municipality": "trollhättan"
   },
   {
-    "name": "Ostersund",
     "key": "Sweden-city-Ostersund",
+    "name": "ostersund",
     "population": 43000,
-    "latitude": 63.180,
-    "longitude": 14.650
+    "type": "city",
+    "x": -194.61409016093404,
+    "y": 395.02264501518766,
+    "longitude": 14.65,
+    "latitude": 63.18,
+    "county": "jämtland",
+    "municipality": "östersund"
   },
   {
-    "name": "Borlange",
     "key": "Sweden-city-Borlange",
+    "name": "borlange",
     "population": 38900,
-    "latitude": 60.490,
-    "longitude": 15.440
+    "type": "city",
+    "x": -167.03788797942366,
+    "y": 594.1013469445115,
+    "longitude": 15.44,
+    "latitude": 60.49,
+    "county": "dalarna",
+    "municipality": "borlänge"
   },
   {
-    "name": "Upplands-vasby",
     "key": "Sweden-city-Upplands-vasby",
+    "name": "upplands-vasby",
     "population": 36600,
-    "latitude": 59.530,
-    "longitude": 	17.920
+    "type": "city",
+    "x": -80.46955708050484,
+    "y": 661.1477517255544,
+    "longitude": 17.92,
+    "latitude": 59.53,
+    "county": "stockholm",
+    "municipality": "upplands väsby"
   },
   {
-    "name": "Tumba",
     "key": "Sweden-city-Tumba",
+    "name": "tumba",
     "population": 35600,
-    "latitude": 59.200,
-    "longitude": 17.810
+    "type": "city",
+    "x": -84.30928143489245,
+    "y": 683.7537625335435,
+    "longitude": 17.81,
+    "latitude": 59.2,
+    "county": "stockholm",
+    "municipality": "stockholm"
   },
   {
-    "name": "Falun",
     "key": "Sweden-city-Falun",
+    "name": "falun",
     "population": 35300,
-    "latitude": 60.610,
-    "longitude": 15.620
+    "type": "city",
+    "x": -160.7547026722441,
+    "y": 585.5817134106014,
+    "longitude": 15.62,
+    "latitude": 60.61,
+    "county": "dalarna",
+    "municipality": "falun"
   },
   {
-    "name": "Kalmar",
     "key": "Sweden-city-Kalmar",
+    "name": "kalmar",
     "population": 34400,
-    "latitude": 56.670,
-    "longitude": 16.360
+    "type": "city",
+    "x": -134.923829742728,
+    "y": 850.1892550717371,
+    "longitude": 16.36,
+    "latitude": 56.67,
+    "county": "kalmar",
+    "municipality": "null"
   },
   {
-    "name": "Skovde",
     "key": "Sweden-city-Skovde",
+    "name": "skovde",
     "population": 32600,
-    "latitude": 58.380,
-    "longitude": 13.840
+    "type": "city",
+    "x": -222.88842404324225,
+    "y": 738.9955319654723,
+    "longitude": 13.84,
+    "latitude": 58.38,
+    "county": "västra götaland",
+    "municipality": "skövde"
   },
   {
-    "name": "Karlskrona",
     "key": "Sweden-city-Karlskrona",
+    "name": "karlskrona",
     "population": 32300,
-    "latitude": 56.180,
-    "longitude": 15.590
+    "type": "city",
+    "x": -161.80190022344073,
+    "y": 881.118092975742,
+    "longitude": 15.59,
+    "latitude": 56.18,
+    "county": "blekinge",
+    "municipality": "karlskrona"
   },
   {
-    "name": "Kristianstad",
     "key": "Sweden-city-Kristianstad",
+    "name": "kristianstad",
     "population": 32100,
-    "latitude": 56.030,
-    "longitude": 14.150
+    "type": "city",
+    "x": -212.06738268087736,
+    "y": 890.5071057695259,
+    "longitude": 14.15,
+    "latitude": 56.03,
+    "county": "null",
+    "municipality": "kristianstad"
   },
   {
-    "name": "Skelleftea",
     "key": "Sweden-city-Skelleftea",
+    "name": "skelleftea",
     "population": 31100,
-    "latitude": 64.760,
-    "longitude": 20.990
+    "type": "city",
+    "x": 26.693658991946904,
+    "y": 269.308030967798,
+    "longitude": 20.99,
+    "latitude": 64.76,
+    "county": "västerbotten",
+    "municipality": "skellefteå"
   },
   {
-    "name": "Lidingo",
     "key": "Sweden-city-Lidingo",
+    "name": "lidingo",
     "population": 30900,
-    "latitude": 59.370,
-    "longitude": 18.150
+    "type": "city",
+    "x": -72.44104252133104,
+    "y": 672.1357013781658,
+    "longitude": 18.15,
+    "latitude": 59.37,
+    "county": "stockholm",
+    "municipality": "uppsala"
   },
   {
-    "name": "Uddevalla",
     "key": "Sweden-city-Uddevalla",
+    "name": "uddevalla",
     "population": 30200,
-    "latitude": 58.350,
-    "longitude": 11.930
+    "type": "city",
+    "x": -289.5600014694256,
+    "y": 740.9920723852979,
+    "longitude": 11.93,
+    "latitude": 58.35,
+    "county": "västra götaland",
+    "municipality": "uddevalla"
   },
   {
-    "name": "Motala",
     "key": "Sweden-city-Motala",
+    "name": "motala",
     "population": 29800,
-    "latitude": 58.540,
-    "longitude": 15.040
+    "type": "city",
+    "x": -181.00052199537834,
+    "y": 728.318544006403,
+    "longitude": 15.04,
+    "latitude": 58.54,
+    "county": "östergötland",
+    "municipality": "motala"
   },
   {
-    "name": "Ornskoldsvik",
     "key": "Sweden-city-Ornskoldsvik",
+    "name": "ornskoldsvik",
     "population": 27900,
-    "latitude": 63.300,
-    "longitude": 18.720
+    "type": "city",
+    "x": -52.544289048595715,
+    "y": 385.7194643462326,
+    "longitude": 18.72,
+    "latitude": 63.3,
+    "county": "null",
+    "municipality": "örnsköldsvik"
   },
   {
-    "name": "Landskrona",
     "key": "Sweden-city-Landskrona",
+    "name": "landskrona",
     "population": 27800,
-    "latitude": 55.880,
-    "longitude": 12.830
+    "type": "city",
+    "x": -258.1440749335277,
+    "y": 899.8597060538177,
+    "longitude": 12.83,
+    "latitude": 55.88,
+    "county": "null",
+    "municipality": "null"
   },
   {
-    "name": "Nykoping",
     "key": "Sweden-city-Nykoping",
+    "name": "nykoping",
     "population": 27400,
-    "latitude": 58.760,
-    "longitude": 17.020
+    "type": "city",
+    "x": -111.8854836164029,
+    "y": 713.5578255323126,
+    "longitude": 17.02,
+    "latitude": 58.76,
+    "county": "södermanland",
+    "municipality": "nyköping"
   },
   {
-    "name": "Karlskoga",
     "key": "Sweden-city-Karlskoga",
+    "name": "karlskoga",
     "population": 27400,
-    "latitude": 59.330,
-    "longitude": 14.500
+    "type": "city",
+    "x": -199.85007791691703,
+    "y": 674.8745882239018,
+    "longitude": 14.5,
+    "latitude": 59.33,
+    "county": "örebro",
+    "municipality": "karlskoga"
   },
   {
-    "name": "Vallentuna",
     "key": "Sweden-city-Vallentuna",
+    "name": "vallentuna",
     "population": 26400,
-    "latitude": 59.540,
-    "longitude": 18.080
+    "type": "city",
+    "x": -74.88450347412311,
+    "y": 660.459275116938,
+    "longitude": 18.08,
+    "latitude": 59.54,
+    "county": "stockholm",
+    "municipality": "vallentuna"
   },
   {
-    "name": "Akersberga",
     "key": "Sweden-city-Akersberga",
+    "name": "akersberga",
     "population": 26400,
-    "latitude": 59.480,
-    "longitude": 18.310
+    "type": "city",
+    "x": -66.8559889149492,
+    "y": 664.5870744802673,
+    "longitude": 18.31,
+    "latitude": 59.48,
+    "county": "stockholm",
+    "municipality": "österåker"
   },
   {
-    "name": "Varberg",
     "key": "Sweden-city-Varberg",
+    "name": "varberg",
     "population": 25700,
-    "latitude": 57.110,
-    "longitude": 12.250
+    "type": "city",
+    "x": -278.3898942566619,
+    "y": 822.0717917835909,
+    "longitude": 12.25,
+    "latitude": 57.11,
+    "county": "halland",
+    "municipality": "null"
   },
   {
-    "name": "Trelleborg",
     "key": "Sweden-city-Trelleborg",
+    "name": "trelleborg",
     "population": 25400,
-    "latitude": 55.380,
-    "longitude": 13.150
+    "type": "city",
+    "x": -246.97396772076394,
+    "y": 930.7764567568356,
+    "longitude": 13.15,
+    "latitude": 55.38,
+    "county": "null",
+    "municipality": "trelleborg"
   },
   {
-    "name": "Lidkoping",
     "key": "Sweden-city-Lidkoping",
+    "name": "lidkoping",
     "population": 24600,
-    "latitude": 58.510,
-    "longitude": 13.160
+    "type": "city",
+    "x": -246.62490187036508,
+    "y": 730.3241837623518,
+    "longitude": 13.16,
+    "latitude": 58.51,
+    "county": "västra götaland",
+    "municipality": "null"
   },
   {
-    "name": "Marsta",
     "key": "Sweden-city-Marsta",
+    "name": "marsta",
     "population": 23000,
-    "latitude": 59.630,
-    "longitude": 17.840
+    "type": "city",
+    "x": -83.26208388369582,
+    "y": 654.2537727485928,
+    "longitude": 17.84,
+    "latitude": 59.63,
+    "county": "stockholm",
+    "municipality": "sigtuna"
   },
   {
-    "name": "Alingsas",
     "key": "Sweden-city-Alingsas",
+    "name": "alingsas",
     "population": 22700,
-    "latitude": 57.930,
-    "longitude": 12.540
+    "type": "city",
+    "x": -268.2669845950948,
+    "y": 768.7671849651383,
+    "longitude": 12.54,
+    "latitude": 57.93,
+    "county": "västra götaland",
+    "municipality": "alingsås"
   },
   {
-    "name": "Angelholm",
     "key": "Sweden-city-Angelholm",
+    "name": "angelholm",
     "population": 22300,
-    "latitude": 56.250,
-    "longitude": 12.870
+    "type": "city",
+    "x": -256.74781153193226,
+    "y": 876.7239943330301,
+    "longitude": 12.87,
+    "latitude": 56.25,
+    "county": "skåne",
+    "municipality": "ängelholm"
   },
   {
-    "name": "Sandviken",
     "key": "Sweden-city-Sandviken",
+    "name": "sandviken",
     "population": 22300,
-    "latitude": 60.620,
-    "longitude": 16.770
+    "type": "city",
+    "x": -120.61212987637452,
+    "y": 584.8703150538477,
+    "longitude": 16.77,
+    "latitude": 60.62,
+    "county": "gävleborg",
+    "municipality": "sandviken"
   },
   {
-    "name": "Pitea",
     "key": "Sweden-city-Pitea",
+    "name": "pitea",
     "population": 22100,
-    "latitude": 65.320,
-    "longitude": 21.510
+    "type": "city",
+    "x": 44.845083212687996,
+    "y": 222.9830110580615,
+    "longitude": 21.51,
+    "latitude": 65.32,
+    "county": "norrbotten",
+    "municipality": "piteå"
   },
   {
-    "name": "Visby",
     "key": "Sweden-city-Visby",
+    "name": "visby",
     "population": 22000,
-    "latitude": 57.640,
-    "longitude": 18.300
+    "type": "city",
+    "x": -67.205054765348,
+    "y": 787.7561492368741,
+    "longitude": 18.3,
+    "latitude": 57.64,
+    "county": "gotland",
+    "municipality": "gotland"
   },
   {
-    "name": "Vanersborg",
     "key": "Sweden-city-Vanersborg",
+    "name": "vanersborg",
     "population": 21700,
-    "latitude": 58.370,
-    "longitude": 12.330
+    "type": "city",
+    "x": -275.597367453471,
+    "y": 739.6612340074266,
+    "longitude": 12.33,
+    "latitude": 58.37,
+    "county": "västra götaland",
+    "municipality": "vänersborg"
   },
   {
-    "name": "Boo",
     "key": "Sweden-city-Boo",
+    "name": "boo",
     "population": 21500,
-    "latitude": 59.310,
-    "longitude": 18.140
+    "type": "city",
+    "x": -72.79010837172984,
+    "y": 676.2428227275186,
+    "longitude": 18.14,
+    "latitude": 59.31,
+    "county": "null",
+    "municipality": "null"
   },
   {
-    "name": "Katrineholm",
     "key": "Sweden-city-Katrineholm",
+    "name": "katrineholm",
     "population": 21100,
-    "latitude": 58.990,
-    "longitude": 16.200
+    "type": "city",
+    "x": -140.50888334910985,
+    "y": 698.0259191676059,
+    "longitude": 16.2,
+    "latitude": 58.99,
+    "county": "södermanland",
+    "municipality": "katrineholm"
   },
   {
-    "name": "Kungalv",
     "key": "Sweden-city-Kungalv",
+    "name": "kungalv",
     "population": 21000,
-    "latitude": 57.870,
-    "longitude": 11.990
+    "type": "city",
+    "x": -287.4656063670324,
+    "y": 772.7084745455172,
+    "longitude": 11.99,
+    "latitude": 57.87,
+    "county": "västra götaland",
+    "municipality": "kungälv"
   },
   {
-    "name": "Vastervik",
     "key": "Sweden-city-Vastervik",
+    "name": "vastervik",
     "population": 20100,
-    "latitude": 57.760,
-    "longitude": 16.630
+    "type": "city",
+    "x": -125.49905178195866,
+    "y": 779.9171366330847,
+    "longitude": 16.63,
+    "latitude": 57.76,
+    "county": "kalmar",
+    "municipality": "västervik"
   },
   {
-    "name": "Enkoping",
     "key": "Sweden-city-Enkoping",
+    "name": "enkoping",
     "population": 19700,
-    "latitude": 59.650,
-    "longitude": 17.090
+    "type": "city",
+    "x": -109.44202266361083,
+    "y": 652.8725138934151,
+    "longitude": 17.09,
+    "latitude": 59.65,
+    "county": "uppsala",
+    "municipality": "enköping"
   },
   {
-    "name": "Falkenberg",
     "key": "Sweden-city-Falkenberg",
+    "name": "falkenberg",
     "population": 18500,
-    "latitude": 56.900,
-    "longitude": 12.510
+    "type": "city",
+    "x": -269.3141821462914,
+    "y": 835.5328020413449,
+    "longitude": 12.51,
+    "latitude": 56.9,
+    "county": "halland",
+    "municipality": "falkenberg"
   },
   {
-    "name": "Boden",
     "key": "Sweden-city-Boden",
+    "name": "boden",
     "population": 18400,
-    "latitude": 65.830,
-    "longitude": 21.700
+    "type": "city",
+    "x": 51.47733437026636,
+    "y": 179.92881108887832,
+    "longitude": 21.7,
+    "latitude": 65.83,
+    "county": "norrbotten",
+    "municipality": "boden"
   },
   {
-    "name": "Kungsbacka",
     "key": "Sweden-city-Kungsbacka",
+    "name": "kungsbacka",
     "population": 18300,
-    "latitude": 57.510,
-    "longitude": 12.100
+    "type": "city",
+    "x": -283.6258820126449,
+    "y": 796.2192280994423,
+    "longitude": 12.1,
+    "latitude": 57.51,
+    "county": "halland",
+    "municipality": "kungsbacka"
   },
   {
-    "name": "Karlshamn",
     "key": "Sweden-city-Karlshamn",
+    "name": "karlshamn",
     "population": 18200,
-    "latitude": 56.170,
-    "longitude": 14.870
+    "type": "city",
+    "x": -186.93464145215898,
+    "y": 881.7451669782081,
+    "longitude": 14.87,
+    "latitude": 56.17,
+    "county": "blekinge",
+    "municipality": "karlshamn"
   },
   {
-    "name": "Kiruna",
     "key": "Sweden-city-Kiruna",
+    "name": "kiruna",
     "population": 18100,
-    "latitude": 67.860,
-    "longitude": 20.220
+    "type": "city",
+    "x": -0.18441148876581792,
+    "y": -0.3892556045971105,
+    "longitude": 20.22,
+    "latitude": 67.86,
+    "county": "norrbotten",
+    "municipality": "kiruna"
   },
   {
-    "name": "Varnamo",
     "key": "Sweden-city-Varnamo",
+    "name": "varnamo",
     "population": 17900,
-    "latitude": 57.180,
-    "longitude": 14.050
+    "type": "city",
+    "x": -215.558041184866,
+    "y": 817.567837930842,
+    "longitude": 14.05,
+    "latitude": 57.18,
+    "county": "jönköping",
+    "municipality": "värnamo"
   },
   {
-    "name": "Ystad",
     "key": "Sweden-city-Ystad",
+    "name": "ystad",
     "population": 17200,
-    "latitude": 55.440,
-    "longitude": 13.840
+    "type": "city",
+    "x": -222.88842404324225,
+    "y": 927.0871924712624,
+    "longitude": 13.84,
+    "latitude": 55.44,
+    "county": "null",
+    "municipality": "ystad"
   },
   {
-    "name": "Hassleholm",
     "key": "Sweden-city-Hassleholm",
+    "name": "hassleholm",
     "population": 17200,
-    "latitude": 56.160,
-    "longitude": 13.760
+    "type": "city",
+    "x": -225.68095084643318,
+    "y": 882.3720776998866,
+    "longitude": 13.76,
+    "latitude": 56.16,
+    "county": "null",
+    "municipality": "hässleholm"
   },
   {
-    "name": "Kristinehamn",
     "key": "Sweden-city-Kristinehamn",
+    "name": "kristinehamn",
     "population": 17200,
-    "latitude": 59.320,
-    "longitude": 14.110
+    "type": "city",
+    "x": -213.46364608247285,
+    "y": 675.5588061027988,
+    "longitude": 14.11,
+    "latitude": 59.32,
+    "county": "värmland",
+    "municipality": "kristinehamn"
   },
   {
-    "name": "Harnosand",
     "key": "Sweden-city-Harnosand",
+    "name": "harnosand",
     "population": 17200,
-    "latitude": 62.640,
-    "longitude": 17.930
+    "type": "city",
+    "x": -80.12049123010604,
+    "y": 436.4161286475578,
+    "longitude": 17.93,
+    "latitude": 62.64,
+    "county": "västernorrland",
+    "municipality": "härnösand"
   },
   {
-    "name": "Norrtalje",
     "key": "Sweden-city-Norrtalje",
+    "name": "norrtalje",
     "population": 16800,
-    "latitude": 59.770,
-    "longitude": 18.700
+    "type": "city",
+    "x": -53.24242074939332,
+    "y": 644.5676227515919,
+    "longitude": 18.7,
+    "latitude": 59.77,
+    "county": "västernorrland",
+    "municipality": "norrtälje"
   },
   {
-    "name": "Koping",
     "key": "Sweden-city-Koping",
+    "name": "koping",
     "population": 16800,
-    "latitude": 59.520,
-    "longitude": 15.990
+    "type": "city",
+    "x": -147.83926620748605,
+    "y": 661.8360241256742,
+    "longitude": 15.99,
+    "latitude": 59.52,
+    "county": "västmanland",
+    "municipality": "köping"
   },
   {
-    "name": "Oskarshamn",
     "key": "Sweden-city-Oskarshamn",
+    "name": "oskarshamn",
     "population": 16700,
-    "latitude": 57.260,
-    "longitude": 16.450
+    "type": "city",
+    "x": -131.78223708913822,
+    "y": 812.4100027391019,
+    "longitude": 16.45,
+    "latitude": 57.26,
+    "county": "kalmar",
+    "municipality": "oskarshamn"
   },
   {
-    "name": "Nassjo",
     "key": "Sweden-city-Nassjo",
+    "name": "nassjo",
     "population": 16100,
-    "latitude": 57.660,
-    "longitude": 14.700
+    "type": "city",
+    "x": -192.86876090893975,
+    "y": 786.4514490661486,
+    "longitude": 14.7,
+    "latitude": 57.66,
+    "county": "jönköping",
+    "municipality": "nässjö"
   },
   {
-    "name": "Eslov",
     "key": "Sweden-city-Eslov",
+    "name": "eslov",
     "population": 15800,
-    "latitude": 55.840,
-    "longitude": 13.300
+    "type": "city",
+    "x": -241.73797996478095,
+    "y": 902.3476272502025,
+    "longitude": 13.3,
+    "latitude": 55.84,
+    "county": "null",
+    "municipality": "eslöv"
   },
   {
-    "name": "Lerum",
     "key": "Sweden-city-Lerum",
+    "name": "lerum",
     "population": 15800,
-    "latitude": 57.770,
-    "longitude": 12.280
+    "type": "city",
+    "x": -277.3426967054653,
+    "y": 779.2627114786601,
+    "longitude": 12.28,
+    "latitude": 57.77,
+    "county": "västra götaland",
+    "municipality": "lerum"
   },
   {
-    "name": "Falkoping",
     "key": "Sweden-city-Falkoping",
+    "name": "falkoping",
     "population": 15100,
-    "latitude": 58.170,
-    "longitude": 13.560
+    "type": "city",
+    "x": -232.6622678544104,
+    "y": 752.9358348683832,
+    "longitude": 13.56,
+    "latitude": 58.17,
+    "county": "västra götaland",
+    "municipality": "falköping"
   },
   {
-    "name": "Mariestad",
     "key": "Sweden-city-Mariestad",
+    "name": "mariestad",
     "population": 14900,
-    "latitude": 58.710,
-    "longitude": 13.820
+    "type": "city",
+    "x": -223.5865557440399,
+    "y": 716.9207147594648,
+    "longitude": 13.82,
+    "latitude": 58.71,
+    "county": "västra götaland",
+    "municipality": "mariestad"
   },
   {
-    "name": "Hudiksvall",
     "key": "Sweden-city-Hudiksvall",
+    "name": "hudiksvall",
     "population": 14700,
-    "latitude": 61.740,
-    "longitude": 17.110
+    "type": "city",
+    "x": -108.743890962813,
+    "y": 503.7597710358,
+    "longitude": 17.11,
+    "latitude": 61.74,
+    "county": "gävleborg",
+    "municipality": "hudiksvall"
   },
   {
-    "name": "Vasterhaninge",
     "key": "Sweden-city-Vasterhaninge",
+    "name": "vasterhaninge",
     "population": 14500,
-    "latitude": 59.120,
-    "longitude": 18.080
+    "type": "city",
+    "x": -74.88450347412311,
+    "y": 689.2010846114595,
+    "longitude": 18.08,
+    "latitude": 59.12,
+    "county": "stockholm",
+    "municipality": "stockholm"
   },
   {
-    "name": "Molnlycke",
     "key": "Sweden-city-Molnlycke",
+    "name": "molnlycke",
     "population": 14400,
-    "latitude": 57.650,
-    "longitude": 12.130
+    "type": "city",
+    "x": -282.57868446144823,
+    "y": 787.1038890294058,
+    "longitude": 12.13,
+    "latitude": 57.65,
+    "county": "västra götaland",
+    "municipality": "härryda"
   },
   {
-    "name": "Avesta",
     "key": "Sweden-city-Avesta",
+    "name": "avesta",
     "population": 14300,
-    "latitude": 60.160,
-    "longitude": 16.180
+    "type": "city",
+    "x": -141.20701504990768,
+    "y": 617.3688918937428,
+    "longitude": 16.18,
+    "latitude": 60.16,
+    "county": "dalarna",
+    "municipality": "avesta"
   },
   {
-    "name": "Ljungby",
     "key": "Sweden-city-Ljungby",
+    "name": "ljungby",
     "population": 14300,
-    "latitude": 56.840,
-    "longitude": 13.940
+    "type": "city",
+    "x": -219.39776553925356,
+    "y": 839.3648979086815,
+    "longitude": 13.94,
+    "latitude": 56.84,
+    "county": "kronoberg",
+    "municipality": "ljungby"
   },
   {
-    "name": "Kinna",
     "key": "Sweden-city-Kinna",
+    "name": "kinna",
     "population": 14200,
-    "latitude": 57.500,
-    "longitude": 12.650
+    "type": "city",
+    "x": -264.42726024070726,
+    "y": 796.8689841588925,
+    "longitude": 12.65,
+    "latitude": 57.5,
+    "county": "västra götaland",
+    "municipality": "mark"
   },
   {
-    "name": "Staffanstorp",
     "key": "Sweden-city-Staffanstorp",
+    "name": "staffanstorp",
     "population": 14100,
-    "latitude": 55.650,
-    "longitude": 13.200
+    "type": "city",
+    "x": -245.22863846876965,
+    "y": 914.1304263433508,
+    "longitude": 13.2,
+    "latitude": 55.65,
+    "county": "null",
+    "municipality": "staffanstorp"
   },
   {
-    "name": "Tranas",
     "key": "Sweden-city-Tranas",
+    "name": "tranas",
     "population": 13900,
-    "latitude": 58.040,
-    "longitude": 14.970
+    "type": "city",
+    "x": -183.4439829481703,
+    "y": 761.5243457109723,
+    "longitude": 14.97,
+    "latitude": 58.04,
+    "county": "jönköping",
+    "municipality": "tranås"
   },
   {
-    "name": "Ludvika",
     "key": "Sweden-city-Ludvika",
+    "name": "ludvika",
     "population": 13800,
-    "latitude": 60.140,
-    "longitude": 15.180
+    "type": "city",
+    "x": -176.1136000897942,
+    "y": 618.7715203614994,
+    "longitude": 15.18,
+    "latitude": 60.14,
+    "county": "dalarna",
+    "municipality": "ludvika"
   },
   {
-    "name": "Arvika",
     "key": "Sweden-city-Arvika",
+    "name": "arvika",
     "population": 13700,
-    "latitude": 59.670,
-    "longitude": 12.590
+    "type": "city",
+    "x": -266.52165534310046,
+    "y": 651.4904313417774,
+    "longitude": 12.59,
+    "latitude": 59.67,
+    "county": "värmland",
+    "municipality": "arvika"
   },
   {
-    "name": "Nynashamn",
     "key": "Sweden-city-Nynashamn",
+    "name": "nynashamn",
     "population": 13500,
-    "latitude": 58.910,
-    "longitude": 17.950
+    "type": "city",
+    "x": -79.42235952930832,
+    "y": 703.4400421418477,
+    "longitude": 17.95,
+    "latitude": 58.91,
+    "county": "null",
+    "municipality": "stockholm"
   },
   {
-    "name": "Hoganas",
     "key": "Sweden-city-Hoganas",
+    "name": "hoganas",
     "population": 13500,
-    "latitude": 56.200,
-    "longitude": 12.550
+    "type": "city",
+    "x": -267.9179187446959,
+    "y": 879.8634547115917,
+    "longitude": 12.55,
+    "latitude": 56.2,
+    "county": "null",
+    "municipality": "null"
   },
   {
-    "name": "Balsta",
     "key": "Sweden-city-Balsta",
+    "name": "balsta",
     "population": 13400,
-    "latitude": 59.590,
-    "longitude": 17.490
+    "type": "city",
+    "x": -95.47938864765615,
+    "y": 657.0138239646512,
+    "longitude": 17.49,
+    "latitude": 59.59,
+    "county": "uppsala",
+    "municipality": "håbo"
   },
   {
-    "name": "Skoghall",
     "key": "Sweden-city-Skoghall",
+    "name": "skoghall",
     "population": 12800,
-    "latitude": 59.340,
-    "longitude": 13.480
+    "type": "city",
+    "x": -235.45479465760133,
+    "y": 674.1901689515103,
+    "longitude": 13.48,
+    "latitude": 59.34,
+    "county": "värmland",
+    "municipality": "hammarö"
   },
   {
-    "name": "Kumla",
     "key": "Sweden-city-Kumla",
+    "name": "kumla",
     "population": 12700,
-    "latitude": 59.130,
-    "longitude": 15.130
+    "type": "city",
+    "x": -177.85892934178855,
+    "y": 688.5208655245324,
+    "longitude": 15.13,
+    "latitude": 59.13,
+    "county": "örebro",
+    "municipality": "kumla"
   },
   {
-    "name": "Strangnas",
     "key": "Sweden-city-Strangnas",
+    "name": "strangnas",
     "population": 12400,
-    "latitude": 59.380,
-    "longitude": 17.020
+    "type": "city",
+    "x": -111.8854836164029,
+    "y": 671.4504751359136,
+    "longitude": 17.02,
+    "latitude": 59.38,
+    "county": "södermanland",
+    "municipality": "strängnäs"
   },
   {
-    "name": "Bollnas",
     "key": "Sweden-city-Bollnas",
+    "name": "bollnas",
     "population": 12300,
-    "latitude": 61.350,
-    "longitude": 16.390
+    "type": "city",
+    "x": -133.87663219153137,
+    "y": 532.3320198009801,
+    "longitude": 16.39,
+    "latitude": 61.35,
+    "county": "gävleborg",
+    "municipality": "bollnäs"
   },
   {
-    "name": "Vetlanda",
     "key": "Sweden-city-Vetlanda",
+    "name": "vetlanda",
     "population": 12200,
-    "latitude": 57.430,
-    "longitude": 15.080
+    "type": "city",
+    "x": -179.6042585937828,
+    "y": 801.412299582762,
+    "longitude": 15.08,
+    "latitude": 57.43,
+    "county": "jönköping",
+    "municipality": "vetlanda"
   },
   {
-    "name": "Finspang",
     "key": "Sweden-city-Finspang",
+    "name": "finspang",
     "population": 12200,
-    "latitude": 58.710,
-    "longitude": 15.780
+    "type": "city",
+    "x": -155.16964906586225,
+    "y": 716.9207147594648,
+    "longitude": 15.78,
+    "latitude": 58.71,
+    "county": "östergötland",
+    "municipality": "finspång"
   },
   {
-    "name": "Soderhamn",
     "key": "Sweden-city-Soderhamn",
+    "name": "soderhamn",
     "population": 12200,
-    "latitude": 61.310,
-    "longitude": 17.080
+    "type": "city",
+    "x": -109.79108851400963,
+    "y": 535.2423322815794,
+    "longitude": 17.08,
+    "latitude": 61.31,
+    "county": "gävleborg",
+    "municipality": "söderhamn"
   },
   {
-    "name": "Nybro",
     "key": "Sweden-city-Nybro",
+    "name": "nybro",
     "population": 12100,
-    "latitude": 56.750,
-    "longitude": 15.910
+    "type": "city",
+    "x": -150.63179301067703,
+    "y": 845.101542488746,
+    "longitude": 15.91,
+    "latitude": 56.75,
+    "county": "kalmar",
+    "municipality": "nybro"
   },
   {
-    "name": "Sala",
     "key": "Sweden-city-Sala",
+    "name": "sala",
     "population": 12000,
-    "latitude": 59.930,
-    "longitude": 16.600
+    "type": "city",
+    "x": -126.54624933315517,
+    "y": 633.4478747093922,
+    "longitude": 16.6,
+    "latitude": 59.93,
+    "county": "västmanland",
+    "municipality": "sala"
   },
   {
-    "name": "Ronneby",
     "key": "Sweden-city-Ronneby",
+    "name": "ronneby",
     "population": 11700,
-    "latitude": 56.210,
-    "longitude": 15.280
+    "type": "city",
+    "x": -172.6229415858055,
+    "y": 879.2358902412607,
+    "longitude": 15.28,
+    "latitude": 56.21,
+    "county": "blekinge",
+    "municipality": "ronneby"
   },
   {
-    "name": "Mjolby",
     "key": "Sweden-city-Mjolby",
+    "name": "mjolby",
     "population": 11600,
-    "latitude": 58.330,
-    "longitude": 15.130
+    "type": "city",
+    "x": -177.85892934178855,
+    "y": 742.322157335248,
+    "longitude": 15.13,
+    "latitude": 58.33,
+    "county": "östergötland",
+    "municipality": "mjölby"
   },
   {
-    "name": "Lindome",
     "key": "Sweden-city-Lindome",
+    "name": "lindome",
     "population": 10800,
-    "latitude": 57.560,
-    "longitude": 12.090
+    "type": "city",
+    "x": -283.9749478630437,
+    "y": 792.9677739310519,
+    "longitude": 12.09,
+    "latitude": 57.56,
+    "county": "västra götaland",
+    "municipality": "mölndal"
   },
   {
-    "name": "Skara",
     "key": "Sweden-city-Skara",
+    "name": "skara",
     "population": 10700,
-    "latitude": 58.380,
-    "longitude": 13.440
+    "type": "city",
+    "x": -236.85105805919682,
+    "y": 738.9955319654723,
+    "longitude": 13.44,
+    "latitude": 58.38,
+    "county": "västra götaland",
+    "municipality": "skara"
   },
   {
-    "name": "Oxelosund",
     "key": "Sweden-city-Oxelosund",
+    "name": "oxelosund",
     "population": 10700,
-    "latitude": 58.670,
-    "longitude": 17.130
+    "type": "city",
+    "x": -108.04575926201528,
+    "y": 719.6075512615871,
+    "longitude": 17.13,
+    "latitude": 58.67,
+    "county": "södermanland",
+    "municipality": "null"
   },
   {
-    "name": "Fagersta",
     "key": "Sweden-city-Fagersta",
+    "name": "fagersta",
     "population": 10600,
-    "latitude": 60.000,
-    "longitude": 15.810
+    "type": "city",
+    "x": -154.1224515146656,
+    "y": 628.5661149144153,
+    "longitude": 15.81,
+    "latitude": 60,
+    "county": "västmanland",
+    "municipality": "fagersta"
   },
   {
-    "name": "Timra",
     "key": "Sweden-city-Timra",
+    "name": "timra",
     "population": 10200,
-    "latitude": 62.480,
-    "longitude": 17.320
+    "type": "city",
+    "x": -101.4135081044368,
+    "y": 448.5359913470056,
+    "longitude": 17.32,
+    "latitude": 62.48,
+    "county": "västernorrland",
+    "municipality": "sundsvall"
   }
 ]

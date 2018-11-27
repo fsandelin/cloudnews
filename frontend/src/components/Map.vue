@@ -23,18 +23,19 @@
           v-bind:d="county.path"
           v-on:click="countyClick(county)">
         </path>
-        <circle
-          class="city"
-          v-for="city in cities"
-          v-bind:key="city.key"
-          v-show="city.active"
-          v-bind:cx="XYFromLatLong(city.latitude, city.longitude)[0]+'px'"
-          v-bind:cy="XYFromLatLong(city.latitude, city.longitude)[1]+'px'"
-          v-bind:r="1+'px'">
-        </circle>
       </g>
+      <mapCities>
+      </mapCities>
       <notifications>
       </notifications>
+      <rect
+        v-bind:key="'abc123'"
+        v-bind:ref="'abc123'"
+        v-bind:x="rectX+'px'"
+        v-bind:y="rectY+'px'"
+        v-bind:width="1+'px'"
+        v-bind:height="1+'px'">
+      </rect>
     </g>
   </svg>
 </template>
@@ -42,22 +43,61 @@
 <script>
 import * as d3 from "d3";
 import Notifications from './Notifications'
+import MapCities from './MapCities'
 import { mapZoom, transitionToCounty, initialZoom, sizeOfCurrentWindow, XYFromLatLong} from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
+import PISP from "point-in-svg-polygon";
 
 export default {
   name: "d3map",
   components: {
-    'notifications': Notifications
+    'notifications': Notifications,
+    'mapCities': MapCities
   },
   data () {
     return {
-      mapZoom: mapZoom(this.setZoomValue)
+      mapZoom: mapZoom(this.setZoomValue),
+      rectX: 0,
+      rectY: 0
     }
   },
   mounted: function() {
     d3.select(".mapContainer").call(this.mapZoom).on("dblclick.zoom", () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))));
     initialZoom(this.mapZoom);
+
+    let countriesString = "[";
+    for (let city of this.cities) {
+      let xy = this.XYFromLatLong(city.latitude, city.longitude);
+      let x = xy[0];
+      let y = xy[1];
+      let cityCounty = null;
+      let cityMun = null;
+      // for (let mun of this.municipalities) {
+      //   if (PISP.isInside([x, y], mun.path)) {
+      //     cityMun = mun.name;
+      //   }
+      // }
+      // for (let county of this.counties) {
+      //   if (PISP.isInside([x, y], county.path)) {
+      //     cityCounty = county.name;
+      //   }
+      // }
+      countriesString += 
+      "\t{\n" + 
+      "\t\t\"key\": \""+city.key+"\",\n" + 
+      "\t\t\"name\": \""+city.name+"\",\n" + 
+      "\t\t\"population\": "+city.population+",\n" + 
+      "\t\t\"type\": \"city\",\n" + 
+      "\t\t\"x\": "+x+",\n" + 
+      "\t\t\"y\": "+y+",\n" + 
+      "\t\t\"longitude\": "+city.longitude+",\n" + 
+      "\t\t\"latitude\": "+city.latitude+",\n" + 
+      "\t\t\"county\": \""+cityCounty+"\",\n" + 
+      "\t\t\"municipality\": \""+cityMun+"\"\n" + 
+      "\t},\n";
+      console.log(city.name);
+    }
+    console.log(countriesString);
   },
   computed: {
     ...mapGetters([

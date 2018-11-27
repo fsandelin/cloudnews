@@ -49,8 +49,7 @@ export const longTransitionToCounty = (mapZoom, county) => {
 
 export const initialZoom = (mapZoom) => {
   const size = sizeOfCurrentWindow();
-  const xy = XYFromLatLong(62.86, 23);
-  console.log(xy);
+  const xy = XYFromLatLong(62.86, 23); //Some long and latitude somewhere to the right of sweden
   const x = xy[0];
   const y = xy[1];
   d3.select(".mapContainer").call(mapZoom.translateTo, x,y);
