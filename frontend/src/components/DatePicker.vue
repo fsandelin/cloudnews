@@ -5,12 +5,14 @@
       <i class="material-icons">check</i>
 
       <div class="year-month flex-row">
-        <i class="material-icons previous">navigate_next</i>
+        <i v-on:click="moveCalendarBackwards"
+           class="material-icons previous">navigate_next</i>
         <p class="flex-col">
           <span class="year">{{ currentYear }}</span>
           <span class="month">{{ numToMonth(currentMonth) }}</span>
         </p>
-        <i class="material-icons next">navigate_next</i>
+        <i v-on:click="moveCalendarForwards"
+           class="material-icons next">navigate_next</i>
       </div>
 
       <i class="material-icons">cancel</i>
@@ -62,61 +64,16 @@
 
 <script>
 import { months as m, weekDays as wd } from '../store/constants';
-
-const tmp_dates = [
-  { year: 2019, month: m.JANUARY, day: 29 },
-  { year: 2019, month: m.JANUARY, day: 30 },
-  { year: 2019, month: m.JANUARY, day: 31 },
-  { year: 2019, month: m.FEBRUARY, day: 1 },
-  { year: 2019, month: m.FEBRUARY, day: 2 },
-  { year: 2019, month: m.FEBRUARY, day: 3 },
-  { year: 2019, month: m.FEBRUARY, day: 4 },
-  { year: 2019, month: m.FEBRUARY, day: 5 },
-  { year: 2019, month: m.FEBRUARY, day: 6 },
-  { year: 2019, month: m.FEBRUARY, day: 7 },
-  { year: 2019, month: m.FEBRUARY, day: 8 },
-  { year: 2019, month: m.FEBRUARY, day: 9 },
-  { year: 2019, month: m.FEBRUARY, day: 10 },
-  { year: 2019, month: m.FEBRUARY, day: 11 },
-  { year: 2019, month: m.FEBRUARY, day: 12 },
-  { year: 2019, month: m.FEBRUARY, day: 13 },
-  { year: 2019, month: m.FEBRUARY, day: 14 },
-  { year: 2019, month: m.FEBRUARY, day: 15 },
-  { year: 2019, month: m.FEBRUARY, day: 16 },
-  { year: 2019, month: m.FEBRUARY, day: 17 },
-  { year: 2019, month: m.FEBRUARY, day: 18 },
-  { year: 2019, month: m.FEBRUARY, day: 19 },
-  { year: 2019, month: m.FEBRUARY, day: 20 },
-  { year: 2019, month: m.FEBRUARY, day: 21 },
-  { year: 2019, month: m.FEBRUARY, day: 22 },
-  { year: 2019, month: m.FEBRUARY, day: 23 },
-  { year: 2019, month: m.FEBRUARY, day: 24 },
-  { year: 2019, month: m.FEBRUARY, day: 25 },
-  { year: 2019, month: m.FEBRUARY, day: 26 },
-  { year: 2019, month: m.FEBRUARY, day: 27 },
-  { year: 2019, month: m.FEBRUARY, day: 28 },
-  { year: 2019, month: m.MARCH, day: 1 },
-  { year: 2019, month: m.MARCH, day: 2 },
-  { year: 2019, month: m.MARCH, day: 3 },
-  { year: 2019, month: m.MARCH, day: 4 },
-  { year: 2019, month: m.MARCH, day: 5 },
-  { year: 2019, month: m.MARCH, day: 6 },
-  { year: 2019, month: m.MARCH, day: 7 },
-  { year: 2019, month: m.MARCH, day: 8 },
-  { year: 2019, month: m.MARCH, day: 9 },
-  { year: 2019, month: m.MARCH, day: 10 },
-  { year: 2019, month: m.MARCH, day: 11 }
-]
+import { numToMonth, getDaysForMonth, getNumArrayBetweenNums } from '../store/helpers';
 
 export default {
   name: "datepicker",
   data () {
     return {
-      currentYear: 2018,
-      currentMonth: 1,
+      currentYear: new Date().getFullYear(),
+      currentMonth: new Date().getMonth(),
       weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
       weekNumbers: [5, 6, 7, 8, 9, 10],
-      dates: [ ...tmp_dates ]
     }
   },
   computed: {
@@ -125,42 +82,51 @@ export default {
       return this.weekNumbers.map((_, i) => {
         return dates.slice(i*7, i*7+7)
       })
-    }
+    },
   },
   methods: {
-    numToMonth(num) {
-      return m[Object.keys(m)[num]]
-    },
-    getDaysForMonth(year, month) {
-      return new Date(year, month+1, 0).getDate()
-    },
-    getNumArrayBetweenNums(start, end) {
-      let arr = []
-      for (let i = start; i < end; i++) {
-        arr = [ ...arr, i]
-      }
-      return arr
-    },
     getDaysToDisplay() {
-      const daysForCurrentMonth = this.getDaysForMonth(this.currentYear, this.currentMonth)
+      const daysForCurrentMonth = getDaysForMonth(this.currentYear, this.currentMonth)
 
-      const currentDaysToFill = this.getNumArrayBetweenNums(1, daysForCurrentMonth+1)
+      const currentDaysToFill = getNumArrayBetweenNums(1, daysForCurrentMonth+1)
         .map(i => ({ year: this.currentYear, month: this.currentMonth, day: i }))
 
-      const weekDay = new Date(this.currentYear, this.currentMonth, 1).getDay()-1;
-      const numPreviousDaysToFill = weekDay;
-      const daysForPreviousMonth = this.getDaysForMonth(this.currentYear, this.currentMonth-1) // if january --> previous year instead
+      const weekDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      const numPreviousDaysToFill = weekDay === 0 ? 7 : weekDay;
 
-      const previousDaysToFill = this.getNumArrayBetweenNums(daysForPreviousMonth-numPreviousDaysToFill+1, daysForPreviousMonth+1)
+      const daysForPreviousMonth = this.currentMonth === 0
+        ? getDaysForMonth(this.currentYear-1, this.currentMonth+11)
+        : getDaysForMonth(this.currentYear, this.currentMonth-1)
+
+      const previousDaysToFill = getNumArrayBetweenNums(daysForPreviousMonth-numPreviousDaysToFill+2, daysForPreviousMonth+1)
         .map(i => ({ year: this.currentYear, month: this.currentMonth-1, day: i }))
 
       const TOTAL_DAYS_TO_SHOW = 42;
       const numNextDaysToFill = TOTAL_DAYS_TO_SHOW - (daysForCurrentMonth+numPreviousDaysToFill)
 
-      const nextDaysToFill = this.getNumArrayBetweenNums(1, numNextDaysToFill+1)
+      const nextDaysToFill = getNumArrayBetweenNums(1, numNextDaysToFill+1)
         .map(i => ({ year: this.currentYear, month: this.currentMonth+1, day: i }))
 
       return [ ...previousDaysToFill, ...currentDaysToFill, ...nextDaysToFill ]
+    },
+    moveCalendarForwards() {
+      if (this.currentMonth === 11) {
+        this.currentYear++
+        this.currentMonth = 0
+      } else {
+        this.currentMonth++
+      }
+    },
+    moveCalendarBackwards() {
+      if (this.currentMonth === 0) {
+        this.currentYear--
+        this.currentMonth = 11
+      } else {
+        this.currentMonth--
+      }
+    },
+    numToMonth: function (num) {
+      return numToMonth(num)
     }
   }
 }
