@@ -3,7 +3,7 @@
 
 #date-picker {
   width: 300px;
-  height: 250px;
+  height: 275px;
   margin: 20px;
 
   .header {
@@ -38,8 +38,56 @@
 
   .calendar {
     flex: 1;
+    width: 240px;
+    margin: 0 auto;
+
+    .week-days {
+      height: 25px;
+
+      color: $darkgrey;
+
+      .day {
+        width: 30px;
+        height: 100%;
+      }
+    }
+
+    .wrapper {
+      flex: 1;
+
+      .week-numbers {
+        width: 30px;
+        color: $lightgrey;
+
+        .week {
+          flex: 1;
+        }
+      }
+
+      .days {
+        flex: 1;
+        color: white;
+
+        .row {
+          height: 25px;
+
+          .day {
+            flex: 1;
+
+            &.current-month {
+              color: $darkblue;
+            }
+
+            &:not(.current-month) {
+              color: $superlightblue;
+            }
+
+          }
+        }
+      }
+    }
   }
   .footer {
-    height: 30px;
+    height: 50px;
   }
 }
