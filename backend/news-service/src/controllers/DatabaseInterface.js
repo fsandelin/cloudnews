@@ -15,15 +15,33 @@ function pushArticles(service, articles, callback) {
     }
     const db = client.db(dbName);
     const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
-    db.collection(collectionName).insertMany(articles, (err, res) => {
-      if (err) {
-        console.log('Got an error in insertMany');
-        callback(error);
-        return;
+    db.listCollections({}, { nameOnly: true }).toArray((error, docs) => {
+      if (docs.indexOf(collectionName) > -1) {
+        db.collection(collectionName).insertMany(articles, (err, res) => {
+          if (err) {
+            console.log('Got an error in insertMany 1');
+            callback(error);
+            return;
+          }
+          console.log(`Articles added to database collection ${collectionName}`);
+          console.log(articles);
+          callback();
+        });
+      } else {
+        db.createCollection(collectionName, {}, (err, collection) => {
+          collection.createIndex({ url: 1 }, { unique: true });
+          collection.insertMany(articles, (errr, res) => {
+            if (err) {
+              console.log('Got an error in insertMany 2');
+              callback(error);
+            } else {
+              console.log(`Articles added to database collection ${collectionName}`);
+              console.log(articles);
+              callback();
+            }
+          });
+        });
       }
-      console.log(`Articles added to database collection ${collectionName}`);
-      console.log(articles);
-      callback();
     });
   });
 }
