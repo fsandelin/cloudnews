@@ -1,19 +1,16 @@
 <template>
-  <div id="date-picker" class="full-shadow flex-centering">
-    <div class="header flex-centering">
-
-      <div class="year-month flex-centering">
-        <i class="material-icons previous">
-          navigate_next
-        </i>
-        <p>
-          <span>February</span>
-          <span>2019</span>
-        </p>
-        <i class="material-icons next">
-          navigate_next
-        </i>
-      </div>
+  <div id="date-picker" class="full-shadow flex-col">
+    <div class="header flex-row">
+      <i class="material-icons previous">
+        navigate_next
+      </i>
+      <p class="flex-col">
+        <span>2019</span>
+        <span>February</span>
+      </p>
+      <i class="material-icons next">
+        navigate_next
+      </i>
     </div>
 
     <div class="calendar">

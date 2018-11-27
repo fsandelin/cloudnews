@@ -10,26 +10,9 @@
     height: 50px;
     color: $darkgreen;
 
-    &.flex-centering {
-      flex-direction: row;
-    }
-
-    .year-month {
-      &.flex-centering {
-        flex-direction: row;
-      }
-      i {
-        margin: auto 0;
-      }
-      .previous {
-        transform: scale(-1, 1);
-      }
-
-      p {
-        span {
-          display: block;
-        }
-      }
+    i {
+      background-color: red;
+      margin: auto 0;
     }
   }
   .calendar {

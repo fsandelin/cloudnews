@@ -29,9 +29,16 @@
   border-bottom: 1px solid $lightgrey;
 }
 
-.flex-centering {
+.flex-col, .flex-row {
   display: flex;
   justify-content: center;
   align-content: center;
+}
+
+.flex-col {
   flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
 }
