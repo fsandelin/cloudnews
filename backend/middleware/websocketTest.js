@@ -4,7 +4,7 @@ const readline = require('readline');
 
 const hostname = process.env.WS_HOST;
 const port = process.env.WS_PORT;
-const services = '{"services": ["tt"]}';
+const services = '{"services": ["svt", "tt"]}';
 const bServices = Buffer.from(services).toString('base64');
 const socket = new io(`http://${hostname}:${port}/?services=${bServices}`);
 
@@ -27,7 +27,7 @@ socket.on('connect', () => {
   readStuffs();
 });
 socket.on('news', (data) => {
-  console.log(`Has received the following news items: ${data.title}`);
+  console.log(`Has received the following news items: ${JSON.stringify(data)}`);
 });
 socket.on('news_list', (data) => {
   console.log(`Has received the following news items: ${data[0].title}`);
