@@ -1,7 +1,22 @@
 <template>
   <div id="date-picker" class="full-shadow flex-col">
-    <dpheader></dpheader>
-    <dpcalendar></dpcalendar>
+    <dpheader
+      v-bind:moveCalendarBackwards="moveCalendarBackwards"
+      v-bind:currentYear="currentYear"
+      v-bind:numToMonth="numToMonth"
+      v-bind:currentMonth="currentMonth"
+      v-bind:moveCalendarForwards="moveCalendarForwards">
+    </dpheader>
+    <dpcalendar
+      v-bind:weekDays="weekDays"
+      v-bind:weekNumbers="weekNumbers"
+      v-bind:daysByRow="daysByRow"
+      v-bind:currentMonth="currentMonth"
+      v-bind:selectDate="selectDate"
+      v-bind:startDate="startDate"
+      v-bind:endDate="endDate"
+      v-bind:dateBetweenStartAndEnd="dateBetweenStartAndEnd">
+    </dpcalendar>
     <dpfooter></dpfooter>
   </div>
 </template>
@@ -20,7 +35,7 @@ export default {
       currentYear: new Date().getFullYear(),
       currentMonth: new Date().getMonth(),
       weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
-      weekNumbers: [5, 6, 7, 8, 9, 10],
+      weekNumbers: [5, 6, 7, 8, 9, 10], // TODO: these shouldnt be hard-coded
       startDate: null,
       endDate: null
     }
@@ -33,7 +48,31 @@ export default {
       })
     },
   },
+  components: {
+    'dpheader': DatePickerHeader,
+    'dpcalendar': DatePickerCalendar,
+    'dpfooter': DatePickerFooter
+  },
   methods: {
+    moveCalendarForwards() {
+      if (this.currentMonth === 11) {
+        this.currentYear++
+        this.currentMonth = 0
+      } else {
+        this.currentMonth++
+      }
+    },
+    moveCalendarBackwards() {
+      if (this.currentMonth === 0) {
+        this.currentYear--
+        this.currentMonth = 11
+      } else {
+        this.currentMonth--
+      }
+    },
+    numToMonth: function (num) {
+      return numToMonth(num)
+    },
     getDaysToDisplay() {
       const daysForCurrentMonth = getDaysForMonth(this.currentYear, this.currentMonth)
 
@@ -58,22 +97,6 @@ export default {
 
       return [ ...previousDaysToFill, ...currentDaysToFill, ...nextDaysToFill ]
     },
-    moveCalendarForwards() {
-      if (this.currentMonth === 11) {
-        this.currentYear++
-        this.currentMonth = 0
-      } else {
-        this.currentMonth++
-      }
-    },
-    moveCalendarBackwards() {
-      if (this.currentMonth === 0) {
-        this.currentYear--
-        this.currentMonth = 11
-      } else {
-        this.currentMonth--
-      }
-    },
     selectDate(date) {
       if (this.startDate === date) {
         this.startDate = this.endDate
@@ -86,9 +109,6 @@ export default {
         this.startDate = date
       }
       else if (!this.dateIsBefore(date, this.startDate)) this.endDate = date
-    },
-    numToMonth: function (num) {
-      return numToMonth(num)
     },
     dateIsBefore(date, comparedTo) {
       if (date === null || comparedTo === null) return false
@@ -104,11 +124,6 @@ export default {
     dateBetweenStartAndEnd(date) {
       return this.dateIsBefore(this.startDate, date) && this.dateIsBefore(date, this.endDate)
     }
-  },
-  components: {
-    'dpheader': DatePickerHeader,
-    'dpcalendar': DatePickerCalendar,
-    'dpfooter': DatePickerFooter
   }
 }
 </script>

@@ -20,37 +20,9 @@
 </template>
 
 <script>
-import { numToMonth } from '../store/helpers';
-
 export default {
   name: "datepickerheader",
-  data () {
-    return {
-      currentYear: new Date().getFullYear(),
-      currentMonth: new Date().getMonth(),
-    }
-  },
-  methods: {
-    moveCalendarForwards() {
-      if (this.currentMonth === 11) {
-        this.currentYear++
-        this.currentMonth = 0
-      } else {
-        this.currentMonth++
-      }
-    },
-    moveCalendarBackwards() {
-      if (this.currentMonth === 0) {
-        this.currentYear--
-        this.currentMonth = 11
-      } else {
-        this.currentMonth--
-      }
-    },
-    numToMonth: function (num) {
-      return numToMonth(num)
-    }
-  }
+  props: ['moveCalendarBackwards', 'currentYear', 'numToMonth', 'currentMonth', 'moveCalendarForwards']
 }
 </script>
 
