@@ -13,7 +13,8 @@
           v-for="municipality in this.municipalities"
           v-bind:key="municipality.key"
           v-show="municipality.active"
-          v-bind:d="municipality.path">
+          v-bind:d="municipality.path"
+          v-on:click="foo(municipality.name)">
         </path>
         <path
           class="county"
