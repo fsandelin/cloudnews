@@ -175,6 +175,9 @@ def check_start_page(until_, region, page):
     #print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", until_)
     found = False
     value = -1
+    if len(news_list) == 0: 
+        print("its empty")
+        return(found, value, page, "start")
     if check_time(news_list[FIRST], BEFORE, until_):
         found = False
         value = -1
@@ -194,6 +197,9 @@ def check_end_page(from_, region, page):
     #print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", from_)
     found = False
     value = 1
+    if len(news_list) == 0: 
+        print("its empty")
+        return(found, value, page, "end")
     if check_time(news_list[LAST], AFTER, from_):
         found = False
         value = 1
@@ -240,7 +246,7 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
 
 def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
 
-    workers = 20
+    workers = 5
 
     start_obj = get_api_object(region = region)
     items = start_obj['auto']['pagination']['totalAvailableItems']
@@ -319,7 +325,7 @@ def get_news_threads(from_, until_, region, page_nmr):
     return filter(lambda x: check_time_range(x, from_, until_), news_list)
 
 async def news_threads(from_, until_, region, page_range):
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(page_range)) as executor:
         loop = asyncio.get_event_loop()
         futures = [
             loop.run_in_executor(
@@ -357,7 +363,6 @@ def get_news_selected_regions_threads(from_, until_, regions=used_regions):
     #for region in regions:
      #   selected_news += get_news_region_thread(from_, until_, region)
     #return selected_news
-
 
 def get_news_region(from_, until_, region, use_web = False):
 
