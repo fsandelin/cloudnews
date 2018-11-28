@@ -1,4 +1,3 @@
-import store from './index.js';
 import * as d3 from "d3";
 
 export const sizeOfCurrentWindow = () => { 

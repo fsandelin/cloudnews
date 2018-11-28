@@ -8,7 +8,8 @@ const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
   counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
-  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: x.population > 200000 })),
+  mapCities: [],
   selectedCounty: null,
   previousSelectedCounty: null,
 }
@@ -26,6 +27,9 @@ const getters = {
   cities: state => {
     return state.cities;
   },
+  mapCities: state => {
+    return state.mapCities;
+  },
   selectedCounty: state => {
     return state.selectedCounty;
   },
@@ -39,6 +43,7 @@ const getters = {
 
 const actions = {
   selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
+  setActiveMapCitiesBasedOnPopulation: ({ commit }, population) => commit('setActiveMapCitiesBasedOnPopulation', population),
   countyClick: ({ dispatch }, county) => {
     dispatch('selectCounty', county.name);
     dispatch('setActiveNewsItemId', null);
@@ -68,6 +73,9 @@ const mutations = {
   toggleActive(state) {
     state.selectedCounty = null
   },
+  setActiveMapCitiesBasedOnPopulation(state, population) {
+    state.mapCities = state.cities.filter(city => city.population > population)
+  }
 }
 
 export default {
