@@ -131,29 +131,34 @@ export default {
       }
     },
     selectDate(date) {
-      // TODO:
-      // if before startDate --> change startDate to endDate and set date to startDate
-      // if after endDate --> set endDate to date
-      // if between startDate and endDate --> set endDate to date
-      if (date === this.startDate) {
-        this.startDate = null
-      } else if (date === this.endDate) {
+      if (this.startDate === date) {
+        this.startDate = this.endDate
         this.endDate = null
-      } else if (this.startDate === null) {
-        this.startDate = date
-      } else {
-        this.endDate = date
       }
+      else if (this.endDate === date) this.endDate = null
+      else if (this.startDate === null && this.endDate === null) this.startDate = date
+      else if (this.dateIsBefore(date, this.startDate)) {
+        if (this.endDate === null) this.endDate = this.startDate
+        this.startDate = date
+      }
+      else if (!this.dateIsBefore(date, this.startDate)) this.endDate = date
     },
     numToMonth: function (num) {
       return numToMonth(num)
     },
+    dateIsBefore(date, comparedTo) {
+      if (date === null || comparedTo === null) return false
+      if (date.year > comparedTo.year) return false
+      if (date.year < comparedTo.year) return true
+
+      if (date.month > comparedTo.month) return false
+      if (date.month < comparedTo.month) return true
+
+      if (date.day > comparedTo.day) return false
+      if (date.day < comparedTo.day) return true
+    },
     dateBetweenStartAndEnd(date) {
-      // TODO: if no end date or start date --> check hover
-      return date !== null && this.startDate !== null && this.endDate !== null &&
-             date.year <= this.endDate.year && date.year >= this.startDate.year &&
-             date.month <= this.endDate.month && date.month >= this.startDate.month &&
-             date.day < this.endDate.day && date.day > this.startDate.day
+      return this.dateIsBefore(this.startDate, date) && this.dateIsBefore(date, this.endDate)
     }
   }
 }
