@@ -1,4 +1,4 @@
-import { mapGetters, mapActions } from 'vuex';
+import store from './index.js';
 import * as d3 from "d3";
 
 export const sizeOfCurrentWindow = () => { 
@@ -12,14 +12,16 @@ export const sizeOfCurrentWindow = () => {
   return size;
 }
 
+let currentZoom = undefined;
+
 export const mapZoom = (setZoomValue) => {
   return d3
     .zoom()
     .scaleExtent([0.2, 50])
     .on("zoom", () => {
       d3.select(".map").attr("transform", d3.event.transform);
-    
-      if (d3.event.transform.k !== this.zoomValue) {
+      if (d3.event.transform.k !== currentZoom) {
+        currentZoom = d3.event.transform.k;
         setZoomValue(d3.event.transform.k);
       }
     })
@@ -41,7 +43,7 @@ export const longTransitionToCounty = (mapZoom, county) => {
   const size = sizeOfCurrentWindow()
   const newZoomValue = 1.25*size;
   const xOffset = (100*(size/newZoomValue))
-  d3.select(".mapContainer").transition().duration(350).call(mapZoom.scaleTo, 1)
+  d3.select(".mapContainer").transition().duration(350).call(mapZoom.scaleTo, 0.6)
                             .transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
                             .transition().duration(350).call(mapZoom.scaleTo, newZoomValue);
                  
