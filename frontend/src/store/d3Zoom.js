@@ -33,7 +33,6 @@ export const transitionToCounty = (mapZoom, county) => {
   const newZoomValue = 1.25*size;
   const scaleMultiplier = 358/Math.max(county.width, county.height);
   const xOffset = (100*(size*(1/scaleMultiplier)/newZoomValue))
-  console.log(scaleMultiplier);
   d3.select(".mapContainer").transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
                             .transition().duration(200).call(mapZoom.scaleTo, newZoomValue*scaleMultiplier);
 }
