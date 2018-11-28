@@ -51,10 +51,9 @@ export default {
   watch: {
     zoomValue: function() {
       const zoom = this.zoomValue;
-      //console.log(zoom);
       this.fontSize = Math.min(12, 12/zoom);
       this.radius = Math.min(3, 4/zoom);
-      
+
       if (this.passedValue(0, 2, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(250000)
       } else if (this.passedValue(2, 3, this.previousZoomValue, zoom)) {
