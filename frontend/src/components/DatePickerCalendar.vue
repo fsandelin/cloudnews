@@ -1,20 +1,51 @@
 <template>
-  <div id="date-picker" class="full-shadow flex-col">
-    <dpheader></dpheader>
-    <dpcalendar></dpcalendar>
-    <dpfooter></dpfooter>
-  </div>
+    <div class="calendar flex-col">
+      <div class="week-days flex-row">
+        <div class="day flex-col"></div>
+        <div v-for="weekDay in weekDays"
+             v-bind:key="weekDay"
+             class="day flex-col">
+          {{ weekDay[0] }}
+        </div>
+      </div>
+      <div class="wrapper flex-row">
+        <div class="week-numbers flex-col">
+          <div v-for="weekNumber in weekNumbers"
+              v-bind:key="weekNumber"
+              class="week flex-col">
+            {{ weekNumber }}
+          </div>
+        </div>
+        <div class="days">
+
+          <div v-for="row in daysByRow"
+               v-bind:key="daysByRow.indexOf(row)"
+               class="row flex-row">
+
+            <div v-for="date in row"
+                 v-bind:key="date.day+date.month+date.year"
+                 v-on:click="selectDate(date)"
+                 class="day flex-col"
+                 v-bind:class="{ 'current-month': date.month === currentMonth,
+                  active: date === startDate || date === endDate,
+                  'in-between': dateBetweenStartAndEnd(date) }">
+                {{ date.day }}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
 </template>
 
 <script>
 import { months as m, weekDays as wd } from '../store/constants';
 import { numToMonth, getDaysForMonth, getNumArrayBetweenNums } from '../store/helpers';
-import DatePickerHeader from './DatePickerHeader';
-import DatePickerCalendar from './DatePickerCalendar';
-import DatePickerFooter from './DatePickerFooter';
 
 export default {
-  name: "datepicker",
+  name: "datepickercalendar",
   data () {
     return {
       currentYear: new Date().getFullYear(),
@@ -104,14 +135,9 @@ export default {
     dateBetweenStartAndEnd(date) {
       return this.dateIsBefore(this.startDate, date) && this.dateIsBefore(date, this.endDate)
     }
-  },
-  components: {
-    'dpheader': DatePickerHeader,
-    'dpcalendar': DatePickerCalendar,
-    'dpfooter': DatePickerFooter
   }
 }
 </script>
 
-<style src="../styles/DatePicker.scss" lang="scss" scoped></style>
+<style src="../styles/DatePickerCalendar.scss" lang="scss" scoped></style>
 <style src="../styles/Commons.scss" lang="scss" scoped></style>
