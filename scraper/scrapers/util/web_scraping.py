@@ -3,8 +3,9 @@ from flask import jsonify
 import pytz, json
 utc=pytz.UTC
 
+import time
 from dateutil import parser
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, date, timedelta
 
 try:
     # For Python 3.0 and later
@@ -13,10 +14,56 @@ except ImportError:
     # Fall back to Python 2's urllib2
     from urllib2 import urlopen
 
+import asyncio
+import concurrent.futures
+
 lan = []
 kommuner = []
 kommun_lan = []
 tatort = []
+
+wiki = "https://sv.wikipedia.org"
+
+
+def get_city(city):
+    city_content = urlopen(wiki + city['url']).read()
+    city_soup = BeautifulSoup(city_content, features='lxml')
+    if city_soup is not None:
+        city_geo = city_soup.find(attrs={"class" : "geo-dms"})
+        if city_geo is not None:
+            city_long = city_geo.find(attrs={"class" : "longitude"})
+            city_lat = city_geo.find(attrs={"class" : "latitude"})
+            if city_long is not None:
+                city['longitude'] = city_long.text
+            if city_lat is not None:
+                city['latitude'] = city_lat.text
+        #print(city['name'])
+
+    
+
+async def get_cities(cities):
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
+
+        loop = asyncio.get_event_loop()
+        futures = [
+            loop.run_in_executor(
+                executor, 
+                get_city,
+                city
+            )
+            for city in cities
+        ]
+
+        for city in await asyncio.gather(*futures):
+            pass
+
+
+
+def run_threads(data):
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(get_cities(data))
+
 
 def get_wiki_table(url, filename, data_names, index):
     
@@ -31,44 +78,81 @@ def get_wiki_table(url, filename, data_names, index):
     
 
     table_body = table.find('tbody')
-    rows = table_body.find_all('tr')
+    #scripts = table_body.find('span')
 
+
+    rows = table_body.find_all('tr')
+    #[s.extract() for s in rows.find('script')]
+    #scripts = rows.find_all('span')
+    #scripts.extract()
+    i = 0
     for row in rows:
         cols = row.find_all('td')
+        if len(cols) is 0:
+            continue
+        for col in cols:
+            s = col.find('span')
+            if s is not None:
+                s.extract()
+        if len(cols) is not 0:
+            url = cols[0].find('a')['href']
+            #print(url)
+
         cols = [ele.text.strip() for ele in cols]
-        data.append([ele for ele in cols if ele]) 
+        city = {}
+        city['key'] = "city-" + cols[0] + "-" + cols[1]
+        city['name'] = cols[0]
+        city['municipality'] = cols[1]
+        city['population'] = cols[2]
+        city['url'] = url
+        #print(wiki + url)
+
+        #print(city_long, city_lat)
+        
+        #data.append([ele for ele in cols if ele])
+        #print(str(i) + "/" + str(len(rows)))
+        #i = i + 1
+        data.append(city)
     
-    data = [ele[index[0]:index[1]] for ele in data[1:]]
+    start_time = time.time()
+    run_threads(data)
+    print(data[1])
+    print("--- %s seconds ---" % (time.time() - start_time))
+    #data = [ele[index[0]:5] for ele in data[1:]]
 
-    group_names = set()
+    # group_names = set()
 
-    for ele in data:
-        group_names.add(ele[1])
+    # for ele in data:
+    #     group_names.add(ele[1])
 
     
     f = open(filename, "w")
 
-    f.write(data_names[1] + " = [")
-    first = True
-    for ele in group_names:
-        if first:
-            first = False
-        else:
-            f.write(",\n")
-        f.write("\"" + ele + "\"")
-    f.write("]\n")
+    f.write(json.dumps(data))
+    #f.write(data_names[0] + " = [")
 
-    f.write(data_names[0] + " = [")
-    first = True
-    for ele in data:
-        if first:
-            first = False
-        else:
-            f.write(",\n")
-        f.write(str(ele))
-    f.write("]\n")
+    # # f.write(data_names[1] + " = [")
+    # # first = True
+    # # for ele in group_names:
+    # #     if first:
+    # #         first = False
+    # #     else:
+    # #         f.write(",\n")
+    # #     f.write("\"" + ele + "\"")
+    # # f.write("]\n")
 
-    f.close
+    # f.write(data_names[0] + " = [")
+    # print(data[0])
+    # first = True
+    # for ele in data:
+    #     if first:
+    #         first = False
+    #     else:
+    #         f.write(",\n")
+    #     f.write(str(ele))
+    # f.write("]\n")
+
+    # f.close
 
 
 def add_mun_lan():
@@ -103,12 +187,17 @@ def add_city_mun():
         f.write("],\n")
     f.write("}")
 
+def get_json():
+    f = open("tatort_info.json", "r")
+    json_obj = json.loads(f.read())
+    print(json_obj[1000])
 
 def main():
     url2 = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_t%C3%A4torter"
     url = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_kommuner"
     apan = "http://kodapan.se/geodata/data/2015-06-26/platser.osm.xml"
-    get_wiki_table(url, "kommun_lan.py", ["kommun_lan", "lan"], [1,3])
+    #get_wiki_table(url2, "tatort_info.py", ["tatort", "lan"], [0,2])
+    get_json()
 
 if __name__ == "__main__":
     main()
