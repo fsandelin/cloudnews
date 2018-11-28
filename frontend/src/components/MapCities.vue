@@ -51,18 +51,21 @@ export default {
   watch: {
     zoomValue: function() {
       const zoom = this.zoomValue;
+      //console.log(zoom);
       this.fontSize = Math.min(12, 12/zoom);
       this.radius = Math.min(3, 4/zoom);
-
-      if (this.passedValue(2, this.previousZoomValue, zoom)) {
+      
+      if (this.passedValue(0, 2, this.previousZoomValue, zoom)) {
+        this.setActiveMapCitiesBasedOnPopulation(250000)
+      } else if (this.passedValue(2, 3, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(150000)
-      } else if (this.passedValue(3, this.previousZoomValue, zoom)) {
+      } else if (this.passedValue(3, 5, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(100000);
-      } else if (this.passedValue(5, this.previousZoomValue, zoom)) {
+      } else if (this.passedValue(5, 8, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(30000);
-      } else if (this.passedValue(8, this.previousZoomValue, zoom)) {
+      } else if (this.passedValue(8, 12, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(20000);
-      } else if (this.passedValue(12, this.previousZoomValue, zoom)) {
+      } else if (this.passedValue(12, 24, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(10000);
       } 
       // else if (this.passedValue(25, this.previousZoomValue, zoom)) {
@@ -76,8 +79,8 @@ export default {
     ...mapActions([
       'setActiveMapCitiesBasedOnPopulation',
     ]),
-    passedValue(value, prev, now) {
-      return (prev < value && now >= value) || (prev > value && now <= value);
+    passedValue(down, up, prev, now) {
+      return (prev < down && now >= down) || (prev > up && now <= up);
     },
     // cityBeforeEnter(el, done) {
     //   Velocity(el, { opacity: 0 },
