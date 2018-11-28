@@ -20,7 +20,6 @@
             v-bind:font-size="fontSize+'px'">
             {{city.name}}
           </text>
-    
     </g>
     </transition-group>
   </g>
@@ -66,10 +65,7 @@ export default {
         this.setActiveMapCitiesBasedOnPopulation(20000);
       } else if (this.passedValue(12, 24, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(10000);
-      } 
-      // else if (this.passedValue(25, this.previousZoomValue, zoom)) {
-      //   this.setActiveMapCitiesBasedOnPopulation(1000);
-      // }
+      }
 
       this.previousZoomValue = zoom
     }
@@ -81,20 +77,6 @@ export default {
     passedValue(down, up, prev, now) {
       return (prev < down && now >= down) || (prev > up && now <= up);
     },
-    // cityBeforeEnter(el, done) {
-    //   Velocity(el, { opacity: 0 },
-    //     { duration: 0 });
-    // },
-    // cityEnter(el, done) {
-    //   Velocity(el, {opacity: 1 },
-    //     { duration: 1000 },
-    //     { complete: done });
-    // },
-    // cityLeave(el, done) {
-    //   Velocity(el, {opacity: 0 },
-    //     { duration: 1000 },
-    //     { complete: done });
-    // }
   }
 }
 </script>
