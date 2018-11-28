@@ -24,18 +24,10 @@
           v-on:click="countyClick(county)">
         </path>
       </g>
-      <mapCities>
-      </mapCities>
+      <!-- <mapCities>
+      </mapCities> -->
       <notifications>
       </notifications>
-      <rect
-        v-bind:key="'abc123'"
-        v-bind:ref="'abc123'"
-        v-bind:x="rectX+'px'"
-        v-bind:y="rectY+'px'"
-        v-bind:width="1+'px'"
-        v-bind:height="1+'px'">
-      </rect>
     </g>
   </svg>
 </template>
@@ -47,6 +39,7 @@ import MapCities from './MapCities'
 import { mapZoom, transitionToCounty, initialZoom, sizeOfCurrentWindow, XYFromLatLong} from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
 import PISP from "point-in-svg-polygon";
+import { cleanString } from '../store/helpers';
 
 export default {
   name: "d3map",
@@ -67,21 +60,35 @@ export default {
 
     let countriesString = "[";
     for (let city of this.cities) {
-      let xy = this.XYFromLatLong(city.latitude, city.longitude);
-      let x = xy[0];
-      let y = xy[1];
+      
+      //Decimal Degrees = degrees + (minutes/60) + (seconds/3600)
+      //58° 4' 57.0792'' N
+      //12° 57' 5.562'' E
+      //55°23′38″N Latitude
+      //13°35′47″Ö Longitude'
+      // city.latitude = "55°23′38″N";
+      // city.longitude = "13°35′47″Ö";
+      // city.municipality = "Skurups kommun";
+      let latitudeDegrees = "55°23′38″N"; //city.latitude;
+      let longitudeDegrees = "13°35′47″Ö"; //city.longitude;
+      latitudeDegrees = latitudeDegrees.replace("°", ",").replace("′", ",").replace("″", ",").split(",");
+      longitudeDegrees = longitudeDegrees.replace("°", ",").replace("′", ",").replace("″", ",").split(",");
+      let latitudeDecimals = parseFloat(latitudeDegrees[0]) + parseFloat(latitudeDegrees[1]/60) + parseFloat(latitudeDegrees[2]/3600);
+      let longitudeDecimals = parseFloat(longitudeDegrees[0]) + parseFloat(longitudeDegrees[1]/60) + parseFloat(longitudeDegrees[2]/3600);
+      console.log("latitudeDegrees: " + latitudeDegrees);
+      console.log("longitudeDegrees: " + longitudeDegrees);
+      console.log("latitudeDecimals: " + latitudeDecimals);
+      console.log("longitudeDecimals: " + longitudeDecimals);
       let cityCounty = null;
       let cityMun = null;
-      // for (let mun of this.municipalities) {
-      //   if (PISP.isInside([x, y], mun.path)) {
-      //     cityMun = mun.name;
-      //   }
-      // }
-      // for (let county of this.counties) {
-      //   if (PISP.isInside([x, y], county.path)) {
-      //     cityCounty = county.name;
-      //   }
-      // }
+      let xy = this.XYFromLatLong(latitudeDecimals, longitudeDecimals);
+      let x = xy[0];
+      let y = xy[1];
+      let municipality = this.municipalityByName(cleanString("Skurups kommun".replace("kommun", ""))); //this.municipalityByName(cleanString(city.municipality.replace("kommun", "")));
+      if (municipality === undefined) {
+        municipality = this.municipalityByName(cleanString("Skurups kommun".replace("s kommun", "")));
+      }
+      let county = this.countyByName(municipality.county);
       countriesString += 
       "\t{\n" + 
       "\t\t\"key\": \""+city.key+"\",\n" + 
@@ -90,10 +97,10 @@ export default {
       "\t\t\"type\": \"city\",\n" + 
       "\t\t\"x\": "+x+",\n" + 
       "\t\t\"y\": "+y+",\n" + 
-      "\t\t\"longitude\": "+city.longitude+",\n" + 
-      "\t\t\"latitude\": "+city.latitude+",\n" + 
-      "\t\t\"county\": \""+cityCounty+"\",\n" + 
-      "\t\t\"municipality\": \""+cityMun+"\"\n" + 
+      "\t\t\"longitude\": "+latitudeDecimals+",\n" + 
+      "\t\t\"latitude\": "+longitudeDecimals+",\n" + 
+      "\t\t\"county\": \""+county.name+"\",\n" + 
+      "\t\t\"municipality\": \""+municipality.name+"\"\n" + 
       "\t},\n";
       console.log(city.name);
     }
@@ -108,6 +115,7 @@ export default {
       'zoomValue',
       'selectedCounty',
       'countyByName',
+      'municipalityByName'
     ])
   },
   methods: {
