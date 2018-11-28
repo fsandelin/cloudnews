@@ -3,10 +3,10 @@
     <circle
         class="city"
         v-for="city in cities"
+        v-if="city.population > 10000"
         v-bind:key="city.key"
-        v-show="city.active"
-        v-bind:cx="XYFromLatLong(city.latitude, city.longitude)[0]+'px'"
-        v-bind:cy="XYFromLatLong(city.latitude, city.longitude)[1]+'px'"
+        v-bind:cx="city.x+'px'"
+        v-bind:cy="city.y+'px'"
         v-bind:r="1+'px'">
     </circle>
   </g>

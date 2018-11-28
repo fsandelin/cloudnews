@@ -6,7 +6,7 @@ import { cleanString } from '../helpers';
 
 const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
-  counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "västra götaland"),
+  counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
   cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   selectedCounty: null,
