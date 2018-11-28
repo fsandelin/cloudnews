@@ -76,17 +76,30 @@
             flex: 1;
             cursor: pointer;
 
-            &.current-month {
-              color: $darkblue;
+            &.active {
+              background-color: $darkgreen;
+              color: white;
             }
 
-            &:not(.current-month) {
-              color: $superlightblue;
+            &:not(.active):not(:hover) {
+              &.current-month {
+                color: $darkblue;
+              }
+
+              &:not(.current-month) {
+                color: $superlightblue;
+              }
+
+              &.in-between {
+                background-color: $lightgrey;
+              }
             }
+
 
             &:hover {
               background-color: $lightgreen;
               color: white;
+              box-shadow: 3px 3px 5px -2px $shadowblack;
             }
 
           }

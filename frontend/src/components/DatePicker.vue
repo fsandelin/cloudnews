@@ -44,8 +44,11 @@
 
             <div v-for="date in row"
                  v-bind:key="date.day+date.month+date.year"
+                 v-on:click="selectDate(date)"
                  class="day flex-col"
-                 v-bind:class="{ 'current-month': date.month === currentMonth }">
+                 v-bind:class="{ 'current-month': date.month === currentMonth,
+                  active: date === startDate || date === endDate,
+                  'in-between': dateBetweenStartAndEnd(date) }">
                 {{ date.day }}
             </div>
 
@@ -74,6 +77,8 @@ export default {
       currentMonth: new Date().getMonth(),
       weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
       weekNumbers: [5, 6, 7, 8, 9, 10],
+      startDate: null,
+      endDate: null
     }
   },
   computed: {
@@ -125,8 +130,30 @@ export default {
         this.currentMonth--
       }
     },
+    selectDate(date) {
+      // TODO:
+      // if before startDate --> change startDate to endDate and set date to startDate
+      // if after endDate --> set endDate to date
+      // if between startDate and endDate --> set endDate to date
+      if (date === this.startDate) {
+        this.startDate = null
+      } else if (date === this.endDate) {
+        this.endDate = null
+      } else if (this.startDate === null) {
+        this.startDate = date
+      } else {
+        this.endDate = date
+      }
+    },
     numToMonth: function (num) {
       return numToMonth(num)
+    },
+    dateBetweenStartAndEnd(date) {
+      // TODO: if no end date or start date --> check hover
+      return date !== null && this.startDate !== null && this.endDate !== null &&
+             date.year <= this.endDate.year && date.year >= this.startDate.year &&
+             date.month <= this.endDate.month && date.month >= this.startDate.month &&
+             date.day < this.endDate.day && date.day > this.startDate.day
     }
   }
 }
