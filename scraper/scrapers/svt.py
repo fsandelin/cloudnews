@@ -17,6 +17,11 @@ from bs4 import BeautifulSoup
 import pytz
 UTC=pytz.UTC
 
+import asyncio
+import concurrent.futures 
+
+from multiprocessing import Pool
+
 try:
     # For Python 3.0 and later
     from urllib.request import urlopen
@@ -24,17 +29,18 @@ except ImportError:
     # Fall back to Python 2's urllib2
     from urllib2 import urlopen
 
-try:
-    # If runing from restapi
-    from scrapers.data.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
-    from scrapers.data.constants import FIRST, LAST, LATER, EARLIER, BEFORE, AFTER
-    from scrapers.util.location_search import search_cloud_news
-    from scrapers.util.time_checks import *
-except ImportError:
+if __name__ == "__main__":
     from data.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
     from util.location_search import search_cloud_news
     from data.constants import FIRST, LAST, LATER, EARLIER, BEFORE, AFTER
     from util.time_checks import *
+else:
+    from scrapers.data.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
+    from scrapers.data.constants import FIRST, LAST, LATER, EARLIER, BEFORE, AFTER
+    from scrapers.util.location_search import search_cloud_news
+    from scrapers.util.time_checks import *
+
+    
 
 BEFORE = True
 AFTER = False
@@ -163,6 +169,195 @@ def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
     region_news = r.json(encoding='utf-16')
 
     return region_news
+
+def check_start_page(until_, region, page):
+    news_list = get_api_news_region(region=region, page=page)
+    #print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", until_)
+    found = False
+    value = -1
+    if check_time(news_list[FIRST], BEFORE, until_):
+        found = False
+        value = -1
+    elif check_time(news_list[FIRST], AFTER, until_) and check_time(news_list[LAST], BEFORE, until_):
+        found = True
+        value = 0
+    elif not check_time(news_list[FIRST], AFTER, until_):
+        found = True
+        value = 0
+    else:
+        found = False
+        value = 1
+    return (found, value, page, "start")
+
+def check_end_page(from_, region, page):
+    news_list = get_api_news_region(region=region, page=page)
+    #print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", from_)
+    found = False
+    value = 1
+    if check_time(news_list[LAST], AFTER, from_):
+        found = False
+        value = 1
+    elif check_time(news_list[FIRST], BEFORE, from_) and check_time(news_list[LAST], AFTER, from_):
+        found = True
+        value = 0
+    elif not check_time(news_list[FIRST], BEFORE, from_):
+        found = True
+        value = 0
+    else:
+        found = False
+        value = -1
+    return (found, value, page, "end")
+
+async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers*2) as executor:
+
+        loop = asyncio.get_event_loop()
+        futures = [
+            loop.run_in_executor(
+                executor, 
+                check_start_page, 
+                until_,
+                region,
+                i
+            )
+            for i in start_pages
+        ] + [
+            loop.run_in_executor(
+                executor, 
+                check_end_page,
+                from_,
+                region,
+                i
+            )
+            for i in end_pages
+        ]
+        response_list = await asyncio.gather(*futures)
+        #for response in response_list:
+            #print(response)
+           # pass
+    return response_list
+
+def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
+
+    workers = 20
+
+    start_obj = get_api_object(region = region)
+    items = start_obj['auto']['pagination']['totalAvailableItems']
+    items = int(items)
+    max_pages = math.ceil(items / 50)
+
+    print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
+    region_name = start_obj['auto']['content'][0]['sectionDisplayName']
+    obj_list = start_obj['auto']['content']
+
+    # Calculating the approriate start_page
+    # by see how many days the first page envelops
+    days_per_page = get_time_diff(obj_list[0], obj_list[-1]) + 1
+
+    time_diff_start = get_time_diff(obj_list[0], until_)
+    time_diff_end = get_time_diff(obj_list[0], from_)
+
+    start_page = math.floor(time_diff_start/days_per_page)
+    end_page = math.floor(time_diff_end/days_per_page)
+
+    print("Region:", region_name, "Starting:", start_page, "ending:", end_page)
+    sleep(1)
+    end_page_found = False
+    start_page_found = False
+    start_pages = range(start_page, start_page + workers)
+    end_pages = range(end_page, end_page + workers)
+    i = 0
+    while i < 20:
+        i += 1
+        loop = asyncio.get_event_loop()
+        responses = loop.run_until_complete(page_threads(from_, until_, region, start_pages, end_pages, workers))
+        
+        start_movement = 0
+        end_movement = 0
+
+        for response in responses:
+            if response[3] == 'start':
+                start_movement = response[1]
+            elif response[3] == 'end':
+                end_movement = response[1]
+
+            if response[3] == 'start' and response[0]:
+                start_page_found = True
+                start_page = response[2]
+            if response[3] == 'end' and response[0]:
+                end_page_found = True
+                end_page = response[2]
+
+        if not start_page_found:
+            if start_movement > 0:
+                start_page = start_page + workers
+                start_pages = range(start_page, start_page + workers)
+            elif start_movement < 0:
+                start_page = start_page - workers
+                start_pages = range(start_page, start_page + workers)
+        else:
+            start_pages = []
+        if not end_page_found:
+            if end_movement > 0:
+                end_page = end_page + workers
+                end_pages = range(end_page, end_page + workers)
+            elif end_movement < 0:
+                end_page = end_page - workers
+                end_pages = range(end_page, end_page + workers)
+        else:
+            end_pages = []
+
+
+        if end_page_found and start_page_found:
+            break
+
+    return (start_page, end_page)
+
+def get_news_threads(from_, until_, region, page_nmr):
+    news_list = get_api_news_region(region=region, page=page_nmr)
+    return filter(lambda x: check_time_range(x, from_, until_), news_list)
+
+async def news_threads(from_, until_, region, page_range):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        loop = asyncio.get_event_loop()
+        futures = [
+            loop.run_in_executor(
+                executor, 
+                get_news_threads, 
+                from_,
+                until_,
+                region,
+                page
+            )
+            for page in page_range
+        ]
+        news_list = []
+        for news in await asyncio.gather(*futures):
+            news_list += news
+    return news_list
+
+def get_news_region_thread(from_, until_, region):
+
+    start_page, end_page = get_start_end_page(from_, until_, region)
+
+    page_range = range(start_page, end_page + 1)
+    print("Region:", region, "page_range:", page_range)
+    loop = asyncio.get_event_loop()
+    news_list = loop.run_until_complete(news_threads(from_, until_, region, page_range))
+
+    return news_list
+
+def get_news_selected_regions_threads(from_, until_, regions=used_regions):
+    selected_news = []
+    p = Pool()
+    arguments = [(from_, until_, region) for region in regions]
+    result = p.starmap(get_news_region_thread, arguments)
+    return result
+    #for region in regions:
+     #   selected_news += get_news_region_thread(from_, until_, region)
+    #return selected_news
+
 
 def get_news_region(from_, until_, region, use_web = False):
 

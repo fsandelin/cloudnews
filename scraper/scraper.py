@@ -1,7 +1,7 @@
 import json
 import requests
 import random
-from time import sleep
+from time import sleep, time
 from app import app
 
 from dateutil import parser
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from scrapers.util.location_search import search_cloud_news
 from scrapers.data.constants import FIRST, LAST
 from scrapers.data.svt_globals import used_regions
-from scrapers.svt import get_news_selected_regions, get_api_object
+from scrapers.svt import get_news_selected_regions, get_api_object, get_start_end_page, get_news_selected_regions_threads
 
 def post_news(json_news, URL):
 
@@ -108,8 +108,29 @@ def test_time_range():
 def get_api_obj():
     print(get_api_object())
 
+def test_page():
+    until_ = datetime.now()
+    from_  = until_ - timedelta(days = 14)
+    until_ = datetime(2017,2,11)
+    from_ = datetime(2017,1,12)
+    pages = get_start_end_page(from_, until_)
+    print(pages)
+
+def test_threads():
+    until_ = datetime(2018,2,11)
+    from_ = datetime(2017,1,12)
+    start_time = time()
+    news_list = get_news_selected_regions_threads(from_, until_)
+    news_group = []
+    for news in news_list:
+        news_group += news
+    print("Amount of news:", len(news_group))
+    print("--- %s seconds ---" % (time() - start_time))
+
 def main():
-    presenting_representing()
+    test_threads()
+    #presenting_representing()
+    #test_page()
 
 if __name__ == "__main__":
     main() 

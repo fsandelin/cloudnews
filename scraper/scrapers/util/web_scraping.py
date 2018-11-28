@@ -37,6 +37,9 @@ def get_city(city):
                 city['longitude'] = city_long.text
             if city_lat is not None:
                 city['latitude'] = city_lat.text
+
+
+    return city
         #print(city['name'])
 
     
@@ -56,6 +59,7 @@ async def get_cities(cities):
         ]
 
         for city in await asyncio.gather(*futures):
+            print(city)
             pass
 
 
@@ -105,54 +109,16 @@ def get_wiki_table(url, filename, data_names, index):
         city['municipality'] = cols[1]
         city['population'] = cols[2]
         city['url'] = url
-        #print(wiki + url)
-
-        #print(city_long, city_lat)
-        
-        #data.append([ele for ele in cols if ele])
-        #print(str(i) + "/" + str(len(rows)))
-        #i = i + 1
         data.append(city)
     
     start_time = time.time()
-    run_threads(data)
+    run_threads(data[:100])
     print(data[1])
     print("--- %s seconds ---" % (time.time() - start_time))
-    #data = [ele[index[0]:5] for ele in data[1:]]
 
-    # group_names = set()
-
-    # for ele in data:
-    #     group_names.add(ele[1])
-
-    
     f = open(filename, "w")
 
     f.write(json.dumps(data))
-    #f.write(data_names[0] + " = [")
-
-    # # f.write(data_names[1] + " = [")
-    # # first = True
-    # # for ele in group_names:
-    # #     if first:
-    # #         first = False
-    # #     else:
-    # #         f.write(",\n")
-    # #     f.write("\"" + ele + "\"")
-    # # f.write("]\n")
-
-    # f.write(data_names[0] + " = [")
-    # print(data[0])
-    # first = True
-    # for ele in data:
-    #     if first:
-    #         first = False
-    #     else:
-    #         f.write(",\n")
-    #     f.write(str(ele))
-    # f.write("]\n")
-
-    # f.close
 
 
 def add_mun_lan():
@@ -196,8 +162,8 @@ def main():
     url2 = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_t%C3%A4torter"
     url = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_kommuner"
     apan = "http://kodapan.se/geodata/data/2015-06-26/platser.osm.xml"
-    #get_wiki_table(url2, "tatort_info.py", ["tatort", "lan"], [0,2])
-    get_json()
+    get_wiki_table(url2, "test.py", ["tatort", "lan"], [0,2])
+    #get_json()
 
 if __name__ == "__main__":
     main()
