@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Twitter = require('Twitter');
+const cities = require('./cities.json');
 
 const client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -11,11 +12,14 @@ const client = new Twitter({
 const stream = client.stream('statuses/filter', {track: '', locations: '10.5922629,55.1365705,24.1773101,69.0600235'});
 
 stream.on('data', (data) => {
-  if(data.place.country_code === 'SE' && data.place.place_type === 'city') {
+  if(data.place !== null && data.place.country_code === 'SE' && data.place.place_type === 'city') {
+    const city = data.place.name;
+    const {county, municipality} = cities[city];
     const tweet = {
       timestamp: data.created_at,
       country: 'Sweden',
-      municipality: '',
+      county: county,
+      municipality: municipality,
       city: data.place.name,
       text: data.text,
       url: 'https://twitter.com/statuses/' + data.id_str,
