@@ -1,2 +1,25 @@
 @import 'variables.scss';
 @import 'reset.scss';
+
+svg.mapContainer g.map {
+  circle {
+
+    &.city-circle {
+      fill: $black;
+      stroke: $black;
+    }
+  }
+
+  text {
+    &.city-number {
+      fill: $white;
+      font-weight: bolder;
+      pointer-events: none;
+    }
+  }
+
+  line {
+    stroke: $black;
+  }
+  
+}

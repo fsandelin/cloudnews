@@ -8,10 +8,12 @@ const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
   counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
-  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: true })),
+  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
   mapCities: [],
   selectedCounty: null,
   previousSelectedCounty: null,
+  selectedMunicipality: null,
+  previousSelectedCountyMunicipality: null
 }
 
 const getters = {
@@ -46,14 +48,25 @@ const getters = {
 
 const actions = {
   selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
+  selectMunicipality: ({ commit }, municipalityName) => commit('selectMunicipality', municipalityName),
   setActiveMapCitiesBasedOnPopulation: ({ commit }, population) => commit('setActiveMapCitiesBasedOnPopulation', population),
   countyClick: ({ dispatch }, county) => {
     dispatch('selectCounty', county.name);
+    dispatch('selectMunicipality', null);
+    dispatch('setActiveNewsItemId', null);
+  },
+  municipalityClick: ({ dispatch }, municipality) => {
+    dispatch('selectMunicipality', municipality.name);
     dispatch('setActiveNewsItemId', null);
   },
 }
 
 const mutations = {
+  selectMunicipality(state, municipalityName) {
+    state.selectMunicipality = municipalityName;
+
+    state.cities.map(city => city.active = city.municipality === municipalityName)
+  },
   selectCounty(state, countyName) {
     state.selectedCounty = countyName
 
