@@ -3,10 +3,13 @@
 
 svg.mapContainer g.map {
   circle {
-
     &.city-circle {
       fill: $black;
       stroke: $black;
+    }
+
+    &.city-circle:hover {
+      fill: yellow;
     }
   }
 
