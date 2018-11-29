@@ -38,7 +38,6 @@ import Notifications from './Notifications'
 import MapCities from './MapCities'
 import { mapZoom, transitionToCounty, initialZoom} from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
-import { cleanString } from '../store/helpers';
 
 export default {
   name: "d3map",
@@ -64,7 +63,6 @@ export default {
       'zoomValue',
       'selectedCounty',
       'countyByName',
-      'municipalityByName'
     ])
   },
   methods: {
