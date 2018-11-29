@@ -312,13 +312,15 @@ kommun_tatort = {
 
 import json
 
-municipalities = {}
+counties = {}
 for lan, kommuner in lan_kommun.items():
+    municipalities = {}
     for kommun in kommuner:
         try:
-            municipalities[kommun] = {'county': lan, 'cities': kommun_tatort[kommun]}
+            municipalities.update({kommun: kommun_tatort[kommun]})
         except:
             pass
-
-with open('municipalities.json', 'w') as outfile:
-    json.dump(municipalities, outfile)
+    counties[lan] = municipalities
+print(counties)
+with open('counties.json', 'w') as outfile:
+    json.dump(counties, outfile)
