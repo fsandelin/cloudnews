@@ -48,6 +48,22 @@ const getters = {
         }
       });
   },
+  newsByCity: (state, getters, rootState) => {
+    return rootState.locations.cities.map(city => {
+      return {
+        ...city,
+        news: state.newsList.filter(({ location }) => location.city === city.name)
+      }
+    }).filter(({ news }) => news.length > 0)
+      .map(city => {
+        const municipality = getters.municipalityByName(city.municipality);
+        return {
+          ...city,
+          municipalityX: municipality.x,
+          municipalityY: municipality.y
+        }
+      })
+  },
   activeNewsItemId: state => {
     return state.activeNewsItemId
   },

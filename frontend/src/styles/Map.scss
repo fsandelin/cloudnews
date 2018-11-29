@@ -44,12 +44,16 @@ svg.mapContainer {
         stroke: $white;
       }
 
+      &.active {
+        fill: $blue;
+      }
+
       &.county:hover {
         fill: $darkblue;
       }
 
       &.municipality:hover {
-        fill: $lightblue;
+        fill: $blue;
       }
     }
   }

@@ -7,7 +7,6 @@ svg.mapContainer g.map {
     &.county-circle {
       stroke: $white;
       fill: $darkblue;
-      transition: 0s;
     }
 
     &.county-circle:hover {

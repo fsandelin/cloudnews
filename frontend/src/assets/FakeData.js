@@ -59,5 +59,16 @@ export const fakeNewsList = [
       municipality: "",
       city: "Kiruna"
     }
+  },
+  {
+    id: 5, title: "jukkasjärvi STAD NYHET", lead: "jukkasjärvi", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "jukkasjärvi"
+    }
   }
 ]
