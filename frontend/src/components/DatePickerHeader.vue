@@ -1,7 +1,8 @@
 <template>
   <div class="header flex-row">
 
-    <i class="material-icons">check</i>
+    <i v-bind:class="{ 'in-active': startDate === null }"
+      class="material-icons">check</i>
 
     <div class="year-month flex-row">
       <i v-on:click="moveCalendarBackwards"
@@ -29,6 +30,7 @@ export default {
       'currentYear',
       'numToMonth',
       'currentMonth',
+      'startDate'
     ])
   },
   methods: {

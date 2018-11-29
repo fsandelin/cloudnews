@@ -6,15 +6,27 @@
   color: $darkgreen;
 
   i {
+    color: $darkblue;
+
+    &.in-active {
+      color: $lightgrey;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(.in-active) {
+      color: $darkgreen;
+    }
+
     margin: auto 10px;
     cursor: pointer;
-    &:not(:hover) {
-      color: $lightgrey;
-    }
   }
 
   .year-month {
     flex: 1;
+
+    i {
+      color: $darkgreen;
+    }
 
     p {
       margin: 0 10px;
