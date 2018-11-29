@@ -25,6 +25,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { prettifyDateObject } from '../store/helpers';
 
 export default {
   name: "datepickerfooter",
@@ -41,9 +42,8 @@ export default {
       'selectDate',
       'moveCalendarToDate',
     ]),
-    prettifyDateObject: function (dateObj = '????-??-??') {
-      if (dateObj === null) return '????-??-??'
-      return `${dateObj.year}-${dateObj.month}-${dateObj.day}`
+    prettifyDateObject: function (dateObj) {
+      return prettifyDateObject(dateObj)
     }
   },
 }

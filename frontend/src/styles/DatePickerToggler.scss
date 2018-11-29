@@ -1,0 +1,39 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+#date-picker-toggler {
+  position: absolute;
+  left: 310px;
+  top: 10px;
+
+  height: 30px;
+  padding: 0 10px;
+
+  z-index: 1;
+  border-radius: 50px;
+
+  div {
+    height: 100%;
+    width: 100%;
+
+    p, i {
+      margin: auto 0;
+    }
+
+    p {
+      font-size: 12px;
+      color: $darkblue;
+    }
+
+    i {
+      font-size: 16px;
+      margin-left: 5px;
+      color: $lightgrey;
+      cursor: pointer;
+
+      &:hover {
+        color: $darkgreen;
+      }
+    }
+  }
+}

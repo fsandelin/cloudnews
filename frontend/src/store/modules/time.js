@@ -11,12 +11,14 @@ import {
   sameDates,
 } from '../helpers';
 
+const today = new Date();
+
 const state = {
-  currentYear: new Date().getFullYear(),
-  currentMonth: new Date().getMonth(),
+  currentYear: today.getFullYear(),
+  currentMonth: today.getMonth(),
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
-  weekNumbers: weekNumsForMonth(new Date().getFullYear(), new Date().getMonth()+1),
-  startDate: null,
+  weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth()+1),
+  startDate: { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() },
   endDate: null,
   hoverDate: null,
 }
@@ -52,7 +54,7 @@ const getters = {
 
     const numNextDaysToFill = TOTAL_DAYS_TO_SHOW - (daysForCurrentMonth+numPreviousDaysToFill)
 
-    const nextDaysToFill = getNumArrayBetweenNums(1, numNextDaysToFill+1)
+    const nextDaysToFill = getNumArrayBetweenNums(1, numNextDaysToFill+2)
       .map(i => ({ year: state.currentYear, month: state.currentMonth+1, day: i }))
 
     return [ ...previousDaysToFill, ...currentDaysToFill, ...nextDaysToFill ]

@@ -2,7 +2,12 @@
 @import 'reset.scss';
 
 #date-picker {
+  position: absolute;
+  left: 310px;
+  top: 10px;
+
   width: 300px;
   height: 275px;
-  margin: 20px;
+
+  background-color: white;
 }

@@ -1,8 +1,9 @@
 <template>
   <div class="header flex-row">
 
-    <i v-bind:class="{ 'in-active': startDate === null }"
-      class="material-icons">check</i>
+    <i v-on:click="startDate !== null ? toggleDatePicker() : null"
+       v-bind:class="{ 'in-active': startDate === null }"
+       class="material-icons">check</i>
 
     <div class="year-month flex-row">
       <i v-on:click="moveCalendarBackwards"
@@ -15,7 +16,8 @@
           class="material-icons next">navigate_next</i>
     </div>
 
-    <i class="material-icons">cancel</i>
+    <i v-on:click="toggleDatePicker"
+       class="material-icons">cancel</i>
 
   </div>
 </template>
@@ -37,6 +39,7 @@ export default {
     ...mapActions([
       'moveCalendarBackwards',
       'moveCalendarForwards',
+      'toggleDatePicker',
     ])
   },
 }
