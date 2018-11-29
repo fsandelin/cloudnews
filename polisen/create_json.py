@@ -1,25 +1,25 @@
 lan_kommun = {
-"Dalarna":["Avesta kommun","Borlänge kommun","Falu kommun","Gagnefs kommun","Hedemora kommun","Leksands kommun","Ludvika kommun","Malung-Sälens kommun","Mora kommun","Orsa kommun","Rättviks kommun","Smedjebackens kommun","Säters kommun","Vansbro kommun","Älvdalens kommun"],
-"Jämtland":["Bergs kommun","Bräcke kommun","Härjedalens kommun","Krokoms kommun","Ragunda kommun","Strömsunds kommun","Åre kommun","Östersunds kommun"],
-"Skåne":["Bjuvs kommun","Bromölla kommun","Burlövs kommun","Båstads kommun","Eslövs kommun","Helsingborgs kommun","Hässleholms kommun","Höganäs kommun","Hörby kommun","Höörs kommun","Klippans kommun","Kristianstads kommun","Kävlinge kommun","Landskrona kommun","Lomma kommun","Lunds kommun","Malmö kommun","Osby kommun","Perstorps kommun","Simrishamns kommun","Sjöbo kommun","Skurups kommun","Staffanstorps kommun","Svalövs kommun","Svedala kommun","Tomelilla kommun","Trelleborgs kommun","Vellinge kommun","Ystads kommun","Åstorps kommun","Ängelholms kommun","Örkelljunga kommun","Östra Göinge kommun"],
-"Värmland":["Arvika kommun","Eda kommun","Filipstads kommun","Forshaga kommun","Grums kommun","Hagfors kommun","Hammarö kommun","Karlstads kommun","Kils kommun","Kristinehamns kommun","Munkfors kommun","Storfors kommun","Sunne kommun","Säffle kommun","Torsby kommun","Årjängs kommun"],
-"Västernorrland":["Härnösands kommun","Kramfors kommun","Sollefteå kommun","Sundsvalls kommun","Timrå kommun","Ånge kommun","Örnsköldsviks kommun"],
-"Östergötland":["Boxholms kommun","Finspångs kommun","Kinda kommun","Linköpings kommun","Mjölby kommun","Motala kommun","Norrköpings kommun","Söderköpings kommun","Vadstena kommun","Valdemarsviks kommun","Ydre kommun","Åtvidabergs kommun","Ödeshögs kommun"],
-"Jönköping":["Aneby kommun","Eksjö kommun","Gislaveds kommun","Gnosjö kommun","Habo kommun","Jönköpings kommun","Mullsjö kommun","Nässjö kommun","Sävsjö kommun","Tranås kommun","Vaggeryds kommun","Vetlanda kommun","Värnamo kommun"],
-"Halland":["Falkenbergs kommun","Halmstads kommun","Hylte kommun","Kungsbacka kommun","Laholms kommun","Varbergs kommun"],
-"Kalmar":["Borgholms kommun","Emmaboda kommun","Hultsfreds kommun","Högsby kommun","Kalmar kommun","Mönsterås kommun","Mörbylånga kommun","Nybro kommun","Oskarshamns kommun","Torsås kommun","Vimmerby kommun","Västerviks kommun"],
-"Västerbotten":["Bjurholms kommun","Dorotea kommun","Lycksele kommun","Malå kommun","Nordmalings kommun","Norsjö kommun","Robertsfors kommun","Skellefteå kommun","Sorsele kommun","Storumans kommun","Umeå kommun","Vilhelmina kommun","Vindelns kommun","Vännäs kommun","Åsele kommun"],
-"Norrbotten":["Arjeplogs kommun","Arvidsjaurs kommun","Bodens kommun","Gällivare kommun","Haparanda kommun","Jokkmokks kommun","Kalix kommun","Kiruna kommun","Luleå kommun","Pajala kommun","Piteå kommun","Älvsbyns kommun","Överkalix kommun","Övertorneå kommun"],
-"Södermanland":["Eskilstuna kommun","Flens kommun","Gnesta kommun","Katrineholms kommun","Nyköpings kommun","Oxelösunds kommun","Strängnäs kommun","Trosa kommun","Vingåkers kommun"],
-"Gävleborg":["Bollnäs kommun","Gävle kommun","Hofors kommun","Hudiksvalls kommun","Ljusdals kommun","Nordanstigs kommun","Ockelbo kommun","Ovanåkers kommun","Sandvikens kommun","Söderhamns kommun"],
-"Gotland":["Gotlands kommun"],
-"Kronoberg":["Alvesta kommun","Lessebo kommun","Ljungby kommun","Markaryds kommun","Tingsryds kommun","Uppvidinge kommun","Växjö kommun","Älmhults kommun"],
-"Blekinge":["Karlshamns kommun","Karlskrona kommun","Olofströms kommun","Ronneby kommun","Sölvesborgs kommun"],
-"Stockholm":["Botkyrka kommun","Danderyds kommun","Ekerö kommun","Haninge kommun","Huddinge kommun","Järfälla kommun","Lidingö kommun","Nacka kommun","Norrtälje kommun","Nykvarns kommun","Nynäshamns kommun","Salems kommun","Sigtuna kommun","Sollentuna kommun","Solna kommun","Stockholms kommun","Sundbybergs kommun","Södertälje kommun","Tyresö kommun","Täby kommun","Upplands Väsby kommun","Upplands-Bro kommun","Vallentuna kommun","Vaxholms kommun","Värmdö kommun","Österåkers kommun"],
-"Uppsala":["Enköpings kommun","Heby kommun","Håbo kommun","Knivsta kommun","Tierps kommun","Uppsala kommun","Älvkarleby kommun","Östhammars kommun"],
-"Västmanland":["Arboga kommun","Fagersta kommun","Hallstahammars kommun","Kungsörs kommun","Köpings kommun","Norbergs kommun","Sala kommun","Skinnskattebergs kommun","Surahammars kommun","Västerås kommun"],
-"Västra Götaland":["Ale kommun","Alingsås kommun","Bengtsfors kommun","Bollebygds kommun","Borås kommun","Dals-Eds kommun","Essunga kommun","Falköpings kommun","Färgelanda kommun","Grästorps kommun","Gullspångs kommun","Göteborgs kommun","Götene kommun","Herrljunga kommun","Hjo kommun","Härryda kommun","Karlsborgs kommun","Kungälvs kommun","Lerums kommun","Lidköpings kommun","Lilla Edets kommun","Lysekils kommun","Mariestads kommun","Marks kommun","Melleruds kommun","Munkedals kommun","Mölndals kommun","Orusts kommun","Partille kommun","Skara kommun","Skövde kommun","Sotenäs kommun","Stenungsunds kommun","Strömstads kommun","Svenljunga kommun","Tanums kommun","Tibro kommun","Tidaholms kommun","Tjörns kommun","Tranemo kommun","Trollhättans kommun","Töreboda kommun","Uddevalla kommun","Ulricehamns kommun","Vara kommun","Vårgårda kommun","Vänersborgs kommun","Åmåls kommun","Öckerö kommun"],
-"Örebro":["Askersunds kommun","Degerfors kommun","Hallsbergs kommun","Hällefors kommun","Karlskoga kommun","Kumla kommun","Laxå kommun","Lekebergs kommun","Lindesbergs kommun","Ljusnarsbergs kommun","Nora kommun","Örebro kommun"]
+"Dalarnas län":["Avesta kommun","Borlänge kommun","Falu kommun","Gagnefs kommun","Hedemora kommun","Leksands kommun","Ludvika kommun","Malung-Sälens kommun","Mora kommun","Orsa kommun","Rättviks kommun","Smedjebackens kommun","Säters kommun","Vansbro kommun","Älvdalens kommun"],
+"Jämtlands län":["Bergs kommun","Bräcke kommun","Härjedalens kommun","Krokoms kommun","Ragunda kommun","Strömsunds kommun","Åre kommun","Östersunds kommun"],
+"Skåne län":["Bjuvs kommun","Bromölla kommun","Burlövs kommun","Båstads kommun","Eslövs kommun","Helsingborgs kommun","Hässleholms kommun","Höganäs kommun","Hörby kommun","Höörs kommun","Klippans kommun","Kristianstads kommun","Kävlinge kommun","Landskrona kommun","Lomma kommun","Lunds kommun","Malmö kommun","Osby kommun","Perstorps kommun","Simrishamns kommun","Sjöbo kommun","Skurups kommun","Staffanstorps kommun","Svalövs kommun","Svedala kommun","Tomelilla kommun","Trelleborgs kommun","Vellinge kommun","Ystads kommun","Åstorps kommun","Ängelholms kommun","Örkelljunga kommun","Östra Göinge kommun"],
+"Värmlands län":["Arvika kommun","Eda kommun","Filipstads kommun","Forshaga kommun","Grums kommun","Hagfors kommun","Hammarö kommun","Karlstads kommun","Kils kommun","Kristinehamns kommun","Munkfors kommun","Storfors kommun","Sunne kommun","Säffle kommun","Torsby kommun","Årjängs kommun"],
+"Västernorrlands län":["Härnösands kommun","Kramfors kommun","Sollefteå kommun","Sundsvalls kommun","Timrå kommun","Ånge kommun","Örnsköldsviks kommun"],
+"Östergötlands län":["Boxholms kommun","Finspångs kommun","Kinda kommun","Linköpings kommun","Mjölby kommun","Motala kommun","Norrköpings kommun","Söderköpings kommun","Vadstena kommun","Valdemarsviks kommun","Ydre kommun","Åtvidabergs kommun","Ödeshögs kommun"],
+"Jönköpings län":["Aneby kommun","Eksjö kommun","Gislaveds kommun","Gnosjö kommun","Habo kommun","Jönköpings kommun","Mullsjö kommun","Nässjö kommun","Sävsjö kommun","Tranås kommun","Vaggeryds kommun","Vetlanda kommun","Värnamo kommun"],
+"Hallands län":["Falkenbergs kommun","Halmstads kommun","Hylte kommun","Kungsbacka kommun","Laholms kommun","Varbergs kommun"],
+"Kalmars län":["Borgholms kommun","Emmaboda kommun","Hultsfreds kommun","Högsby kommun","Kalmar kommun","Mönsterås kommun","Mörbylånga kommun","Nybro kommun","Oskarshamns kommun","Torsås kommun","Vimmerby kommun","Västerviks kommun"],
+"Västerbottens län":["Bjurholms kommun","Dorotea kommun","Lycksele kommun","Malå kommun","Nordmalings kommun","Norsjö kommun","Robertsfors kommun","Skellefteå kommun","Sorsele kommun","Storumans kommun","Umeå kommun","Vilhelmina kommun","Vindelns kommun","Vännäs kommun","Åsele kommun"],
+"Norrbottens län":["Arjeplogs kommun","Arvidsjaurs kommun","Bodens kommun","Gällivare kommun","Haparanda kommun","Jokkmokks kommun","Kalix kommun","Kiruna kommun","Luleå kommun","Pajala kommun","Piteå kommun","Älvsbyns kommun","Överkalix kommun","Övertorneå kommun"],
+"Södermanlands län":["Eskilstuna kommun","Flens kommun","Gnesta kommun","Katrineholms kommun","Nyköpings kommun","Oxelösunds kommun","Strängnäs kommun","Trosa kommun","Vingåkers kommun"],
+"Gävleborgs län":["Bollnäs kommun","Gävle kommun","Hofors kommun","Hudiksvalls kommun","Ljusdals kommun","Nordanstigs kommun","Ockelbo kommun","Ovanåkers kommun","Sandvikens kommun","Söderhamns kommun"],
+"Gotlands län":["Gotlands kommun"],
+"Kronobergs län":["Alvesta kommun","Lessebo kommun","Ljungby kommun","Markaryds kommun","Tingsryds kommun","Uppvidinge kommun","Växjö kommun","Älmhults kommun"],
+"Blekinge län":["Karlshamns kommun","Karlskrona kommun","Olofströms kommun","Ronneby kommun","Sölvesborgs kommun"],
+"Stockholms län":["Botkyrka kommun","Danderyds kommun","Ekerö kommun","Haninge kommun","Huddinge kommun","Järfälla kommun","Lidingö kommun","Nacka kommun","Norrtälje kommun","Nykvarns kommun","Nynäshamns kommun","Salems kommun","Sigtuna kommun","Sollentuna kommun","Solna kommun","Stockholms kommun","Sundbybergs kommun","Södertälje kommun","Tyresö kommun","Täby kommun","Upplands Väsby kommun","Upplands-Bro kommun","Vallentuna kommun","Vaxholms kommun","Värmdö kommun","Österåkers kommun"],
+"Uppsala län":["Enköpings kommun","Heby kommun","Håbo kommun","Knivsta kommun","Tierps kommun","Uppsala kommun","Älvkarleby kommun","Östhammars kommun"],
+"Västmanlands län":["Arboga kommun","Fagersta kommun","Hallstahammars kommun","Kungsörs kommun","Köpings kommun","Norbergs kommun","Sala kommun","Skinnskattebergs kommun","Surahammars kommun","Västerås kommun"],
+"Västras Götalands län":["Ale kommun","Alingsås kommun","Bengtsfors kommun","Bollebygds kommun","Borås kommun","Dals-Eds kommun","Essunga kommun","Falköpings kommun","Färgelanda kommun","Grästorps kommun","Gullspångs kommun","Göteborgs kommun","Götene kommun","Herrljunga kommun","Hjo kommun","Härryda kommun","Karlsborgs kommun","Kungälvs kommun","Lerums kommun","Lidköpings kommun","Lilla Edets kommun","Lysekils kommun","Mariestads kommun","Marks kommun","Melleruds kommun","Munkedals kommun","Mölndals kommun","Orusts kommun","Partille kommun","Skara kommun","Skövde kommun","Sotenäs kommun","Stenungsunds kommun","Strömstads kommun","Svenljunga kommun","Tanums kommun","Tibro kommun","Tidaholms kommun","Tjörns kommun","Tranemo kommun","Trollhättans kommun","Töreboda kommun","Uddevalla kommun","Ulricehamns kommun","Vara kommun","Vårgårda kommun","Vänersborgs kommun","Åmåls kommun","Öckerö kommun"],
+"Örebro län":["Askersunds kommun","Degerfors kommun","Hallsbergs kommun","Hällefors kommun","Karlskoga kommun","Kumla kommun","Laxå kommun","Lekebergs kommun","Lindesbergs kommun","Ljusnarsbergs kommun","Nora kommun","Örebro kommun"]
 }
 
 kommun_tatort = {
@@ -314,8 +314,11 @@ import json
 
 municipalities = {}
 for lan, kommuner in lan_kommun.items():
-    for kommun, tatorter in kommun_tatort.items():
-        municipalities[kommun] = {'county': lan, 'cities': tatorter}
+    for kommun in kommuner:
+        try:
+            municipalities[kommun] = {'county': lan, 'cities': kommun_tatort[kommun]}
+        except:
+            pass
 
 with open('municipalities.json', 'w') as outfile:
     json.dump(municipalities, outfile)
