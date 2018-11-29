@@ -4,7 +4,7 @@
       v-bind:showFilter="true"
     ></newssidebar>
 
-    <datepicker></datepicker>
+    <datepicker v-if="showDatePicker"></datepicker>
 
     <mainsection></mainsection>
 
@@ -60,7 +60,8 @@ export default {
       'activeNewsItem',
       'activeNewsItemId',
       'selectedCounty',
-      'newsSources'
+      'newsSources',
+      'showDatePicker'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
