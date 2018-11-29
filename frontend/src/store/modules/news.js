@@ -10,16 +10,16 @@ const getters = {
   newsList: state => {
     return state.newsList
   },
-  filteredNewsList: (state, getters, rootState, rootGetters) => {
+  filteredNewsList: (state, rootState, rootGetters) => {
     return state.newsList.filter(news => {
       const county = rootGetters.countyByName(news.location.county)
       return county ? county.name === rootState.locations.selectedCounty : false
     })
   },
-  selectedCountyNews: (state, getters, rootState) => {
+  selectedCountyNews: (state, rootState) => {
     return state.newsList.filter(({ location }) => location.county === rootState.locations.selectedCounty)
   },
-  newsByCounty: (state, getters, rootState) => {
+  newsByCounty: (state, rootState) => {
     return rootState.locations.counties.map(county => {
 
       return {
