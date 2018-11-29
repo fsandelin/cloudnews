@@ -1,7 +1,11 @@
+require('dotenv').config();
 const request = require('request');
 const app = require('express')();
+const axios = require('axios');
 const counties = require('./counties.json');
 const municipalities = require('./municipalities.json');
+
+const {APP_PORT, NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
 
 const findStringInStringList = (str, strList) => {
 	for (const s of strList) {
@@ -65,12 +69,19 @@ app.get('/api/polisens_nyheter', (req, res) => {
 	const api_url = 'https://polisen.se/api/events';
 	request.get({url: api_url}, (resp, err, body) => {
 		const news = getNewsFromNewsList(JSON.parse(body));
-		console.log(news);
+		axios.post(`http://{NEWS_SERVICE_HOST}:{NEWS_SERVICE_PORT}/api/articles`, {
+			articles: news
+		})
+		.then((res) => {
+			console.log(res);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 	});
   res.sendStatus(200);
 });
 
-const port = 8080;
-app.listen(port, () => {
-  console.log(`police-news-service listening on ${port}`);
+app.listen(APP_PORT, () => {
+  console.log(`police-news-service listening on ${APP_PORT}`);
 });
