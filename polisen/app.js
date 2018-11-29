@@ -34,6 +34,10 @@ const getNewsFromNewsList = (newsList) => {
 		}
 		if (news.location.name.substr(-3) === 'län') {
 			county_temp = news.location.name;
+
+			const municipalityList = Object.keys(counties[county_temp]).map((c) => c.substr(0, c.length-7)); // Remove ' kommun'
+			municipality = findStringInStringList(news.summary, municipalityList);
+			municipality = (municipality !== '') ? municipalityWithSuffix(municipality) : '';
 		} else {
 			municipality = municipalityWithSuffix(news.location.name);
 			if (municipality === undefined) continue;
@@ -54,9 +58,14 @@ const getNewsFromNewsList = (newsList) => {
 			city: city
 		});
 	}
-	console.log('newsList length: ', newsListFormated.length)
 	return newsListFormated;
 }
+
+const newsList = require('./polisens_nyheter_test.json');
+const testGetNewsFromNewsList = () => {
+	getNewsFromNewsList(newsList);
+}
+testGetNewsFromNewsList();
 
 app.get('/api/polisens_nyheter', (req, res) => {
 	const api_url = 'https://polisen.se/api/events';
