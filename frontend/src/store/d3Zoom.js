@@ -26,27 +26,31 @@ export const mapZoom = (setZoomValue) => {
     })
 }
 
-export const transitionToCounty = (mapZoom, county) => {
-  const x = county.x;
-  const y = county.y;
-  const size = sizeOfCurrentWindow();
-  const newZoomValue = 1.25*size;
-  const scaleMultiplier = 358/Math.max(county.width, county.height);
-  const xOffset = (100*(size*(1/scaleMultiplier)/newZoomValue))
-  d3.select(".mapContainer").transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
-                            .transition().duration(200).call(mapZoom.scaleTo, newZoomValue*scaleMultiplier);
-}
-
-export const longTransitionToCounty = (mapZoom, county) => {
+const determineValues = (county) => {
   const x = county.x;
   const y = county.y;
   const size = sizeOfCurrentWindow()
   const newZoomValue = 1.25*size;
   const scaleMultiplier = 358/Math.max(county.width, county.height);
-  const xOffset = (100*(size*(1/scaleMultiplier)/newZoomValue))
+  const xOffset = (100*(size*(1/scaleMultiplier)/newZoomValue));
+  return {
+    x: x+xOffset,
+    y: y,
+    newZoomValue: newZoomValue*scaleMultiplier,
+  }
+}
+
+export const transitionToCounty = (mapZoom, county) => {
+  let { x, y, newZoomValue } = determineValues(county);
+  d3.select(".mapContainer").transition().duration(450).call(mapZoom.translateTo, x, y)
+                            .transition().duration(200).call(mapZoom.scaleTo, newZoomValue);
+}
+
+export const longTransitionToCounty = (mapZoom, county) => {
+  let { x, y, newZoomValue } = determineValues(county);
   d3.select(".mapContainer").transition().duration(350).call(mapZoom.scaleTo, 0.6)
-                            .transition().duration(450).call(mapZoom.translateTo, x+xOffset, y)
-                            .transition().duration(350).call(mapZoom.scaleTo, newZoomValue*scaleMultiplier);
+                            .transition().duration(450).call(mapZoom.translateTo, x, y)
+                            .transition().duration(350).call(mapZoom.scaleTo, newZoomValue);
                  
 }
 
