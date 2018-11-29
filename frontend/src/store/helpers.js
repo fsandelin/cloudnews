@@ -16,3 +16,15 @@ export const getNumArrayBetweenNums = (start, end) => {
   }
   return arr
 }
+
+export const dateIsBefore = (date, comparedTo) => {
+  if (date === null || comparedTo === null) return false
+  if (date.year > comparedTo.year) return false
+  if (date.year < comparedTo.year) return true
+
+  if (date.month > comparedTo.month) return false
+  if (date.month < comparedTo.month) return true
+
+  if (date.day > comparedTo.day) return false
+  if (date.day < comparedTo.day) return true
+}

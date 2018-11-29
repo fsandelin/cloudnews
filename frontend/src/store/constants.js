@@ -34,3 +34,5 @@ export const weekDays = {
   SATURDAY: 'Saturday',
   SUNDAY: 'Sunday',
 }
+
+export const TOTAL_DAYS_TO_SHOW = 42;

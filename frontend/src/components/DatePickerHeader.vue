@@ -20,9 +20,23 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: "datepickerheader",
-  props: ['moveCalendarBackwards', 'currentYear', 'numToMonth', 'currentMonth', 'moveCalendarForwards']
+  computed: {
+    ...mapGetters([
+      'currentYear',
+      'numToMonth',
+      'currentMonth',
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'moveCalendarBackwards',
+      'moveCalendarForwards',
+    ])
+  },
 }
 </script>
 

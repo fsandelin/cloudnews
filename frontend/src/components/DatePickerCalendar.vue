@@ -41,9 +41,26 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: "datepickercalendar",
-  props: ['weekDays', 'weekNumbers', 'daysByRow', 'currentMonth', 'selectDate', 'startDate', 'endDate', 'dateBetweenStartAndEnd']
+  computed: {
+    ...mapGetters([
+      'weekDays',
+      'weekNumbers',
+      'daysByRow',
+      'currentMonth',
+      'startDate',
+      'endDate',
+      'dateBetweenStartAndEnd'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'selectDate',
+    ])
+  },
 }
 </script>
 
