@@ -1,5 +1,4 @@
 import {
-  months as m,
   weekDays as wd,
   TOTAL_DAYS_TO_SHOW
 } from '../constants';
@@ -7,14 +6,15 @@ import {
   numToMonth,
   getDaysForMonth,
   getNumArrayBetweenNums,
-  dateIsBefore
+  dateIsBefore,
+  weekNumsForMonth
 } from '../helpers';
 
 const state = {
   currentYear: new Date().getFullYear(),
   currentMonth: new Date().getMonth(),
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
-  weekNumbers: [ 5, 6, 7, 8, 9, 10 ], // TODO: these shouldnt be hard-coded
+  weekNumbers: weekNumsForMonth(new Date().getFullYear(), new Date().getMonth()+1),
   startDate: null,
   endDate: null
 }
@@ -99,6 +99,7 @@ const mutations = {
   moveCalendar(state, { month = state.currentMonth, year = state.currentYear }) {
     state.currentMonth = month
     state.currentYear = year
+    state.weekNumbers = weekNumsForMonth(state.currentYear, state.currentMonth+1)
   },
   selectDate(state, { startDate = state.startDate, endDate = state.endDate }) {
     state.startDate = startDate

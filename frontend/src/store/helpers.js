@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { months as m, weekDays as wd } from './constants';
 
 export const cleanString = s => s.trim().toLowerCase()
@@ -27,4 +28,13 @@ export const dateIsBefore = (date, comparedTo) => {
 
   if (date.day > comparedTo.day) return false
   if (date.day < comparedTo.day) return true
+}
+
+export const weekNumsForMonth = (year, month) => {
+  const startWeek = moment(`${year}-${month}-1`, "YYYY-MM-DD").isoWeek()
+  let weeks = []
+  for (let i = startWeek; i < startWeek+6; i++) {
+    weeks = [ ...weeks, i === 53 ? 1 : i ]
+  }
+  return weeks
 }
