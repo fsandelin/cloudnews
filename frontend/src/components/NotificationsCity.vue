@@ -34,8 +34,7 @@
           class="city-circle"
           v-bind:cx="city.x+'px'"
           v-bind:cy="city.y+'px'"
-          v-bind:r="circleSize(city.news.length)*0.70+'px'"
-          v-bind:stroke-width="strokeWidth()*0.70+'px'">
+          v-bind:r="circleSize(city.news.length)*0.70+'px'">
         </circle>
       </transition>
 
@@ -67,7 +66,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "notificationsCity",
-  props: ['circleSize', 'fontSize', 'yOffset', 'lineWidth', 'strokeWidth'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'lineWidth'],
   computed: {
     ...mapGetters([
       'newsByCity',
