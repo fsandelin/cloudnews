@@ -10,7 +10,12 @@ from datetime import datetime, timedelta
 from scrapers.util.location_search import search_cloud_news
 from scrapers.data.constants import FIRST, LAST
 from scrapers.data.svt_globals import used_regions
-from scrapers.svt import get_news_selected_regions, get_api_object, get_start_end_page, get_news_selected_regions_threads
+from scrapers.svt import get_news_selected_regions, get_api_object, get_start_end_page, get_news_selected_regions_threads, get_news
+
+import asyncio
+import concurrent.futures
+
+from multiprocessing import Pool
 
 def post_news(json_news, URL):
 
@@ -117,18 +122,77 @@ def test_page():
     print(pages)
 
 def test_threads():
-    until_ = datetime(2018,2,11)
-    from_ = datetime(2017,1,12)
+    until_ = datetime(2018,11,11)
+    from_ = datetime(2018,11,10)
     start_time = time()
     news_list = get_news_selected_regions_threads(from_, until_)
     news_group = []
     for news in news_list:
         news_group += news
-    print("Amount of news:", len(news_group))
+    print("Amount of regions:", len(news_list), "Amount of news:", len(news_group))
     print("--- %s seconds ---" % (time() - start_time))
 
+    return news_list
+
+
+def locate_single_news(news):
+    found, news = search_cloud_news(news)
+
+    if not found:
+        temp_news = get_news(news['url'], news['location']['county'])
+        temp_news = search_cloud_news(temp_news)[1]
+        news['location'] = temp_news['location']
+
+    return news
+        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
+
+async def locate_threads(news_list):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        loop = asyncio.get_event_loop()
+        futures = [
+            loop.run_in_executor(
+                executor, 
+                locate_single_news,
+                news
+            )
+            for news in news_list
+        ]
+        news_list = []
+        for news in await asyncio.gather(*futures):
+            news_list.append(news)
+    #print(news_list[0])
+    return news_list
+
+def locate_process(news_list):
+    loop = asyncio.get_event_loop()
+    news_list = loop.run_until_complete(locate_threads(news_list))
+    return news_list
+
+
+def locate_news(news_list):
+    p = Pool()
+    result = p.map(locate_process, news_list)
+    return result
+
+
 def main():
-    test_threads()
+    news_list = test_threads()
+
+    start_time = time()
+    news_list = locate_news(news_list)
+    
+    #print(news_list[1])
+    news_group = []
+    for news in news_list:
+        news_group += news
+
+    i = 0
+    for news in news_group:
+        if 'city' in news['location']:
+            i += 1
+
+    print("Amoun of regions:", len(news_list), "Amount of news:", len(news_group), "amount of found news:", i)
+    print("--- %s seconds ---" % (time() - start_time))
     #presenting_representing()
     #test_page()
 

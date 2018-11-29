@@ -61,7 +61,9 @@ def get_news(url, region):
 
 
     # Initiate the Beautiful soup
-    content = urlopen(url).read()
+    response = urlopen(url)
+    print("Response info:", response.info())
+    content = response.read()
     soup = BeautifulSoup(content, features='lxml')
 
     # Get the article part
@@ -81,7 +83,9 @@ def get_news(url, region):
 
     img_url = None
     if pict is not None:
-        img_url = pict.find(attrs={"class" : "pic__img pic__img--preloaded pic__img--wide "})['src']
+        img_class = pict.find(attrs={"class" : "pic__img pic__img--preloaded pic__img--wide "})
+        if img_class is not None:
+            img_url = img_class['src']
 
     # A parser making a datetime from the SVT time convention
     dt = parser.parse(date)
@@ -253,7 +257,7 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     items = int(items)
     max_pages = math.ceil(items / 50)
 
-    print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
+    #print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
     region_name = start_obj['auto']['content'][0]['sectionDisplayName']
     obj_list = start_obj['auto']['content']
 
@@ -267,7 +271,7 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     start_page = math.floor(time_diff_start/days_per_page)
     end_page = math.floor(time_diff_end/days_per_page)
 
-    print("Region:", region_name, "Starting:", start_page, "ending:", end_page)
+    #print("Region:", region_name, "Starting:", start_page, "ending:", end_page)
     sleep(1)
     end_page_found = False
     start_page_found = False
@@ -325,7 +329,10 @@ def get_news_threads(from_, until_, region, page_nmr):
     return filter(lambda x: check_time_range(x, from_, until_), news_list)
 
 async def news_threads(from_, until_, region, page_range):
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(page_range)) as executor:
+    workers = 5
+    if len(page_range) > 3:
+        workers = len(page_range)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         loop = asyncio.get_event_loop()
         futures = [
             loop.run_in_executor(
@@ -351,6 +358,8 @@ def get_news_region_thread(from_, until_, region):
     print("Region:", region, "page_range:", page_range)
     loop = asyncio.get_event_loop()
     news_list = loop.run_until_complete(news_threads(from_, until_, region, page_range))
+
+    news_list = [ele for ele in news_list if 'Nyheter från dagen' not in ele['title']]
 
     return news_list
 
