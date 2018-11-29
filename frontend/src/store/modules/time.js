@@ -63,6 +63,9 @@ const getters = {
 }
 
 const actions = {
+  moveCalendarToDate: ({ commit }, date) => {
+    commit('moveCalendar', { month: date.month, year: date.year })
+  },
   moveCalendarForwards: ({ state, commit }) => {
     if (state.currentMonth === 11) {
       commit('moveCalendar', { month: 0, year: state.currentYear+1 })
