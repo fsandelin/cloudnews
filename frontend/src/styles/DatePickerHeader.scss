@@ -8,6 +8,9 @@
   i {
     margin: auto 10px;
     cursor: pointer;
+    &:not(:hover) {
+      color: $lightgrey;
+    }
   }
 
   .year-month {

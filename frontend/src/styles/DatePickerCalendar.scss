@@ -54,8 +54,13 @@
               color: $superlightblue;
             }
 
-            &.in-between {
+            &.in-between-selected {
               background-color: $darkgreen;
+              color: white;
+            }
+
+            &.in-between-hover:not(.in-between-selected) {
+              background-color: $lightgrey;
               color: white;
             }
           }

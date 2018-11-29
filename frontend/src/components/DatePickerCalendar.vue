@@ -24,11 +24,13 @@
 
             <div v-for="date in row"
                  v-bind:key="date.day+date.month+date.year"
+                 @mouseenter="toggleHoverDate(date)"
+                 @mouseleave="toggleHoverDate(date)"
                  v-on:click="selectDate(date)"
                  class="day flex-col"
                  v-bind:class="{ 'current-month': date.month === currentMonth,
-                  active: date === startDate || date === endDate,
-                  'in-between': dateBetweenStartAndEnd(date) }">
+                  'in-between-hover': dateBetween(date, hoverDate, startDate),
+                  'in-between-selected': (date === startDate || date === endDate) || dateBetween(date, startDate, endDate) }">
                 {{ date.day }}
             </div>
 
@@ -53,12 +55,14 @@ export default {
       'currentMonth',
       'startDate',
       'endDate',
-      'dateBetweenStartAndEnd'
+      'hoverDate',
+      'dateBetween'
     ])
   },
   methods: {
     ...mapActions([
       'selectDate',
+      'toggleHoverDate',
     ])
   },
 }

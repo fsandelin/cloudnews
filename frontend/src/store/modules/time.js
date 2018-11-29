@@ -16,7 +16,8 @@ const state = {
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
   weekNumbers: weekNumsForMonth(new Date().getFullYear(), new Date().getMonth()+1),
   startDate: null,
-  endDate: null
+  endDate: null,
+  hoverDate: null,
 }
 
 const getters = {
@@ -26,7 +27,11 @@ const getters = {
   weekNumbers: state => state.weekNumbers,
   startDate: state => state.startDate,
   endDate: state => state.endDate,
-  dateBetweenStartAndEnd: state => date => dateIsBefore(state.startDate, date) && dateIsBefore(date, state.endDate),
+  hoverDate: state => state.hoverDate,
+  dateBetween: _ => (date, edgeDate1, edgeDate2) => {
+    return (dateIsBefore(edgeDate1, date) && dateIsBefore(date, edgeDate2)) ||
+           (dateIsBefore(edgeDate2, date) && dateIsBefore(date, edgeDate1))
+  },
   numToMonth: _ => num => numToMonth(num),
   getDaysToDisplay: state => {
     const daysForCurrentMonth = getDaysForMonth(state.currentYear, state.currentMonth)
@@ -93,6 +98,13 @@ const actions = {
       commit('selectDate', { endDate: date })
     }
   },
+  toggleHoverDate: ({ state, commit }, date) => {
+    if (state.hoverDate === date) {
+      commit('toggleHoverDate', null)
+    } else {
+      commit('toggleHoverDate', date)
+    }
+  }
 }
 
 const mutations = {
@@ -104,6 +116,9 @@ const mutations = {
   selectDate(state, { startDate = state.startDate, endDate = state.endDate }) {
     state.startDate = startDate
     state.endDate = endDate
+  },
+  toggleHoverDate(state, date) {
+    state.hoverDate = date
   }
 }
 
