@@ -48,5 +48,16 @@ export const fakeNewsList = [
       municipality: "",
       city: ""
     }
+  },
+  {
+    id: 4, title: "KIRUNA STAD NYHET", lead: "Blabla", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "Kiruna"
+    }
   }
 ]
