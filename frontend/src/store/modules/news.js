@@ -58,41 +58,35 @@ const getters = {
 }
 
 const actions = {
-  addNews: ({ rootState, state, commit }, news) => {
-
+  addNews: ({ state, commit, rootGetters }, news) => {
     if (state.newsList.find(x => x.id === news.id)) return
 
     let location = { ...news.location }
     for (const key of Object.keys(location)) {
       location[key] = cleanString(location[key])
     }
-    if (rootState.locations.cities.find(city => city.name === location.city)) {
-
-      const municipalityName = rootState.locations.counties.find(municipality =>
-        municipality.municipalities.find(city =>
-          city === location.city
-      )).name
-
+    
+    const city = rootGetters.cityByName(location.city);
+    if (city) {
       location = {
         ...location,
-        municipality: municipalityName
+        municipality: city.municipality,
+        county: city.county,
+        country: 'sweden'
       }
     }
 
-    if (rootState.locations.municipalities.find(municipality => municipality.name === location.municipality)) {
-
-      const countyName = rootState.locations.counties.find(county =>
-        county.municipalities.find(municipality =>
-          municipality === location.municipality
-      )).name
-
+    const municipality = rootGetters.municipalityByName(location.municipality);
+    if (municipality) {
       location = {
         ...location,
-        county: countyName
+        county: municipality.county,
+        country: 'sweden'
       }
     }
 
-    if (rootState.locations.counties.find(county => county.name === location.county)) {
+    const county =  rootGetters.countyByName(location.county);
+    if (county) {
       location = {
         ...location,
         country: 'sweden'

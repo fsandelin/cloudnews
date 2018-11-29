@@ -39,6 +39,9 @@ const getters = {
   municipalityByName: (state) => (name = "") => {
     return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name));
   },
+  cityByName: (state) => (name = "") => {
+    return state.cities.find(city => cleanString(city.name) === cleanString(name));
+  },
 }
 
 const actions = {
