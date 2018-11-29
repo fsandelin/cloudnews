@@ -61,12 +61,6 @@ const getNewsFromNewsList = (newsList) => {
 	return newsListFormated;
 }
 
-const newsList = require('./polisens_nyheter_test.json');
-const testGetNewsFromNewsList = () => {
-	getNewsFromNewsList(newsList);
-}
-testGetNewsFromNewsList();
-
 app.get('/api/polisens_nyheter', (req, res) => {
 	const api_url = 'https://polisen.se/api/events';
 	request.get({url: api_url}, (resp, err, body) => {
