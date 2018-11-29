@@ -53,17 +53,17 @@ export default {
       this.fontSize = Math.min(12, 12/zoom);
       this.radius = Math.min(3, 4/zoom);
 
-      if (this.passedValue(0, 2, this.previousZoomValue, zoom)) {
+      if (this.valueTransitionedIntoRange(0, 2, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(250000)
-      } else if (this.passedValue(2, 3, this.previousZoomValue, zoom)) {
+      } else if (this.valueTransitionedIntoRange(2, 3, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(150000)
-      } else if (this.passedValue(3, 5, this.previousZoomValue, zoom)) {
+      } else if (this.valueTransitionedIntoRange(3, 5, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(100000);
-      } else if (this.passedValue(5, 8, this.previousZoomValue, zoom)) {
+      } else if (this.valueTransitionedIntoRange(5, 8, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(30000);
-      } else if (this.passedValue(8, 12, this.previousZoomValue, zoom)) {
+      } else if (this.valueTransitionedIntoRange(8, 12, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(20000);
-      } else if (this.passedValue(12, 24, this.previousZoomValue, zoom)) {
+      } else if (this.valueTransitionedIntoRange(12, 24, this.previousZoomValue, zoom)) {
         this.setActiveMapCitiesBasedOnPopulation(10000);
       }
 
@@ -74,8 +74,8 @@ export default {
     ...mapActions([
       'setActiveMapCitiesBasedOnPopulation',
     ]),
-    passedValue(down, up, prev, now) {
-      return (prev < down && now >= down) || (prev > up && now <= up);
+    valueTransitionedIntoRange(rangeStart, rangeEnd, previousValue, newValue) {
+      return (previousValue < rangeStart && newValue >= rangeStart) || (previousValue > rangeEnd && newValue <= rangeEnd);
     },
   }
 }
