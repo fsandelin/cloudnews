@@ -8,7 +8,7 @@ const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== "sweden"),
   counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
-  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: true})),
+  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: true })),
   mapCities: [],
   selectedCounty: null,
   previousSelectedCounty: null,

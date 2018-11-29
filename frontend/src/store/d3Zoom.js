@@ -11,7 +11,7 @@ export const sizeOfCurrentWindow = () => {
   return size;
 }
 
-let currentZoom = undefined;
+let currentZoom = null;
 
 export const mapZoom = (setZoomValue) => {
   return d3
