@@ -38,3 +38,10 @@ export const weekNumsForMonth = (year, month) => {
   }
   return weeks
 }
+
+export const sameDates = (firstDate, secondDate) => {
+  return firstDate !== null && secondDate !== null &&
+         firstDate.year === secondDate.year &&
+         firstDate.month === secondDate.month &&
+         firstDate.day === secondDate.day
+}

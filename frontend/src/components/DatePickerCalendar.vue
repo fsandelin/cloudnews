@@ -30,7 +30,7 @@
                  class="day flex-col"
                  v-bind:class="{ 'current-month': date.month === currentMonth,
                   'in-between-hover': dateBetween(date, hoverDate, startDate),
-                  'in-between-selected': (date === startDate || date === endDate) || dateBetween(date, startDate, endDate) }">
+                  'in-between-selected': (sameDates(date, startDate) || sameDates(date, endDate)) || dateBetween(date, startDate, endDate) }">
                 {{ date.day }}
             </div>
 
@@ -44,6 +44,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { sameDates } from '../store/helpers';
 
 export default {
   name: "datepickercalendar",
@@ -63,7 +64,10 @@ export default {
     ...mapActions([
       'selectDate',
       'toggleHoverDate',
-    ])
+    ]),
+    sameDates: function (date1, date2) {
+      return sameDates(date1, date2)
+    }
   },
 }
 </script>

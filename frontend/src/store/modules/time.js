@@ -7,7 +7,8 @@ import {
   getDaysForMonth,
   getNumArrayBetweenNums,
   dateIsBefore,
-  weekNumsForMonth
+  weekNumsForMonth,
+  sameDates,
 } from '../helpers';
 
 const state = {
@@ -81,10 +82,10 @@ const actions = {
     }
   },
   selectDate: ({ state, commit }, date) => {
-    if (state.startDate === date) {
+    if (sameDates(state.startDate, date)) {
       commit('selectDate', { startDate: state.endDate, endDate: null })
     }
-    else if (state.endDate === date) {
+    else if (sameDates(state.endDate, date)) {
       commit('selectDate', { endDate: null })
     }
     else if (state.startDate === null && state.endDate === null) {
@@ -102,7 +103,7 @@ const actions = {
     }
   },
   toggleHoverDate: ({ state, commit }, date) => {
-    if (state.hoverDate === date) {
+    if (sameDates(state.hoverDate, date)) {
       commit('toggleHoverDate', null)
     } else {
       commit('toggleHoverDate', date)
