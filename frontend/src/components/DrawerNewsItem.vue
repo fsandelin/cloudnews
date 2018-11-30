@@ -2,7 +2,7 @@
   <div id="active-news-item">
     <div class="header flex-centering">
       <i class="material-icons back"
-        v-on:click="toggleActive(activeNewsItem)">
+        v-on:click="setActiveNewsItemId(null)">
         reply
       </i>
       <p class="title">
@@ -35,7 +35,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'toggleActive'
+      'toggleActive',
+      'setActiveNewsItemId'
     ]),
     openLink: function () {
       if (this.activeNewsItem.url.startsWith('http')) {
