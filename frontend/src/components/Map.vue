@@ -24,6 +24,8 @@
           v-on:click="countyClick(county)">
         </path>
       </g>
+      <mapCities>
+      </mapCities>
       <notifications>
       </notifications>
     </g>
@@ -33,17 +35,19 @@
 <script>
 import * as d3 from "d3";
 import Notifications from './Notifications'
+import MapCities from './MapCities'
 import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "d3map",
   components: {
-    'notifications': Notifications
+    'notifications': Notifications,
+    'mapCities': MapCities
   },
   data () {
     return {
-      mapZoom: mapZoom(this.setZoomValue)
+      mapZoom: mapZoom(this.setZoomValue),
     }
   },
   mounted: function() {
@@ -55,16 +59,17 @@ export default {
       'countries',
       'counties',
       'municipalities',
+      'cities',
       'zoomValue',
       'selectedCounty',
-      'countyByName'
+      'countyByName',
     ])
   },
   methods: {
     ...mapActions([
       'countyClick',
       'setZoomValue',
-    ])
+    ]),
   }
 }
 </script>
