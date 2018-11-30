@@ -39,9 +39,14 @@ export default {
       'countyByName',
       'activeNewsItemId',
       'selectedCounty',
+      'selectedMunicipality',
       'zoomValue'
     ]),
     applyFilter: function () {
+      if (this.selectedMunicipality) {
+        return this.showFilter && this.news.location.municipality === this.selectedMunicipality;
+      }
+
       return this.showFilter && this.news.location.county === this.selectedCounty;
     }
   },

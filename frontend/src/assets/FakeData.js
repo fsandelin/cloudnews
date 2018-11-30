@@ -70,5 +70,27 @@ export const fakeNewsList = [
       municipality: "",
       city: "jukkasjärvi"
     }
+  },
+  {
+    id: 6, title: "jukkasjärvi STAD NYHET", lead: "jukkasjärvi", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "gällivare"
+    }
+  },
+  {
+    id: 7, title: "Stockholm STAD NYHET", lead: "sthubuntu", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "stockholm"
+    }
   }
 ]

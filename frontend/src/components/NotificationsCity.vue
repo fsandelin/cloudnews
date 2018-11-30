@@ -2,7 +2,9 @@
   <g id="notificationsCity">
     <g
       v-for="city of newsByCity"
-      v-bind:key="'cityNotifications-'+city.name">
+      v-bind:key="'cityNotification-'+city.name"
+      class="cityNotification"
+      v-on:click="cityClick(city)">
       <!--LINES-->
       <transition
         v-on:beforeEnter="(el, done) => lineBeforeEnter(el, done, city)"
@@ -73,6 +75,9 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+      'cityClick'
+    ]),
     lineBeforeEnter: function(el, done, city) {
       Velocity(el, {
         x1: city.municipalityX,

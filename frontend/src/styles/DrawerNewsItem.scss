@@ -10,10 +10,6 @@
       margin: auto 0;
       color: $darkgrey;
 
-      &.back {
-        cursor: pointer;
-      }
-
       &.url {
         &.exists {
           cursor: pointer;
