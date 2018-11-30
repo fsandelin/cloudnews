@@ -31,7 +31,7 @@
 
     .days {
       flex: 1;
-      color: white;
+      color: $white;
 
       .row {
         height: 25px;
@@ -42,7 +42,7 @@
 
           &.active {
             background-color: $darkgreen;
-            color: white;
+            color: $white;
           }
 
           &:not(.active):not(:hover) {
@@ -56,19 +56,19 @@
 
             &.in-between-selected {
               background-color: $darkgreen;
-              color: white;
+              color: $white;
             }
 
             &.in-between-hover:not(.in-between-selected) {
               background-color: $lightgrey;
-              color: white;
+              color: $white;
             }
           }
 
 
           &:hover {
             background-color: $lightgreen;
-            color: white;
+            color: $white;
             box-shadow: 3px 3px 5px -2px $shadowblack;
           }
         }
