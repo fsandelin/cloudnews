@@ -56,10 +56,10 @@ export default {
       'setZoomValue'
     ]),
     itemClicked: function(news) {
-      const previousCount = this.selectedCounty;
+      const previousCounty = this.selectedCounty;
       this.toggleActive(news)
       const county = this.countyByName(news.location.county);
-      if (this.selectedCounty !== previousCount) longTransitionToCounty(this.mapZoom, county);
+      if (this.selectedCounty !== previousCounty) longTransitionToCounty(this.mapZoom, county);
 
     },
     toggleHover: function () {

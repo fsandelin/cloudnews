@@ -94,6 +94,11 @@ const mutations = {
   openDrawer(state) {
     state.selectedCounty = state.previousSelectedCounty;
     state.previousSelectedCounty = null;
+    state.selectedMunicipality = state.previousSelectedMunicipality;
+    state.previousSelectedMunicipality = null;
+    state.selectedCity = state.previousSelectedCity;
+    state.previousSelectedCity = null;
+
     state.counties.map(county => county.active = !(county.name === state.selectedCounty));
     state.municipalities.map(municipality => municipality.active = municipality.county === state.selectedCounty);
     state.cities.map(city => city.active = city.municipality === state.selectedMunicipality);
@@ -105,9 +110,16 @@ const mutations = {
 
     state.previousSelectedCounty = state.selectedCounty;
     state.selectedCounty = null;
+    state.previousSelectedMunicipality = state.selectedMunicipality ;
+    state.selectedMunicipality = null;
+    state.previousSelectedCity = state.selectedCity ;
+    state.selectedCity = null;
+    
   },
   toggleActive(state) {
     state.selectedCounty = null;
+    state.selectedMunicipality = null;
+    state.selectedCity = null;
   },
   setActiveMapCitiesBasedOnPopulation(state, population) {
     state.mapCities = state.cities.filter(city => city.population > population);
