@@ -2,6 +2,7 @@
   <div id="date-picker-toggler" class="full-shadow">
     <div class="flex-row">
       <p>{{ prettifyDateObject(startDate) }}</p>
+      <p v-if="endDate !== null">to {{ prettifyDateObject(endDate) }}</p>
       <i v-on:click="toggleDatePicker"
          class="material-icons">edit</i>
     </div>
@@ -17,6 +18,7 @@ export default {
   computed: {
     ...mapGetters([
       'startDate',
+      'endDate',
     ]),
   },
   methods: {
