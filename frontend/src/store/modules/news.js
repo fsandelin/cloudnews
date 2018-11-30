@@ -11,9 +11,26 @@ const getters = {
     return state.newsList
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
+    if(rootState.locations.selectedCity !== null) return getters.filterNewsSelectedCity;
+    else if(rootState.locations.selectedMunicipality !== null) return getters.filterNewsSelectedMunicipality;
+    else return getters.filterNewsSelectedCounty;
+  },
+  filterNewsSelectedCounty: (state, getters, rootState, rootGetters) => {
     return state.newsList.filter(news => {
-      const county = rootGetters.countyByName(news.location.county)
-      return county ? county.name === rootState.locations.selectedCounty : false
+      const county = rootGetters.countyByName(news.location.county);
+      return county ? county.name === rootState.locations.selectedCounty : false;
+    })
+  },
+  filterNewsSelectedMunicipality: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => {
+      const municipality = rootGetters.municipalityByName(news.location.municipality);
+      return municipality ? municipality.name === rootState.locations.selectedMunicipality : false;
+    });
+  },
+  filterNewsSelectedCity: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => {
+      const city = rootGetters.cityByName(news.location.city);
+      return city ? city.name === rootState.locations.selectedCity : false;
     })
   },
   selectedCountyNews: (state, getters, rootState) => {

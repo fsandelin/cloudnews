@@ -11,9 +11,11 @@ const state = {
   cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
   mapCities: [],
   selectedCounty: null,
-  previousSelectedCounty: null,
   selectedMunicipality: null,
-  previousSelectedCountyMunicipality: null
+  selectedCity: null,
+  previousSelectedCounty: null,
+  previousSelectedMunicipality: null,
+  previousSelectedCity: null
 }
 
 const getters = {
@@ -35,6 +37,12 @@ const getters = {
   selectedCounty: state => {
     return state.selectedCounty;
   },
+  selectedMunicipality: state => {
+    return state.selectedMunicipality;
+  },
+  selectedCity: state => {
+    return state.selectedCity;
+  },
   countyByName: state => (name = "") => {
     return state.counties.find(county => cleanString(county.name) === cleanString(name));
   },
@@ -49,48 +57,60 @@ const getters = {
 const actions = {
   selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
   selectMunicipality: ({ commit }, municipalityName) => commit('selectMunicipality', municipalityName),
+  selectCity: ({ commit }, cityName) => commit('selectCity', cityName),
   setActiveMapCitiesBasedOnPopulation: ({ commit }, population) => commit('setActiveMapCitiesBasedOnPopulation', population),
   countyClick: ({ dispatch }, county) => {
     dispatch('selectCounty', county.name);
     dispatch('selectMunicipality', null);
+    dispatch('selectCity', null);
     dispatch('setActiveNewsItemId', null);
   },
   municipalityClick: ({ dispatch }, municipality) => {
     dispatch('selectMunicipality', municipality.name);
+    dispatch('selectCity', null);
+    dispatch('setActiveNewsItemId', null);
+  },
+  cityClick: ({ dispatch }, city) => {
+    dispatch('selectCity', city.name);
     dispatch('setActiveNewsItemId', null);
   },
 }
 
 const mutations = {
-  selectMunicipality(state, municipalityName) {
-    state.selectMunicipality = municipalityName;
-
-    state.cities.map(city => city.active = city.municipality === municipalityName)
-  },
   selectCounty(state, countyName) {
     state.selectedCounty = countyName
-
+    
     state.counties.map(county => county.active = !(county.name === countyName));
-    state.municipalities.map(municipality => municipality.active = municipality.county === countyName)
+    state.municipalities.map(municipality => municipality.active = municipality.county === countyName);
+  },
+  selectMunicipality(state, municipalityName) {
+    state.selectedMunicipality = municipalityName;
+
+    state.cities.map(city => city.active = city.municipality === municipalityName);
+  },
+  selectCity(state, cityName) {
+    state.selectedCity = cityName;
   },
   openDrawer(state) {
-    state.selectedCounty = state.previousSelectedCounty
-    state.previousSelectedCounty = null
+    state.selectedCounty = state.previousSelectedCounty;
+    state.previousSelectedCounty = null;
     state.counties.map(county => county.active = !(county.name === state.selectedCounty));
-    state.municipalities.map(municipality => municipality.active = municipality.county === state.selectedCounty)
+    state.municipalities.map(municipality => municipality.active = municipality.county === state.selectedCounty);
+    state.cities.map(city => city.active = city.municipality === state.selectedMunicipality);
   },
   closeDrawer(state) {
-    state.counties.map(county => county.active = true)
-    state.municipalities.map(municipality => municipality.active = false)
+    state.counties.map(county => county.active = true);
+    state.municipalities.map(municipality => municipality.active = false);
+    state.cities.map(city => city.active = false);
 
-    state.previousSelectedCounty = state.selectedCounty
-    state.selectedCounty = null
+    state.previousSelectedCounty = state.selectedCounty;
+    state.selectedCounty = null;
   },
   toggleActive(state) {
-    state.selectedCounty = null
+    state.selectedCounty = null;
   },
   setActiveMapCitiesBasedOnPopulation(state, population) {
-    state.mapCities = state.cities.filter(city => city.population > population)
+    state.mapCities = state.cities.filter(city => city.population > population);
   }
 }
 

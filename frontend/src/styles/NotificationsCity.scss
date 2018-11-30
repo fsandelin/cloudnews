@@ -1,14 +1,10 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-svg.mapContainer g.map {
+svg.mapContainer g.map .cityNotification{
   circle {
     &.city-circle {
       fill: $black;
-    }
-
-    &.city-circle:hover {
-      fill: yellow;
     }
   }
 
@@ -22,6 +18,15 @@ svg.mapContainer g.map {
 
   line {
     stroke: $black;
+    pointer-events: none;
   }
   
+}
+
+svg.mapContainer g.map .cityNotification:hover{
+  circle {
+    &.city-circle {
+      fill: $grey;
+    }
+  }
 }
