@@ -5,6 +5,158 @@ const dbName = process.env.DATABASE_NAME;
 
 const scraperMetaCollection = 'prefetched';
 
+function compareDates(a, b) {
+  const dA = new Date(a.from);
+  const dB = new Date(b.from);
+  if (dA < dB) {
+    return -1;
+  }
+  if (dA > dB) {
+    return 1;
+  }
+  return 0;
+}
+
+function getNextDay(date) {
+  const nextDay = new Date(date);
+  nextDay.setDate(nextDay.getDate() + 1);
+  return nextDay;
+}
+
+function getPreviousDay(date) {
+  const nextDay = new Date(date);
+  nextDay.setDate(nextDay.getDate() - 1);
+  return nextDay;
+}
+
+function getIncludedTimespans(newFrom, newUntil, timespans) {
+  let tentFrom = null;
+  let tentUntil = null;
+  let placedFrom = false;
+  const includedTimespans = [];
+  for (let i = 0; i < timespans.length; i += 1) {
+    tentFrom = new Date(timespans[i].from);
+    tentUntil = new Date(timespans[i].until);
+    if (!placedFrom) {
+      if (newFrom > getNextDay(tentUntil)) {
+        continue;
+      } else {
+        placedFrom = true;
+      }
+    }
+    if (placedFrom) {
+      if (newUntil < getPreviousDay(tentFrom)) {
+        break;
+      }
+      includedTimespans.push(timespans[i]);
+    }
+  }
+  return includedTimespans;
+}
+
+function getNewTimespan(inputFrom, inputUntil, timespans) {
+  if (timespans.length === 0) return { from: inputFrom, until: inputUntil };
+  const includedTimespans = getIncludedTimespans(inputFrom, inputUntil, timespans);
+  const firstFrom = new Date(timespans[0].from);
+  const lastUntil = new Date(timespans[timespans.length - 1].until);
+
+  let newFrom = null;
+  let newUntil = null;
+
+  if (firstFrom < inputFrom) {
+    newFrom = firstFrom;
+  } else {
+    newFrom = inputFrom;
+  }
+
+  if (lastUntil > inputUntil) {
+    newUntil = lastUntil;
+  } else {
+    newUntil = inputUntil;
+  }
+
+  return { from: newFrom, until: newUntil };
+}
+
+function fillTimeSpan(service, news, timespan, callback, retries = 5) {
+  // Todo
+  const prefetchedCollectionName = 'prefetched';
+  const articlesCollectionName = `articles_${service}`;
+  const newFrom = new Date(timespan.from);
+  const newUntil = new Date(timespan.until);
+  dbConnection.connect((error, client) => {
+    if (error) {
+      console.log(error);
+    }
+    const session = dbConnection.getSession();
+    const db = client.db(dbName);
+    try {
+      session.startTransaction();
+    } catch (mongoError) {
+      if (retries) {
+        console.log('Retrying!!!');
+        setTimeout(() => fillTimeSpan(service, news, timespan, callback, retries - 1), 3000);
+        return;
+      }
+    }
+
+    db.collection(prefetchedCollectionName).findOne({ service }, { session }, (error3, result) => {
+      if (error3) {
+        console.log('Got an error when trying to get timespans for service');
+        console.log('ABORTING TRANSACTION');
+        session.abortTransaction();
+        dbConnection.closeSession();
+        callback('Things went to hell');
+        return;
+      } if (!result) {
+        console.log('There are no timespans in the results for the specified service');
+        console.log('ABORTING TRANSACTION');
+        session.abortTransaction();
+        dbConnection.closeSession();
+        callback('Things went to hell');
+        return;
+      }
+      const { timespans } = result;
+      timespans.sort(compareDates);
+
+      const includedTimespans = getIncludedTimespans(newFrom, newUntil, timespans);
+      const newTimespan = getNewTimespan(newFrom, newUntil, includedTimespans);
+
+      db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
+        if (error4) {
+          if (error4.writeErrors) {
+            if (!error4.writeErrors.every(wError => wError.code === 11000)) {
+              session.abortTransaction();
+              dbConnection.closeSession();
+              callback(error);
+              return;
+            }
+          }
+        }
+        const query = {
+          service,
+        };
+        const update1 = {
+          $pull: { timespans: { $in: includedTimespans } },
+        };
+        const update2 = {
+          $push: { timespans: newTimespan },
+        };
+        setTimeout(() => {
+          db.collection(prefetchedCollectionName).update(query, update1, { session }, (error1, result2) => {
+            db.collection(prefetchedCollectionName).update(query, update2, { session }, (error2, result3) => {
+              session.commitTransaction(() => {
+                dbConnection.closeSession();
+                callback();
+              });
+            });
+          });
+        }, 1000); // Added timeout only to test concurrency-things for this transaction
+      });
+    });
+  });
+}
+
 // Pushes an array of articles to the database. Right now uses articles_${service} as collection for all. DOES NO DATACHECK WHATSOEVER
 function pushArticles(service, articles, callback) {
   dbConnection.connect((error, client) => {
@@ -64,10 +216,12 @@ function getArticles(service, from, until, callback) {
 }
 
 // Returns an array of timespans that are missing to fulfill a requested timespan for a given service and timespans already available.
-function computeMissingSpans(service, availableSpans, requestFrom, requestUntil) {
+function computeMissingSpans(service, serviceTimespans, requestFrom, requestUntil) {
   const missingSpans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
+  const availableSpans = serviceTimespans.timespans.sort(compareDates);
+  console.log(serviceTimespans.timespans);
   for (let i = 0; i < availableSpans.length; i += 1) {
     const currentDateFrom = new Date(availableSpans[i].from);
     const currentDateUntil = new Date(availableSpans[i].until);
@@ -105,7 +259,7 @@ function getMissingTimespans(requestedResource, callback) {
     const query = {
       service,
     };
-    db.collection(scraperMetaCollection).find(query).sort({ from: 1 }).toArray((err, results) => {
+    db.collection(scraperMetaCollection).findOne(query, (err, results) => {
       const needed = computeMissingSpans(service, results, from, until);
       callback(needed);
     });
@@ -116,4 +270,5 @@ module.exports = {
   pushArticles,
   getArticles,
   getMissingTimespans,
+  fillTimeSpan,
 };

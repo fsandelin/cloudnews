@@ -1,22 +1,36 @@
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 
-const uri = `${process.env.DB_HOST}:${process.env.DB_PORT}`;
+const uri = `${process.env.DB_HOST}:${process.env.DB_PORT}/?replicaSet=rs`;
 
 const state = {
   db: null,
+  session: null,
 };
 
 function connect(callback) {
   if (state.db) {
-    callback(null, state.db);
-    return;
+    return callback(null, state.db);
   }
 
   MongoClient.connect(uri, (err, db) => {
     state.db = db;
-    callback(err, db);
+    return callback(err, db);
   });
+}
+
+function getSession() {
+  if (state.db) {
+    if (state.session) return state.session;
+
+    state.session = state.db.startSession();
+    return state.session;
+  }
+  return connect(getSession);
+}
+
+function closeSession() {
+  if (state.sesssion) state.session.endSession((state.session = null));
 }
 
 function close(callback) {
@@ -31,4 +45,6 @@ function close(callback) {
 module.exports = {
   connect,
   close,
+  getSession,
+  closeSession,
 };

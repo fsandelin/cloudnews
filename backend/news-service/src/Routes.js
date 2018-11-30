@@ -4,6 +4,23 @@ const { addRequest, checkRequestsCompletion } = require('./Requests');
 
 const router = express.Router();
 
+router.post('/fill_timespan', (req, res) => {
+  const {
+    service,
+    news,
+    timespan,
+  } = req.body;
+  if (service === undefined || news === undefined || timespan === undefined) res.status(400).send('Please send a valid request');
+  db.fillTimeSpan(service, news, timespan, (error) => {
+    if (error) {
+      res.status(500).send('Something went wrong, sorry about that.');
+    } else {
+      res.send('Seems to have done what you asked');
+      checkRequestsCompletion();
+    }
+  });
+});
+
 router.post('/new_articles', (req, res) => {
   const { service } = req.query;
   db.pushArticles(service, req.body.articles, (error) => {
@@ -41,6 +58,11 @@ router.post('/request/timespan', (req, res) => {
     res.sendStatus(200);
     addRequest(requestId, reqResources);
   }
+});
+
+router.get('/available_services', (req, res) => {
+  const availableServices = ['svt', 'tt'];
+  res.json(availableServices);
 });
 
 module.exports = router;
