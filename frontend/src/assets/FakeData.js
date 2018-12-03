@@ -77,5 +77,16 @@ export const fakeNewsList = [
       municipality: "",
       city: "stockholm"
     }
+  },
+  {
+    id: 8, title: "resarö STAD NYHET", lead: "sthubuntu", active: false,
+    timestamp: "2018-04-24 13:44",
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "reSarÖ"
+    }
   }
 ]
