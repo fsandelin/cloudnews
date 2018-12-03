@@ -12,29 +12,21 @@ const getters = {
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
     if(rootState.locations.selectedCity !== null) return getters.filterNewsSelectedCity;
-    else if(rootState.locations.selectedMunicipality !== null) return getters.filterNewsSelectedMunicipality;
-    else return getters.filterNewsSelectedCounty;
+    if(rootState.locations.selectedMunicipality !== null) return getters.filterNewsSelectedMunicipality;
+    if(rootState.locations.selectedCounty !== null) return getters.filterNewsSelectedCounty;
+    return [];
   },
   filterNewsSelectedCounty: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => {
-      const county = rootGetters.countyByName(news.location.county);
-      return county ? county.name === rootState.locations.selectedCounty : false;
-    })
+    return state.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty));
   },
   filterNewsSelectedMunicipality: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => {
-      const municipality = rootGetters.municipalityByName(news.location.municipality);
-      return municipality ? municipality.name === rootState.locations.selectedMunicipality : false;
-    });
+    return state.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality));
   },
   filterNewsSelectedCity: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => {
-      const city = rootGetters.cityByName(news.location.city);
-      return city ? city.name === rootState.locations.selectedCity : false;
-    })
+    return state.newsList.filter(news => (news.location.city === rootState.locations.selectedCity));
   },
   selectedCountyNews: (state, getters, rootState) => {
-    return state.newsList.filter(({ location }) => location.county === rootState.locations.selectedCounty)
+    return state.newsList.filter(({ location }) => (location.county === rootState.locations.selectedCounty));
   },
   newsByCounty: (state, getters, rootState) => {
     return rootState.locations.counties.map(county => {
@@ -91,7 +83,7 @@ const getters = {
 }
 
 const actions = {
-  addNews: ({ state, commit, rootGetters }, news) => {
+  addNews: ({ state, commit, rootGetters, rootState }, news) => {
     if (state.newsList.find(x => x.id === news.id)) return
 
     if (dateIsBefore(news.timestamp, rootState.time.newsStartDate)) return
@@ -107,6 +99,7 @@ const actions = {
     if (city) {
       location = {
         ...location,
+        city: city.name,
         municipality: city.municipality,
         county: city.county,
         country: 'sweden'
@@ -117,6 +110,7 @@ const actions = {
     if (municipality) {
       location = {
         ...location,
+        municipality: municipality.name,
         county: municipality.county,
         country: 'sweden'
       }
@@ -126,6 +120,7 @@ const actions = {
     if (county) {
       location = {
         ...location,
+        county: county.name,
         country: 'sweden'
       }
     }
