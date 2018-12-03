@@ -5,7 +5,7 @@ const routes = require('./src/Routes');
 
 const app = express();
 
-app.use(parser.json({ extended: true }));
+app.use(parser.json({ extended: true, limit: '1mb' }));
 app.use('/api', routes);
 
 app.listen(process.env.PORT, () => {
