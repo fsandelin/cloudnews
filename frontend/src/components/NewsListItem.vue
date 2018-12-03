@@ -40,13 +40,12 @@ export default {
       'activeNewsItemId',
       'selectedCounty',
       'selectedMunicipality',
+      'selectedCity',
       'zoomValue'
     ]),
     applyFilter: function () {
-      if (this.selectedMunicipality) {
-        return this.showFilter && this.news.location.municipality === this.selectedMunicipality;
-      }
-
+      if (this.selectedCity) return this.showFilter && this.news.location.city === this.selectedCity;
+      if (this.selectedMunicipality) return this.showFilter && this.news.location.municipality === this.selectedMunicipality;
       return this.showFilter && this.news.location.county === this.selectedCounty;
     }
   },
