@@ -17,14 +17,15 @@ export const getNumArrayBetweenNums = (start, end) => {
 
 export const dateIsBefore = (date, comparedTo) => {
   if (date === null || comparedTo === null) return false
-  if (date.year > comparedTo.year) return false
-  if (date.year < comparedTo.year) return true
 
-  if (date.month > comparedTo.month) return false
-  if (date.month < comparedTo.month) return true
+  if (date.year === comparedTo.year) {
+    if (date.month === comparedTo.month) {
+      return date.day < comparedTo.day
+    }
+    return date.month < comparedTo.month
+  }
 
-  if (date.day > comparedTo.day) return false
-  if (date.day < comparedTo.day) return true
+  return date.year < comparedTo.year
 }
 
 export const weekNumsForMonth = (year, month) => {
