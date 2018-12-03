@@ -15,7 +15,7 @@
           v-bind:key="municipality.key"
           v-show="municipality.active"
           v-bind:d="municipality.path"
-          v-on:click="municipalityClicked(municipality)">
+          v-on:click="municipalityClick(municipality)">
         </path>
         <path
           class="county"
@@ -73,11 +73,7 @@ export default {
       'countyClick',
       'municipalityClick',
       'setZoomValue',
-    ]),
-    municipalityClicked: function(municipality) {
-      this.clickedMunicipality = municipality.name;
-      this.municipalityClick(municipality);
-    }
+    ])
   }
 }
 </script>
