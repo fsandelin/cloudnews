@@ -7,15 +7,15 @@
                     active: news.id === activeNewsItemId,
                     'bottom-shadow': this.hover,
                     filter: this.applyFilter }"
-    class="news-item flex-centering light-border-bottom"
+    class="news-item flex-col light-border-bottom"
     v-bind:key="news.id"
     >
-    <p class="title flex-centering">
+    <p class="title flex-col">
       {{ news.title }}
     </p>
-    <p class="subtitle flex-centering">
+    <p class="subtitle flex-col">
       <span>{{ news.source }}</span>
-      <span>{{ news.timestamp }}</span>
+      <span>{{ prettifyDateObject(news.timestamp) }}</span>
     </p>
   </li>
 </template>
@@ -23,6 +23,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { mapZoom, longTransitionToCounty } from '../store/d3Zoom';
+import { prettifyDateObject } from '../store/helpers';
 
 export default {
   name: 'newslistitem',
@@ -54,10 +55,13 @@ export default {
       this.toggleActive(news)
       const county = this.countyByName(news.location.county);
       if (this.selectedCounty !== previousCount) longTransitionToCounty(this.mapZoom, county);
-      
+
     },
     toggleHover: function () {
       this.hover = !this.hover;
+    },
+    prettifyDateObject: function (dateObj) {
+      return prettifyDateObject(dateObj)
     }
   }
 }

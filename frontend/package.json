@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "d3": "^5.7.0",
+    "moment": "^2.22.2",
     "npm": "^6.4.1",
     "socket.io-client": "^2.1.1",
     "topojson": "^3.0.2",

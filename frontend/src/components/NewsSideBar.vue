@@ -1,6 +1,6 @@
 <template>
   <div id="news-sidebar" class="right-shadow">
-      <div class="header flex-centering bottom-shadow light-border-bottom">
+      <div class="header flex-col bottom-shadow light-border-bottom">
         <img
           class="logo"
           v-bind:src="logoWithText"

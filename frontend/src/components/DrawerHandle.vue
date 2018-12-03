@@ -1,7 +1,7 @@
 <template>
   <div
     id="drawerhandle"
-    class="flex-centering"
+    class="flex-col"
     v-on:click="toggleDrawer"
     v-bind:class="{ closed: !isOpen }">
     <div>

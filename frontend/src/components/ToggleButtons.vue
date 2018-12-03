@@ -1,5 +1,5 @@
 <template>
-  <div class="toggle-buttons flex-centering">
+  <div class="toggle-buttons flex-row">
     <togglebutton
       v-for="item in items"
       v-bind:key="item.name"

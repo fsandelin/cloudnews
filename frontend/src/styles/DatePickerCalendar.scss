@@ -1,0 +1,78 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+.calendar {
+  flex: 1;
+  width: 240px;
+  margin: 0 auto;
+
+  .week-days {
+    height: 25px;
+
+    color: $darkgrey;
+
+    .day {
+      width: 30px;
+      height: 100%;
+    }
+  }
+
+  .wrapper {
+    flex: 1;
+
+    .week-numbers {
+      width: 30px;
+      color: $lightgrey;
+
+      .week {
+        flex: 1;
+      }
+    }
+
+    .days {
+      flex: 1;
+      color: $white;
+
+      .row {
+        height: 25px;
+
+        .day {
+          flex: 1;
+          cursor: pointer;
+
+          &.active {
+            background-color: $darkgreen;
+            color: $white;
+          }
+
+          &:not(.active):not(:hover) {
+            &.current-month {
+              color: $darkblue;
+            }
+
+            &:not(.current-month) {
+              color: $superlightblue;
+            }
+
+            &.in-between-selected {
+              background-color: $darkgreen;
+              color: $white;
+            }
+
+            &.in-between-hover:not(.in-between-selected) {
+              background-color: $lightgrey;
+              color: $white;
+            }
+          }
+
+
+          &:hover {
+            background-color: $lightgreen;
+            color: $white;
+            box-shadow: 3px 3px 5px -2px $shadowblack;
+          }
+        }
+      }
+    }
+  }
+}
