@@ -69,7 +69,7 @@ app.get('/api/polisens_nyheter', (req, res) => {
 	const api_url = 'https://polisen.se/api/events';
 	request.get({url: api_url}, (resp, err, body) => {
 		const news = getNewsFromNewsList(JSON.parse(body));
-		axios.post(`http://{NEWS_SERVICE_HOST}:{NEWS_SERVICE_PORT}/api/articles`, {
+		axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/articles`, {
 			articles: news
 		})
 		.then((res) => {
