@@ -19,11 +19,10 @@ const actions = {
     }
   },
   toggleActive: ({ rootState, dispatch }, news) => {
-    if (news.id === rootState.news.activeNewsItemId) dispatch('toggleDrawer')
-    else dispatch('setActiveNewsItemId', news.id)
-    dispatch('selectCounty', news.location.county)
-    dispatch('selectMunicipality', news.location.municipality)
-    dispatch('selectCity', news.location.city)
+    dispatch('setActiveNewsItemId', news.id);
+    if(news.location.county !== "") dispatch('selectCounty', news.location.county);
+    if(news.location.municipality !== "") dispatch('selectMunicipality', news.location.municipality);
+    if(news.location.city !== "") dispatch('selectCity', news.location.city);
   }
 }
 
