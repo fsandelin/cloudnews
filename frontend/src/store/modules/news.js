@@ -1,4 +1,4 @@
-import { cleanString } from '../helpers';
+import { cleanString, dateIsBefore } from '../helpers';
 
 const state = {
   newsList: [],
@@ -61,6 +61,10 @@ const actions = {
   addNews: ({ rootState, state, commit }, news) => {
 
     if (state.newsList.find(x => x.id === news.id)) return
+
+    if (dateIsBefore(news.timestamp, rootState.time.newsStartDate)) return
+    if (rootState.time.newsEndDate !== null &&
+        dateIsBefore(rootState.time.newsEndDate, news.timestamp)) return
 
     let location = { ...news.location }
     for (const key of Object.keys(location)) {

@@ -1,7 +1,7 @@
 <template>
   <div class="header flex-row">
 
-    <i v-on:click="startDate !== null ? toggleDatePicker() : null"
+    <i v-on:click="startDate !== null ? toggleDatePicker() && saveNewDates() : null"
        v-bind:class="{ 'in-active': startDate === null }"
        class="material-icons">check</i>
 
@@ -16,7 +16,7 @@
           class="material-icons next">navigate_next</i>
     </div>
 
-    <i v-on:click="toggleDatePicker"
+    <i v-on:click="() => toggleDatePicker() && discardNewDates()"
        class="material-icons">cancel</i>
 
   </div>
@@ -40,6 +40,8 @@ export default {
       'moveCalendarBackwards',
       'moveCalendarForwards',
       'toggleDatePicker',
+      'saveNewDates',
+      'discardNewDates',
     ])
   },
 }

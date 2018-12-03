@@ -20,6 +20,8 @@ const state = {
   weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth()+1),
   startDate: { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() },
   endDate: null,
+  newsStartDate: { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() },
+  newsEndDate: null,
   hoverDate: null,
 }
 
@@ -30,6 +32,8 @@ const getters = {
   weekNumbers: state => state.weekNumbers,
   startDate: state => state.startDate,
   endDate: state => state.endDate,
+  newsStartDate: state => state.newsStartDate,
+  newsEndDate: state => state.newsEndDate,
   hoverDate: state => state.hoverDate,
   dateBetween: _ => (date, edgeDate1, edgeDate2) => {
     return (dateIsBefore(edgeDate1, date) && dateIsBefore(date, edgeDate2)) ||
@@ -110,6 +114,22 @@ const actions = {
     } else {
       commit('toggleHoverDate', date)
     }
+  },
+  saveNewDates: ({ state, commit }) => {
+    commit('saveDates', {
+      newsStartDate: state.startDate,
+      newsEndDate: state.endDate,
+      startDate: state.startDate,
+      endDate: state.endDate
+    })
+  },
+  discardNewDates: ({ state, commit }) => {
+    commit('saveDates', {
+      newsStartDate: state.newsStartDate,
+      newsEndDate: state.newsEndDate,
+      startDate: state.newsStartDate,
+      endDate: state.newsEndDate
+    })
   }
 }
 
@@ -125,6 +145,12 @@ const mutations = {
   },
   toggleHoverDate(state, date) {
     state.hoverDate = date
+  },
+  saveDates(state, { startDate, endDate, newsStartDate, newsEndDate }) {
+    state.startDate = startDate
+    state.endDate = endDate
+    state.newsStartDate = newsStartDate
+    state.newsEndDate = newsEndDate
   }
 }
 
