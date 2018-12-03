@@ -19,8 +19,8 @@ const logger = winston.createLogger({
 
 function applyEventListeners(io) {
   io.use((socket, next) => {
-    const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-    const { services } = JSON.parse(servicesString.trim());
+    const servicesString = socket.handshake.query.services
+    const services = servicesString.split('+').map(service => service.trim())
     let verified = true;
     for (const service of services) {
       if (availableServices.indexOf(service) === -1) {
@@ -35,8 +35,8 @@ function applyEventListeners(io) {
 
   io.on('connection', (socket) => {
     logger.info('Someone connected');
-    const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-    const { services } = JSON.parse(servicesString.trim());
+    const servicesString = socket.handshake.query.services
+    const services = servicesString.split('+').map(service => service.trim())
     const clientId = uuid();
 
     clients[clientId] = {
