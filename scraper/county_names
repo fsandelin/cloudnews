@@ -1,21 +1,26 @@
-östergötland, 
-blekinge, 
-dalarna, 
-gävleborg, 
-gotland, 
-halland, 
-jämtland, 
-jönköping, 
-kalmar, 
-kronoberg, 
-norrbotten, 
-örebro, 
-södermanland, 
-skåne, 
-stockholm, 
-uppsala, 
-värmland, 
-västerbotten, 
-västernorrland, 
-västmanland, 
-västra götaland
+ 
+
+ 
+blekinge,       0
+dalarna,        1
+gävleborg,      2 
+gotland,        -
+halland,        3
+jämtland,       5
+jönköping,      6
+kalmar,         -
+kronoberg,      -
+norrbotten,     7
+skåne,          8
+stockholm,      10
+södermanland,   12
+uppsala,        13
+värmland,       14
+västra götaland 15
+västerbotten,   16
+västernorrland, 17
+västmanland,    18
+örebro,         19
+östergötland,   20
+
+4, 9 , 11

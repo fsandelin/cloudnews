@@ -2,8 +2,7 @@
   <g id="notificationsMunicipality">
     <g
       v-for="municipality of newsByMunicipality"
-      v-bind:key="'municipalityLine'+municipality.name">
-
+      v-bind:key="'municipalityNoticication'+municipality.name">
       <!--LINES-->
       <transition-group tag="g"
         v-on:beforeEnter="(el, done) => lineBeforeEnter(el, done, municipality)"

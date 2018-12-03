@@ -4,6 +4,9 @@
       v-bind:showFilter="true"
     ></newssidebar>
 
+    <datepicker v-if="showDatePicker"></datepicker>
+    <datepickertoggler v-if="!showDatePicker"></datepickertoggler>
+
     <mainsection></mainsection>
 
     <drawer
@@ -30,6 +33,8 @@
 
 <script>
 import Main from './Main'
+import DatePicker from './DatePicker'
+import DatePickerToggler from './DatePickerToggler'
 import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
 import Drawer from './Drawer'
@@ -57,7 +62,8 @@ export default {
       'activeNewsItem',
       'activeNewsItemId',
       'selectedCounty',
-      'newsSources'
+      'newsSources',
+      'showDatePicker'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
@@ -72,6 +78,8 @@ export default {
   },
   components: {
     'mainsection': Main,
+    'datepicker': DatePicker,
+    'datepickertoggler': DatePickerToggler,
     'drawernewsitem': DrawerNewsItem,
     'newssidebar': NewsSideBar,
     'drawer': Drawer,

@@ -24,6 +24,8 @@
           v-on:click="countyClick(county)">
         </path>
       </g>
+      <mapCities>
+      </mapCities>
       <notifications>
       </notifications>
     </g>
@@ -33,53 +35,41 @@
 <script>
 import * as d3 from "d3";
 import Notifications from './Notifications'
+import MapCities from './MapCities'
+import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "d3map",
   components: {
-    'notifications': Notifications
+    'notifications': Notifications,
+    'mapCities': MapCities
+  },
+  data () {
+    return {
+      mapZoom: mapZoom(this.setZoomValue),
+    }
   },
   mounted: function() {
-    const RATIO = 2.1;
-    const width = d3.select("#main-section").node().getBoundingClientRect().width;
-    const height = d3.select("#main-section").node().getBoundingClientRect().height;
-    const SIZE =
-        width * RATIO < height
-          ? width/500
-          : height/500;
-
-
-    const zoomed = () => {
-      d3.select(".map").attr("transform", d3.event.transform);
-      if (d3.event.transform.k !== this.zoomValue) {
-        this.setZoomValue(d3.event.transform.k);
-      }
-    }
-
-    const zoom = d3
-      .zoom()
-      .scaleExtent([0.7, 50])
-      .on("zoom", zoomed);
-
-    d3.select(".mapContainer").call(zoom);
-    d3.select(".mapContainer").call(zoom.translateTo, 600,255);
-    d3.select(".mapContainer").call(zoom.scaleTo, 0.9*SIZE);
-
+    d3.select(".mapContainer").call(this.mapZoom).on("dblclick.zoom", () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))));
+    initialZoom(this.mapZoom);
   },
   computed: {
     ...mapGetters([
       'countries',
       'counties',
       'municipalities',
-      'zoomValue'
+      'cities',
+      'zoomValue',
+      'selectedCounty',
+      'countyByName',
     ])
   },
   methods: {
     ...mapActions([
       'countyClick',
-      'setZoomValue'
-    ])
+      'setZoomValue',
+    ]),
   }
 }
 </script>

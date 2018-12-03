@@ -78,13 +78,13 @@ export default {
       Velocity(el,  { r: r }, { duration: 40 });
     },
     circleSize: function (length) {
-      return Math.min(9,(4+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));
+      return Math.min(12,(10+(length/7))) * (1/Math.max(this.zoomValue/1.5, 1.0));
     },
     fontSize: function (length) {
-      return Math.min(10,(5+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));
+      return Math.min(13,(11+(length/7))) * (1/Math.max(this.zoomValue/1.5, 1.0));
     },
     yOffset: function (length) {
-      return Math.min(10,(5+(length/7))/3) * (1/Math.max(this.zoomValue/2.5, 1.0));
+      return Math.min(13,(11+(length/7))/3) * (1/Math.max(this.zoomValue/1.5, 1.0));
     },
   }
 }
