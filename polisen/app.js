@@ -70,7 +70,8 @@ const getNewsFromApi = () => {
   // const datetime = {'datetime': date};
   const datetime = {};
   request.get({url: api_url, qs:datetime}, (resp, err, body) => {
-		const news = getNewsFromNewsList(JSON.parse(body));
+    const news = getNewsFromNewsList(JSON.parse(body));
+    const timespan = {from: '', until: ''};
 		axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`, {
       service: 'polisen',
       news: news,
