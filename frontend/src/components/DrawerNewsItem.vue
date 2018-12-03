@@ -1,6 +1,6 @@
 <template>
   <div id="active-news-item">
-    <div class="header flex-centering">
+    <div class="header flex-row">
       <i class="material-icons back"
         v-on:click="setActiveNewsItemId(null)">
         reply
@@ -14,7 +14,7 @@
         {{ activeNewsItem.url ? 'link' : 'link_off' }}
       </i>
     </div>
-    <p class="flex-centering">
+    <p class="flex-col">
       {{ activeNewsItem.lead }}
     </p>
     <img
