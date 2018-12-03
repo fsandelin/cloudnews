@@ -1,30 +1,33 @@
 const R = require('request');
 const db = require('./controllers/DatabaseInterface');
+const SH = require('./ScraperHandler');
 require('dotenv').config();
 
-const { MIDDLEWARE_HOST, MIDDLEWARE_PORT, SCRAPER_PORT } = process.env;
+const {
+  MIDDLEWARE_HOST, MIDDLEWARE_PORT, SVT_PORT, POLISEN_PORT,
+} = process.env;
 const MIDDLEWARE_ROUTE = '/complete_request';
 const COMPLETE_REQUEST_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}${MIDDLEWARE_ROUTE}`;
-const SCRAPER_URL = `http://localhost:${SCRAPER_PORT}/getnews/daterange`;
+const SCRAPER_URL_SVT = `http://localhost:${SVT_PORT}/getnews/daterange`;
+const SCRAPER_URL_POLISEN = `http://localhost:${POLISEN_PORT}/api/polisens_nyheter`;
+
 
 const requests = {};
 
 
 // Should do some api calls to scrape missing timespans for a given service
 function scrapeRequestedResources(neededTimespans) {
-  console.log(`We need to scrape for ${neededTimespans.length} missing timespans`);
-  console.log(neededTimespans);
-  const options = {
-    url: SCRAPER_URL,
-    body: neededTimespans,
-    json: true,
-  };
-  R.post(options, (error, response) => {
-    if (error) {
-      console.log('Got a goddamn error');
-      console.log(error);
-    } else {
-      console.log(response);
+  neededTimespans.forEach((neededTimespan) => {
+    switch (neededTimespan.service) {
+      case 'svt':
+        SH.svt(neededTimespan);
+        break;
+      case 'polisen':
+        SH.polisen(neededTimespan);
+        break;
+      default:
+        console.log('Cannot find the desired scraper-service');
+        break;
     }
   });
 }
