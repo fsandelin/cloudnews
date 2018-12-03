@@ -4,6 +4,7 @@
 #drawer-news-list {
   display: flex;
   flex-direction: column;
+  min-height: 0;
 
   .title {
     color: $white;
@@ -12,9 +13,5 @@
     font-weight: bold;
     padding: 15px 0;
     text-transform: capitalize;
-  }
-  .news-list {
-    flex: 1;
-    overflow-y: scroll;
   }
 }

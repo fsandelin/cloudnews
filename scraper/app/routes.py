@@ -8,6 +8,21 @@ from scrapers.data.svt_globals import used_regions
 import requests
 import json
 import time
+from time import sleep
+
+from multiprocessing import Process
+
+def f(name):
+    for i in range(10):
+        sleep(1)
+        print('hello', name)
+
+@app.route('/test', methods=['POST'])
+def test():
+    p = Process(target=f, args=('filip',))
+    p.start()
+    return "done"
+
 
 @app.route('/getnews/daterange', methods=['POST'])
 def get_date_ranges():
@@ -26,9 +41,11 @@ def get_date_ranges():
         from_ = datetime.combine(from_.date(), datetime.min.time())
         until_ = datetime.combine(until_.date(), datetime.max.time())
 
-        news_list += get_news_selected_regions(from_, until_)
-    
-    return jsonify(news_list)
+        #news_list += get_news_selected_regions(from_, until_)
+        p = Process(target=get_news_selected_regions, args=(from_, until_))
+        p.start()
+
+    return jsonify('message: Did shit!')
 
 @app.route('/getnews/daterange2', methods=['POST'])
 def get_news_date_range():

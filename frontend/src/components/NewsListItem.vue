@@ -2,43 +2,44 @@
   <li
     @mouseenter="toggleHover(news)"
     @mouseleave="toggleHover(news)"
-    v-on:click="toggleActive(news)"
+    v-on:click="itemClicked(news)"
     v-bind:class="{ hover: this.hover && news.id !== activeNewsItemId,
                     active: news.id === activeNewsItemId,
                     'bottom-shadow': this.hover,
                     filter: this.applyFilter }"
-    class="news-item flex-centering light-border-bottom"
+    class="news-item flex-col light-border-bottom"
     v-bind:key="news.id"
     >
-    <p class="title flex-centering">
+    <p class="title flex-col">
       {{ news.title }}
     </p>
-    <p class="source flex-centering">
-      {{ news.source }}
+    <p class="subtitle flex-col">
+      <span>{{ news.source }}</span>
+      <span>{{ prettifyDateObject(news.timestamp) }}</span>
     </p>
   </li>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import {
-  getters as g,
-  actions as a
-} from '../store/constants'
+import { mapZoom, longTransitionToCounty } from '../store/d3Zoom';
+import { prettifyDateObject } from '../store/helpers';
 
 export default {
   name: 'newslistitem',
   props: ['showFilter', 'news'],
   data () {
     return {
-      hover: false
+      hover: false,
+      mapZoom: mapZoom(this.setZoomValue)
     }
   },
   computed: {
     ...mapGetters([
-      g.COUNTY_BY_NAME,
-      g.ACTIVE_NEWS_ITEM_ID,
-      g.SELECTED_COUNTY
+      'countyByName',
+      'activeNewsItemId',
+      'selectedCounty',
+      'zoomValue'
     ]),
     applyFilter: function () {
       return this.showFilter && this.news.location.county === this.selectedCounty;
@@ -46,10 +47,21 @@ export default {
   },
   methods: {
     ...mapActions([
-      a.TOGGLE_ACTIVE
+      'toggleActive',
+      'setZoomValue'
     ]),
+    itemClicked: function(news) {
+      const previousCount = this.selectedCounty;
+      this.toggleActive(news)
+      const county = this.countyByName(news.location.county);
+      if (this.selectedCounty !== previousCount) longTransitionToCounty(this.mapZoom, county);
+
+    },
     toggleHover: function () {
       this.hover = !this.hover;
+    },
+    prettifyDateObject: function (dateObj) {
+      return prettifyDateObject(dateObj)
     }
   }
 }
