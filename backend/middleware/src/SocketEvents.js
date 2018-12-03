@@ -22,9 +22,7 @@ function applyEventListeners(io) {
     const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
     const { services } = JSON.parse(servicesString.trim());
     let verified = true;
-    let service = null;
-    for (let i = 0; i < services.length; i++) {
-      service = services[i];
+    for (const service of services) {
       if (availableServices.indexOf(service) === -1) {
         verified = false;
         logger.error(`Tried to subscribe to the following unknown service: ${service}`);
