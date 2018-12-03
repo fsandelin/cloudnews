@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'toggleActive',
       'setActiveNewsItemId'
     ]),
     openLink: function () {
