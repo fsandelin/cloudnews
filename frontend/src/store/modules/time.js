@@ -9,6 +9,7 @@ import {
   dateIsBefore,
   weekNumsForMonth,
   sameDates,
+  prettifyDateObject
 } from '../helpers';
 
 const today = new Date();
@@ -115,13 +116,16 @@ const actions = {
       commit('toggleHoverDate', date)
     }
   },
-  saveNewDates: ({ state, commit }) => {
+  saveNewDates: ({ state, commit, dispatch }) => {
     commit('saveDates', {
       newsStartDate: state.startDate,
       newsEndDate: state.endDate,
       startDate: state.startDate,
       endDate: state.endDate
     })
+    const from = prettifyDateObject(state.startDate)
+    const to = prettifyDateObject(state.endDate)
+    dispatch('makeSocketTimeSpanRequest', { from, to })
   },
   discardNewDates: ({ state, commit }) => {
     commit('saveDates', {
