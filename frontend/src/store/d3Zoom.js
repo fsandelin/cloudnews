@@ -1,4 +1,6 @@
-import * as d3 from "d3";
+import d3 from '../store/d3Importer.js';
+import { event as d3Event } from 'd3-selection';
+
 
 export const sizeOfCurrentWindow = () => { 
   const ratio = 2.1;
@@ -18,10 +20,10 @@ export const mapZoom = (setZoomValue) => {
     .zoom()
     .scaleExtent([0.2, 50])
     .on("zoom", () => {
-      d3.select(".map").attr("transform", d3.event.transform);
-      if (d3.event.transform.k !== currentZoom) {
-        currentZoom = d3.event.transform.k;
-        setZoomValue(d3.event.transform.k);
+      d3.select(".map").attr("transform", d3Event.transform);
+      if (d3Event.transform.k !== currentZoom) {
+        currentZoom = d3Event.transform.k;
+        setZoomValue(d3Event.transform.k);
       }
     })
 }
@@ -63,8 +65,8 @@ export const initialZoom = (mapZoom) => {
   d3.select(".mapContainer").transition().duration(750).call(mapZoom.scaleTo, 0.45*size);
 }
 
-const projection = d3.geoMercator().scale(2000).translate([-705.9955609952726, 3262.481908764047])
+// const projection = d3.geoMercator().scale(2000).translate([-705.9955609952726, 3262.481908764047])
 
-export const XYFromLatLong = (lat, long) => {
-  return projection([long,lat])
-}
+// export const XYFromLatLong = (lat, long) => {
+//   return projection([long,lat])
+// }

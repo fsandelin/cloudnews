@@ -1,5 +1,16 @@
-import moment from 'moment'
 import { months as m, weekDays as wd } from './constants';
+
+Date.prototype.getWeek = function () {
+  var target  = new Date(this.valueOf());
+  var dayNr   = (this.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  var firstThursday = target.valueOf();
+  target.setMonth(0, 1);
+  if (target.getDay() != 4) {
+      target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+  }
+  return 1 + Math.ceil((firstThursday - target) / 604800000);
+}
 
 export const cleanString = s => s.trim().toLowerCase()
 
@@ -39,7 +50,8 @@ export const dateIsBefore = (date, comparedTo) => {
 }
 
 export const weekNumsForMonth = (year, month) => {
-  const startWeek = moment(`${year}-${month}-1`, "YYYY-MM-DD").isoWeek()
+  const firstDayOfMonth = new Date(year, month - 1, 1);
+  const startWeek = firstDayOfMonth.getWeek()
   let weeks = []
   for (let i = startWeek; i < startWeek+6; i++) {
     weeks = [ ...weeks, i === 53 ? 1 : i ]

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import * as d3 from "d3";
+import d3 from '../store/d3Importer.js';
 import Notifications from './Notifications'
 import MapCities from './MapCities'
 import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';

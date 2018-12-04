@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: './src/main.js',
@@ -85,6 +86,12 @@ module.exports = {
     hints: false
   },
   devtool: '#eval-source-map'
+}
+
+if (process.env.ANALYSE === "true") {
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new BundleAnalyzerPlugin()
+  ])
 }
 
 if (process.env.NODE_ENV === 'production') {
