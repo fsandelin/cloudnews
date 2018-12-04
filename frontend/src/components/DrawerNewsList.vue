@@ -1,6 +1,6 @@
 <template>
   <div id="drawer-news-list">
-    <div class="title light-border-bottom">
+    <div class="header flex-row light-border-bottom">
       <i class="material-icons back"
         v-if="selectedCity"
         v-on:click="selectCity(null)">
@@ -11,11 +11,13 @@
         v-on:click="selectMunicipality(null)">
         reply
       </i>
-      {{ selectedCity ? 
-          selectedCity :
-          selectedMunicipality ? 
-            selectedMunicipality : 
-            selectedCounty }}
+      <p class="title">
+        {{ selectedCity ?
+            selectedCity :
+            selectedMunicipality ?
+              selectedMunicipality :
+              selectedCounty }}
+      </p>
     </div>
     <newslist
       v-bind:filteredNewsList="filteredNewsList"
