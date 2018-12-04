@@ -17,6 +17,8 @@ export const getNumArrayBetweenNums = (start, end) => {
 
 export const dateIsBefore = (date, comparedTo) => {
   if (date === null || comparedTo === null) return false
+  date = convertDateItemsToInts(date);
+  comparedTo = convertDateItemsToInts(comparedTo);
 
   if (date.year === comparedTo.year) {
     if (date.month === comparedTo.month) {
