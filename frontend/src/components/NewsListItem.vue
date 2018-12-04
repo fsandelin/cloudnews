@@ -59,7 +59,6 @@ export default {
       this.toggleActive(news)
       const activeCountyAfterClick = this.countyByName(news.location.county);
       if (this.selectedCounty !== activeCountyBeforeClick) longTransitionToCounty(this.mapZoom, activeCountyAfterClick);
-
     },
     toggleHover: function () {
       this.hover = !this.hover;
