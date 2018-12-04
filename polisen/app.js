@@ -1,5 +1,4 @@
 require('dotenv').config();
-const request = require('request');
 const app = require('express')();
 const axios = require('axios');
 const bodyParser = require('body-parser');
@@ -57,7 +56,7 @@ const getNewsFromNewsList = (newsList) => {
 			title: news.type,
 			text: news.summary,
 			url: news.url,
-			timestamp: news.datetime,
+			datetime: news.datetime,
 			country: 'Sweden',
 			county: county_temp,
 			municipality: municipality,
@@ -68,31 +67,52 @@ const getNewsFromNewsList = (newsList) => {
 }
 
 const sendNewsToNewsService = (news, timespan) => {
+  console.log(timespan);
   axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`, {
       service: 'polisen',
       news: news,
       timespan: timespan
 		})
 		.then((res) => {
-      //console.log(res);
-      console.log("Successful!")
+      console.log("Successfully sent news to news service!")
 		})
 		.catch((error) => {
 			console.log(error);
 		});
 };
 
-app.post('/api/polisens_nyheter', (req, res) => {
-  const {from, until} = req.body.neededTimespan;
+const getNewsFromPolisen = (date) => {
   const api_url = 'https://polisen.se/api/events';
-  const datetime = {'datetime': from};
+  return axios.get(api_url, {
+      params: {
+        datetime: date
+      }
+    });
+};
 
-  request.get({url: api_url, qs:datetime}, (resp, err, body) => {
-    const news = getNewsFromNewsList(JSON.parse(body));
-    const timespan = {from: news[news.length-1].timestamp, until: news[0].timestamp};
+app.post('/api/polisens_nyheter', (req, res) => {
+  let {from, until} = req.body.neededTimespan;
+  if (until === '') until = from;
+  
+  let dateArray = [];
+  for (let date = new Date(until); date >= new Date(from); date.setDate(date.getDate()-1)) {
+    dateArray.push(date.toISOString().substr(0, 10));
+  }
+  
+  let reqArray = dateArray.map(date => getNewsFromPolisen(date));
+  axios.all(reqArray)
+    .then((res) => {
+      let newsLists = res.map(r => r.data);
+      let newsList = [];
+      for (const n of newsLists) newsList.push(...n);
 
-    sendNewsToNewsService(news, timespan);
-  });
+      const news = getNewsFromNewsList(newsList);
+      const timespan = {from: news[news.length-1].datetime.substr(0, 10), until: news[0].datetime.substr(0, 10)};
+      sendNewsToNewsService(news, timespan);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   
   res.sendStatus(200);
 });
