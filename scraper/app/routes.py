@@ -41,7 +41,6 @@ def get_date_ranges():
         from_ = datetime.combine(from_.date(), datetime.min.time())
         until_ = datetime.combine(until_.date(), datetime.max.time())
 
-        #news_list += get_news_selected_regions(from_, until_)
         p = Process(target=get_news_selected_regions, args=(from_, until_))
         p.start()
 

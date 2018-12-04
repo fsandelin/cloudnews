@@ -38,10 +38,7 @@ def get_city(city):
             if city_lat is not None:
                 city['latitude'] = city_lat.text
 
-
     return city
-        #print(city['name'])
-
     
 
 async def get_cities(cities):
@@ -86,9 +83,7 @@ def get_wiki_table(url, filename, data_names, index):
 
 
     rows = table_body.find_all('tr')
-    #[s.extract() for s in rows.find('script')]
-    #scripts = rows.find_all('span')
-    #scripts.extract()
+
     i = 0
     for row in rows:
         cols = row.find_all('td')
@@ -100,7 +95,6 @@ def get_wiki_table(url, filename, data_names, index):
                 s.extract()
         if len(cols) is not 0:
             url = cols[0].find('a')['href']
-            #print(url)
 
         cols = [ele.text.strip() for ele in cols]
         city = {}
@@ -163,7 +157,6 @@ def main():
     url = "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_Sveriges_kommuner"
     apan = "http://kodapan.se/geodata/data/2015-06-26/platser.osm.xml"
     get_wiki_table(url2, "test.py", ["tatort", "lan"], [0,2])
-    #get_json()
 
 if __name__ == "__main__":
     main()

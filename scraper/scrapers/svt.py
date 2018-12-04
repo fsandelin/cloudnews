@@ -116,7 +116,6 @@ def reform_api_news(svt_news_list):
 
     for svt_news in svt_news_list:
         news = {}
-        #print(svt_news['image'])
         # Extract the wanted information
         if 'title'              in svt_news:
             news['title']       = svt_news['title']
@@ -143,7 +142,6 @@ def reform_api_news(svt_news_list):
         
         news['id'] = str(uuid.uuid4())
         news['source']  = 'svt'
-        #json_news = json.dumps(news, indent=4, sort_keys=True, default=str)
         cloud_news.append(news)
 
     return cloud_news
@@ -176,7 +174,7 @@ def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
 
 def check_start_page(until_, region, page):
     news_list = get_api_news_region(region=region, page=page)
-    #print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", until_)
+    print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", until_)
     found = False
     value = -1
     if len(news_list) == 0: 
@@ -198,7 +196,7 @@ def check_start_page(until_, region, page):
 
 def check_end_page(from_, region, page):
     news_list = get_api_news_region(region=region, page=page)
-    #print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", from_)
+    print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", from_)
     found = False
     value = 1
     if len(news_list) == 0: 
@@ -243,9 +241,7 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
             for i in end_pages
         ]
         response_list = await asyncio.gather(*futures)
-        #for response in response_list:
-            #print(response)
-           # pass
+
     return response_list
 
 def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
@@ -257,7 +253,7 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     items = int(items)
     max_pages = math.ceil(items / 50)
 
-    #print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
+    print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
     region_name = start_obj['auto']['content'][0]['sectionDisplayName']
     obj_list = start_obj['auto']['content']
 
@@ -271,7 +267,6 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     start_page = math.floor(time_diff_start/days_per_page)
     end_page = math.floor(time_diff_end/days_per_page)
 
-    #print("Region:", region_name, "Starting:", start_page, "ending:", end_page)
     sleep(1)
     end_page_found = False
     start_page_found = False
@@ -369,9 +364,6 @@ def get_news_selected_regions_threads(from_, until_, regions=used_regions):
     arguments = [(from_, until_, region) for region in regions]
     result = p.starmap(get_news_region_thread, arguments)
     return result
-    #for region in regions:
-     #   selected_news += get_news_region_thread(from_, until_, region)
-    #return selected_news
 
 def get_news_region(from_, until_, region, use_web = False):
 
@@ -443,19 +435,13 @@ def get_news_region(from_, until_, region, use_web = False):
     for found, ele in news_list:
         if not found and use_web:
             temp_news = get_news(ele['url'], region_name)
-            #print(temp_news)
             temp_news = search_cloud_news(temp_news)[1]
             ele['location'] = temp_news['location']
         if 'city' in ele['location']:
             amount += 1
         located_news.append(ele)
-        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
 
     print("Amount of found cities:", amount)
-    #for ele in news:
-        #search_text(ele)
-
-    #return selected_news
     print("")
     return located_news
 

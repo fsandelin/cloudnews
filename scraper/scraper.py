@@ -68,8 +68,6 @@ def presenting_representing():
     # now - 2 weeks (14days)
 
     global used_regions
-    
-    #used_regions = [svt_regions[0],svt_regions[1]]
 
     until_ = datetime.now()
     from_  = until_ - timedelta(days = 14)
@@ -81,7 +79,6 @@ def presenting_representing():
     news_list = [json.dumps(ele, indent=4, sort_keys=True, default=str) for ele in news_list]
 
     # collect region names from the news, or store in different lists
-    
     news_dict_list = []
     region_names = set()
     for news in news_list:
@@ -91,13 +88,12 @@ def presenting_representing():
 
 
     print ("Total news:", len(news_list), "\tdatetime type:", type(json.loads(news_list[0])['datetime']))
-    # order by time
 
     # generate post commands towards the middleware at random times
     news_sorted_date = sorted(news_dict_list, key=lambda x: parser.parse(x['datetime']))
 
-    #for news in news_sorted_date:
-    #    print ("{:30}{:15}{:.20}".format(news['datetime'], news['location']['county'], news['title']))
+
+    print ("{:30}{:15}{:.20}".format(news['datetime'], news['location']['county'], news['title']))
 
     random_posts(news_sorted_date)
 
@@ -105,7 +101,6 @@ def test_time_range():
     from_  = datetime(2017, 12, 30)
     until_ = datetime(2018, 1, 1)
     api_obj = get_news_time_range(from_, until_)
-
 
     post_news(api_obj, "http://localhost:3000")
     print ("First object: ", json.loads(api_obj[FIRST])['datetime'])
@@ -144,7 +139,7 @@ def locate_single_news(news):
         news['location'] = temp_news['location']
 
     return news
-        # print (json.dumps(ele, indent=4, sort_keys=True, default=str))
+
 
 async def locate_threads(news_list):
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
@@ -160,7 +155,7 @@ async def locate_threads(news_list):
         news_list = []
         for news in await asyncio.gather(*futures):
             news_list.append(news)
-    #print(news_list[0])
+
     return news_list
 
 def locate_process(news_list):
@@ -181,7 +176,7 @@ def main():
     start_time = time()
     news_list = locate_news(news_list)
     
-    #print(news_list[1])
+
     news_group = []
     for news in news_list:
         news_group += news
@@ -193,8 +188,7 @@ def main():
 
     print("Amoun of regions:", len(news_list), "Amount of news:", len(news_group), "amount of found news:", i)
     print("--- %s seconds ---" % (time() - start_time))
-    #presenting_representing()
-    #test_page()
+
 
 if __name__ == "__main__":
     main() 

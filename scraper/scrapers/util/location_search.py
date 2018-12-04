@@ -25,6 +25,7 @@ def find_location(region, capital_words):
 
 
     location = {}
+    
     # look through county, muni, and then city
     city_found = False
 
@@ -45,7 +46,6 @@ def find_location(region, capital_words):
                     kommun_name = get_kommun_name(kommun)
                     location['city'] = city
                     location['municipality'] = kommun_name
-                    #print("Kommun short name:", kommun_name, "Kommun full name:", kommun)
                     city_found = True
                     break
         except KeyError:
@@ -75,24 +75,10 @@ def search_cloud_news(news):
 
     city_found, location = find_location(region, capital_words)
 
-    #print (local_tatort)
-    #for word in capital_words:
-    #    for city in local_tatort:
-    #        if word == city[0]:
-    #            location['city'] = city[0]
-    #            location['municipality'] = city[1]
-    #            location['conutry'] = "Sweden"
-    
-  
     location['county'] = region
     location['country'] = "Sweden"
 
     news['location'] = location
-
-    #print(text)
-    #print(capital_words, location)
-    #print(news['url'])
-    #print("")
 
     return (city_found, news)
     

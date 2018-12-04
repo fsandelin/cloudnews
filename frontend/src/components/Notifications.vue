@@ -7,12 +7,16 @@
     </notificationsCity>
 
     <notificationsMunicipality
+      v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
+      v-bind:updateNewsLengthForObjects="updateNewsLengthForObjects"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
       v-bind:yOffset="yOffset">
     </notificationsMunicipality>
 
     <notificationsCounty
+      v-bind:calculateNewsLengthForObjects="calculateNewsLengthForObjects"
+      v-bind:updateNewsLengthForObjects="updateNewsLengthForObjects"
       v-bind:circleSize="circleSize"
       v-bind:fontSize="fontSize"
       v-bind:yOffset="yOffset">
@@ -32,11 +36,6 @@ import NotificationsMunicipality from './NotificationsMunicipality';
 import NotificationsCounty from './NotificationsCounty';
 import NotificationsCountry from './NotificationsCountry';
 import { mapGetters, mapActions } from 'vuex';
-import {
-  newsSources as ns,
-  getters as g,
-  actions as a
-} from '../store/constants'
 
 export default {
   name: "notifications",
@@ -48,18 +47,44 @@ export default {
   },
   computed: {
     ...mapGetters([
-      g.ZOOM_VALUE,
+      'zoomValue',
     ])
   },
   methods: {
+    updateNewsLengthForObjects: function (list, lenList, refs, refPrefix) {
+      list.map(obj => {
+        if (!(lenList.map(m => m.name).includes(obj.name))){
+          lenList.push({name: obj.name, length: obj.news.length});
+        }
+
+        lenList.map(prevObj => {
+          if (obj.name === prevObj.name &&
+              obj.news.length !== prevObj.length) {
+                const el = refs[`${refPrefix}${obj.name}`];
+                this.animate(el);
+                prevObj.length = obj.news.length;
+              }
+        });
+      })
+    },
+    calculateNewsLengthForObjects: function (list) {
+      return list.map(obj => ({
+        name: obj.name, length: obj.news.length
+      }))
+    },
+    animate: function(el) {
+      let r = parseFloat(el[0].attributes.getNamedItem("r").value, 10);
+      Velocity(el,  { r: r*1.5 }, { duration: 80 });
+      Velocity(el,  { r: r }, { duration: 40 });
+    },
     circleSize: function (length) {
-      return Math.min(9,(4+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));
+      return Math.min(12,(10+(length/7))) * (1/Math.max(this.zoomValue/1.5, 1.0));
     },
     fontSize: function (length) {
-      return Math.min(10,(5+(length/7))) * (1/Math.max(this.zoomValue/2.5, 1.0));
+      return Math.min(13,(11+(length/7))) * (1/Math.max(this.zoomValue/1.5, 1.0));
     },
     yOffset: function (length) {
-      return Math.min(10,(5+(length/7))/3) * (1/Math.max(this.zoomValue/2.5, 1.0));
+      return Math.min(13,(11+(length/7))/3) * (1/Math.max(this.zoomValue/1.5, 1.0));
     },
   }
 }

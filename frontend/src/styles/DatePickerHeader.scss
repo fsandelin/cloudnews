@@ -1,0 +1,48 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+.header {
+  height: 50px;
+  color: $darkgreen;
+
+  i {
+    color: $darkblue;
+
+    &.in-active {
+      color: $lightgrey;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(.in-active) {
+      color: $darkgreen;
+    }
+
+    margin: auto 10px;
+    cursor: pointer;
+  }
+
+  .year-month {
+    flex: 1;
+
+    i {
+      color: $darkgreen;
+    }
+
+    p {
+      margin: 0 10px;
+      min-width: 40%;
+
+      .year {
+        font-size: 10px;
+      }
+
+      .month {
+        font-weight: bold;
+      }
+    }
+
+    .previous {
+      transform: scale(-1, 1);
+    }
+  }
+}

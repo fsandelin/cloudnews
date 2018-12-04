@@ -1,9 +1,4 @@
-import { cleanString } from '../helpers';
-import {
-  mutations as m,
-  actions as a,
-  socketEvents as se,
-} from '../constants';
+import { cleanString, dateIsBefore } from '../helpers';
 
 const state = {
   newsList: [],
@@ -67,6 +62,10 @@ const actions = {
 
     if (state.newsList.find(x => x.id === news.id)) return
 
+    if (dateIsBefore(news.timestamp, rootState.time.newsStartDate)) return
+    if (rootState.time.newsEndDate !== null &&
+        dateIsBefore(rootState.time.newsEndDate, news.timestamp)) return
+
     let location = { ...news.location }
     for (const key of Object.keys(location)) {
       location[key] = cleanString(location[key])
@@ -104,12 +103,12 @@ const actions = {
       }
     }
 
-    commit(m.ADD_NEWS, { ...news, location });
+    commit('addNews', { ...news, location });
   },
   addNewsList: ({ dispatch }, newsList) => {
-    newsList.map(news => dispatch(a.ADD_NEWS, news))
+    newsList.map(news => dispatch('addNews', news))
   },
-  setActiveNewsItemId: ({ commit }, id) => commit(a.SELECT_ACTIVE_NEWS_ITEM_ID, id),
+  setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
 }
 
 const mutations = {
