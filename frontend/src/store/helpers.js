@@ -24,9 +24,9 @@ const convertDateItemsToInts = ({ year, month, day }) => {
 }
 
 export const dateIsBefore = (date, comparedTo) => {
+  if (date === null || comparedTo === null) return false
   date = convertDateItemsToInts(date);
   comparedTo = convertDateItemsToInts(comparedTo);
-  if (date === null || comparedTo === null) return false
 
   if (date.year === comparedTo.year) {
     if (date.month === comparedTo.month) {
