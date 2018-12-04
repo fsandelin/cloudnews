@@ -2,10 +2,12 @@ require('dotenv').config();
 const request = require('request');
 const app = require('express')();
 const axios = require('axios');
+const bodyParser = require('body-parser');
 const counties = require('./counties.json');
 const municipalities = require('./municipalities.json');
 
 const {APP_PORT, NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
+app.use(bodyParser.json({ extended: true }));
 
 const findStringInStringList = (str, strList) => {
 	for (const s of strList) {
@@ -65,31 +67,32 @@ const getNewsFromNewsList = (newsList) => {
 	return newsListFormated;
 }
 
-const getNewsFromApi = () => {
-  const api_url = 'https://polisen.se/api/events';
-  // const datetime = {'datetime': date};
-  const datetime = {};
-  request.get({url: api_url, qs:datetime}, (resp, err, body) => {
-    const news = getNewsFromNewsList(JSON.parse(body));
-    const timespan = {from: '', until: ''};
-		axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`, {
+const sendNewsToNewsService = (news, timespan) => {
+  axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`, {
       service: 'polisen',
       news: news,
       timespan: timespan
 		})
 		.then((res) => {
-			console.log(res);
+      //console.log(res);
+      console.log("Successful!")
 		})
 		.catch((error) => {
 			console.log(error);
 		});
-	});
 };
 
-app.get('/api/polisens_nyheter', (req, res) => {
-  //const {from, until} = req.query.neededTimespan;
-  
-  getNewsFromApi();
+app.post('/api/polisens_nyheter', (req, res) => {
+  const {from, until} = req.body.neededTimespan;
+  const api_url = 'https://polisen.se/api/events';
+  const datetime = {'datetime': from};
+
+  request.get({url: api_url, qs:datetime}, (resp, err, body) => {
+    const news = getNewsFromNewsList(JSON.parse(body));
+    const timespan = {from: news[news.length-1].timestamp, until: news[0].timestamp};
+
+    sendNewsToNewsService(news, timespan);
+  });
   
   res.sendStatus(200);
 });
