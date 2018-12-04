@@ -11,9 +11,11 @@
         <path
           class="municipality"
           v-for="municipality in this.municipalities"
+          v-bind:class="{ active: municipality.name === selectedMunicipality }"
           v-bind:key="municipality.key"
           v-show="municipality.active"
-          v-bind:d="municipality.path">
+          v-bind:d="municipality.path"
+          v-on:click="municipalityClick(municipality)">
         </path>
         <path
           class="county"
@@ -47,7 +49,7 @@ export default {
   },
   data () {
     return {
-      mapZoom: mapZoom(this.setZoomValue),
+      mapZoom: mapZoom(this.setZoomValue)
     }
   },
   mounted: function() {
@@ -62,14 +64,16 @@ export default {
       'cities',
       'zoomValue',
       'selectedCounty',
+      'selectedMunicipality',
       'countyByName',
     ])
   },
   methods: {
     ...mapActions([
       'countyClick',
+      'municipalityClick',
       'setZoomValue',
-    ]),
+    ])
   }
 }
 </script>
