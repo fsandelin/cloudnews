@@ -67,7 +67,6 @@ const getNewsFromNewsList = (newsList) => {
 }
 
 const sendNewsToNewsService = (news, timespan) => {
-  console.log(timespan);
   axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`, {
       service: 'polisen',
       news: news,
@@ -90,24 +89,29 @@ const getNewsFromPolisen = (date) => {
     });
 };
 
+const getDateRange = (from, until) => {
+  let dates = [];
+  for (let date = new Date(until); date >= new Date(from); date.setDate(date.getDate()-1)) {
+    dates.push(date.toISOString().substr(0, 10));
+  }
+  return dates;
+};
+
+const flatten = (arr) => [].concat.apply([], arr);
+
 app.post('/api/polisens_nyheter', (req, res) => {
   let {from, until} = req.body.neededTimespan;
   if (until === '') until = from;
-  
-  let dateArray = [];
-  for (let date = new Date(until); date >= new Date(from); date.setDate(date.getDate()-1)) {
-    dateArray.push(date.toISOString().substr(0, 10));
-  }
-  
-  let reqArray = dateArray.map(date => getNewsFromPolisen(date));
-  axios.all(reqArray)
-    .then((res) => {
-      let newsLists = res.map(r => r.data);
-      let newsList = [];
-      for (const n of newsLists) newsList.push(...n);
 
+  const dates = getDateRange(from, until);
+  const requests = dates.map(date => getNewsFromPolisen(date));
+  
+  axios.all(requests)
+    .then((results) => {
+      const newsList = flatten(results.map(r => r.data));
       const news = getNewsFromNewsList(newsList);
       const timespan = {from: news[news.length-1].datetime.substr(0, 10), until: news[0].datetime.substr(0, 10)};
+
       sendNewsToNewsService(news, timespan);
     })
     .catch((error) => {
