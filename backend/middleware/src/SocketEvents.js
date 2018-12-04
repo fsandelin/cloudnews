@@ -1,0 +1,103 @@
+require('dotenv').config();
+const uuid = require('uuid/v4');
+const winston = require('winston');
+const rq = require('request');
+
+const availableServices = ['tt', 'svt'];
+const { NEWS_SERVICE_HOST, NEWS_SERVICE_PORT } = process.env;
+
+const clients = {};
+const requests = {};
+
+// Define logging
+const logger = winston.createLogger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'middleware_SocketEvents.log' }),
+  ],
+});
+
+function applyEventListeners(io) {
+  io.use((socket, next) => {
+    const servicesString = socket.handshake.query.services
+    const services = servicesString.split('+').map(service => service.trim())
+    let verified = true;
+    for (const service of services) {
+      if (availableServices.indexOf(service) === -1) {
+        verified = false;
+        logger.error(`Tried to subscribe to the following unknown service: ${service}`);
+        socket.disconnect();
+      }
+    }
+    if (verified) next();
+    else next(new Error('Service not found.'));
+  });
+
+  io.on('connection', (socket) => {
+    logger.info('Someone connected');
+    const servicesString = socket.handshake.query.services
+    const services = servicesString.split('+').map(service => service.trim())
+    const clientId = uuid();
+
+    clients[clientId] = {
+      socket,
+      services,
+    };
+    logger.info(`Joining the following services: ${services}`);
+    services.forEach((service) => {
+      if (availableServices.includes(service)) {
+        socket.join(service);
+      }
+    });
+
+    socket.on('disconnect', () => {
+      delete clients[socket.id];
+      logger.info('Client disconnected');
+      logger.debug(clients);
+    });
+
+    socket.on('timespan_request', (requestedResources) => {
+      const requestId = uuid();
+      const request = {
+        requestId,
+        clientId,
+      };
+      let reqRes = null;
+      try {
+        reqRes = JSON.parse(requestedResources);
+        reqRes.forEach((res) => {
+          res.completed = false;
+        });
+      } catch (exception) {
+        console.log('Cannot parse requestedResources, probably wrong format');
+        return;
+      }
+      request.requestedResources = reqRes;
+      request.incompleteResources = reqRes.length;
+
+      setInterval(() => { console.log(requests); }, 5000);
+      requests[requestId] = request;
+      logger.info(requests);
+      rq.post({
+        url: `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/request/timespan`,
+        body: request,
+        json: true,
+      }, (error, response) => {
+        if (error) {
+          logger.error(`Received an error when trying to post request to news-service: ${error}`);
+          delete requests[requestId];
+          logger.error(`Removed request with id: ${requestId}`);
+        } else if (response.statusCode === 200) {
+          logger.info('Successfully posted request');
+          logger.info(`There are ${Object.keys(requests).length} unfullfilled requests`);
+        }
+      });
+    });
+  });
+}
+
+module.exports = {
+  applyEventListeners,
+  clients,
+  requests,
+};

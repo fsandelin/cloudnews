@@ -15,7 +15,17 @@ export const getNumArrayBetweenNums = (start, end) => {
   return arr
 }
 
+const convertDateItemsToInts = ({ year, month, day }) => {
+  return {
+    year: parseInt(year, 10),
+    month: parseInt(month, 10),
+    day: parseInt(day, 10)
+  }
+}
+
 export const dateIsBefore = (date, comparedTo) => {
+  date = convertDateItemsToInts(date);
+  comparedTo = convertDateItemsToInts(comparedTo);
   if (date === null || comparedTo === null) return false
 
   if (date.year === comparedTo.year) {

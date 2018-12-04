@@ -1,7 +1,12 @@
 export const fakeNewsList = [
   {
     id: 1, title: "Kiruna KKs är bäst i Sverige", lead: "Nåjå", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     url: "https://svt.se",
     source: "svt",
     location: {
@@ -13,7 +18,12 @@ export const fakeNewsList = [
   },
   {
     id: 2, title: "Norrbotten når botten", lead: "Bubblan sprack", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     url: "tt.se",
     source: "tt",
     location: {
@@ -25,7 +35,12 @@ export const fakeNewsList = [
   },
   {
     id: 3, title: "Norrbotten är iaf inte bög", lead: "Quotes by Anton", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     source: "svt",
     location: {
       country: "",
@@ -36,7 +51,12 @@ export const fakeNewsList = [
   },
   {
     id: 4, title: "KIRUNA STAD NYHET", lead: "Blabla", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     source: "svt",
     location: {
       country: "",
@@ -47,7 +67,12 @@ export const fakeNewsList = [
   },
   {
     id: 5, title: "jukkasjärvi STAD NYHET", lead: "jukkasjärvi", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     source: "svt",
     location: {
       country: "",
@@ -58,7 +83,12 @@ export const fakeNewsList = [
   },
   {
     id: 6, title: "jukkasjärvi STAD NYHET", lead: "jukkasjärvi", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     source: "svt",
     location: {
       country: "",
@@ -69,7 +99,12 @@ export const fakeNewsList = [
   },
   {
     id: 7, title: "Stockholm STAD NYHET", lead: "sthubuntu", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     source: "svt",
     location: {
       country: "",
@@ -80,7 +115,12 @@ export const fakeNewsList = [
   },
   {
     id: 8, title: "resarö STAD NYHET", lead: "sthubuntu", active: false,
-    timestamp: "2018-04-24 13:44",
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
     source: "svt",
     location: {
       country: "",
