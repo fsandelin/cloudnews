@@ -7,12 +7,7 @@ export const addWebSocket = dispatch => (events, service, from, to) => {
       dispatch(action, data)
     });
 
-    socket.emit('timespan_request', JSON.stringify([{
-      "service": service,
-      "from": from,
-      "until": to,
-    }]))
-
+    createWebSocketTimeSpanRequest(socket, service, from, to)
     return socket
   })
 }
