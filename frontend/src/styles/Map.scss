@@ -1,14 +1,6 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-.fade-enter-active {
-  transition: opacity .9s;
-}
-
-.fade-enter {
-  opacity: 0;
-}
-
 svg.mapContainer {
   overflow: hidden;
   background-color: $lightlightblue;

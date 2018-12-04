@@ -1,7 +1,7 @@
-import europeCountries from '../../assets/meta-info-europe-countries.json';
-import swedishCounties from '../../assets/meta-info-sweden-counties.json';
-import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.json';
-import swedishCities from '../../assets/meta-info-sweden-cities.json';
+import europeCountries from '../../assets/meta-info-europe-countries.min.json';
+import swedishCounties from '../../assets/meta-info-sweden-counties.min.json';
+import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.min.json';
+import swedishCities from '../../assets/meta-info-sweden-cities.min.json';
 import { cleanString } from '../helpers';
 
 const state = {
