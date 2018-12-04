@@ -34,7 +34,7 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 3, title: "Norrbotten är iaf inte bög", lead: "Quotes by Anton", active: false,
+    id: 3, title: "Norrbotten news", lead: "Quotes by Anton", active: false,
     timestamp: {
       year: "2018",
       month: "12",
