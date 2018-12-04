@@ -105,12 +105,12 @@ app.post('/api/polisens_nyheter', (req, res) => {
 
   const dates = getDateRange(from, until);
   const requests = dates.map(date => getNewsFromPolisen(date));
-  
+
   axios.all(requests)
     .then((results) => {
       const newsList = flatten(results.map(r => r.data));
       const news = getNewsFromNewsList(newsList);
-      const timespan = {from: news[news.length-1].datetime.substr(0, 10), until: news[0].datetime.substr(0, 10)};
+      const timespan = {from: from.substr(0, 10), until: until.substr(0, 10)};
 
       sendNewsToNewsService(news, timespan);
     })
