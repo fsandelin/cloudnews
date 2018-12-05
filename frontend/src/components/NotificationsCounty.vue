@@ -1,26 +1,30 @@
 <template>
   <g id="notificationsCounty">
-    <circle
-      class="county-circle"
+    <g
+      class="countyNotification"
       v-for="county of newsByCounty"
-      v-bind:ref="'countyNewsNotification-'+county.name"
-      v-bind:key="'countyNewsNotification-'+county.name"
-      v-bind:cx="county.x+'px'"
-      v-bind:cy="county.y+'px'"
-      v-bind:stroke-width="strokeWidth()+'px'"
-      v-bind:r="circleSize(county.news.length)+'px'">
-    </circle>
-    <text
-      class="county-number"
-      v-for="county of newsByCounty"
-      v-bind:key="'countyNewsNotificationText'+county.name"
-      text-anchor="middle"
-      v-bind:x="county.x+'px'"
-      v-bind:y="county.y+'px'"
-      v-bind:dy="yOffset(county.news.length)+'px'"
-      v-bind:font-size="fontSize(county.news.length)+'px'">
-      {{county.news.length}}
-    </text>
+      v-bind:key="'countyNotification-'+county.name"
+      v-on:click="countyClick(county)">
+      <circle
+        class="county-circle"
+        v-bind:ref="'countyNewsNotification-'+county.name"
+        v-bind:key="'countyNewsNotification-'+county.name"
+        v-bind:cx="county.x+'px'"
+        v-bind:cy="county.y+'px'"
+        v-bind:stroke-width="strokeWidth()+'px'"
+        v-bind:r="circleSize(county.news.length)+'px'">
+      </circle>
+      <text
+        class="county-number"
+        v-bind:key="'countyNewsNotificationText'+county.name"
+        text-anchor="middle"
+        v-bind:x="county.x+'px'"
+        v-bind:y="county.y+'px'"
+        v-bind:dy="yOffset(county.news.length)+'px'"
+        v-bind:font-size="fontSize(county.news.length)+'px'">
+        {{county.news.length}}
+      </text>
+    </g>
   </g>
 </template>
 
@@ -30,11 +34,16 @@ import Velocity from "velocity-animate";
 
 export default {
   name: "notificationsCounty",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects', 'strokeWidth'],
   computed: {
     ...mapGetters([
       'newsByCounty',
       'zoomValue'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'countyClick'
     ])
   },
   data: function() {
@@ -49,11 +58,6 @@ export default {
     newsByCounty: function(newsByCounty) {
       this.updateNewsLengthForObjects(newsByCounty, this.previousCountyNewsLength, this.$refs, 'countyNewsNotification-')
     }
-  },
-  methods: {
-    strokeWidth: function() {
-      return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
-    },
   }
 }
 </script>

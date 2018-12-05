@@ -2,9 +2,11 @@
   <g id="notificationsMunicipality">
     <g
       v-for="municipality of newsByMunicipality"
-      v-bind:key="'municipalityNoticication'+municipality.name">
+      v-bind:key="'municipalityNoticication-'+municipality.name"
+      class="municipalityNoticication"
+      v-on:click="municipalityClick(municipality)">
       <!--LINES-->
-      <transition-group tag="g"
+      <transition
         v-on:beforeEnter="(el, done) => lineBeforeEnter(el, done, municipality)"
         v-on:enter="(el, done) => lineEnter(el, done, municipality)"
         v-on:leave="(el, done) => lineLeave(el, done, municipality)"
@@ -19,10 +21,10 @@
           v-bind:y2="municipality.y+'px'"
           v-bind:stroke-width="lineWidth()+'px'">
         </line>
-      </transition-group>
+      </transition>
 
       <!--CIRCLES-->
-      <transition-group tag="g"
+      <transition
         v-on:beforeEnter="(el, done) => circleBeforeEnter(el, done, municipality)"
         v-on:enter="(el, done) => circleEnter(el, done, municipality)"
         v-on:leave="(el, done) => circleLeave(el, done, municipality)"
@@ -36,10 +38,10 @@
           v-bind:cy="municipality.y+'px'"
           v-bind:r="circleSize(municipality.news.length)+'px'">
         </circle>
-      </transition-group>
+      </transition>
 
-      <!--text-->
-      <transition-group tag="g"
+      <!--TEXT-->
+      <transition
         v-on:beforeEnter="(el, done) => textBeforeEnter(el, done, municipality)"
         v-on:enter="(el, done) => textEnter(el, done, municipality)"
         v-on:leave="(el, done) => textLeave(el, done, municipality)"
@@ -56,7 +58,7 @@
           v-bind:font-size="fontSize(municipality.news.length)+'px'">
           {{municipality.news.length}}
         </text>
-      </transition-group>
+      </transition>
     </g>
   </g>
 </template>
@@ -66,7 +68,7 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "notificationsMunicipality",
-  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects'],
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects', 'lineWidth'],
   computed: {
     ...mapGetters([
       'selectedCounty',
@@ -88,9 +90,9 @@ export default {
     }
   },
   methods: {
-    lineWidth: function() {
-      return 1.0 * (1/Math.max(this.zoomValue/2.5, 1.0));
-    },
+    ...mapActions([
+      'municipalityClick'
+    ]),
     lineBeforeEnter: function(el, done, municipality) {
       Velocity(el, {
         x1: municipality.countyX,

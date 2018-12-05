@@ -1,14 +1,6 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-.fade-enter-active {
-  transition: opacity .9s;
-}
-
-.fade-enter {
-  opacity: 0;
-}
-
 svg.mapContainer {
   overflow: hidden;
   background-color: $lightlightblue;
@@ -44,12 +36,16 @@ svg.mapContainer {
         stroke: $white;
       }
 
+      &.active {
+        fill: $blue;
+      }
+
       &.county:hover {
         fill: $darkblue;
       }
 
       &.municipality:hover {
-        fill: $lightblue;
+        fill: $blue;
       }
     }
   }
