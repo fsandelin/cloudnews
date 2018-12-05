@@ -35,79 +35,65 @@ function scrapeRequestedResources(neededTimespans) {
 
 // Send all requested resources that are complete to the middleware.
 function sendCompletedResources(request) {
-  const { requestId } = request;
-  request.requestedResources.forEach((requestedResource) => {
-    if (requestedResource.sent || !requestedResource.completed) {
-      return;
+  const { requestId, requestedResource } = request;
+  if (requestedResource.sent || !requestedResource.completed) {
+    return;
+  }
+  const { service, from, until } = requestedResource;
+  db.getArticles(service, from, until, (error, articles) => {
+    if (error) {
+      console.log(error);
     }
-    const { service, from, until } = requestedResource;
-    db.getArticles(service, from, until, (articles) => {
-      const body = { service, requestId, articles };
-      const options = {
-        url: COMPLETE_REQUEST_URL,
-        body,
-        json: true,
-      };
-      R.post(options, (error, response) => {
-        if (response.statusCode === 200) {
-          requestedResource.sent = true;
-          request.incompleteResources -= 1;
-          console.log(`Has successfully sent timespan for ${service}`);
-        }
-        if (request.incompleteResources === 0) {
-          delete requests[request.requestId];
-        }
-        if (response.statusCode < 200 || response.statusCode > 299) {
-          console.log('Got an error when trying to send requested resource');
-          console.log(error);
-        }
-      });
+    const body = { service, requestId, articles };
+    const options = {
+      url: COMPLETE_REQUEST_URL,
+      body,
+      json: true,
+    };
+    R.post(options, (error, response) => {
+      if (response.statusCode === 200) {
+        delete requests[request.requestId];
+      }
+      if (response.statusCode < 200 || response.statusCode > 299) {
+        console.log('Got an error when trying to send requested resource');
+        console.log(response.statusCode);
+        console.log(error);
+      }
     });
   });
 }
 
 // Check all requested resources for completion and scrape if missing. Then send all unsent, completed resources.
 function updateRequestCompletion(request) {
-  const { requestedResources } = request;
-  let neededTimespans = [];
-  let uncheckedResources = requestedResources.length;
-  requestedResources.forEach((requestedResource) => {
-    if (requestedResource.completed) {
-      uncheckedResources -= 1;
-      return;
+  const { requestedResource } = request;
+  if (requestedResource.completed) {
+    return;
+  }
+  db.getMissingTimespans(requestedResource, (timespans) => {
+    if (timespans.length === 0) {
+      requestedResource.completed = true;
+      request.completed = true;
+    } else {
+      requestedResource.scraping = true;
+      scrapeRequestedResources(timespans);
     }
-    db.getMissingTimespans(requestedResource, (timespans) => {
-      if (timespans.length === 0) {
-        requestedResource.completed = true;
-      } else {
-        neededTimespans = neededTimespans.concat(timespans);
-      }
-      uncheckedResources -= 1;
-      if (uncheckedResources === 0) {
-        if (neededTimespans.length === 0) {
-          request.completed = true;
-        } else {
-          scrapeRequestedResources(neededTimespans);
-        }
-        sendCompletedResources(request);
-      }
-    });
+    sendCompletedResources(request);
   });
 }
 
 // Add a request to the requests-object and check the request for completion.
-function addRequest(requestId, requestedResources) {
+function addRequest(requestId, requestedResource) {
   setInterval(() => {
     console.log(requests);
   }, 5000);
-  requestedResources.forEach((requestedResource) => {
-    requestedResource.completed = false;
-    requestedResource.sent = false;
-  });
+
+  requestedResource.completed = false;
+  requestedResource.sent = false;
+  requestedResource.scraping = false;
+
   requests[requestId] = {
     requestId,
-    requestedResources,
-    incompleteResources: requestedResources.length,
+    requestedResource,
   };
   updateRequestCompletion(requests[requestId]);
 }

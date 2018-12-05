@@ -35,7 +35,7 @@ function handlePolisen(neededTimespan) {
     body: neededTimespan,
     json: true,
   };
-  R.get(options, (error, response) => {
+  R.post(options, (error, response) => {
     if (error) {
       console.log('Got an error');
     } else {
