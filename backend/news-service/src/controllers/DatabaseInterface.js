@@ -101,6 +101,12 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
     }
 
     db.collection(prefetchedCollectionName).findOne({ service }, { session }, (error3, result) => {
+      let timespans = null;
+      try {
+        timespans = result.timespans;
+      } catch (e) {
+        timespans = [];
+      }
       if (error3) {
         console.log('Got an error when trying to get timespans for service');
         console.log('ABORTING TRANSACTION');
@@ -108,31 +114,46 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
         dbConnection.closeSession();
         callback('Things went to hell');
         return;
-      } if (!result) {
-        console.log('There are no timespans in the results for the specified service');
-        console.log('ABORTING TRANSACTION');
-        session.abortTransaction();
-        dbConnection.closeSession();
-        callback('Things went to hell');
-        return;
       }
-      const { timespans } = result;
       timespans.sort(compareDates);
 
       const includedTimespans = getIncludedTimespans(newFrom, newUntil, timespans);
       const newTimespan = getNewTimespan(newFrom, newUntil, includedTimespans);
-
-      db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
-        if (error4) {
-          if (error4.writeErrors) {
-            if (!error4.writeErrors.every(wError => wError.code === 11000)) {
-              session.abortTransaction();
-              dbConnection.closeSession();
-              callback(error);
-              return;
+      console.log('news');
+      console.log(news);
+      if (news.length == !0) {
+        db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
+          if (error4) {
+            if (error4.writeErrors) {
+              if (!error4.writeErrors.every(wError => wError.code === 11000)) {
+                session.abortTransaction();
+                dbConnection.closeSession();
+                callback(error);
+                return;
+              }
             }
           }
-        }
+          const query = {
+            service,
+          };
+          const update1 = {
+            $pull: { timespans: { $in: includedTimespans } },
+          };
+          const update2 = {
+            $push: { timespans: newTimespan },
+          };
+          setTimeout(() => {
+            db.collection(prefetchedCollectionName).update(query, update1, { session }, (error1, result2) => {
+              db.collection(prefetchedCollectionName).update(query, update2, { session }, (error2, result3) => {
+                session.commitTransaction(() => {
+                  dbConnection.closeSession();
+                  callback();
+                });
+              });
+            });
+          }, 1000); // Added timeout only to test concurrency-things for this transaction
+        });
+      } else {
         const query = {
           service,
         };
@@ -151,8 +172,8 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
               });
             });
           });
-        }, 1000); // Added timeout only to test concurrency-things for this transaction
-      });
+        }, 1000);
+      }
     });
   });
 }
@@ -220,8 +241,12 @@ function computeMissingSpans(service, serviceTimespans, requestFrom, requestUnti
   const missingSpans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
-  const availableSpans = serviceTimespans.timespans.sort(compareDates);
-  console.log(serviceTimespans.timespans);
+  let availableSpans = null;
+  if (!serviceTimespans) {
+    availableSpans = [];
+  } else {
+    availableSpans = serviceTimespans.timespans.sort(compareDates);
+  }
   for (let i = 0; i < availableSpans.length; i += 1) {
     const currentDateFrom = new Date(availableSpans[i].from);
     const currentDateUntil = new Date(availableSpans[i].until);
@@ -260,6 +285,9 @@ function getMissingTimespans(requestedResource, callback) {
       service,
     };
     db.collection(scraperMetaCollection).findOne(query, (err, results) => {
+      if (results === undefined) {
+        // should create an entry for service
+      }
       const needed = computeMissingSpans(service, results, from, until);
       callback(needed);
     });
