@@ -99,12 +99,21 @@ const getDateRange = (from, until) => {
 
 const flatten = (arr) => [].concat.apply([], arr);
 
-app.post('/api/polisens_nyheter', (req, res) => {
-  let {from, until} = req.body;
-  if (until === '') until = from;
+const noDateIsGiven = (body) => {
+  return (body === undefined || body.from === undefined || body.from === '');
+}
 
-  const dates = getDateRange(from, until);
-  const requests = dates.map(date => getNewsFromPolisen(date));
+app.post('/api/polisens_nyheter', (req, res) => {
+  if (noDateIsGiven(req.body)) {
+    var from = '', until = '';
+    var requests = [getNewsFromPolisen(null)];
+  } else {
+    var {from, until} = req.body;
+    if (until === '') until = from;
+  
+    const dates = getDateRange(from, until);
+    var requests = dates.map(date => getNewsFromPolisen(date));
+  }
 
   axios.all(requests)
     .then((results) => {
