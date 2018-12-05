@@ -1,6 +1,6 @@
-var express = require('express')
-var app = express()
-var port = 5000
+const express = require('express')
+const app = express()
+const port = 5000
 
 app.use(express.static('public'))
 
