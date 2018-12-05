@@ -100,7 +100,7 @@ const getDateRange = (from, until) => {
 const flatten = (arr) => [].concat.apply([], arr);
 
 const noDateIsGiven = (body) => {
-  return (body.neededTimespan === undefined || body.neededTimespan.from === undefined || body.neededTimespan.from === '');
+  return (body === undefined || body.from === undefined || body.from === '');
 }
 
 app.post('/api/polisens_nyheter', (req, res) => {
@@ -108,7 +108,7 @@ app.post('/api/polisens_nyheter', (req, res) => {
     var from = '', until = '';
     var requests = [getNewsFromPolisen(null)];
   } else {
-    var {from, until} = req.body.neededTimespan;
+    var {from, until} = req.body;
     if (until === '') until = from;
   
     const dates = getDateRange(from, until);
