@@ -12,11 +12,7 @@
         reply
       </i>
       <p class="title">
-        {{ selectedCity ?
-            selectedCity :
-            selectedMunicipality ?
-              selectedMunicipality :
-              selectedCounty }}
+        {{title()}}
       </p>
     </div>
     <newslist
@@ -45,7 +41,12 @@ export default {
     ...mapActions([
       'selectMunicipality',
       'selectCity'
-    ])
+    ]),
+    title: function() {
+      if (this.selectedCity) return this.selectedCity;
+      if (this.selectedMunicipality) return this.selectedMunicipality;
+      return this.selectedCounty;
+    }
   },
   components: {
     'newslist': NewsList,
