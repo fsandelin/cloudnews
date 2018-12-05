@@ -65,8 +65,8 @@ export const initialZoom = (mapZoom) => {
   d3.select(".mapContainer").transition().duration(750).call(mapZoom.scaleTo, 0.45*size);
 }
 
-// const projection = d3.geoMercator().scale(2000).translate([-705.9955609952726, 3262.481908764047])
+const projection = d3.geoMercator().scale(2000).translate([-705.9955609952726, 3262.481908764047])
 
-// export const XYFromLatLong = (lat, long) => {
-//   return projection([long,lat])
-// }
+export const XYFromLatLong = (lat, long) => {
+  return projection([long,lat])
+}
