@@ -86,11 +86,9 @@ function addRequest(requestId, requestedResource) {
   setInterval(() => {
     console.log(requests);
   }, 5000);
-
   requestedResource.completed = false;
   requestedResource.sent = false;
   requestedResource.scraping = false;
-
   requests[requestId] = {
     requestId,
     requestedResource,
