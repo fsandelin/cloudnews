@@ -1,8 +1,8 @@
 import { months as m, weekDays as wd } from './constants';
 
 Date.prototype.getWeek = function () {
-  const target  = new Date(this.valueOf());
-  const dayNr   = (this.getDay() + 6) % 7;
+  const target = new Date(this.valueOf());
+  const dayNr = (this.getDay() + 6) % 7;
   target.setDate(target.getDate() - dayNr + 3);
   const firstThursday = target.valueOf();
   target.setMonth(0, 1);
