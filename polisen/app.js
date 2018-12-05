@@ -100,7 +100,7 @@ const getDateRange = (from, until) => {
 const flatten = (arr) => [].concat.apply([], arr);
 
 app.post('/api/polisens_nyheter', (req, res) => {
-  let {from, until} = req.body.neededTimespan;
+  let {from, until} = req.body;
   if (until === '') until = from;
 
   const dates = getDateRange(from, until);
