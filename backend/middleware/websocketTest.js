@@ -35,6 +35,9 @@ socket.on('news_list', (data) => {
 socket.on('error', (data) => {
   console.log(data);
 });
+socket.on('warning', (data) => {
+  console.log(data);
+});
 socket.on('complete_request', (message) => {
   console.log(`Getting the following articles since I sent request ${message.requestId}:`);
   console.log(message.articles);
