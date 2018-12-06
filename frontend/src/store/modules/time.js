@@ -83,7 +83,7 @@ const actions = {
   },
   moveCalendarBackwards: ({ state, commit }) => {
     if (state.currentMonth === 1) {
-      commit('moveCalendar', { month: 12, year: state.currentYear-1 })
+      commit('moveCalendar', { month: 12, year: state.currentYear - 1 })
     } else {
       commit('moveCalendar', { month: state.currentMonth-1 })
     }
