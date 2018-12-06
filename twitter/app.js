@@ -1,10 +1,10 @@
 require('dotenv').config();
-const Twitter = require('Twitter');
+const Twitter = require('twitter');
 const cities = require('./cities.json');
 const axios = require('axios');
 
 const {NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
-const NEWS_SERVICE_URL = `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`;
+const NEWS_SERVICE_URL = `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/live_news`;
 
 const client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -39,14 +39,14 @@ stream.on('data', (data) => {
 
     axios.post(NEWS_SERVICE_URL, {
       service: 'twitter',
-      news: [tweet],
+      news: tweet,
       timespan: {
         from: '',
         until: ''
       }
 		})
 		.then((res) => {
-			console.log(res);
+			//console.log(res);
 		})
 		.catch((error) => {
 			console.log(error);
