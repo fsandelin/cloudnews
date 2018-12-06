@@ -47,8 +47,13 @@ module.exports = class MicroserviceHandler {
 
       res.status(200).send('Successfully completed request ');
     });
-  }
 
+    this.app.post('/live_news', (req, res) => {
+      const { service, news } = req.body;
+      res.sendStatus(200);
+      serviceHandler(service, news);
+    });
+  }
 
   listen(port) {
     this.app.listen(port, () => {

@@ -141,7 +141,7 @@ const actions = {
 
 const mutations = {
   addNews (state, news) {
-    state.newsList = [ ...state.newsList, news ]
+    state.newsList = [ news, ...state.newsList ]
   },
   setActiveNewsItemId (state, id) {
     state.activeNewsItemId = id

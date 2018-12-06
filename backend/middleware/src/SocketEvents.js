@@ -3,7 +3,7 @@ const uuid = require('uuid/v4');
 const winston = require('winston');
 const rq = require('request');
 
-const availableServices = ['tt', 'svt'];
+const availableServices = ['tt', 'svt', 'twitter', 'polisen'];
 const { NEWS_SERVICE_HOST, NEWS_SERVICE_PORT } = process.env;
 
 const clients = {};
