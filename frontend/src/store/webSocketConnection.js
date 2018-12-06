@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import io from 'socket.io-client'
 
 export const addWebSocket = dispatch => (events, url, service, from, to) => {
   const socket = io(url)
@@ -6,7 +6,7 @@ export const addWebSocket = dispatch => (events, url, service, from, to) => {
   events.map(({ event, action }) => {
     socket.on(event, (data) => {
       dispatch(action, data)
-    });
+    })
   })
 
   createWebSocketTimeSpanRequest(socket, service, from, to)
@@ -15,8 +15,8 @@ export const addWebSocket = dispatch => (events, url, service, from, to) => {
 
 export const createWebSocketTimeSpanRequest = (socket, service, from, to) => {
   socket.emit('timespan_request', JSON.stringify([{
-    "service": service,
-    "from": from,
-    "until": to,
+    'service': service,
+    'from': from,
+    'until': to
   }]))
 }
