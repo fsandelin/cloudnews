@@ -1,11 +1,10 @@
 from flask import Flask, request, url_for, jsonify
 from app import app
 from dateutil import parser
-#from scrapers.svt import svt_scraping as ss
 from scrapers.svt import get_news_selected_regions
 from datetime import datetime, date
 from scrapers.data.svt_globals import used_regions
-from scraper import thread_get_news
+from app.threads import thread_get_news
 import requests
 import json
 import time
@@ -26,19 +25,20 @@ def test():
 
 
 @app.route('/getnews/daterange/thread', methods=['POST'])
-def get_date_ranges():
+def get_date_ranges_thread():
 
     content = request.get_json()
-    
+
     news_list = []
 
     for timespan in content:
         print(timespan)
+
         from_ = timespan['from']
         until_ = timespan['until']
         from_ = parser.parse(from_)
         until_ = parser.parse(until_)
-
+        
         from_ = datetime.combine(from_.date(), datetime.min.time())
         until_ = datetime.combine(until_.date(), datetime.max.time())
 
@@ -94,12 +94,27 @@ def get_news_time_range():
     
     return jsonify(news_list)
 
+live_active = False
+start_active = None
+
+def live_news_active():
+    while live_active:
+        pass
 @app.route('/livenews', methods=['GET'])
 def live_news():
-    today = date.today()
+    global live_active
+    global start_active
+
+    live_active = True
+    start_active = datetime.now()
 
     from_ = datetime.combine(today, datetime.min.time())
     until_ = datetime.combine(today, datetime.max.time())
     news_list = get_news_selected_regions(from_, until_)
     
-    return jsonify(news_list)
+
+    p = Process(target=live_news_active)
+    p.start()
+
+
+    return "Started live news!"

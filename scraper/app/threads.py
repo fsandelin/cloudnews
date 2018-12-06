@@ -17,105 +17,21 @@ import concurrent.futures
 
 from multiprocessing import Pool
 
-def post_news(json_news, URL):
-
-    headers = {
-    'Content-Type': "application/json",
-    'cache-control': "no-cache"
-    }
-
-    if json_news[0] is not None:
-        print(json_news[0])
-
-    json_news = [json.loads(news) for news in json_news]
-    
-    r = requests.post(URL,  json = json_news[3], params = {"service": "svt" }, headers = headers)
-    print(r.status_code, r.reason)
-    print(r.text[:300] + '...')
-    print(r.json)
-
-def print_json(json_str):
-
-    json_obj = json.loads(json_str)
-
-    for elm in json_obj:
-        print( elm[:6], "\t: \t",json_obj[elm][0:40])
-
-    print ("")
-
-def random_posts(news_list):
-    headers = {
-    'Content-Type': "application/json",
-    'cache-control': "no-cache"
-    }
-    URL = "http://localhost:3000"
-    news_index = 0
-    max_index  = len(news_list)
-    while True:
-
-        news_index += random.randint(1,5)
-        if news_index >= max_index:
-            break
-        r = requests.post(URL,  json = news_list[news_index], params = {"service": "tt" }, headers = headers)
-        print ("News index:", news_index)
-        sleep(0.5 + random.random())
-        pass
-    pass
 
 def post_timespan(from_, until_, news_list, service="svt"):
 
-    URL = "http://localhost:3000/api/fill_timespan"
+    URL = "http://localhost:3030/api/fill_timespan"
 
     dict_obj = {}
 
     dict_obj['service'] = service
     dict_obj['timespan'] = {'from' : str(from_), 'until' : str(until_)}
     dict_obj['news'] = news_list
+    try:
+        requests.post(URL, json = dict_obj)
+    except requests.RequestException as e:
+        print(e)
 
-    requests.post(URL, json = dict_obj)
-
-def presenting_representing():
-    # Choose which regions, connected to counties
-    # get the latest two weeks
-    # now - 2 weeks (14days)
-
-    global used_regions
-
-    until_ = datetime.now()
-    from_  = until_ - timedelta(days = 14)
-
-    # Collect all news in a list
-    news_list = get_news_selected_regions(from_, until_,used_regions[:1])
-
-    print("News:", len(news_list))
-    news_list = [json.dumps(ele, indent=4, sort_keys=True, default=str) for ele in news_list]
-
-    # collect region names from the news, or store in different lists
-    news_dict_list = []
-    region_names = set()
-    for news in news_list:
-        news_dict = json.loads(news)
-        news_dict_list.append(news_dict)
-        region_names.add(news_dict['location']['county'])
-
-
-    print ("Total news:", len(news_list), "\tdatetime type:", type(json.loads(news_list[0])['datetime']))
-
-    # generate post commands towards the middleware at random times
-    news_sorted_date = sorted(news_dict_list, key=lambda x: parser.parse(x['datetime']))
-
-
-    print ("{:30}{:15}{:.20}".format(news['datetime'], news['location']['county'], news['title']))
-
-    random_posts(news_sorted_date)
-
-def test_time_range():
-    from_  = datetime(2017, 12, 30)
-    until_ = datetime(2018, 1, 1)
-    api_obj = get_news_time_range(from_, until_)
-
-    post_news(api_obj, "http://localhost:3000")
-    print ("First object: ", json.loads(api_obj[FIRST])['datetime'])
 
 def get_api_obj():
     print(get_api_object())
@@ -129,8 +45,6 @@ def test_page():
     print(pages)
 
 def test_threads(from_, until_):
-    #until_ = datetime(2018,9,11)
-    #from_ = datetime(2018,1,10)
     start_time = time()
     news_list = get_news_selected_regions_threads(from_, until_)
     news_group = []
@@ -178,13 +92,14 @@ async def locate_threads(news_list):
     return news_list
 
 def locate_process(news_list):
-    loop = asyncio.get_event_loop()
+    #loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     news_list = loop.run_until_complete(locate_threads(news_list))
     return news_list
 
 
 def locate_news(news_list):
-    #news_list = filter(lambda x: x is not None, news_list)
     p = Pool()
     result = p.map(locate_process, news_list)
     return result
@@ -210,15 +125,4 @@ def thread_get_news(from_, until_):
 
 
     service = 'svt'
-    post_timespan(from_, until_, news_list, service)
-
-
-def main():
-    pass
-    
-
-
-if __name__ == "__main__":
-
-    app.run(threaded=True)
-    
+    post_timespan(from_, until_, news_group, service)

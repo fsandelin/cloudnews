@@ -317,7 +317,8 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     i = 0
     while i < 20:
         i += 1
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         responses = loop.run_until_complete(page_threads(from_, until_, region, start_pages, end_pages, workers))
         
         start_movement = 0
