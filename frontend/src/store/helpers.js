@@ -28,6 +28,30 @@ export const getNumArrayBetweenNums = (start, end) => {
   return arr
 }
 
+export const convertDateStringToDateObj = (dateString) => {
+  const cleanDateString = cleanString(dateString)
+  let dateArray = cleanDateString.split(" ")
+
+  let time = "";
+  const datePart = dateArray[0]
+  if (dateArray.length > 1) {
+    time = dateArray[1]
+  }
+
+  dateArray = datePart.split("-")
+
+  const year = dateArray[0]
+  const month = dateArray[1]
+  const day = dateArray[2]
+
+  return {
+    year,
+    month,
+    day,
+    time
+  }
+}
+
 const convertDateItemsToInts = ({ year, month, day }) => {
   return {
     year: parseInt(year, 10),

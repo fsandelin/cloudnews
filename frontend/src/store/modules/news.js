@@ -1,4 +1,8 @@
-import { cleanString, dateIsBefore } from '../helpers'
+import {
+  cleanString,
+  dateIsBefore,
+  convertDateStringToDateObj
+} from '../helpers'
 
 const state = {
   newsList: [],
@@ -83,9 +87,14 @@ const actions = {
   addNews: ({ state, commit, rootGetters, rootState }, news) => {
     if (state.newsList.find(x => x.id === news.id)) return
 
-    if (dateIsBefore(news.timestamp, rootState.time.newsStartDate)) return
+    news = {
+      ...news,
+      datetime: convertDateStringToDateObj(news.datetime)
+    }
+
+    if (dateIsBefore(news.datetime, rootState.time.newsStartDate)) return
     if (rootState.time.newsEndDate !== null &&
-        dateIsBefore(rootState.time.newsEndDate, news.timestamp)) return
+        dateIsBefore(rootState.time.newsEndDate, news.datetime)) return
 
     let location = { ...news.location }
     for (const key of Object.keys(location)) {

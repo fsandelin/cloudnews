@@ -15,7 +15,7 @@
       </i>
     </div>
     <p class="flex-col">
-      {{ activeNewsItem.lead }}
+      {{ activeNewsItem.lead ? activeNewsItem.lead : activeNewsItem.body }}
     </p>
     <img
       v-bind:src="activeNewsItem.imgurl"
