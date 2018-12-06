@@ -19,6 +19,7 @@ svg.mapContainer {
       }
 
       &.county, &.municipality {
+        cursor: pointer;
         fill-opacity: 1;
       }
 
