@@ -11,13 +11,22 @@ const getters = {
     return state.newsList
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => {
-      const county = rootGetters.countyByName(news.location.county)
-      return county ? county.name === rootState.locations.selectedCounty : false
-    })
+    if(rootState.locations.selectedCity !== null) return getters.filterNewsSelectedCity;
+    if(rootState.locations.selectedMunicipality !== null) return getters.filterNewsSelectedMunicipality;
+    if(rootState.locations.selectedCounty !== null) return getters.filterNewsSelectedCounty;
+    return [];
+  },
+  filterNewsSelectedCounty: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty));
+  },
+  filterNewsSelectedMunicipality: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality));
+  },
+  filterNewsSelectedCity: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => (news.location.city === rootState.locations.selectedCity));
   },
   selectedCountyNews: (state, getters, rootState) => {
-    return state.newsList.filter(({ location }) => location.county === rootState.locations.selectedCounty)
+    return state.newsList.filter(({ location }) => (location.county === rootState.locations.selectedCounty));
   },
   newsByCounty: (state, getters, rootState) => {
     return rootState.locations.counties.map(county => {
@@ -48,6 +57,22 @@ const getters = {
         }
       });
   },
+  newsByCity: (state, getters, rootState) => {
+    return rootState.locations.cities.map(city => {
+      return {
+        ...city,
+        news: state.newsList.filter(({ location }) => location.city === city.name)
+      }
+    }).filter(({ news }) => news.length > 0)
+      .map(city => {
+        const municipality = getters.municipalityByName(city.municipality);
+        return {
+          ...city,
+          municipalityX: municipality.x,
+          municipalityY: municipality.y
+        }
+      })
+  },
   activeNewsItemId: state => {
     return state.activeNewsItemId
   },
@@ -58,8 +83,7 @@ const getters = {
 }
 
 const actions = {
-  addNews: ({ rootState, state, commit }, news) => {
-
+  addNews: ({ state, commit, rootGetters, rootState }, news) => {
     if (state.newsList.find(x => x.id === news.id)) return
 
     if (dateIsBefore(news.timestamp, rootState.time.newsStartDate)) return
@@ -70,35 +94,33 @@ const actions = {
     for (const key of Object.keys(location)) {
       location[key] = cleanString(location[key])
     }
-    if (rootState.locations.cities.find(city => city.name === location.city)) {
-
-      const municipalityName = rootState.locations.counties.find(municipality =>
-        municipality.municipalities.find(city =>
-          city === location.city
-      )).name
-
+    
+    const city = rootGetters.cityByName(location.city);
+    if (city) {
       location = {
         ...location,
-        municipality: municipalityName
+        city: city.name,
+        municipality: city.municipality,
+        county: city.county,
+        country: 'sweden'
       }
     }
 
-    if (rootState.locations.municipalities.find(municipality => municipality.name === location.municipality)) {
-
-      const countyName = rootState.locations.counties.find(county =>
-        county.municipalities.find(municipality =>
-          municipality === location.municipality
-      )).name
-
+    const municipality = rootGetters.municipalityByName(location.municipality);
+    if (municipality) {
       location = {
         ...location,
-        county: countyName
+        municipality: municipality.name,
+        county: municipality.county,
+        country: 'sweden'
       }
     }
 
-    if (rootState.locations.counties.find(county => county.name === location.county)) {
+    const county =  rootGetters.countyByName(location.county);
+    if (county) {
       location = {
         ...location,
+        county: county.name,
         country: 'sweden'
       }
     }

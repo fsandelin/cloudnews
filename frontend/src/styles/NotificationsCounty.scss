@@ -1,17 +1,12 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-svg.mapContainer g.map {
-  circle {
+svg.mapContainer g.map .countyNotification {
 
+  circle {
     &.county-circle {
       stroke: $white;
       fill: $darkblue;
-      transition: 0s;
-    }
-
-    &.county-circle:hover {
-      fill: yellow;
     }
   }
 
@@ -20,6 +15,15 @@ svg.mapContainer g.map {
       fill: $white;
       pointer-events: none;
       border-radius: 12px;
+      font-weight: bold;
+    }
+  }
+}
+
+svg.mapContainer g.map .countyNotification:hover {
+  circle {
+    &.county-circle {
+      fill: $lightblue;
     }
   }
 }

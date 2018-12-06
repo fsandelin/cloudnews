@@ -1,6 +1,6 @@
 export const fakeNewsList = [
   {
-    id: 0, title: "News title 0", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
+    id: 1, title: "Kiruna KKs är bäst i Sverige", lead: "Nåjå", active: false,
     timestamp: {
       year: "2018",
       month: "12",
@@ -17,10 +17,10 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 3423, title: "2131", lead: "abbbddd", active: false,
+    id: 2, title: "Norrbotten når botten", lead: "Bubblan sprack", active: false,
     timestamp: {
-      year: "2019",
-      month: "04",
+      year: "2018",
+      month: "12",
       day: "24",
       time: "13:44"
     },
@@ -34,11 +34,11 @@ export const fakeNewsList = [
     }
   },
   {
-    id: 2432, title: "avc", lead: "qweqwe", active: false,
+    id: 3, title: "Norrbotten news", lead: "Quotes by Anton", active: false,
     timestamp: {
       year: "2018",
       month: "12",
-      day: "25",
+      day: "24",
       time: "13:44"
     },
     source: "svt",
@@ -47,6 +47,86 @@ export const fakeNewsList = [
       county: "Norrbottens län",
       municipality: "",
       city: ""
+    }
+  },
+  {
+    id: 4, title: "KIRUNA STAD NYHET", lead: "Blabla", active: false,
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "Kiruna"
+    }
+  },
+  {
+    id: 5, title: "jukkasjärvi STAD NYHET", lead: "jukkasjärvi", active: false,
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "jukkasjärvi"
+    }
+  },
+  {
+    id: 6, title: "jukkasjärvi STAD NYHET", lead: "jukkasjärvi", active: false,
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "gällivare"
+    }
+  },
+  {
+    id: 7, title: "Stockholm STAD NYHET", lead: "sthubuntu", active: false,
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "stockholm"
+    }
+  },
+  {
+    id: 8, title: "resarö STAD NYHET", lead: "sthubuntu", active: false,
+    timestamp: {
+      year: "2018",
+      month: "12",
+      day: "24",
+      time: "13:44"
+    },
+    source: "svt",
+    location: {
+      country: "",
+      county: "",
+      municipality: "",
+      city: "reSarÖ"
     }
   }
 ]
