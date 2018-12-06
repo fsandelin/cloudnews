@@ -3,6 +3,9 @@ const Twitter = require('Twitter');
 const cities = require('./cities.json');
 const axios = require('axios');
 
+const {NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
+const NEWS_SERVICE_URL = `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`;
+
 const client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -34,7 +37,7 @@ stream.on('data', (data) => {
       url: url
     }
 
-    axios.post(`http://${process.env.NEWS_SERVICE_HOST}:${process.env.NEWS_SERVICE_PORT}/api/fill_timespan`, {
+    axios.post(NEWS_SERVICE_URL, {
       service: 'twitter',
       news: [tweet],
       timespan: {

@@ -6,6 +6,7 @@ const counties = require('./counties.json');
 const municipalities = require('./municipalities.json');
 
 const {APP_PORT, NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
+const NEWS_SERVICE_URL = `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`;
 app.use(bodyParser.json({ extended: true }));
 
 const findStringInStringList = (str, strList) => {
@@ -67,7 +68,7 @@ const getNewsFromNewsList = (newsList) => {
 }
 
 const sendNewsToNewsService = (news, timespan) => {
-  axios.post(`http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`, {
+  axios.post(NEWS_SERVICE_URL, {
       service: 'polisen',
       news: news,
       timespan: timespan
@@ -91,7 +92,7 @@ const getNewsFromPolisen = (date) => {
 
 const getDateRange = (from, until) => {
   let dates = [];
-  for (let date = new Date(until); date >= new Date(from); date.setDate(date.getDate()-1)) {
+  for (const date = new Date(until); date >= new Date(from); date.setDate(date.getDate()-1)) {
     dates.push(date.toISOString().substr(0, 10));
   }
   return dates;
@@ -99,21 +100,24 @@ const getDateRange = (from, until) => {
 
 const flatten = (arr) => [].concat.apply([], arr);
 
-const noDateIsGiven = (body) => {
-  return (body === undefined || body.from === undefined || body.from === '');
+const dateIsGiven = (neededTimespan) => {
+	return !(neededTimespan === undefined || neededTimespan.from === undefined || neededTimespan.from === '');
 }
 
 app.post('/api/polisens_nyheter', (req, res) => {
-  if (noDateIsGiven(req.body)) {
-    var from = '', until = '';
-    var requests = [getNewsFromPolisen(null)];
-  } else {
-    var {from, until} = req.body;
+	let from = '';
+	let until = '';
+	let requests; 
+
+	if (dateIsGiven(req.body.neededTimespan)) {
+    ({from, until} = req.body.neededTimespan);
     if (until === '') until = from;
   
     const dates = getDateRange(from, until);
-    var requests = dates.map(date => getNewsFromPolisen(date));
-  }
+    requests = dates.map(date => getNewsFromPolisen(date));
+	} else {
+		requests = [getNewsFromPolisen(null)];
+	}
 
   axios.all(requests)
     .then((results) => {
