@@ -9,7 +9,7 @@ const {
   MIDDLEWARE_HOST, MIDDLEWARE_PORT,
 } = process.env;
 
-const MIDDLEARE_LIVE_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}/live_news`;
+const MIDDLEWARE_LIVE_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}/live_news`;
 
 router.post('/fill_timespan', (req, res) => {
   const {
@@ -61,7 +61,7 @@ router.get('/available_services', (req, res) => {
 
 router.post('/live_news', (req, res) => {
   const options = {
-    url: MIDDLEARE_LIVE_URL,
+    url: MIDDLEWARE_LIVE_URL,
     body: req.body,
     json: true,
   };
