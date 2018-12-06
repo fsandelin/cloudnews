@@ -13,6 +13,18 @@
   border-radius: 50px;
 
   background-color: $white;
+  cursor: pointer;
+
+  &:hover {
+    i {
+      color: $darkgreen;
+    }
+
+    &.full-shadow {
+      transition: 0.2s;
+      box-shadow: 0px 0px 12px 1px $shadowblack;
+    }
+  }
 
   div {
     height: 100%;
@@ -35,11 +47,6 @@
       font-size: 16px;
       margin-left: 5px;
       color: $lightgrey;
-      cursor: pointer;
-
-      &:hover {
-        color: $darkgreen;
-      }
     }
   }
 }
