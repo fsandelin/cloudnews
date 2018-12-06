@@ -1,5 +1,5 @@
 const express = require('express');
-const R = require('request');
+const rq = require('request');
 const db = require('./controllers/DatabaseInterface');
 const { addRequest, checkRequestsCompletion } = require('./Requests');
 
@@ -65,7 +65,7 @@ router.post('/live_news', (req, res) => {
     body: req.body,
     json: true,
   };
-  R.post(options, (error, response) => {
+  rq.post(options, (error, response) => {
     if (error) {
       console.log('Failed to send live news to middleware.');
       res.sendStatus(500);
