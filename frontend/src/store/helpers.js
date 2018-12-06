@@ -14,7 +14,7 @@ Date.prototype.getWeek = function () {
 
 export const cleanString = s => s.trim().toLowerCase()
 
-export const numToMonth = num => m[Object.keys(m)[num-1]]
+export const numToMonth = num => m[Object.keys(m)[num - 1]]
 
 export const getDaysForMonth = (year, month) => new Date(year, month+1, 0).getDate()
 
