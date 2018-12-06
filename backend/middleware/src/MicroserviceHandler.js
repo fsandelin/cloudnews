@@ -49,7 +49,7 @@ module.exports = class MicroserviceHandler {
     });
 
     this.app.post('/live_news', (req, res) => {
-      const { service, news, timespan } = req.body;
+      const { service, news } = req.body;
       serviceHandler(service, news);
     });
   }
