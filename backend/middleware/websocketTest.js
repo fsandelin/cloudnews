@@ -4,9 +4,8 @@ const readline = require('readline');
 
 const hostname = process.env.WS_HOST;
 const port = process.env.WS_PORT;
-const services = '{"services": ["svt", "tt", "twitter"]}';
-const bServices = Buffer.from(services).toString('base64');
-const socket = new io(`http://${hostname}:${port}/?services=${bServices}`);
+const services = 'svt+twitter';
+const socket = new io(`http://${hostname}:${port}/?services=${services}`);
 
 function readStuffs() {
   const r1 = readline.createInterface({
