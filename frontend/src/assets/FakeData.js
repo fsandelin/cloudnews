@@ -5,10 +5,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/uppsala/uppsalabor-om-stefan-hannas-uteslutning",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "uppsala kommun",
-      city: "Uppsala"
+      country: '',
+      county: '',
+      municipality: 'uppsala kommun',
+      city: 'Uppsala'
     }
   },
   {
@@ -17,10 +17,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/uppsala/majoriteten-fick-inte-igenom-sin-budget-i-enkoping-sd-gav-stod-at-s-och-ne",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "uppsala kommun",
-      city: "enköping"
+      country: '',
+      county: '',
+      municipality: 'uppsala kommun',
+      city: 'enköping'
     }
   },
   {
@@ -29,10 +29,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/vasternorrland/skidgymnasieeleven-svart-att-sluta-med-de-farliga-vallorna",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "",
-      city: "Sollefteå"
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'Sollefteå'
     }
   },
   {
@@ -41,10 +41,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/norrbotten/efter-dodsolyckan-nu-rullar-malmtransporterna-igen",
     source: "svt",
     location: {
-      country: "",
-      county: "norrbottens län",
-      municipality: "",
-      city: ""
+      country: '',
+      county: 'norrbottens län',
+      municipality: '',
+      city: ''
     }
   },
   {
@@ -53,10 +53,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/skane/flersprakighet-ska-lyfta-larandet",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "",
-      city: "malmö"
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'malmö'
     }
   },
   {
@@ -65,10 +65,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/kultur/de-gastar-musikhjalpen",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "",
-      city: "lund"
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'lund'
     }
   },
   {
@@ -77,10 +77,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/halland/stor-trafikinsats-i-halland-under-onsdagsnatten",
     source: "svt",
     location: {
-      country: "",
-      county: "hallands län",
-      municipality: "",
-      city: ""
+      country: '',
+      county: 'hallands län',
+      municipality: '',
+      city: ''
     }
   },
   {
@@ -89,10 +89,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/vast/sa-mycket-skattepengar-laggs-pa-representation-och-konferenser",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "",
-      city: "göteborg"
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'göteborg'
     }
   },
   {
@@ -101,10 +101,10 @@ export const fakeNewsList = [
     url: "https://www.svt.se/nyheter/lokalt/vast/sa-ser-varlden-ut-2050",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "",
-      city: "göteborg"
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'göteborg'
     }
-  },
+  }
 ]
