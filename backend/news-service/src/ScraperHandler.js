@@ -1,4 +1,4 @@
-const R = require('request');
+const rq = require('request');
 const db = require('./controllers/DatabaseInterface');
 require('dotenv').config();
 
@@ -19,7 +19,7 @@ function handleSVT(neededTimespans) {
     body: neededTimespans,
     json: true,
   };
-  R.post(options, (error, response) => {
+  rq.post(options, (error, response) => {
     if (error) {
       console.log('Got a goddamn error');
       console.log(error);
@@ -35,7 +35,7 @@ function handlePolisen(neededTimespan) {
     body: neededTimespan,
     json: true,
   };
-  R.post(options, (error, response) => {
+  rq.post(options, (error, response) => {
     if (error) {
       console.log('Got an error');
     } else {

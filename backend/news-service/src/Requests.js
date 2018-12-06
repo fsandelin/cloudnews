@@ -1,6 +1,6 @@
-const R = require('request');
+const rq = require('request');
 const db = require('./controllers/DatabaseInterface');
-const SH = require('./ScraperHandler');
+const scraperHandler = require('./ScraperHandler');
 require('dotenv').config();
 
 const {
@@ -20,10 +20,10 @@ function scrapeRequestedResources(neededTimespans) {
   neededTimespans.forEach((neededTimespan) => {
     switch (neededTimespan.service) {
       case 'svt':
-        SH.svt(neededTimespan);
+        scraperHandler.svt(neededTimespan);
         break;
       case 'polisen':
-        SH.polisen(neededTimespan);
+        scraperHandler.polisen(neededTimespan);
         break;
       default:
         console.log('Cannot find the desired scraper-service');
@@ -50,7 +50,7 @@ function sendCompletedResources(request) {
       body,
       json: true,
     };
-    R.post(options, (error, response) => {
+    rq.post(options, (error, response) => {
       if (response.statusCode === 200) {
         delete requests[request.requestId];
       }

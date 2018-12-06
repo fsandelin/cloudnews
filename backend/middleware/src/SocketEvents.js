@@ -62,20 +62,20 @@ function applyEventListeners(io) {
         requestId,
         clientId,
       };
-      let reqRes = null;
+      let requestedResourceParsed = null;
       try {
-        reqRes = JSON.parse(requestedResource);
-        reqRes.completed = false;
+        requestedResourceParsed = JSON.parse(requestedResource);
+        requestedResourceParsed.completed = false;
       } catch (exception) {
         console.log('Cannot parse requestedResources, probably wrong format');
         return;
       }
-      if (isNaN(Date.parse(reqRes.from)) || isNaN(Date.parse(reqRes.until))) {
+      if (isNaN(Date.parse(requestedResourceParsed.from)) || isNaN(Date.parse(requestedResourceParsed.until))) {
         clients[clientId].socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
         return;
       }
 
-      request.requestedResource = reqRes;
+      request.requestedResource = requestedResourceParsed;
 
       requests[requestId] = request;
       logger.info(requests);

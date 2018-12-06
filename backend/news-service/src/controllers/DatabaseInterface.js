@@ -121,7 +121,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
       const newTimespan = getNewTimespan(newFrom, newUntil, includedTimespans);
       console.log('news');
       console.log(news);
-      if (news.length == !0) {
+      if (news.length !== 0) {
         db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
           if (error4) {
             if (error4.writeErrors) {
@@ -238,26 +238,26 @@ function getArticles(service, from, until, callback) {
 
 // Returns an array of timespans that are missing to fulfill a requested timespan for a given service and timespans already available.
 function computeMissingSpans(service, serviceTimespans, requestFrom, requestUntil) {
-  const missingSpans = [];
+  const missingTimespans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
-  let availableSpans = null;
-  if (!serviceTimespans) {
-    availableSpans = [];
+  let availableTimespans = null;
+  if (serviceTimespans) {
+    availableTimespans = serviceTimespans.timespans.sort(compareDates);
   } else {
-    availableSpans = serviceTimespans.timespans.sort(compareDates);
+    availableTimespans = [];
   }
-  for (let i = 0; i < availableSpans.length; i += 1) {
-    const currentDateFrom = new Date(availableSpans[i].from);
-    const currentDateUntil = new Date(availableSpans[i].until);
+  for (let i = 0; i < availableTimespans.length; i += 1) {
+    const currentDateFrom = new Date(availableTimespans[i].from);
+    const currentDateUntil = new Date(availableTimespans[i].until);
     if (tentFrom < currentDateFrom) {
       if (until < currentDateFrom) {
-        missingSpans.push({ service, from: tentFrom, until });
-        return missingSpans;
+        missingTimespans.push({ service, from: tentFrom, until });
+        return missingTimespans;
       }
-      missingSpans.push({ service, from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
+      missingTimespans.push({ service, from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
       if (until <= currentDateUntil) {
-        return missingSpans;
+        return missingTimespans;
       }
       tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
       continue;
@@ -267,13 +267,13 @@ function computeMissingSpans(service, serviceTimespans, requestFrom, requestUnti
         continue;
       }
       if (until <= currentDateUntil) {
-        return missingSpans;
+        return missingTimespans;
       }
       tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
     }
   }
-  missingSpans.push({ service, from: tentFrom, until });
-  return missingSpans;
+  missingTimespans.push({ service, from: tentFrom, until });
+  return missingTimespans;
 }
 
 // Applies a callback function to the timespans needed to complete a requested resource.
