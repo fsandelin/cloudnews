@@ -1,14 +1,15 @@
-import addWebSocket from '../webSocketConnection';
+import { addWebSocket, createWebSocketTimeSpanRequest } from '../webSocketConnection';
 import {
   socketEvents as se,
   newsSources as ns,
   socketServiceUrl
 } from '../constants';
+import { prettifyDateObject } from '../helpers'
 
 let socketConnections = []
 
 const state = {
-  newsSources: ns.map(source => ({ name: source, active: false}))
+  newsSources: ns.map(source => ({ name: source, active: false }))
 }
 
 const getters = {
@@ -25,12 +26,16 @@ const actions = {
       dispatch('activateNewsSource', source)
     }
   },
-  activateNewsSource: ({ dispatch, commit }, source) => {
+  activateNewsSource: ({ rootState, dispatch, commit }, source) => {
     const events = [
       { url: `${socketServiceUrl}${source.name}`, event: se.NEWS, action: 'addNews' },
       { url: `${socketServiceUrl}${source.name}`, event: se.NEWS_LIST, action: 'addNewsList' },
     ]
-    socketConnections = [ ...socketConnections, { source: source.name, sockets: addWebSocket(dispatch)(events) } ]
+
+    const from = prettifyDateObject(rootState.time.newsStartDate)
+    const to = prettifyDateObject(rootState.time.newsEndDate)
+
+    socketConnections = [ ...socketConnections, { source: source.name, sockets: addWebSocket(dispatch)(events, source.name, from, to) } ]
 
     commit('activateNewsSource', source)
   },
@@ -41,6 +46,13 @@ const actions = {
 
     commit('deactivateNewsSource', source)
   },
+  makeSocketTimeSpanRequest: ({ }, { from, to }) => {
+    socketConnections.map(sc => {
+      sc.sockets.map(socket => {
+        createWebSocketTimeSpanRequest(socket, sc.source, from, to)
+      })
+    })
+  }
 }
 
 const mutations = {
