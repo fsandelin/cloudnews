@@ -2,6 +2,7 @@ require('dotenv').config();
 const Twitter = require('twitter');
 const cities = require('./cities.json');
 const axios = require('axios');
+const uuid = require('uuid/v4');
 
 const {NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
 const NEWS_SERVICE_URL = `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/live_news`;
@@ -28,12 +29,16 @@ stream.on('data', (data) => {
     const url = 'https://twitter.com/statuses/' + data.id_str;
 
     const tweet = {
+      id: uuid(),
+      title: data.user.screen_name,
       datetime: datetime,
-      country: 'Sweden',
-      county: county,
-      municipality: municipality,
-      city: data.place.name,
-      text: data.text,
+      location: {
+        country: 'Sweden',
+        county: county,
+        municipality: municipality,
+        city: data.place.name,
+      },
+      body: data.text,
       url: url
     }
 
