@@ -24,10 +24,10 @@ from multiprocessing import Pool
 
 try:
     # For Python 3.0 and later
-    from urllib.request import urlopen
+    from urllib.request import urlopen, HTTPError
 except ImportError:
     # Fall back to Python 2's urllib2
-    from urllib2 import urlopen
+    from urllib2 import urlopen, HTTPError
 
 if __name__ == "__main__":
     from data.svt_globals import URL_SVT, URL_API, svt_regions, used_regions, param_limit, param_page, params
@@ -45,6 +45,10 @@ else:
 BEFORE = True
 AFTER = False
 
+
+    
+
+
 def check_svt_name(name):
     if name == 'Väst':
         return 'Västra Götaland'
@@ -57,13 +61,16 @@ def check_svt_name(name):
 
     return name
 
-def get_news(url, region):
+def get_news(url, region, response = None, print_thing = False):
 
 
     # Initiate the Beautiful soup
-    response = urlopen(url)
-    print("Response info:", response.info())
-    content = response.read()
+    if response is None:
+        response = urlopen(url)
+        content = response.read()
+    else:
+        content = response.read()
+
     soup = BeautifulSoup(content, features='lxml')
 
     # Get the article part
@@ -79,7 +86,14 @@ def get_news(url, region):
 
     # Time 
     time = main.find('time')
-    date = time['datetime']
+    #if print_thing:
+     #   print(time)
+    if time is not None:
+        date = time['datetime']
+    else:
+        #print(main)
+        print(str(datetime.now()), str(datetime(1970, 1, 1)))
+        date = str(datetime(1970, 1, 1))
 
     img_url = None
     if pict is not None:
@@ -110,6 +124,36 @@ def get_news(url, region):
     news['url']   = url
 
     return news
+
+class News:
+
+    def __init__(self, url, region_name):
+        self.url = url
+        self.region_name = region_name   
+        self.tries = 5
+        self.retry = False
+        self.news = None
+        self.sleeptime = 0.1
+
+    def request_news(self):
+        if self.tries > 0:
+            self.tries -= 1
+            try:
+                response = urlopen(self.url)
+                self.news = get_news(self.url, self.region_name, response, True)
+            except HTTPError as e:
+                response = None
+                if e.code == 503:
+                    self.retry = True
+                    self.news = None
+                else:
+                    print(e.code)
+        else:
+            self.retry = False
+
+    def get_news(self):
+        return self.news
+
 
 def reform_api_news(svt_news_list):
     cloud_news = []
@@ -174,7 +218,6 @@ def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
 
 def check_start_page(until_, region, page):
     news_list = get_api_news_region(region=region, page=page)
-    print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", until_)
     found = False
     value = -1
     if len(news_list) == 0: 
@@ -196,7 +239,6 @@ def check_start_page(until_, region, page):
 
 def check_end_page(from_, region, page):
     news_list = get_api_news_region(region=region, page=page)
-    print("Page: ", page, "  datetime: ", news_list[FIRST]['datetime'], " vs:", from_)
     found = False
     value = 1
     if len(news_list) == 0: 
@@ -450,3 +492,44 @@ def get_news_selected_regions(from_, until_, regions=used_regions):
     for region in regions:
         selected_news += get_news_region(from_, until_, region)
     return selected_news
+
+
+class Page:
+    
+    def __init__(self, region, page_nmr):
+        params_struct = params + param_limit + str(50) + param_page + str(page_nmr)
+        self.url_call = URL_API + region + params_struct
+        self.tries = 5
+        self.news = None
+
+    def request_news(self):
+        if self.tries > 0:
+
+            self.tries -= 1
+            r = requests.get(url = self.url_call)
+            
+            if r.status_code == 200:
+                self.complete = True
+                region_news = r.json()
+                self.news = reform_api_news(region_news['auto']['content'])
+            
+            elif r.status_code == 503:
+                self.complete = False
+
+            else:
+                self.complete = True
+                self.news = []
+
+        else:
+            self.complete = True
+            self.news = []
+
+    def get_news(self):
+        return self.news
+
+
+
+
+
+
+        

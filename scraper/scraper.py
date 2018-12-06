@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from scrapers.util.location_search import search_cloud_news
 from scrapers.data.constants import FIRST, LAST
 from scrapers.data.svt_globals import used_regions
-from scrapers.svt import get_news_selected_regions, get_api_object, get_start_end_page, get_news_selected_regions_threads, get_news
+from scrapers.svt import get_news_selected_regions, get_api_object, get_start_end_page, get_news_selected_regions_threads, get_news, News
 
 import asyncio
 import concurrent.futures
@@ -61,6 +61,18 @@ def random_posts(news_list):
         sleep(0.5 + random.random())
         pass
     pass
+
+def post_timespan(from_, until_, news_list, service="svt"):
+
+    URL = "http://localhost:3000/api/fill_timespan"
+
+    dict_obj = {}
+
+    dict_obj['service'] = service
+    dict_obj['timespan'] = {'from' : str(from_), 'until' : str(until_)}
+    dict_obj['news'] = news_list
+
+    requests.post(URL, json = dict_obj)
 
 def presenting_representing():
     # Choose which regions, connected to counties
@@ -116,9 +128,9 @@ def test_page():
     pages = get_start_end_page(from_, until_)
     print(pages)
 
-def test_threads():
-    until_ = datetime(2018,11,11)
-    from_ = datetime(2018,11,10)
+def test_threads(from_, until_):
+    #until_ = datetime(2018,9,11)
+    #from_ = datetime(2018,1,10)
     start_time = time()
     news_list = get_news_selected_regions_threads(from_, until_)
     news_group = []
@@ -130,13 +142,20 @@ def test_threads():
     return news_list
 
 
-def locate_single_news(news):
+def locate_single_news(news):    
     found, news = search_cloud_news(news)
 
     if not found:
-        temp_news = get_news(news['url'], news['location']['county'])
-        temp_news = search_cloud_news(temp_news)[1]
-        news['location'] = temp_news['location']
+        news_obj = News(news['url'], news['location']['county'])
+        news_obj.request_news()
+
+        while news_obj.retry:
+            sleep(0.1)
+            news_obj.request_news()
+
+        if news_obj.news is not None:
+            temp_news = search_cloud_news(news_obj.news)[1]
+            news['location'] = temp_news['location']
 
     return news
 
@@ -165,13 +184,13 @@ def locate_process(news_list):
 
 
 def locate_news(news_list):
+    #news_list = filter(lambda x: x is not None, news_list)
     p = Pool()
     result = p.map(locate_process, news_list)
     return result
 
-
-def main():
-    news_list = test_threads()
+def thread_get_news(from_, until_):
+    news_list = test_threads(from_, until_)
 
     start_time = time()
     news_list = locate_news(news_list)
@@ -188,6 +207,15 @@ def main():
 
     print("Amoun of regions:", len(news_list), "Amount of news:", len(news_group), "amount of found news:", i)
     print("--- %s seconds ---" % (time() - start_time))
+
+
+    service = 'svt'
+    post_timespan(from_, until_, news_list, service)
+
+
+def main():
+    pass
+    
 
 
 if __name__ == "__main__":

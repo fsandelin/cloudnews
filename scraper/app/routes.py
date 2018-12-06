@@ -5,6 +5,7 @@ from dateutil import parser
 from scrapers.svt import get_news_selected_regions
 from datetime import datetime, date
 from scrapers.data.svt_globals import used_regions
+from scraper import thread_get_news
 import requests
 import json
 import time
@@ -23,6 +24,28 @@ def test():
     p.start()
     return "done"
 
+
+@app.route('/getnews/daterange/thread', methods=['POST'])
+def get_date_ranges():
+
+    content = request.get_json()
+    
+    news_list = []
+
+    for timespan in content:
+        print(timespan)
+        from_ = timespan['from']
+        until_ = timespan['until']
+        from_ = parser.parse(from_)
+        until_ = parser.parse(until_)
+
+        from_ = datetime.combine(from_.date(), datetime.min.time())
+        until_ = datetime.combine(until_.date(), datetime.max.time())
+
+        p = Process(target=thread_get_news, args=(from_, until_))
+        p.start()
+
+    return jsonify('message: started scraping')
 
 @app.route('/getnews/daterange', methods=['POST'])
 def get_date_ranges():
@@ -44,7 +67,7 @@ def get_date_ranges():
         p = Process(target=get_news_selected_regions, args=(from_, until_))
         p.start()
 
-    return jsonify('message: Did shit!')
+    return jsonify('message: started scraping')
 
 @app.route('/getnews/daterange2', methods=['POST'])
 def get_news_date_range():
