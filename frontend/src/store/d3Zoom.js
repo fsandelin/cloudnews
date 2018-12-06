@@ -1,4 +1,6 @@
-import * as d3 from "d3";
+import d3 from '../store/d3Importer.js';
+import { event as d3Event } from 'd3-selection';
+
 
 export const sizeOfCurrentWindow = () => { 
   const ratio = 2.1;
@@ -16,12 +18,12 @@ let currentZoom = null;
 export const mapZoom = (setZoomValue) => {
   return d3
     .zoom()
-    .scaleExtent([0.2, 50])
+    .scaleExtent([0.45, 50])
     .on("zoom", () => {
-      d3.select(".map").attr("transform", d3.event.transform);
-      if (d3.event.transform.k !== currentZoom) {
-        currentZoom = d3.event.transform.k;
-        setZoomValue(d3.event.transform.k);
+      d3.select(".map").attr("transform", d3Event.transform);
+      if (d3Event.transform.k !== currentZoom) {
+        currentZoom = d3Event.transform.k;
+        setZoomValue(d3Event.transform.k);
       }
     })
 }

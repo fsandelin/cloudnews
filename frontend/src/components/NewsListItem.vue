@@ -15,7 +15,7 @@
     </p>
     <p class="subtitle flex-col">
       <span>{{ news.source }}</span>
-      <span>{{ prettifyDateObject(news.timestamp) }}</span>
+      <span>{{ prettifyDateObject(news.datetime) }}</span>
     </p>
   </li>
 </template>
@@ -39,9 +39,13 @@ export default {
       'countyByName',
       'activeNewsItemId',
       'selectedCounty',
+      'selectedMunicipality',
+      'selectedCity',
       'zoomValue'
     ]),
     applyFilter: function () {
+      if (this.selectedCity) return this.showFilter && this.news.location.city === this.selectedCity;
+      if (this.selectedMunicipality) return this.showFilter && this.news.location.municipality === this.selectedMunicipality;
       return this.showFilter && this.news.location.county === this.selectedCounty;
     }
   },
@@ -51,11 +55,10 @@ export default {
       'setZoomValue'
     ]),
     itemClicked: function(news) {
-      const previousCount = this.selectedCounty;
+      const activeCountyBeforeClick = this.selectedCounty;
       this.toggleActive(news)
-      const county = this.countyByName(news.location.county);
-      if (this.selectedCounty !== previousCount) longTransitionToCounty(this.mapZoom, county);
-
+      const activeCountyAfterClick = this.countyByName(news.location.county);
+      if (this.selectedCounty !== activeCountyBeforeClick) longTransitionToCounty(this.mapZoom, activeCountyAfterClick);
     },
     toggleHover: function () {
       this.hover = !this.hover;
