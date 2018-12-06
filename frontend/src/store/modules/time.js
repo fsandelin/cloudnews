@@ -19,7 +19,7 @@ const state = {
   currentMonth: today.getMonth() + 1,
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
   weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth()+1),
-  startDate: { year: today.getFullYear(), month: today.getMonth()+1, day: today.getDate() },
+  startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
   newsStartDate: { year: today.getFullYear(), month: today.getMonth()+1, day: today.getDate() },
   newsEndDate: null,
