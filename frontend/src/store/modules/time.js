@@ -21,7 +21,7 @@ const state = {
   weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth()+1),
   startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
-  newsStartDate: { year: today.getFullYear(), month: today.getMonth()+1, day: today.getDate() },
+  newsStartDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   newsEndDate: null,
   hoverDate: null,
 }
