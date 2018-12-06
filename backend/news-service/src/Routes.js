@@ -1,8 +1,15 @@
 const express = require('express');
+const rq = require('request');
 const db = require('./controllers/DatabaseInterface');
 const { addRequest, checkRequestsCompletion } = require('./Requests');
 
 const router = express.Router();
+
+const {
+  MIDDLEWARE_HOST, MIDDLEWARE_PORT,
+} = process.env;
+
+const MIDDLEWARE_LIVE_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}/live_news`;
 
 router.post('/fill_timespan', (req, res) => {
   const {
@@ -32,17 +39,6 @@ router.post('/new_articles', (req, res) => {
   });
 });
 
-router.get('/timespan', (req, res) => {
-  const { service, from, until } = req.query;
-  db.getTimeSpan(service, from, until, (error, documents) => {
-    if (error) {
-      res.status(500).send(`500 internal server error: ${error}`);
-    } else {
-      res.json(documents);
-    }
-  });
-});
-
 router.get('/run_check', (req, res) => {
   res.send('ok');
   checkRequestsCompletion();
@@ -62,5 +58,22 @@ router.get('/available_services', (req, res) => {
   const availableServices = ['svt', 'tt', 'polisen'];
   res.json(availableServices);
 });
+
+router.post('/live_news', (req, res) => {
+  const options = {
+    url: MIDDLEWARE_LIVE_URL,
+    body: req.body,
+    json: true,
+  };
+  rq.post(options, (error, response) => {
+    if (error) {
+      console.log('Failed to send live news to middleware.');
+      res.sendStatus(500);
+    } else {
+      res.send('Successful');
+    }
+  });
+});
+
 
 module.exports = router;

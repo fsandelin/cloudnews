@@ -10,6 +10,10 @@
       margin: auto 0;
       color: $darkgrey;
 
+      &:hover {
+        color: $darkgreen;
+      }
+
       &.url {
         &.exists {
           cursor: pointer;
@@ -25,7 +29,7 @@
     }
 
     .title {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
       flex: 1;
     }

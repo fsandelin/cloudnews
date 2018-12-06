@@ -14,7 +14,7 @@ Date.prototype.getWeek = function () {
 
 export const cleanString = s => s.trim().toLowerCase()
 
-export const numToMonth = num => m[Object.keys(m)[num]]
+export const numToMonth = num => m[Object.keys(m)[num - 1]]
 
 export const getDaysForMonth = (year, month) => new Date(year, month+1, 0).getDate()
 
@@ -24,6 +24,30 @@ export const getNumArrayBetweenNums = (start, end) => {
     arr = [ ...arr, i]
   }
   return arr
+}
+
+export const convertDateStringToDateObj = (dateString) => {
+  const cleanDateString = cleanString(dateString)
+  let dateArray = cleanDateString.split(" ")
+
+  let time = "";
+  const datePart = dateArray[0]
+  if (dateArray.length > 1) {
+    time = dateArray[1]
+  }
+
+  dateArray = datePart.split("-")
+
+  const year = dateArray[0]
+  const month = dateArray[1]
+  const day = dateArray[2]
+
+  return {
+    year,
+    month,
+    day,
+    time
+  }
 }
 
 const convertDateItemsToInts = ({ year, month, day }) => {

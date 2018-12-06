@@ -15,7 +15,7 @@
     </p>
     <p class="subtitle flex-col">
       <span>{{ news.source }}</span>
-      <span>{{ prettifyDateObject(news.timestamp) }}</span>
+      <span>{{ prettifyDateObject(news.datetime) }}</span>
     </p>
   </li>
 </template>

@@ -1,10 +1,11 @@
 <template>
-  <div id="date-picker-toggler" class="full-shadow">
+  <div id="date-picker-toggler"
+    v-on:click="toggleDatePicker"
+    class="full-shadow">
     <div class="flex-row">
       <p>{{ prettifyDateObject(newsStartDate) }}</p>
       <p v-if="newsEndDate !== null">to {{ prettifyDateObject(newsEndDate) }}</p>
-      <i v-on:click="toggleDatePicker"
-         class="material-icons">edit</i>
+      <i class="material-icons">edit</i>
     </div>
   </div>
 </template>

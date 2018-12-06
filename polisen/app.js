@@ -4,6 +4,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const counties = require('./counties.json');
 const municipalities = require('./municipalities.json');
+const uuid = require('uuid/v4');
 
 const {APP_PORT, NEWS_SERVICE_HOST, NEWS_SERVICE_PORT} = process.env;
 const NEWS_SERVICE_URL = `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/fill_timespan`;
@@ -54,14 +55,17 @@ const getNewsFromNewsList = (newsList) => {
 		}
 
 		newsListFormated.push({
+			id: uuid(),
 			title: news.type,
-			text: news.summary,
+			body: news.summary,
 			url: news.url,
 			datetime: news.datetime,
-			country: 'Sweden',
-			county: county_temp,
-			municipality: municipality,
-			city: city
+			location: {
+				country: 'Sweden',
+				county: county_temp,
+				municipality: municipality,
+				city: city
+			}
 		});
 	}
 	return newsListFormated;
