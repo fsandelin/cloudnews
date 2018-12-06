@@ -1,5 +1,5 @@
 export const newsSources = [
-  'svt', 'tt'
+  'svt', 'twitter', 'polisen'
 ]
 
 export const socketEvents = {

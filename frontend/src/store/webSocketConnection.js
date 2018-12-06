@@ -1,15 +1,16 @@
 import io from 'socket.io-client'
 
-export const addWebSocket = dispatch => (events, service, from, to) => {
-  return events.map(({ url, event, action }) => {
-    const socket = io(url)
+export const addWebSocket = dispatch => (events, url, service, from, to) => {
+  const socket = io(url)
+
+  events.map(({ event, action }) => {
     socket.on(event, (data) => {
       dispatch(action, data)
     })
-
-    createWebSocketTimeSpanRequest(socket, service, from, to)
-    return socket
   })
+
+  createWebSocketTimeSpanRequest(socket, service, from, to)
+  return socket
 }
 
 export const createWebSocketTimeSpanRequest = (socket, service, from, to) => {

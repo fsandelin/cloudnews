@@ -49,19 +49,17 @@ router.get('/run_check', (req, res) => {
 });
 
 router.post('/request/timespan', (req, res) => {
-  const { requestId, clientId, requestedResources } = req.body;
-  const reqResources = requestedResources;
-  console.log(`Should get a requestedResource: ${reqResources}`);
-  if (requestedResources.length === 0) {
-    res.sendStatus(400);
-  } else {
+  const { requestId, requestedResource } = req.body;
+  if (requestedResource) {
     res.sendStatus(200);
-    addRequest(requestId, reqResources);
+    addRequest(requestId, requestedResource);
+  } else {
+    res.sendStatus(400);
   }
 });
 
 router.get('/available_services', (req, res) => {
-  const availableServices = ['svt', 'tt'];
+  const availableServices = ['svt', 'tt', 'polisen'];
   res.json(availableServices);
 });
 

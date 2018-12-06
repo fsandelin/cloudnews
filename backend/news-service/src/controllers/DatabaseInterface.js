@@ -101,6 +101,12 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
     }
 
     db.collection(prefetchedCollectionName).findOne({ service }, { session }, (error3, result) => {
+      let timespans = null;
+      try {
+        timespans = result.timespans;
+      } catch (e) {
+        timespans = [];
+      }
       if (error3) {
         console.log('Got an error when trying to get timespans for service');
         console.log('ABORTING TRANSACTION');
@@ -108,31 +114,46 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
         dbConnection.closeSession();
         callback('Things went to hell');
         return;
-      } if (!result) {
-        console.log('There are no timespans in the results for the specified service');
-        console.log('ABORTING TRANSACTION');
-        session.abortTransaction();
-        dbConnection.closeSession();
-        callback('Things went to hell');
-        return;
       }
-      const { timespans } = result;
       timespans.sort(compareDates);
 
       const includedTimespans = getIncludedTimespans(newFrom, newUntil, timespans);
       const newTimespan = getNewTimespan(newFrom, newUntil, includedTimespans);
-
-      db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
-        if (error4) {
-          if (error4.writeErrors) {
-            if (!error4.writeErrors.every(wError => wError.code === 11000)) {
-              session.abortTransaction();
-              dbConnection.closeSession();
-              callback(error);
-              return;
+      console.log('news');
+      console.log(news);
+      if (news.length !== 0) {
+        db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
+          if (error4) {
+            if (error4.writeErrors) {
+              if (!error4.writeErrors.every(wError => wError.code === 11000)) {
+                session.abortTransaction();
+                dbConnection.closeSession();
+                callback(error);
+                return;
+              }
             }
           }
-        }
+          const query = {
+            service,
+          };
+          const update1 = {
+            $pull: { timespans: { $in: includedTimespans } },
+          };
+          const update2 = {
+            $push: { timespans: newTimespan },
+          };
+          setTimeout(() => {
+            db.collection(prefetchedCollectionName).update(query, update1, { session }, (error1, result2) => {
+              db.collection(prefetchedCollectionName).update(query, update2, { session }, (error2, result3) => {
+                session.commitTransaction(() => {
+                  dbConnection.closeSession();
+                  callback();
+                });
+              });
+            });
+          }, 1000); // Added timeout only to test concurrency-things for this transaction
+        });
+      } else {
         const query = {
           service,
         };
@@ -151,8 +172,8 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
               });
             });
           });
-        }, 1000); // Added timeout only to test concurrency-things for this transaction
-      });
+        }, 1000);
+      }
     });
   });
 }
@@ -217,22 +238,26 @@ function getArticles(service, from, until, callback) {
 
 // Returns an array of timespans that are missing to fulfill a requested timespan for a given service and timespans already available.
 function computeMissingSpans(service, serviceTimespans, requestFrom, requestUntil) {
-  const missingSpans = [];
+  const missingTimespans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
-  const availableSpans = serviceTimespans.timespans.sort(compareDates);
-  console.log(serviceTimespans.timespans);
-  for (let i = 0; i < availableSpans.length; i += 1) {
-    const currentDateFrom = new Date(availableSpans[i].from);
-    const currentDateUntil = new Date(availableSpans[i].until);
+  let availableTimespans = null;
+  if (serviceTimespans) {
+    availableTimespans = serviceTimespans.timespans.sort(compareDates);
+  } else {
+    availableTimespans = [];
+  }
+  for (let i = 0; i < availableTimespans.length; i += 1) {
+    const currentDateFrom = new Date(availableTimespans[i].from);
+    const currentDateUntil = new Date(availableTimespans[i].until);
     if (tentFrom < currentDateFrom) {
       if (until < currentDateFrom) {
-        missingSpans.push({ service, from: tentFrom, until });
-        return missingSpans;
+        missingTimespans.push({ service, from: tentFrom, until });
+        return missingTimespans;
       }
-      missingSpans.push({ service, from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
+      missingTimespans.push({ service, from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
       if (until <= currentDateUntil) {
-        return missingSpans;
+        return missingTimespans;
       }
       tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
       continue;
@@ -242,13 +267,13 @@ function computeMissingSpans(service, serviceTimespans, requestFrom, requestUnti
         continue;
       }
       if (until <= currentDateUntil) {
-        return missingSpans;
+        return missingTimespans;
       }
       tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
     }
   }
-  missingSpans.push({ service, from: tentFrom, until });
-  return missingSpans;
+  missingTimespans.push({ service, from: tentFrom, until });
+  return missingTimespans;
 }
 
 // Applies a callback function to the timespans needed to complete a requested resource.
@@ -260,6 +285,9 @@ function getMissingTimespans(requestedResource, callback) {
       service,
     };
     db.collection(scraperMetaCollection).findOne(query, (err, results) => {
+      if (results === undefined) {
+        // should create an entry for service
+      }
       const needed = computeMissingSpans(service, results, from, until);
       callback(needed);
     });

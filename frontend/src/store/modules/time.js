@@ -16,12 +16,12 @@ const today = new Date()
 
 const state = {
   currentYear: today.getFullYear(),
-  currentMonth: today.getMonth(),
+  currentMonth: today.getMonth() + 1,
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
   weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth() + 1),
-  startDate: { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() },
+  startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
-  newsStartDate: { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() },
+  newsStartDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   newsEndDate: null,
   hoverDate: null
 }
@@ -75,15 +75,15 @@ const actions = {
     commit('moveCalendar', { month: date.month, year: date.year })
   },
   moveCalendarForwards: ({ state, commit }) => {
-    if (state.currentMonth === 11) {
-      commit('moveCalendar', { month: 0, year: state.currentYear + 1 })
+    if (state.currentMonth === 12) {
+      commit('moveCalendar', { month: 1, year: state.currentYear + 1 })
     } else {
       commit('moveCalendar', { month: state.currentMonth + 1, year: state.currentYear })
     }
   },
   moveCalendarBackwards: ({ state, commit }) => {
-    if (state.currentMonth === 0) {
-      commit('moveCalendar', { month: 11, year: state.currentYear - 1 })
+    if (state.currentMonth === 1) {
+      commit('moveCalendar', { month: 12, year: state.currentYear - 1 })
     } else {
       commit('moveCalendar', { month: state.currentMonth - 1 })
     }
@@ -128,7 +128,9 @@ const actions = {
       newsStartDate: state.newsStartDate,
       newsEndDate: state.newsEndDate,
       startDate: state.newsStartDate,
-      endDate: state.newsEndDate
+      endDate: state.newsEndDate,
+      currentYear: state.newsStartDate.year,
+      currentMonth: state.newsStartDate.month
     })
   }
 }
@@ -146,11 +148,13 @@ const mutations = {
   toggleHoverDate (state, date) {
     state.hoverDate = date
   },
-  saveDates (state, { startDate, endDate, newsStartDate, newsEndDate }) {
+  saveDates (state, { startDate, endDate, newsStartDate, newsEndDate, currentYear, currentMonth }) {
     state.startDate = startDate
     state.endDate = endDate
     state.newsStartDate = newsStartDate
     state.newsEndDate = newsEndDate
+    state.currentYear = currentYear
+    state.currentMonth = currentMonth
   }
 }
 

@@ -99,3 +99,5 @@ export default {
   }
 }
 </script>
+
+<style src="../styles/Notifications.scss" lang="scss" scoped></style>

@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 
-const uri = `${process.env.DB_HOST}:${process.env.DB_PORT}/?replicaSet=rs`;
+const uri = `${process.env.DB_HOST}:${process.env.DB_PORT}/cloudnews?replicaSet=rs`;
 
 const state = {
   db: null,

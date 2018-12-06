@@ -1,346 +1,182 @@
 export const fakeNewsList = [
   {
     id: 1,
-    title: 'Kiruna KKs är bäst i Sverige', 
-    lead: 'Nåjå',
+    title: 'Uppsalabor om Stefan Hannas uteslutning',
+    lead: 'Komplicerad fråga',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '07:31'
     },
-    url: 'https://svt.se',
+    url: 'https://www.svt.se/nyheter/lokalt/uppsala/uppsalabor-om-stefan-hannas-uteslutning',
     source: 'svt',
     location: {
       country: '',
       county: '',
-      municipality: 'kiruna kommun',
-      city: ''
+      municipality: 'uppsala kommun',
+      city: 'Uppsala'
     }
   },
   {
     id: 2,
-    title: 'Norrbotten når botten',
-    lead: 'Bubblan sprack',
+    title: 'Nya Enköpingsstyrets budget inte deras egen',
+    lead: 'SD gav stödet åt S och NE - \'De har samma prioriteringar som oss\'',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '06:47'
     },
-    url: 'tt.se',
-    source: 'tt',
+    url: 'https://www.svt.se/nyheter/lokalt/uppsala/majoriteten-fick-inte-igenom-sin-budget-i-enkoping-sd-gav-stod-at-s-och-ne',
+    source: 'svt',
     location: {
       country: '',
-      county: 'Norrbottens län',
-      municipality: '',
-      city: ''
+      county: '',
+      municipality: 'uppsala kommun',
+      city: 'enköping'
     }
   },
   {
     id: 3,
-    title: 'Norrbotten news',
-    lead: 'Quotes by Anton',
+    title: 'Skidgymnasieeleven: Svårt att sluta med de farliga vallorna',
+    lead: 'Förbjuds i Norge',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '06:00'
     },
+    url: 'https://www.svt.se/nyheter/lokalt/vasternorrland/skidgymnasieeleven-svart-att-sluta-med-de-farliga-vallorna',
     source: 'svt',
     location: {
       country: '',
-      county: 'Norrbottens län',
+      county: '',
       municipality: '',
-      city: ''
+      city: 'Sollefteå'
     }
   },
   {
     id: 4,
-    title: 'KIRUNA STAD NYHET',
-    lead: 'Blabla',
+    title: 'Facket vill veta om olyckorna har ett samband',
+    lead: 'Flera olyckor med malmtransporter',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '04',
+      time: '20:15'
     },
+    url: 'https://www.svt.se/nyheter/lokalt/norrbotten/efter-dodsolyckan-nu-rullar-malmtransporterna-igen',
     source: 'svt',
     location: {
       country: '',
-      county: '',
+      county: 'norrbottens län',
       municipality: '',
-      city: 'Kiruna'
+      city: ''
     }
   },
   {
     id: 5,
-    title: 'jukkasjärvi STAD NYHET',
-    lead: 'jukkasjärvi',
+    title: 'Så ska flerspråkiga elever lära sig bättre svenska',
+    lead: 'Pilotprojektet testas i Malmöskola',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '05:00'
     },
+    url: 'https://www.svt.se/nyheter/lokalt/skane/flersprakighet-ska-lyfta-larandet',
     source: 'svt',
     location: {
       country: '',
       county: '',
       municipality: '',
-      city: 'jukkasjärvi'
+      city: 'malmö'
     }
   },
   {
     id: 6,
-    title: 'dummy news',
-    lead: 'jukkasjärvi',
+    title: 'First aid kit, Les big byrd och Jamie XX gästar Musikhjälpen',
+    lead: 'Maratoninsamlingen drar igång i Lund den 10 december',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '07:00'
     },
+    url: 'https://www.svt.se/kultur/de-gastar-musikhjalpen',
     source: 'svt',
     location: {
       country: '',
       county: '',
       municipality: '',
-      city: 'kiruna'
+      city: 'lund'
     }
   },
   {
     id: 7,
-    title: 'Stockholm STAD NYHET',
-    lead: 'sthubuntu',
+    title: 'Stor trafikinsats i Halland under onsdagsnatten',
+    lead: 'Kontrollerade 785 fordon - flera myndigheter deltog',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '07:29'
     },
+    url: 'https://www.svt.se/nyheter/lokalt/halland/stor-trafikinsats-i-halland-under-onsdagsnatten',
     source: 'svt',
     location: {
       country: '',
-      county: '',
+      county: 'hallands län',
       municipality: '',
-      city: 'stockholm'
+      city: ''
     }
   },
   {
     id: 8,
-    title: 'resarö STAD NYHET',
-    lead: 'sthubuntu',
+    title: 'Så mycket skattepengar läggs på representation och konferenser',
+    lead: 'SVT:s reporter visar skillnaderna mellan Göteborgs stadsdelar',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '05',
+      time: '06:00'
     },
+    url: 'https://www.svt.se/nyheter/lokalt/vast/sa-mycket-skattepengar-laggs-pa-representation-och-konferenser',
     source: 'svt',
     location: {
       country: '',
       county: '',
       municipality: '',
-      city: 'reSarÖ'
+      city: 'göteborg'
     }
   },
   {
     id: 9,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
+    title: 'Så ser världen ut 2050',
+    lead: 'Hör teknikentreprenören Nicklas Bergman om hur samhället kan förändras i grunden',
     active: false,
     timestamp: {
       year: '2018',
       month: '12',
-      day: '24',
-      time: '13:44'
+      day: '04',
+      time: '21:25'
     },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'arjeplogs kommun',
-      city: ''
-    }
-  },
-  {
-    id: 10,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'arjeplogs kommun',
-      city: ''
-    }
-  },
-  {
-    id: 11,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'Bodens kommun',
-      city: ''
-    }
-  },
-  {
-    id: 12,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'Pajala',
-      city: ''
-    }
-  },
-  {
-    id: 13,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'Färgelanda Kommun',
-      city: ''
-    }
-  },
-  {
-    id: 14,
-    title: 'Dummy news2',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'Skara Kommun',
-      city: ''
-    }
-  },
-  {
-    id: 15,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
+    url: 'https://www.svt.se/nyheter/lokalt/vast/sa-ser-varlden-ut-2050',
     source: 'svt',
     location: {
       country: '',
       county: '',
       municipality: '',
       city: 'göteborg'
-    }
-  },
-  {
-    id: 17,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: '',
-      city: 'göteborg'
-    }
-  },
-  {
-    id: 18,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'Aneby Kommun',
-      city: ''
-    }
-  },
-  {
-    id: 19,
-    title: 'Dummy news',
-    lead: 'sthubuntu',
-    active: false,
-    timestamp: {
-      year: '2018',
-      month: '12',
-      day: '24',
-      time: '13:44'
-    },
-    source: 'svt',
-    location: {
-      country: '',
-      county: '',
-      municipality: 'Gislaveds Kommun',
-      city: ''
     }
   }
 ]
