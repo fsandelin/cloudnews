@@ -7,7 +7,7 @@ const {
 } = process.env;
 const MIDDLEWARE_ROUTE = '/complete_request';
 const COMPLETE_REQUEST_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}${MIDDLEWARE_ROUTE}`;
-const SCRAPER_URL_SVT = `http://localhost:${SVT_PORT}/getnews/daterange`;
+const SCRAPER_URL_SVT = `http://localhost:${SVT_PORT}/getnews/daterange/thread`;
 const SCRAPER_URL_POLISEN = `http://localhost:${POLISEN_PORT}/api/polisens_nyheter`;
 
 
