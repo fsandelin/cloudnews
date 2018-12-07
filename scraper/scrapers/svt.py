@@ -401,7 +401,7 @@ def get_news_region_thread(from_, until_, region):
 
     return news_list
 
-def get_news_selected_regions_threads(from_, until_, regions=used_regions):
+def get_news_selected_regions_threads(from_, until_, regions=svt_regions):
     selected_news = []
     p = Pool()
     arguments = [(from_, until_, region) for region in regions]

@@ -70,7 +70,6 @@ def test_threads(from_, until_):
 
     return news_list
 
-
 def locate_single_news(news):    
     found, news = search_cloud_news(news)
 
@@ -87,7 +86,6 @@ def locate_single_news(news):
             news['location'] = temp_news['location']
 
     return news
-
 
 async def locate_threads(news_list):
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
@@ -112,7 +110,6 @@ def locate_process(news_list):
     asyncio.set_event_loop(loop)
     news_list = loop.run_until_complete(locate_threads(news_list))
     return news_list
-
 
 def locate_news(news_list):
     pool = Pool()
