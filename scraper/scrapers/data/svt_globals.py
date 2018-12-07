@@ -74,3 +74,27 @@ svt_lokala_namn = [
 "Öst"
 ]
 
+svt_translate = {
+"Blekinge" : "Blekinge län",
+"Dalarna" : "Dalarnas län",
+"Gävleborg" : "Gävleborgs län",
+"Halland" : "Hallands län",
+"Helsingborg" : "Skåne län", # också som skåne
+"Jämtland" : "Jämtlands län",
+"Jönköping" : "Jönköpings län",
+"Norrbotten" : "Norrbottens län",
+"Skåne" : "Skåne län",
+"Småland" : ["Kalmar län", "Kronobergs län"], # tilhör både "Kalmar län" "Kronobergs län"
+"Stockholm" : "Stockholms län",
+"Södertälje" : "Stockholms län", # också som stockholm
+"Sörmland" : "Södermanlands län",
+"Uppsala" : "Uppsala län",
+"Värmland" : "Värmlands län",
+"Väst" : "Västra Götalands län",
+"Västerbotten" : "Västerbottens län",
+"Västernorrland" : "Västernorrlands län",
+"Västmanland" : "Västmanlands län",
+"Örebro" : "Örebro län",
+"Öst" : ["Östergötlands län", "Gotlands län"] # tillhör båda länen
+}
+
