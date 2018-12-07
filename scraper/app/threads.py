@@ -22,16 +22,31 @@ def post_timespan(from_, until_, news_list, service="svt"):
 
     URL = "http://localhost:3030/api/fill_timespan"
 
-    dict_obj = {}
+    body = {}
 
-    dict_obj['service'] = service
-    dict_obj['timespan'] = {'from' : str(from_), 'until' : str(until_)}
-    dict_obj['news'] = news_list
+    body['service'] = service
+    body['timespan'] = {'from' : str(from_), 'until' : str(until_)}
+    body['news'] = news_list
+
     try:
-        requests.post(URL, json = dict_obj)
+        requests.post(URL, json = body)
     except requests.RequestException as e:
         print(e)
 
+def post_livenews(from_, until_, news_list, service="svt"):
+
+    URL = "http://localhost:3030/api/live_news"
+
+    body = {}
+
+    body['service'] = service
+    body['timespan'] = {'from' : str(from_), 'until' : str(until_)}
+    body['news'] = news_list
+
+    try:
+        requests.post(URL, json = body)
+    except requests.RequestException as e:
+        print(e)
 
 def get_api_obj():
     print(get_api_object())
@@ -100,8 +115,8 @@ def locate_process(news_list):
 
 
 def locate_news(news_list):
-    p = Pool()
-    result = p.map(locate_process, news_list)
+    pool = Pool()
+    result = pool.map(locate_process, news_list)
     return result
 
 def thread_get_news(from_, until_):
@@ -126,3 +141,25 @@ def thread_get_news(from_, until_):
 
     service = 'svt'
     post_timespan(from_, until_, news_group, service)
+
+def thread_livenews(from_, until_):
+    news_list = test_threads(from_, until_)
+
+    start_time = time()
+    news_list = locate_news(news_list)
+    
+
+    news_group = []
+    for news in news_list:
+        news_group += news
+
+    i = 0
+    for news in news_group:
+        if 'city' in news['location']:
+            i += 1
+
+    print("Amoun of regions:", len(news_list), "Amount of news:", len(news_group), "amount of found news:", i)
+    print("--- %s seconds ---" % (time() - start_time))
+
+    service = 'svt'
+    post_livenews(from_, until_, news_group, service)

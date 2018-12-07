@@ -1,4 +1,4 @@
-a = ["channels",
+keywords = ["channels",
      "keywords",
      "id",
      "boilerplate",
