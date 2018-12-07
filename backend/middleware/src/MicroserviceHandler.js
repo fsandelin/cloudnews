@@ -29,7 +29,7 @@ module.exports = class MicroserviceHandler {
 
     this.app.post('/complete_request', (req, res) => {
       logger.info('Should try to complete part of request');
-      const { service, requestId, articles } = req.body;
+      const { requestId, articles } = req.body;
       const timespanRequest = requests[requestId];
       if (!timespanRequest) {
         logger.error(`Cannot find request ${requestId}. Could it have already been completed?`);

@@ -29,7 +29,8 @@ const actions = {
   activateNewsSource: ({ rootState, dispatch, commit }, source) => {
     const events = [
       { event: se.NEWS, action: 'addNews' },
-      { event: se.NEWS_LIST, action: 'addNewsList' }
+      { event: se.NEWS_LIST, action: 'addNewsList' },
+      { event: se.COMPLETE_REQUEST, action: 'logCompleteRequest' },
     ]
 
     const url = `${socketServiceUrl}${source.name}`
@@ -40,6 +41,11 @@ const actions = {
     socketConnections = [ ...socketConnections, { source: source.name, socket: addWebSocket(dispatch)(events, url, source.name, from, to) } ]
 
     commit('activateNewsSource', source)
+  },
+  logCompleteRequest: ({ dispatch }, request) => {
+    console.log(request)
+    const newsList = request.articles;
+    dispatch('addNewsList', newsList)
   },
   deactivateNewsSource: ({ commit }, source) => {
     const socketConnection = socketConnections.find(connection => connection.source === source.name)
