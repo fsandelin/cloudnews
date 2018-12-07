@@ -1,14 +1,15 @@
-import addWebSocket from '../webSocketConnection';
+import { addWebSocket, createWebSocketTimeSpanRequest } from '../webSocketConnection'
 import {
   socketEvents as se,
   newsSources as ns,
   socketServiceUrl
-} from '../constants';
+} from '../constants'
+import { prettifyDateObject } from '../helpers'
 
 let socketConnections = []
 
 const state = {
-  newsSources: ns.map(source => ({ name: source, active: false}))
+  newsSources: ns.map(source => ({ name: source, active: false }))
 }
 
 const getters = {
@@ -25,37 +26,48 @@ const actions = {
       dispatch('activateNewsSource', source)
     }
   },
-  activateNewsSource: ({ dispatch, commit }, source) => {
+  activateNewsSource: ({ rootState, dispatch, commit }, source) => {
     const events = [
-      { url: `${socketServiceUrl}${source.name}`, event: se.NEWS, action: 'addNews' },
-      { url: `${socketServiceUrl}${source.name}`, event: se.NEWS_LIST, action: 'addNewsList' },
+      { event: se.NEWS, action: 'addNews' },
+      { event: se.NEWS_LIST, action: 'addNewsList' }
     ]
-    socketConnections = [ ...socketConnections, { source: source.name, sockets: addWebSocket(dispatch)(events) } ]
+
+    const url = `${socketServiceUrl}${source.name}`
+
+    const from = prettifyDateObject(rootState.time.newsStartDate)
+    const to = prettifyDateObject(rootState.time.newsEndDate)
+
+    socketConnections = [ ...socketConnections, { source: source.name, socket: addWebSocket(dispatch)(events, url, source.name, from, to) } ]
 
     commit('activateNewsSource', source)
   },
   deactivateNewsSource: ({ commit }, source) => {
     const socketConnection = socketConnections.find(connection => connection.source === source.name)
-    socketConnection.sockets.map(socket => socket.disconnect())
+    socketConnection.socket.disconnect()
     socketConnections = socketConnections.filter(connection => connection.source !== source.name)
 
     commit('deactivateNewsSource', source)
   },
+  makeSocketTimeSpanRequest: (_, { from, to }) => {
+    socketConnections.map(sc => {
+      createWebSocketTimeSpanRequest(sc.socket, sc.source, from, to)
+    })
+  }
 }
 
 const mutations = {
-  activateNewsSource(state, source) {
+  activateNewsSource (state, source) {
     state.newsSources = state.newsSources.map(s => ({
       ...s,
       active: s.name === source.name ? true : s.active
     }))
   },
-  deactivateNewsSource(state, source) {
+  deactivateNewsSource (state, source) {
     state.newsSources = state.newsSources.map(s => ({
       ...s,
       active: s.name === source.name ? false : s.active
     }))
-  },
+  }
 }
 
 export default {

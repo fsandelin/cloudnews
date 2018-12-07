@@ -3,7 +3,7 @@ const uuid = require('uuid/v4');
 const winston = require('winston');
 const rq = require('request');
 
-const availableServices = ['tt', 'svt'];
+const availableServices = ['tt', 'svt', 'twitter', 'polisen'];
 const { NEWS_SERVICE_HOST, NEWS_SERVICE_PORT } = process.env;
 
 const clients = {};
@@ -19,8 +19,8 @@ const logger = winston.createLogger({
 
 function applyEventListeners(io) {
   io.use((socket, next) => {
-    const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-    const { services } = JSON.parse(servicesString.trim());
+    const servicesString = socket.handshake.query.services
+    const services = servicesString.split('+').map(service => service.trim())
     let verified = true;
     for (const service of services) {
       if (availableServices.indexOf(service) === -1) {
@@ -35,8 +35,8 @@ function applyEventListeners(io) {
 
   io.on('connection', (socket) => {
     logger.info('Someone connected');
-    const servicesString = Buffer.from(socket.handshake.query.services, 'base64').toString();
-    const { services } = JSON.parse(servicesString.trim());
+    const servicesString = socket.handshake.query.services
+    const services = servicesString.split('+').map(service => service.trim())
     const clientId = uuid();
 
     clients[clientId] = {
@@ -56,26 +56,27 @@ function applyEventListeners(io) {
       logger.debug(clients);
     });
 
-    socket.on('timespan_request', (requestedResources) => {
+    socket.on('timespan_request', (requestedResource) => {
       const requestId = uuid();
       const request = {
         requestId,
         clientId,
       };
-      let reqRes = null;
+      let requestedResourceParsed = null;
       try {
-        reqRes = JSON.parse(requestedResources);
-        reqRes.forEach((res) => {
-          res.completed = false;
-        });
+        requestedResourceParsed = JSON.parse(requestedResource);
+        requestedResourceParsed.completed = false;
       } catch (exception) {
         console.log('Cannot parse requestedResources, probably wrong format');
         return;
       }
-      request.requestedResources = reqRes;
-      request.incompleteResources = reqRes.length;
+      if (isNaN(Date.parse(requestedResourceParsed.from)) || isNaN(Date.parse(requestedResourceParsed.until))) {
+        clients[clientId].socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
+        return;
+      }
 
-      setInterval(() => { console.log(requests); }, 5000);
+      request.requestedResource = requestedResourceParsed;
+
       requests[requestId] = request;
       logger.info(requests);
       rq.post({

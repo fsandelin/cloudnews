@@ -3,16 +3,16 @@
     <transition-group name="fade" tag="g">
     <g
       v-for="city in mapCities"
-      v-bind:key="'city-'+city.key">
+      v-bind:key="city.name+'-'+city.municipality+'-'+city.county">
           <circle 
-            v-bind:key="city.key"
+            v-bind:key="'circle-'+city.name+'-'+city.municipality+'-'+city.county"
             class="city"
             v-bind:cx="city.x+'px'"
             v-bind:cy="city.y+'px'"
             v-bind:r="radius+'px'">
           </circle>
           <text
-            v-bind:key="'text-'+city.key"
+            v-bind:key="'text-'+city.name+'-'+city.municipality+'-'+city.county"
             class="city"
             v-bind:x="city.x+'px'"
             v-bind:y="city.y+'px'"

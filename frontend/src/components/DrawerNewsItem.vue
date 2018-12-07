@@ -2,7 +2,7 @@
   <div id="active-news-item">
     <div class="header flex-row">
       <i class="material-icons back"
-        v-on:click="toggleActive(activeNewsItem)">
+        v-on:click="setActiveNewsItemId(null)">
         reply
       </i>
       <p class="title">
@@ -15,7 +15,7 @@
       </i>
     </div>
     <p class="flex-col">
-      {{ activeNewsItem.lead }}
+      {{ activeNewsItem.lead ? activeNewsItem.lead : activeNewsItem.body }}
     </p>
     <img
       v-bind:src="activeNewsItem.imgurl"
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'toggleActive'
+      'setActiveNewsItemId'
     ]),
     openLink: function () {
       if (this.activeNewsItem.url.startsWith('http')) {

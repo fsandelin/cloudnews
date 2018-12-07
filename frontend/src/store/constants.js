@@ -1,5 +1,5 @@
 export const newsSources = [
-  'svt', 'tt'
+  'svt', 'twitter', 'polisen'
 ]
 
 export const socketEvents = {
@@ -22,7 +22,7 @@ export const months = {
   SEPTEMBER: 'September',
   OCTOBER: 'October',
   NOVEMBER: 'November',
-  DECEMBER: 'December',
+  DECEMBER: 'December'
 }
 
 export const weekDays = {
@@ -32,7 +32,7 @@ export const weekDays = {
   THURSDAY: 'Thursday',
   FRIDAY: 'Friday',
   SATURDAY: 'Saturday',
-  SUNDAY: 'Sunday',
+  SUNDAY: 'Sunday'
 }
 
-export const TOTAL_DAYS_TO_SHOW = 42;
+export const TOTAL_DAYS_TO_SHOW = 42
