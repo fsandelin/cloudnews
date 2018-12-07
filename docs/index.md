@@ -17,6 +17,7 @@ GitHub Page for Software Engineering Project
 
 * [Git repository](https://github.com/antoncarlsson/cloudnews)
 * [Project plan](https://docs.google.com/document/d/1Hg0ZxK5_y_Vkw8W16Bfwu3eayNPo9ShCfFvujZslWZU/edit?usp=sharing)
+* [Mid-course presentation](https://drive.google.com/open?id=1x0x7pN1MMlGhX7jBfmDkBIRcHbxByPJUzUdV8VkXsEo)
 
 ## Weekly reports:
 * [44](https://drive.google.com/open?id=1skGAC9gxAYvZEPVlsxdhnuxb_1FhQdMr03YFA9smVxs)
