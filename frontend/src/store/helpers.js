@@ -92,7 +92,14 @@ export const sameDates = (firstDate, secondDate) => {
          firstDate.day === secondDate.day
 }
 
-export const prettifyDateObject = (dateObj = '????-??-??') => {
+export const prettifyDateObject = (dateObj) => {
   if (dateObj === null) return '????-??-??'
-  return `${dateObj.year}-${dateObj.month}-${dateObj.day}`
+
+  let year = dateObj.year.toString()
+  let month = dateObj.month.toString()
+  month = month.length < 2 ? `0${month}` : month
+  let day = dateObj.day.toString()
+  day = day.length < 2 ? `0${day}` : day
+
+  return `${year}-${month}-${day}`
 }

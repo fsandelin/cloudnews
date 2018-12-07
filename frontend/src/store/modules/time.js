@@ -15,11 +15,12 @@ import {
 const today = new Date()
 
 const state = {
+  today: prettifyDateObject({ year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() }),
   currentYear: today.getFullYear() - 1,
   currentMonth: today.getMonth() + 1,
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
   weekNumbers: weekNumsForMonth(today.getFullYear() - 1, today.getMonth() + 1),
-  startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
+  startDate: { year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
   newsStartDate: { year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() },
   newsEndDate: null,
@@ -60,7 +61,8 @@ const getters = {
     const numNextDaysToFill = TOTAL_DAYS_TO_SHOW - (daysForCurrentMonth + numPreviousDaysToFill)
 
     const nextDaysToFill = getNumArrayBetweenNums(1, numNextDaysToFill + 2)
-      .map(i => ({ year: state.currentYear, month: state.currentMonth + 1, day: i }))
+      .map(i => ({ year: state.currentMonth === 12 ? state.currentYear + 1 : state.currentYear,
+                   month: state.currentMonth === 12 ? 1 : state.currentMonth + 1, day: i }))
 
     return [ ...previousDaysToFill, ...currentDaysToFill, ...nextDaysToFill ]
   },
@@ -117,7 +119,9 @@ const actions = {
       newsStartDate: state.startDate,
       newsEndDate: state.endDate,
       startDate: state.startDate,
-      endDate: state.endDate
+      endDate: state.endDate,
+      currentYear: state.newsStartDate.year,
+      currentMonth: state.newsStartDate.month
     })
     const from = prettifyDateObject(state.startDate)
     const to = prettifyDateObject(state.endDate)

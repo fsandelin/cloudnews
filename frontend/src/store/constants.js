@@ -4,7 +4,9 @@ export const newsSources = [
 
 export const socketEvents = {
   NEWS: 'news',
-  NEWS_LIST: 'news_list'
+  NEWS_LIST: 'news_list',
+  TIMESPAN_REQUEST: 'complete_request',
+  COMPLETE_REQUEST: 'complete_request',
 }
 
 export const socketBaseUrl = 'http://localhost:3020/'
