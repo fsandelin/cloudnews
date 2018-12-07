@@ -220,18 +220,27 @@ function pushArticles(service, articles, callback) {
 }
 
 // Gets all articles for a given service in a given timespan and calls callback on it.
-function getArticles(service, from, until, callback) {
+function getArticles(service, from_, until_, callback) {
   if (!service) service = 'svt';
   dbConnection.connect((error, client) => {
     if (error) {
       callback(error, null);
     }
-    from = from.replace(' ', '+');
-    until = until.replace(' ', '+');
+
+    from_ = from_.replace(' ', '+');
+    until_ = until_.replace(' ', '+');
+
+    const from = new Date(from_);
+    const until = new Date(until_);
+
+    until.setHours(23, 59, 59, 999);
+    from_ = from.toISOString();
+    until_ = until.toISOString();
+
     const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     const db = client.db(dbName);
     db.collection(collectionName).find({
-      $and: [{ datetime: { $gte: from } }, { datetime: { $lte: until } }],
+      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
     }).toArray(callback);
   });
 }

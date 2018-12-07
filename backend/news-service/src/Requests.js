@@ -8,7 +8,7 @@ const {
 } = process.env;
 const MIDDLEWARE_ROUTE = '/complete_request';
 const COMPLETE_REQUEST_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}${MIDDLEWARE_ROUTE}`;
-const SCRAPER_URL_SVT = `http://localhost:${SVT_PORT}/getnews/daterange`;
+const SCRAPER_URL_SVT = `http://localhost:${SVT_PORT}/getnews/daterange/thread`;
 const SCRAPER_URL_POLISEN = `http://localhost:${POLISEN_PORT}/api/polisens_nyheter`;
 
 
@@ -20,7 +20,7 @@ function scrapeRequestedResources(neededTimespans) {
   neededTimespans.forEach((neededTimespan) => {
     switch (neededTimespan.service) {
       case 'svt':
-        scraperHandler.svt(neededTimespan);
+        scraperHandler.svt(neededTimespans);
         break;
       case 'polisen':
         scraperHandler.polisen(neededTimespan);
@@ -67,12 +67,14 @@ function sendCompletedResources(request) {
 function updateRequestCompletion(request) {
   const { requestedResource } = request;
   if (requestedResource.completed) {
+    sendCompletedResources(request);
     return;
   }
   db.getMissingTimespans(requestedResource, (timespans) => {
     if (timespans.length === 0) {
       requestedResource.completed = true;
       request.completed = true;
+      requestedResource.scraping = false;
     } else {
       requestedResource.scraping = true;
       scrapeRequestedResources(timespans);
