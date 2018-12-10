@@ -1,35 +1,41 @@
 <template>
-  <div id="date-picker-toggler"
-    v-on:click="toggleDatePicker"
-    class="full-shadow">
+  <div
+    id="date-picker-toggler"
+    class="full-shadow"
+    @click="toggleDatePicker"
+  >
     <div class="flex-row">
       <p>{{ prettifyDateObject(newsStartDate) }}</p>
-      <p v-if="newsEndDate !== null">to {{ prettifyDateObject(newsEndDate) }}</p>
-      <i class="material-icons">edit</i>
+      <p v-if="newsEndDate !== null">
+        to {{ prettifyDateObject(newsEndDate) }}
+      </p>
+      <i class="material-icons">
+        edit
+      </i>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { prettifyDateObject } from '../store/helpers';
+import { mapGetters, mapActions } from 'vuex'
+import { prettifyDateObject } from '../store/helpers'
 
 export default {
-  name: "datepickertoggler",
+  name: 'Datepickertoggler',
   computed: {
     ...mapGetters([
       'newsStartDate',
-      'newsEndDate',
-    ]),
+      'newsEndDate'
+    ])
   },
   methods: {
     ...mapActions([
-      'toggleDatePicker',
+      'toggleDatePicker'
     ]),
     prettifyDateObject: function (dateObj) {
       return prettifyDateObject(dateObj)
     }
-  },
+  }
 }
 </script>
 

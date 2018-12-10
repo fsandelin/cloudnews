@@ -1,24 +1,25 @@
 <template>
   <div
     id="drawer"
-    class="bottom-shadow flex-col">
-    <slot></slot>
-    <drawerhandle
-      v-bind:isOpen="isOpen"
-      v-bind:toggleDrawer="toggleDrawer">
-    </drawerhandle>
+    class="bottom-shadow flex-col"
+  >
+    <slot />
+    <DrawerHandle
+      :isOpen="isOpen"
+      :toggleDrawer="toggleDrawer"
+    />
   </div>
 </template>
 
 <script>
-import DrawerHandle from './DrawerHandle';
+import DrawerHandle from './DrawerHandle'
 
 export default {
-  name: 'drawer',
-  props: ['toggleDrawer', 'isOpen'],
+  name: 'Drawer',
   components: {
-    'drawerhandle': DrawerHandle,
-  }
+    'DrawerHandle': DrawerHandle
+  },
+  props: ['toggleDrawer', 'isOpen']
 }
 </script>
 

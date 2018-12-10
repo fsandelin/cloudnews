@@ -5,6 +5,8 @@ export const addWebSocket = dispatch => (events, url, service, from, to) => {
 
   events.map(({ event, action }) => {
     socket.on(event, (data) => {
+
+      console.log('event', event, data)
       dispatch(action, data)
     })
   })
@@ -14,9 +16,11 @@ export const addWebSocket = dispatch => (events, url, service, from, to) => {
 }
 
 export const createWebSocketTimeSpanRequest = (socket, service, from, to) => {
-  socket.emit('timespan_request', JSON.stringify([{
+  console.log('trying to create a timespan request')
+  socket.emit('timespan_request', JSON.stringify({
     'service': service,
     'from': from,
     'until': to
-  }]))
+  }))
+  console.log('created a timespan request', socket, service, from, to)
 }

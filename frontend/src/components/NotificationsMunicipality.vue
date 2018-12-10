@@ -2,73 +2,84 @@
   <g id="notificationsMunicipality">
     <g
       v-for="municipality of newsByMunicipality"
-      v-bind:key="'municipalityNoticication-'+municipality.name"
+      :key="'municipalityNoticication-'+municipality.name"
       class="municipalityNoticication"
-      v-on:click="municipalityClick(municipality)">
+      @click="municipalityClick(municipality)"
+    >
       <!--LINES-->
-      <transition
-        v-on:beforeEnter="(el, done) => lineBeforeEnter(el, done, municipality)"
-        v-on:enter="(el, done) => lineEnter(el, done, municipality)"
-        v-on:leave="(el, done) => lineLeave(el, done, municipality)"
-        v-bind:css="false">
+      <Transition
+        :css="false"
+        @beforeEnter="(el, done) => lineBeforeEnter(el, done, municipality)"
+        @enter="(el, done) => lineEnter(el, done, municipality)"
+        @leave="(el, done) => lineLeave(el, done, municipality)"
+      >
         <line
-          v-bind:ref="'municipalityLine'+municipality.name"
-          v-bind:key="'municipalityLine'+municipality.name"
           v-show="municipality.active"
-          v-bind:x1="municipality.countyX+'px'"
-          v-bind:y1="municipality.countyY+'px'"
-          v-bind:x2="municipality.x+'px'"
-          v-bind:y2="municipality.y+'px'"
-          v-bind:stroke-width="lineWidth()+'px'">
-        </line>
-      </transition>
+          :ref="'municipalityLine'+municipality.name"
+          :key="'municipalityLine'+municipality.name"
+          :x1="municipality.countyX+'px'"
+          :y1="municipality.countyY+'px'"
+          :x2="municipality.x+'px'"
+          :y2="municipality.y+'px'"
+          :stroke-width="lineWidth()+'px'"
+        />
+      </Transition>
 
       <!--CIRCLES-->
-      <transition
-        v-on:beforeEnter="(el, done) => circleBeforeEnter(el, done, municipality)"
-        v-on:enter="(el, done) => circleEnter(el, done, municipality)"
-        v-on:leave="(el, done) => circleLeave(el, done, municipality)"
-        v-bind:css="false">
+      <Transition
+        :css="false"
+        @beforeEnter="(el, done) => circleBeforeEnter(el, done, municipality)"
+        @enter="(el, done) => circleEnter(el, done, municipality)"
+        @leave="(el, done) => circleLeave(el, done, municipality)"
+      >
         <circle
-          v-bind:ref="'newsNotification-'+municipality.name"
-          v-bind:key="'newsNotification-'+municipality.name"
           v-show="municipality.active"
+          :ref="'newsNotification-'+municipality.name"
+          :key="'newsNotification-'+municipality.name"
           class="municipality-circle"
-          v-bind:cx="municipality.x+'px'"
-          v-bind:cy="municipality.y+'px'"
-          v-bind:r="circleSize(municipality.news.length)+'px'">
-        </circle>
-      </transition>
+          :cx="municipality.x+'px'"
+          :cy="municipality.y+'px'"
+          :r="circleSize(municipality.news.length)+'px'"
+        />
+      </Transition>
 
       <!--TEXT-->
-      <transition
-        v-on:beforeEnter="(el, done) => textBeforeEnter(el, done, municipality)"
-        v-on:enter="(el, done) => textEnter(el, done, municipality)"
-        v-on:leave="(el, done) => textLeave(el, done, municipality)"
-        v-bind:css="false">
+      <Transition
+        :css="false"
+        @beforeEnter="(el, done) => textBeforeEnter(el, done, municipality)"
+        @enter="(el, done) => textEnter(el, done, municipality)"
+        @leave="(el, done) => textLeave(el, done, municipality)"
+      >
         <text
-          v-bind:ref="'newsNotificationText-'+municipality.name+municipality.news.id"
-          v-bind:key="'newsNotificationText-'+municipality.name+municipality.news.id"
           v-show="municipality.active"
+          :ref="'newsNotificationText-'+municipality.name+municipality.news.id"
+          :key="'newsNotificationText-'+municipality.name+municipality.news.id"
           class="municipality-number"
           text-anchor="middle"
-          v-bind:x="municipality.x+'px'"
-          v-bind:y="municipality.y+'px'"
-          v-bind:dy="yOffset(municipality.news.length)+'px'"
-          v-bind:font-size="fontSize(municipality.news.length)+'px'">
-          {{municipality.news.length}}
+          :x="municipality.x+'px'"
+          :y="municipality.y+'px'"
+          :dy="yOffset(municipality.news.length)+'px'"
+          :font-size="fontSize(municipality.news.length)+'px'"
+        >
+          {{ municipality.news.length }}
         </text>
-      </transition>
+      </Transition>
     </g>
   </g>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
+import Velocity from 'velocity-animate'
 
 export default {
-  name: "notificationsMunicipality",
+  name: 'NotificationsMunicipality',
   props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects', 'lineWidth'],
+  data: function () {
+    return {
+      previousmunicipalityNewsLength: []
+    }
+  },
   computed: {
     ...mapGetters([
       'selectedCounty',
@@ -76,86 +87,81 @@ export default {
       'zoomValue'
     ])
   },
-  data: function() {
-    return {
-      previousmunicipalityNewsLength: []
-    }
-  },
-  mounted: function() {
-    this.previousMunicipalityNewsLength = this.calculateNewsLengthForObjects(this.newsByMunicipality)
-  },
   watch: {
-    newsByMunicipality: function(newsByMunicipality) {
+    newsByMunicipality: function (newsByMunicipality) {
       this.updateNewsLengthForObjects(newsByMunicipality, this.previousMunicipalityNewsLength, this.$refs, 'newsNotification-')
     }
+  },
+  mounted: function () {
+    this.previousMunicipalityNewsLength = this.calculateNewsLengthForObjects(this.newsByMunicipality)
   },
   methods: {
     ...mapActions([
       'municipalityClick'
     ]),
-    lineBeforeEnter: function(el, done, municipality) {
+    lineBeforeEnter: function (el, done, municipality) {
       Velocity(el, {
         x1: municipality.countyX,
         y1: municipality.countyY,
         x2: municipality.countyX,
         y2: municipality.countyY },
-        { duration: 0 });
+      { duration: 0 })
     },
-    lineEnter: function(el, done, municipality) {
+    lineEnter: function (el, done, municipality) {
       Velocity(el, {
         x2: municipality.x,
         y2: municipality.y },
-        { duration: 300 },
-        { complete: done });
+      { duration: 300 },
+      { complete: done })
     },
-    lineLeave: function(el, done, municipality) {
+    lineLeave: function (el, done, municipality) {
       Velocity(el, {
         x1: municipality.countyX,
         y1: municipality.countyY,
         x2: municipality.countyX,
         y2: municipality.countyY },
-        { duration: 300 },
-        { complete: done });
+      { duration: 300 },
+      { complete: done })
     },
-    circleBeforeEnter: function(el, done, municipality) {
+    circleBeforeEnter: function (el, done, municipality) {
       Velocity(el, {
         cx: municipality.countyX,
         cy: municipality.countyY },
-        { duration: 0 });
+      { duration: 0 })
     },
-    circleEnter: function(el, done, municipality) {
+    circleEnter: function (el, done, municipality) {
       Velocity(el, {
         cx: municipality.x,
         cy: municipality.y },
-        { duration: 300 },
-        { complete: done });
+      { duration: 300 },
+      { complete: done })
     },
-    circleLeave: function(el, done, municipality) {
+    circleLeave: function (el, done, municipality) {
       Velocity(el, {
         cx: municipality.countyX,
         cy: municipality.countyY },
-        { duration: 300 },
-        { complete: done });
+      { duration: 300 },
+      { complete: done })
     },
-    textBeforeEnter: function(el, done, municipality) {
+    textBeforeEnter: function (el, done, municipality) {
       Velocity(el, {
         x: municipality.countyX,
         y: municipality.countyY },
-        { duration: 0 });
+      { duration: 0 })
     },
-    textEnter: function(el, done, municipality) {
+    textEnter: function (el, done, municipality) {
       Velocity(el, {
         x: municipality.x,
         y: municipality.y },
-        { duration: 300 },
-        { complete: done });
+      { duration: 300 },
+      { complete: done })
     },
-    textLeave: function(el, done, municipality) {
+    textLeave: function (el, done, municipality) {
       Velocity(el, {
         x: municipality.countyX,
         y: municipality.countyY },
-        { duration: 300 },
-        { complete: done });
+      { duration: 300 },
+      { complete: done })
     }
   }
 }

@@ -109,26 +109,26 @@ const dateIsGiven = (neededTimespan) => {
 }
 
 app.post('/api/polisens_nyheter', (req, res) => {
+	console.log('Got a request');
 	let from = '';
 	let until = '';
 	let requests; 
 
-	if (dateIsGiven(req.body.neededTimespan)) {
-    ({from, until} = req.body.neededTimespan);
+	if (dateIsGiven(req.body)) {
+    ({from, until} = req.body);
     if (until === '') until = from;
   
-    const dates = getDateRange(from, until);
+		const dates = getDateRange(from, until);
     requests = dates.map(date => getNewsFromPolisen(date));
 	} else {
 		requests = [getNewsFromPolisen(null)];
 	}
-
   axios.all(requests)
     .then((results) => {
       const newsList = flatten(results.map(r => r.data));
       const news = getNewsFromNewsList(newsList);
       const timespan = {from: from.substr(0, 10), until: until.substr(0, 10)};
-
+			console.log(news.length)
       sendNewsToNewsService(news, timespan);
     })
     .catch((error) => {

@@ -1,13 +1,16 @@
 <template>
-  <div id="news-sidebar" class="right-shadow">
-      <div class="header flex-col bottom-shadow light-border-bottom">
-        <img
-          class="logo"
-          v-bind:src="logoWithText"
-          v-bind:alt="logoWithTextAlt">
-      </div>
-      <newslist v-bind:showFilter="showFilter">
-      </newslist>
+  <div
+    id="news-sidebar"
+    class="right-shadow"
+  >
+    <div class="header flex-col bottom-shadow light-border-bottom">
+      <img
+        class="logo"
+        :src="logoWithText"
+        :alt="logoWithTextAlt"
+      >
+    </div>
+    <Newslist :showFilter="showFilter" />
   </div>
 </template>
 
@@ -16,16 +19,21 @@ import NewsList from './NewsList'
 import LogoWithText from '../assets/LogoWithText.png'
 
 export default {
-  name: 'sidebar',
-  props: ['showFilter'],
+  name: 'Sidebar',
+  components: {
+    'Newslist': NewsList
+  },
+  props: {
+    'showFilter': {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       logoWithText: LogoWithText,
-      logoWithTextAlt: "LogoWithText",
+      logoWithTextAlt: 'LogoWithText'
     }
-  },
-  components: {
-    'newslist': NewsList
   }
 }
 </script>
