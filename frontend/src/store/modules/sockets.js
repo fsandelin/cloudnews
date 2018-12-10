@@ -5,16 +5,14 @@ import {
   unsubscribeToLiveNews,
   unsubscribeToHistoricalNews
 } from '../webSocketConnection'
-import {
-  newsSources as ns,
-  socketServiceUrl
-} from '../constants'
+import { socketServiceUrl } from '../constants'
 import { prettifyDateObject } from '../helpers'
+import { getAvailableServices } from '../httpRequests'
 
 let socketConnections = []
 
 const state = {
-  newsSources: ns.map(source => ({ name: source, active: false }))
+  newsSources: []
 }
 
 const getters = {
@@ -24,6 +22,17 @@ const getters = {
 }
 
 const actions = {
+  fetchAvailableNewsSources: ({ dispatch }) => {
+    getAvailableServices(dispatch, 'saveAvailableNewsSources')
+  },
+  saveAvailableNewsSources: ({ commit }, fetchedNewsSources) => {
+    const newsSources = fetchedNewsSources
+      .slice(1, fetchedNewsSources.length - 1)
+      .toLowerCase().trim().split(',')
+      .map(source => source.slice(1, source.length - 1))
+      .map(source => ({ name: source, active: false }))
+    commit('saveAvailableNewsSources', newsSources)
+  },
   toggleNewsSource: ({ dispatch, state }, source) => {
     if (state.newsSources.find(s => s.name === source.name && s.active)) {
       dispatch('deactivateNewsSource', source)
@@ -73,6 +82,9 @@ const actions = {
 }
 
 const mutations = {
+  saveAvailableNewsSources (state, sources) {
+    state.newsSources = sources
+  },
   activateNewsSource (state, source) {
     state.newsSources = state.newsSources.map(s => ({
       ...s,

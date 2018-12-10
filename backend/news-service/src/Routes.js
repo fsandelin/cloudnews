@@ -55,7 +55,7 @@ router.post('/request/timespan', (req, res) => {
 });
 
 router.get('/available_services', (req, res) => {
-  const availableServices = ['svt', 'tt', 'polisen'];
+  const availableServices = ['svt', 'twitter', 'polisen'];
   res.json(availableServices);
 });
 
