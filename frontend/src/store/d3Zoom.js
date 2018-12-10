@@ -17,7 +17,7 @@ let currentZoom = null
 export const mapZoom = (setZoomValue) => {
   return d3
     .zoom()
-    .scaleExtent([0.45, 50])
+    .scaleExtent([0.33, 50])
     .on('zoom', () => {
       d3.select('.map').attr('transform', d3Event.transform)
       if (d3Event.transform.k !== currentZoom) {
