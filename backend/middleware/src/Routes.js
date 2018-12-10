@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const request = require('request');
+const cors = require('cors');
 
 const router = express.Router();
 const { NEWS_SERVICE_HOST, NEWS_SERVICE_PORT } = process.env;
@@ -19,7 +20,7 @@ router.get('/timespan', (req, res) => {
   });
 });
 
-router.get('/available_services', (req, res) => {
+router.get('/available_services', cors(), (req, res) => {
   console.log('Should make request to news-service now!');
   request.get({ url: `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/available_services` }, (err, response, body) => {
     console.log('Got request to news-service');
