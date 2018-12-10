@@ -30,7 +30,7 @@ const actions = {
     const events = [
       { event: se.NEWS, action: 'addNews' },
       { event: se.NEWS_LIST, action: 'addNewsList' },
-      { event: se.COMPLETE_REQUEST, action: 'logCompleteRequest' },
+      { event: se.COMPLETE_REQUEST, action: 'logCompleteRequest' }
     ]
 
     const url = `${socketServiceUrl}${source.name}`
@@ -44,7 +44,7 @@ const actions = {
   },
   logCompleteRequest: ({ dispatch }, request) => {
     console.log(request)
-    const newsList = request.articles;
+    const newsList = request.articles
     dispatch('addNewsList', newsList)
   },
   deactivateNewsSource: ({ commit }, source) => {
