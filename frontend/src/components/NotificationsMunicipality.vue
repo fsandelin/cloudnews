@@ -21,7 +21,7 @@
           :y1="municipality.countyY+'px'"
           :x2="municipality.x+'px'"
           :y2="municipality.y+'px'"
-          :stroke-width="lineWidth()+'px'"
+          :stroke-width="lineWidth+'px'"
         />
       </Transition>
 
@@ -94,6 +94,7 @@ export default {
   },
   mounted: function () {
     this.previousMunicipalityNewsLength = this.calculateNewsLengthForObjects(this.newsByMunicipality)
+    console.log(this.circleSize, this.fontSize, this.yOffset, this.lineWidth, this.calculateNewsLengthForObjects, this.updateNewsLengthForObjects)
   },
   methods: {
     ...mapActions([
