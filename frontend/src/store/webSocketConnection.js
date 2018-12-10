@@ -7,12 +7,11 @@ export const createWebSocket = url => {
 
 export const subscribeToLiveNews = dispatch => socket => {
   const liveEvents = [
-    { event: se.NEWS, action: 'addNews'},
-    { event: se.NEWS_LIST, action: 'addNewsList'}
+    { event: se.NEWS, action: 'addNews' },
+    { event: se.NEWS_LIST, action: 'addNewsList' }
   ]
   liveEvents.map(({ event, action }) => {
     socket.on(event, (data) => {
-
       dispatch(action, data)
     })
   })
