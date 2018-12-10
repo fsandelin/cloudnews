@@ -1,16 +1,20 @@
 <template>
   <div id="active-news-item">
     <div class="header flex-row">
-      <i class="material-icons back"
-        v-on:click="setActiveNewsItemId(null)">
+      <i
+        class="material-icons back"
+        @click="setActiveNewsItemId(null)"
+      >
         reply
       </i>
       <p class="title">
         {{ activeNewsItem.title }}
       </p>
-      <i class="material-icons url"
-        v-on:click="() => activeNewsItem.url ? openLink() : null"
-        v-bind:class="{ exists: activeNewsItem.url }">
+      <i
+        class="material-icons url"
+        :class="{ exists: activeNewsItem.url }"
+        @click="() => activeNewsItem.url ? openLink() : null"
+      >
         {{ activeNewsItem.url ? 'link' : 'link_off' }}
       </i>
     </div>
@@ -18,16 +22,17 @@
       {{ activeNewsItem.lead ? activeNewsItem.lead : activeNewsItem.body }}
     </p>
     <img
-      v-bind:src="activeNewsItem.imgurl"
-      v-if="activeNewsItem.imgurl">
+      v-if="activeNewsItem.imgurl"
+      :src="activeNewsItem.imgurl"
+    >
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'drawernewsitem',
+  name: 'Drawernewsitem',
   computed: {
     ...mapGetters([
       'activeNewsItem'

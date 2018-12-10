@@ -1,38 +1,58 @@
 <template>
   <div class="footer flex-row">
-    <div class="flex-row start-date"
-      v-bind:class="{ active: startDate !== null }">
-      <i v-on:click="startDate !== null ? selectDate(startDate) : null"
-         class="material-icons">replay</i>
-      <p v-on:click="startDate !== null ? moveCalendarToDate(startDate) : null"
-         class="flex-col">
+    <div
+      class="flex-row start-date"
+      :class="{ active: startDate !== null }"
+    >
+      <i
+        class="material-icons"
+        @click="startDate !== null ? selectDate(startDate) : null"
+      >
+        replay
+      </i>
+      <p
+        class="flex-col"
+        @click="startDate !== null ? moveCalendarToDate(startDate) : null"
+      >
         <span>Start date</span>
-        <span class="date">{{ prettifyDateObject(startDate) }}</span>
+        <span class="date">
+          {{ prettifyDateObject(startDate) }}
+        </span>
       </p>
     </div>
-    <div class="flex-row end-date"
-      v-bind:class="{ active: endDate !== null }">
-      <p v-on:click="endDate !== null ? moveCalendarToDate(endDate) : null"
-         class="flex-col">
+    <div
+      class="flex-row end-date"
+      :class="{ active: endDate !== null }"
+    >
+      <p
+        class="flex-col"
+        @click="endDate !== null ? moveCalendarToDate(endDate) : null"
+      >
         <span>End date</span>
-        <span class="date">{{ prettifyDateObject(endDate) }}</span>
+        <span class="date">
+          {{ prettifyDateObject(endDate) }}
+        </span>
       </p>
-      <i v-on:click="endDate !== null ? selectDate(endDate) : null"
-         class="material-icons">replay</i>
+      <i
+        class="material-icons"
+        @click="endDate !== null ? selectDate(endDate) : null"
+      >
+        replay
+      </i>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { prettifyDateObject } from '../store/helpers';
+import { mapGetters, mapActions } from 'vuex'
+import { prettifyDateObject } from '../store/helpers'
 
 export default {
-  name: "datepickerfooter",
+  name: 'DatePickerFooter',
   computed: {
     ...mapGetters([
       'startDate',
-      'endDate',
+      'endDate'
     ])
   },
   methods: {
@@ -40,12 +60,12 @@ export default {
       'moveCalendarBackwards',
       'moveCalendarForwards',
       'selectDate',
-      'moveCalendarToDate',
+      'moveCalendarToDate'
     ]),
     prettifyDateObject: function (dateObj) {
       return prettifyDateObject(dateObj)
     }
-  },
+  }
 }
 </script>
 
