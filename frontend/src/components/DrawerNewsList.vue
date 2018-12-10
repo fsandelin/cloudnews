@@ -1,56 +1,60 @@
 <template>
   <div id="drawer-news-list">
     <div class="header flex-row light-border-bottom">
-      <i class="material-icons back"
+      <i
         v-if="selectedCity"
-        v-on:click="selectCity(null)">
+        class="material-icons back"
+        @click="selectCity(null)"
+      >
         reply
       </i>
-      <i class="material-icons back"
+      <i
         v-else-if="selectedMunicipality"
-        v-on:click="selectMunicipality(null)">
+        class="material-icons back"
+        @click="selectMunicipality(null)"
+      >
         reply
       </i>
       <p class="title">
-        {{title()}}
+        {{ title() }}
       </p>
     </div>
-    <newslist
-      v-bind:filteredNewsList="filteredNewsList"
-      v-bind:showFilter="showFilter">
-    </newslist>
+    <NewsList
+      :filteredNewsList="filteredNewsList"
+      :showFilter="showFilter"
+    />
   </div>
 </template>
 
 <script>
 import NewsList from './NewsList'
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'drawernewslist',
+  name: 'Drawernewslist',
+  components: {
+    'NewsList': NewsList
+  },
   props: ['showFilter'],
   computed: {
     ...mapGetters([
       'selectedCounty',
       'selectedMunicipality',
       'selectedCity',
-      'filteredNewsList',
-    ]),
+      'filteredNewsList'
+    ])
   },
   methods: {
     ...mapActions([
       'selectMunicipality',
       'selectCity'
     ]),
-    title: function() {
-      if (this.selectedCity) return this.selectedCity;
-      if (this.selectedMunicipality) return this.selectedMunicipality;
-      return this.selectedCounty;
+    title: function () {
+      if (this.selectedCity) return this.selectedCity
+      if (this.selectedMunicipality) return this.selectedMunicipality
+      return this.selectedCounty
     }
-  },
-  components: {
-    'newslist': NewsList,
-  },
+  }
 }
 </script>
 
