@@ -61,13 +61,13 @@ const actions = {
 
     commit('deactivateNewsSource', source)
   },
-  makeSocketTimeSpanRequest: (_, { from, until }) => {
+  makeSocketTimeSpanRequest: ({ dispatch }, { from, until }) => {
     socketConnections.map(sc => {
       if (!until.includes('?')) {
-        unsubscribeToLiveNews(socket)
+        unsubscribeToLiveNews(sc.socket)
       }
       unsubscribeToHistoricalNews(sc.socket)
-      subscribeToHistoricalNews(dispatch)(sc.socket, source.name, from, until)
+      subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, until)
     })
   }
 }
