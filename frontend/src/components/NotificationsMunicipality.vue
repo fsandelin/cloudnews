@@ -77,7 +77,7 @@ export default {
   props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects', 'lineWidth'],
   data: function () {
     return {
-      previousmunicipalityNewsLength: []
+      previousMunicipalityNewsLength: []
     }
   },
   computed: {
