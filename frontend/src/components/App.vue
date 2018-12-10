@@ -1,16 +1,15 @@
 <template>
   <div id="app">
-    <NewsSideBar
-      :showFilter="true"
-    />
+    <NewsSideBar :showFilter="true" />
+    <PopUpContainer>
+      <div>
+        "ok"
+      </div>
+    </PopUpContainer>
 
-    <DatePicker
-      v-if="showDatePicker"
-    />
+    <DatePicker v-if="showDatePicker" />
 
-    <DatePickerToggler
-      v-if="!showDatePicker"
-    />
+    <DatePickerToggler v-if="!showDatePicker" />
 
     <MainSection />
 
@@ -38,6 +37,7 @@
 
 <script>
 import MainSection from './MainSection'
+import PopUpContainer from './PopUpContainer'
 import DatePicker from './DatePicker'
 import DatePickerToggler from './DatePickerToggler'
 import DrawerNewsItem from './DrawerNewsItem'
@@ -52,6 +52,7 @@ export default {
   name: 'App',
   components: {
     'MainSection': MainSection,
+    'PopUpContainer': PopUpContainer,
     'DatePicker': DatePicker,
     'DatePickerToggler': DatePickerToggler,
     'drawernewsitem': DrawerNewsItem,
