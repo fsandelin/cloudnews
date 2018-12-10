@@ -124,8 +124,8 @@ const actions = {
       currentMonth: state.newsStartDate.month
     })
     const from = prettifyDateObject(state.startDate)
-    const to = prettifyDateObject(state.endDate)
-    dispatch('makeSocketTimeSpanRequest', { from, to })
+    const until = prettifyDateObject(state.endDate)
+    dispatch('makeSocketTimeSpanRequest', { from, until })
   },
   discardNewDates: ({ state, commit }) => {
     commit('saveDates', {
