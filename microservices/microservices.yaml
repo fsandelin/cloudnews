@@ -1,0 +1,211 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-node-svc
+spec:
+  selector:
+    matchLabels:
+      run: nginx-node-svc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: nginx-node-svc
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+      - name: nginx-node-svc
+        image: nginx-node:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-node-svc
+  labels:
+    run: nginx-node-svc
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    run: nginx-node-svc
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: news-service-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: news-service-svc
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+      - name: news-service-svc
+        image: news-service:latest
+        ports:
+        - containerPort: 3000
+        env:
+          - name: MIDDLEWARE_URI
+            value: http://middleware-svc.default.svc.cluster.local
+          - name: MIDDLEWARE_PORT
+            value: '3001'
+          - name: POLISEN_URI
+            value: http://middleware-svc.default.svc.cluster.local
+          - name: POLISEN_PORT
+            value: '4002'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-service-svc
+  labels:
+    app: news-service-svc
+  namespace: default
+spec:
+  selector:
+    app: news-service-svc
+  type: ClusterIP
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+    name: news-service-port
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: middleware-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: middleware-svc
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+      - name: middleware-svc
+        image: middleware:latest
+        ports:
+        - containerPort: 3001
+        - containerPort: 5001
+        env:
+          - name: NEWS_SERVICE_URI
+            value: http://news-service-svc.default.svc.cluster.local
+          - name: NEWS_SERVICE_PORT
+            value: '3000'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: middleware-svc
+  labels:
+    app: middleware-svc
+  namespace: default
+spec:
+  selector:
+    app: middleware-svc
+  type: LoadBalancer
+  ports:
+  - port: 3001
+    protocol: TCP
+    targetPort: 3001
+    name: middleware-port
+  - port: 5001
+    protocol: TCP
+    targetPort: 5001
+    name: middleware-socket
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: twitter-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: twitter-svc
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+      - name: twitter-svc
+        image: twitter:latest
+        ports:
+        - containerPort: 4003
+        env:
+          - name: NEWS_SERVICE_URI
+            value: http://news-service-svc.default.svc.cluster.local
+          - name: NEWS_SERVICE_PORT
+            value: '3000'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: twitter-svc
+  labels:
+    app: twitter-svc
+  namespace: default
+spec:
+  selector:
+    app: twitter-svc
+  type: ClusterIP
+  ports:
+  - port: 4003
+    protocol: TCP
+    targetPort: 4003
+    name: twitter-port
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: polisen-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: polisen-svc
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+      - name: polisen-svc
+        image: polisen:latest
+        ports:
+        - containerPort: 4002
+        env:
+          - name: NEWS_SERVICE_URI
+            value: http://news-service-svc.default.svc.cluster.local
+          - name: NEWS_SERVICE_PORT
+            value: '3000'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polisen-svc
+  labels:
+    app: polisen-svc
+  namespace: default
+spec:
+  selector:
+    app: polisen-svc
+  type: ClusterIP
+  ports:
+  - port: 4002
+    protocol: TCP
+    targetPort: 4002
+    name: polisen-port
+---
