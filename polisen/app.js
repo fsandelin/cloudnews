@@ -112,12 +112,12 @@ app.post('/api/polisens_nyheter', (req, res) => {
 	console.log('Got a request');
 	let from = '';
 	let until = '';
-	let requests; 
+	let requests;
 
 	if (dateIsGiven(req.body)) {
     ({from, until} = req.body);
     if (until === '') until = from;
-  
+
 		const dates = getDateRange(from, until);
     requests = dates.map(date => getNewsFromPolisen(date));
 	} else {
@@ -134,7 +134,7 @@ app.post('/api/polisens_nyheter', (req, res) => {
     .catch((error) => {
       console.log(error);
     });
-  
+
   res.sendStatus(200);
 });
 

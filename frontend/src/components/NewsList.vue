@@ -1,30 +1,38 @@
 <template>
-    <ul>
-      <newslistitem
-        v-for="news in (filteredNewsList ? filteredNewsList : newsList)"
-        v-bind:news="news"
-        v-bind:key="news.id"
-        v-bind:showFilter="showFilter"
-      >
-      </newslistitem>
-    </ul>
+  <ul>
+    <NewslistItem
+      v-for="news in (filteredNewsList ? filteredNewsList : newsList)"
+      :key="news.id"
+      :news="news"
+      :showFilter="showFilter"
+    />
+  </ul>
 </template>
 
 <script>
 import NewsListItem from './NewsListItem'
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'newslist',
-  props: ['filteredNewsList', 'showFilter'],
+  name: 'Newslist',
+  components: {
+    'NewslistItem': NewsListItem
+  },
+  props: {
+    'filteredNewsList': {
+      type: Array,
+      default: null
+    },
+    'showFilter': {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     ...mapGetters([
-      'newsList',
-    ]),
-  },
-  components: {
-    'newslistitem': NewsListItem
-  },
+      'newsList'
+    ])
+  }
 }
 </script>
 

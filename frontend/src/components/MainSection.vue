@@ -1,17 +1,16 @@
 <template>
   <div id="main-section">
-    <d3map>
-    </d3map>
+    <Map />
   </div>
 </template>
 
 <script>
-import Map from './Map';
+import Map from './Map'
 
 export default {
-  name: "mainsection",
+  name: 'MainSection',
   components: {
-    'd3map': Map
+    'Map': Map
   }
 }
 </script>

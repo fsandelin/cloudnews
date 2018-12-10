@@ -25,7 +25,7 @@ def find_location(region, capital_words):
 
 
     location = {}
-    
+
     # look through county, muni, and then city
     city_found = False
 
@@ -35,7 +35,7 @@ def find_location(region, capital_words):
             for kommun in lan_kommun[region]:
                 try:
                     for city in kommun_tatort[kommun]:
-                        if city_in_text(city, capital_words): 
+                        if city_in_text(city, capital_words):
                             location['city'] = city
                             location['municipality'] = kommun
                             location['county'] = region
@@ -53,7 +53,7 @@ def find_location(region, capital_words):
         for kommun in lan_kommun[region]:
             try:
                 for city in kommun_tatort[kommun]:
-                    if city_in_text(city, capital_words):                    
+                    if city_in_text(city, capital_words):
                         location['city'] = city
                         location['municipality'] = kommun
                         location['county'] = region
@@ -80,9 +80,11 @@ def get_region(region_list, capital_words):
 def search_cloud_news(news):
 
     city_found = False
-    
-    # Look for tatort    
-    text = news['title'] + " "
+
+    # Look for tatort
+    text = ''
+    if 'title' in news:
+        text += news['title'] + " "
     if 'lead' in news:
         text += news['lead'] + " "
     if 'body' in news:
@@ -95,7 +97,7 @@ def search_cloud_news(news):
         region = svt_translate[news['location']['county']]
     else:
         region = news['location']['county']
-    
+
     capital_words = [word for word in text.split() if word[0].isupper()]
 
     #if "Gotland" in capital_words:
@@ -113,4 +115,4 @@ def search_cloud_news(news):
     news['location'] = location
 
     return (city_found, news)
-    
+

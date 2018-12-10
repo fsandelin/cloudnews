@@ -1,26 +1,44 @@
 import io from 'socket.io-client'
+import { socketEvents as se } from './constants'
 
-export const addWebSocket = dispatch => (events, url, service, from, to) => {
-  const socket = io(url)
+export const createWebSocket = url => {
+  return io(url)
+}
 
-  events.map(({ event, action }) => {
+export const subscribeToLiveNews = dispatch => socket => {
+  const liveEvents = [
+    { event: se.NEWS, action: 'addNews'},
+    { event: se.NEWS_LIST, action: 'addNewsList'}
+  ]
+  liveEvents.map(({ event, action }) => {
     socket.on(event, (data) => {
 
-      console.log('event', event, data)
       dispatch(action, data)
     })
   })
-
-  createWebSocketTimeSpanRequest(socket, service, from, to)
-  return socket
 }
 
-export const createWebSocketTimeSpanRequest = (socket, service, from, to) => {
-  console.log('trying to create a timespan request')
-  socket.emit('timespan_request', JSON.stringify({
+export const subscribeToHistoricalNews = dispatch => (socket, service, from, until) => {
+  socket.emit(se.TIMESPAN_REQUEST, JSON.stringify({
     'service': service,
     'from': from,
-    'until': to
+    'until': until
   }))
-  console.log('created a timespan request', socket, service, from, to)
+
+  socket.on(se.COMPLETE_REQUEST, (data) => {
+    dispatch('addNewsList', data)
+  })
+}
+
+export const unsubscribeToLiveNews = socket => {
+  unsubscribe(socket, se.NEWS)
+  unsubscribe(socket, se.NEWS_LIST)
+}
+
+export const unsubscribeToHistoricalNews = socket => {
+  unsubscribe(socket, se.COMPLETE_REQUEST)
+}
+
+const unsubscribe = (socket, event) => {
+  socket.removeAllListeners(event)
 }

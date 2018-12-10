@@ -134,7 +134,7 @@ const actions = {
     commit('addNews', { ...news, location })
   },
   addNewsList: ({ dispatch }, newsList) => {
-    newsList.map(news => dispatch('addNews', news))
+    newsList.articles.map(news => dispatch('addNews', news))
   },
   setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id)
 }

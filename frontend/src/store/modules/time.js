@@ -15,13 +15,14 @@ import {
 const today = new Date()
 
 const state = {
-  currentYear: today.getFullYear() - 1,
+  today: prettifyDateObject({ year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() }),
+  currentYear: today.getFullYear(),
   currentMonth: today.getMonth() + 1,
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
-  weekNumbers: weekNumsForMonth(today.getFullYear() - 1, today.getMonth() + 1),
-  startDate: { year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() },
+  weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth() + 1),
+  startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
-  newsStartDate: { year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() },
+  newsStartDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   newsEndDate: null,
   hoverDate: null
 }
@@ -123,8 +124,8 @@ const actions = {
       currentMonth: state.newsStartDate.month
     })
     const from = prettifyDateObject(state.startDate)
-    const to = prettifyDateObject(state.endDate)
-    dispatch('makeSocketTimeSpanRequest', { from, to })
+    const until = prettifyDateObject(state.endDate)
+    dispatch('makeSocketTimeSpanRequest', { from, until })
   },
   discardNewDates: ({ state, commit }) => {
     commit('saveDates', {
