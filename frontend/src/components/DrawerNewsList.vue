@@ -31,7 +31,7 @@ import NewsList from './NewsList'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'Drawernewslist',
+  name: 'DrawerNewsList',
   components: {
     'NewsList': NewsList
   },
