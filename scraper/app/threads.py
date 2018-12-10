@@ -20,7 +20,7 @@ from multiprocessing import Pool
 
 def post_timespan(from_, until_, news_list, service="svt"):
 
-    URL = "http://localhost:3030/api/fill_timespan"
+    URL = "http://localhost:3000/api/fill_timespan"
 
     body = {}
 
@@ -35,7 +35,7 @@ def post_timespan(from_, until_, news_list, service="svt"):
 
 def post_livenews(from_, until_, news_list, service="svt"):
 
-    URL = "http://localhost:3030/api/live_news"
+    URL = "http://localhost:3000/api/live_news"
 
     body = {}
 
@@ -70,7 +70,7 @@ def test_threads(from_, until_):
 
     return news_list
 
-def locate_single_news(news):    
+def locate_single_news(news):
     found, news = search_cloud_news(news)
 
     if not found:
@@ -92,7 +92,7 @@ async def locate_threads(news_list):
         loop = asyncio.get_event_loop()
         futures = [
             loop.run_in_executor(
-                executor, 
+                executor,
                 locate_single_news,
                 news
             )
@@ -121,7 +121,7 @@ def thread_get_news(from_, until_):
 
     start_time = time()
     news_list = locate_news(news_list)
-    
+
 
     news_group = []
     for news in news_list:
@@ -144,7 +144,7 @@ def thread_livenews(from_, until_):
 
     start_time = time()
     news_list = locate_news(news_list)
-    
+
 
     news_group = []
     for news in news_list:

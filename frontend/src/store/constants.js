@@ -5,10 +5,11 @@ export const newsSources = [
 export const socketEvents = {
   NEWS: 'news',
   NEWS_LIST: 'news_list',
-  COMPLETE_REQUEST: 'complete_request'
+  TIMESPAN_REQUEST: 'timespan_request',
+  COMPLETE_REQUEST: 'complete_request',
 }
 
-export const socketBaseUrl = 'http://localhost:3020/'
+export const socketBaseUrl = 'http://localhost:5001/'
 export const socketServiceUrl = `${socketBaseUrl}?services=`
 
 export const months = {
