@@ -1,11 +1,11 @@
 <template>
   <div class="toggle-buttons flex-row">
-    <togglebutton
+    <ToggleButton
       v-for="item in items"
-      v-bind:key="item.name"
-      v-bind:item="item"
-      v-bind:toggleActive="toggleActive">
-    </togglebutton>
+      :key="item.name"
+      :item="item"
+      :toggleActive="toggleActive"
+    />
   </div>
 </template>
 
@@ -13,11 +13,11 @@
 import ToggleButton from './ToggleButton'
 
 export default {
-  name: 'togglebuttons',
-  props: ['items', 'toggleActive'],
+  name: 'Togglebuttons',
   components: {
-    'togglebutton': ToggleButton
-  }
+    'ToggleButton': ToggleButton
+  },
+  props: ['items', 'toggleActive']
 }
 </script>
 

@@ -3,58 +3,52 @@
     <g class="map">
       <g>
         <path
-          class="country"
           v-for="country in countries"
-          v-bind:key="country.key"
-          v-bind:d="country.path">
-        </path>
+          :key="country.key"
+          class="country"
+          :d="country.path"
+        />
         <path
-          class="municipality"
-          v-for="municipality in this.municipalities"
-          v-bind:class="{ active: municipality.name === selectedMunicipality }"
-          v-bind:key="municipality.key"
+          v-for="municipality in municipalities"
           v-show="municipality.active"
-          v-bind:d="municipality.path"
-          v-on:click="municipalityClick(municipality)">
-        </path>
+          :key="municipality.key"
+          class="municipality"
+          :class="{ active: municipality.name === selectedMunicipality }"
+          :d="municipality.path"
+          @click="municipalityClick(municipality)"
+        />
         <path
-          class="county"
           v-for="county in counties"
-          v-bind:key="county.key"
           v-show="county.active"
-          v-bind:d="county.path"
-          v-on:click="countyClick(county)">
-        </path>
+          :key="county.key"
+          class="county"
+          :d="county.path"
+          @click="countyClick(county)"
+        />
       </g>
-      <mapCities>
-      </mapCities>
-      <notifications>
-      </notifications>
+      <MapCities />
+      <Notifications />
     </g>
   </svg>
 </template>
 
 <script>
-import d3 from '../store/d3Importer.js';
+import d3 from '../store/d3Importer.js'
 import Notifications from './Notifications'
 import MapCities from './MapCities'
-import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom';
-import { mapGetters, mapActions } from 'vuex';
+import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: "d3map",
+  name: 'Map',
   components: {
-    'notifications': Notifications,
-    'mapCities': MapCities
+    'Notifications': Notifications,
+    'MapCities': MapCities
   },
   data () {
     return {
       mapZoom: mapZoom(this.setZoomValue)
     }
-  },
-  mounted: function() {
-    d3.select(".mapContainer").call(this.mapZoom).on("dblclick.zoom", () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))));
-    initialZoom(this.mapZoom);
   },
   computed: {
     ...mapGetters([
@@ -65,14 +59,18 @@ export default {
       'zoomValue',
       'selectedCounty',
       'selectedMunicipality',
-      'countyByName',
+      'countyByName'
     ])
+  },
+  mounted: function () {
+    d3.select('.mapContainer').call(this.mapZoom).on('dblclick.zoom', () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))))
+    initialZoom(this.mapZoom)
   },
   methods: {
     ...mapActions([
       'countyClick',
       'municipalityClick',
-      'setZoomValue',
+      'setZoomValue'
     ])
   }
 }

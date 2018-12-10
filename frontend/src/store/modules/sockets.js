@@ -1,6 +1,11 @@
-import { addWebSocket, createWebSocketTimeSpanRequest } from '../webSocketConnection'
 import {
-  socketEvents as se,
+  createWebSocket,
+  subscribeToLiveNews,
+  subscribeToHistoricalNews,
+  unsubscribeToLiveNews,
+  unsubscribeToHistoricalNews
+} from '../webSocketConnection'
+import {
   newsSources as ns,
   socketServiceUrl
 } from '../constants'
@@ -27,25 +32,27 @@ const actions = {
     }
   },
   activateNewsSource: ({ rootState, dispatch, commit }, source) => {
-    const events = [
-      { event: se.NEWS, action: 'addNews' },
-      { event: se.NEWS_LIST, action: 'addNewsList' },
-      { event: se.COMPLETE_REQUEST, action: 'logCompleteRequest' },
-    ]
-
     const url = `${socketServiceUrl}${source.name}`
 
     const from = prettifyDateObject(rootState.time.newsStartDate)
-    const to = prettifyDateObject(rootState.time.newsEndDate)
+    const until = prettifyDateObject(rootState.time.newsEndDate)
 
-    socketConnections = [ ...socketConnections, { source: source.name, socket: addWebSocket(dispatch)(events, url, source.name, from, to) } ]
+    const socket = createWebSocket(url)
+
+    if (until.includes('?')) {
+      subscribeToLiveNews(dispatch)(socket)
+      const today = rootState.time.today
+      subscribeToHistoricalNews(dispatch)(socket, source.name, from, today)
+    } else {
+      subscribeToHistoricalNews(dispatch)(socket, source.name, from, until)
+    }
+
+    socketConnections = [
+      ...socketConnections,
+      { source: source.name, socket }
+    ]
 
     commit('activateNewsSource', source)
-  },
-  logCompleteRequest: ({ dispatch }, request) => {
-    console.log(request)
-    const newsList = request.articles;
-    dispatch('addNewsList', newsList)
   },
   deactivateNewsSource: ({ commit }, source) => {
     const socketConnection = socketConnections.find(connection => connection.source === source.name)
@@ -54,9 +61,13 @@ const actions = {
 
     commit('deactivateNewsSource', source)
   },
-  makeSocketTimeSpanRequest: (_, { from, to }) => {
+  makeSocketTimeSpanRequest: ({ dispatch }, { from, until }) => {
     socketConnections.map(sc => {
-      createWebSocketTimeSpanRequest(sc.socket, sc.source, from, to)
+      if (!until.includes('?')) {
+        unsubscribeToLiveNews(sc.socket)
+      }
+      unsubscribeToHistoricalNews(sc.socket)
+      subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, until)
     })
   }
 }

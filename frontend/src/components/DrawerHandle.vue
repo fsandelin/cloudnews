@@ -2,12 +2,14 @@
   <div
     id="drawerhandle"
     class="flex-col"
-    v-on:click="toggleDrawer"
-    v-bind:class="{ closed: !isOpen }">
+    :class="{ closed: !isOpen }"
+    @click="toggleDrawer"
+  >
     <div>
       <img
-        v-bind:src="drawerArrows"
-        v-bind:alt="drawerArrowsAlt">
+        :src="drawerArrows"
+        :alt="drawerArrowsAlt"
+      >
     </div>
   </div>
 </template>
@@ -16,12 +18,12 @@
 import DrawerArrows from '../assets/DrawerArrows.png'
 
 export default {
-  name: 'drawerhandle',
+  name: 'Drawerhandle',
   props: ['isOpen', 'toggleDrawer'],
   data () {
     return {
       drawerArrows: DrawerArrows,
-      drawerArrowsAlt: "Drawer Arrows"
+      drawerArrowsAlt: 'Drawer Arrows'
     }
   }
 }
