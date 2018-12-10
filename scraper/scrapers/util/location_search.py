@@ -1,6 +1,6 @@
 from scrapers.data.lan_kommun_tatort import lan, lan_kommun, kommun_tatort
 from scrapers.data.constants import FIRST, LAST, EARLIER, LATER
-
+from scrapers.data.svt_globals import svt_translate
 import json
 import requests
 import uuid
@@ -25,36 +25,57 @@ def find_location(region, capital_words):
 
 
     location = {}
+    
     # look through county, muni, and then city
     city_found = False
 
-    if region == 'Sörmland':
-        region = 'Södermanland'
+    if isinstance(region, list):
 
-    if region == 'Väst':
-        region = 'Västra Götaland'
+        for region in region:
+            for kommun in lan_kommun[region]:
+                try:
+                    for city in kommun_tatort[kommun]:
+                        if city_in_text(city, capital_words): 
+                            location['city'] = city
+                            location['municipality'] = kommun
+                            location['county'] = region
+                            city_found = True
+                            break
+                        else:
+                            location['county'] = region
+                except KeyError:
+                    pass
 
-    if region == 'Öst':
-        region = 'Östergötland'
-
-
-    for kommun in lan_kommun[region]:
-        try:
-            for city in kommun_tatort[kommun]:
-                if city_in_text(city, capital_words):                    
-                    kommun_name = get_kommun_name(kommun)
-                    location['city'] = city
-                    location['municipality'] = kommun_name
-                    #print("Kommun short name:", kommun_name, "Kommun full name:", kommun)
-                    city_found = True
+                if city_found:
                     break
-        except KeyError:
-            pass
 
-        if city_found:
-            break
+    else:
+        for kommun in lan_kommun[region]:
+            try:
+                for city in kommun_tatort[kommun]:
+                    if city_in_text(city, capital_words):                    
+                        location['city'] = city
+                        location['municipality'] = kommun
+                        location['county'] = region
+                        city_found = True
+                        break
+                    else:
+                        location['county'] = region
+            except KeyError:
+                pass
 
+            if city_found:
+                break
+
+    location
     return (city_found, location)
+
+def get_region(region_list, capital_words):
+    for region in region_list:
+        if city_in_text(region.split()[0], capital_words):
+            return region
+
+    return region_list
 
 def search_cloud_news(news):
 
@@ -69,30 +90,27 @@ def search_cloud_news(news):
 
     if 'location' not in news:
         print(news)
-    region  = news['location']['county']
 
+    if news['location']['county'] in svt_translate:
+        region = svt_translate[news['location']['county']]
+    else:
+        region = news['location']['county']
+    
     capital_words = [word for word in text.split() if word[0].isupper()]
+
+    #if "Gotland" in capital_words:
+    #    print("Gotland found")
+
+    if isinstance(region, list):
+        region = get_region(region, capital_words)
+
 
     city_found, location = find_location(region, capital_words)
 
-    #print (local_tatort)
-    #for word in capital_words:
-    #    for city in local_tatort:
-    #        if word == city[0]:
-    #            location['city'] = city[0]
-    #            location['municipality'] = city[1]
-    #            location['conutry'] = "Sweden"
-    
-  
-    location['county'] = region
+
     location['country'] = "Sweden"
 
     news['location'] = location
-
-    #print(text)
-    #print(capital_words, location)
-    #print(news['url'])
-    #print("")
 
     return (city_found, news)
     

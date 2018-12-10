@@ -19,8 +19,8 @@ const logger = winston.createLogger({
 
 function applyEventListeners(io) {
   io.use((socket, next) => {
-    const servicesString = socket.handshake.query.services
-    const services = servicesString.split('+').map(service => service.trim())
+    const servicesString = socket.handshake.query.services;
+    const services = servicesString.split('+').map(service => service.trim());
     let verified = true;
     for (const service of services) {
       if (availableServices.indexOf(service) === -1) {
@@ -35,8 +35,8 @@ function applyEventListeners(io) {
 
   io.on('connection', (socket) => {
     logger.info('Someone connected');
-    const servicesString = socket.handshake.query.services
-    const services = servicesString.split('+').map(service => service.trim())
+    const servicesString = socket.handshake.query.services;
+    const services = servicesString.split('+').map(service => service.trim());
     const clientId = uuid();
 
     clients[clientId] = {
@@ -71,12 +71,12 @@ function applyEventListeners(io) {
         return;
       }
       if (isNaN(Date.parse(requestedResourceParsed.from)) || isNaN(Date.parse(requestedResourceParsed.until))) {
+        console.log('Incorrect dates');
         clients[clientId].socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
         return;
       }
 
       request.requestedResource = requestedResourceParsed;
-
       requests[requestId] = request;
       logger.info(requests);
       rq.post({
@@ -85,6 +85,7 @@ function applyEventListeners(io) {
         json: true,
       }, (error, response) => {
         if (error) {
+          console.log('Got an error when posting to news-service');
           logger.error(`Received an error when trying to post request to news-service: ${error}`);
           delete requests[requestId];
           logger.error(`Removed request with id: ${requestId}`);

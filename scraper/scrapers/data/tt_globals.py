@@ -1,7 +1,4 @@
-from TTJSON import TT_message as message
-import flask 
-
-a = ["channels",
+keywords = ["channels",
      "keywords",
      "id",
      "boilerplate",

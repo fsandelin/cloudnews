@@ -12,6 +12,7 @@ export const subscribeToLiveNews = dispatch => socket => {
   ]
   liveEvents.map(({ event, action }) => {
     socket.on(event, (data) => {
+
       dispatch(action, data)
     })
   })
