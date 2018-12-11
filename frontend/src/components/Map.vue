@@ -6,8 +6,7 @@
           v-for="country in countries"
           :key="country.key"
           class="country"
-          :d="country.path"
-        />
+          :d="country.path" />
         <path
           v-for="municipality in municipalities"
           v-show="municipality.active"
@@ -15,16 +14,14 @@
           class="municipality"
           :class="{ active: municipality.name === selectedMunicipality }"
           :d="municipality.path"
-          @click="municipalityClick(municipality)"
-        />
+          @click="municipalityClick(municipality)" />
         <path
           v-for="county in counties"
           v-show="county.active"
           :key="county.key"
           class="county"
           :d="county.path"
-          @click="countyClick(county)"
-        />
+          @click="countyClick(county)" />
       </g>
       <MapCities />
       <Notifications />

@@ -3,13 +3,11 @@
     id="drawerhandle"
     class="flex-col"
     :class="{ closed: !isOpen }"
-    @click="toggleDrawer"
-  >
+    @click="toggleDrawer">
     <div>
       <img
         :src="drawerArrows"
-        :alt="drawerArrowsAlt"
-      >
+        :alt="drawerArrowsAlt">
     </div>
   </div>
 </template>

@@ -12,8 +12,6 @@ Date.prototype.getWeek = function () {
   return 1 + Math.ceil((firstThursday - target) / 604800000)
 }
 
-
-
 export const cleanString = s => s.trim().toLowerCase()
 
 export const numToMonth = num => m[Object.keys(m)[num - 1]]
@@ -30,15 +28,15 @@ export const getNumArrayBetweenNums = (start, end) => {
 
 export const convertDateStringToDateObj = (dateString) => {
   const cleanDateString = cleanString(dateString)
-  let dateArray = cleanDateString.split(" ")
+  let dateArray = cleanDateString.split(' ')
 
-  let time = "";
+  let time = ''
   const datePart = dateArray[0]
   if (dateArray.length > 1) {
     time = dateArray[1]
   }
 
-  dateArray = datePart.split("-")
+  dateArray = datePart.split('-')
 
   const year = dateArray[0]
   const month = dateArray[1]
@@ -76,7 +74,7 @@ export const dateIsBefore = (date, comparedTo) => {
 }
 
 export const weekNumsForMonth = (year, month) => {
-  const firstDayOfMonth = new Date(year, month - 1, 1);
+  const firstDayOfMonth = new Date(year, month - 1, 1)
   const startWeek = firstDayOfMonth.getWeek()
   let weeks = []
   for (let i = startWeek; i < startWeek + 6; i++) {

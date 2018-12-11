@@ -1,13 +1,11 @@
 <template>
   <div
     id="drawer"
-    class="bottom-shadow flex-col"
-  >
+    class="bottom-shadow flex-col">
     <slot />
     <DrawerHandle
       :isOpen="isOpen"
-      :toggleDrawer="toggleDrawer"
-    />
+      :toggleDrawer="toggleDrawer" />
   </div>
 </template>
 

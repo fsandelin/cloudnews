@@ -3,16 +3,14 @@
     <i
       :class="{ 'in-active': startDate === null }"
       class="material-icons"
-      @click="startDate !== null ? toggleDatePicker() && saveNewDates() : null"
-    >
+      @click="startDate !== null ? toggleDatePicker() && saveNewDates() : null">
       check
     </i>
 
     <div class="year-month flex-row">
       <i
         class="material-icons previous"
-        @click="moveCalendarBackwards"
-      >
+        @click="moveCalendarBackwards">
         navigate_next
       </i>
       <p class="flex-col">
@@ -25,16 +23,14 @@
       </p>
       <i
         class="material-icons next"
-        @click="moveCalendarForwards"
-      >
+        @click="moveCalendarForwards">
         navigate_next
       </i>
     </div>
 
     <i
       class="material-icons"
-      @click="() => toggleDatePicker() && discardNewDates()"
-    >
+      @click="() => toggleDatePicker() && discardNewDates()">
       cancel
     </i>
   </div>

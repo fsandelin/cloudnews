@@ -4,8 +4,7 @@
       v-for="county of newsByCounty"
       :key="'countyNotification-'+county.name"
       class="countyNotification"
-      @click="countyClick(county)"
-    >
+      @click="countyClick(county)">
       <circle
         :ref="'countyNewsNotification-'+county.name"
         :key="'countyNewsNotification-'+county.name"
@@ -13,8 +12,7 @@
         :cx="county.x+'px'"
         :cy="county.y+'px'"
         :stroke-width="strokeWidth()+'px'"
-        :r="circleSize(county.news.length)+'px'"
-      />
+        :r="circleSize(county.news.length)+'px'" />
       <text
         :key="'countyNewsNotificationText'+county.name"
         class="county-number"
@@ -22,8 +20,7 @@
         :x="county.x+'px'"
         :y="county.y+'px'"
         :dy="yOffset(county.news.length)+'px'"
-        :font-size="fontSize(county.news.length)+'px'"
-      >
+        :font-size="fontSize(county.news.length)+'px'">
         {{ county.news.length }}
       </text>
     </g>

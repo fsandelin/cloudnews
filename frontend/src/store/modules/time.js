@@ -62,7 +62,8 @@ const getters = {
 
     const nextDaysToFill = getNumArrayBetweenNums(1, numNextDaysToFill + 2)
       .map(i => ({ year: state.currentMonth === 12 ? state.currentYear + 1 : state.currentYear,
-                   month: state.currentMonth === 12 ? 1 : state.currentMonth + 1, day: i }))
+        month: state.currentMonth === 12 ? 1 : state.currentMonth + 1,
+        day: i }))
 
     return [ ...previousDaysToFill, ...currentDaysToFill, ...nextDaysToFill ]
   },

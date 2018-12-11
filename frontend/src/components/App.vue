@@ -1,37 +1,30 @@
 <template>
   <div id="app">
     <NewsSideBar :showFilter="true" />
-    <PopUpContainer>
-      <div>
-        "ok"
-      </div>
+    <PopUpContainer
+      v-if="false">
+      <DatePicker v-if="showDatePicker" />
     </PopUpContainer>
 
-    <DatePicker v-if="showDatePicker" />
-
-    <DatePickerToggler v-if="!showDatePicker" />
+    <DatePickerToggler />
 
     <MainSection />
 
     <Drawer
       :isOpen="drawerIsOpen"
-      :toggleDrawer="toggleDrawer"
-    >
+      :toggleDrawer="toggleDrawer">
       <Component
         :is="dynamicComponents.drawerNewsItemComponent"
-        v-if="activeNewsItem !== null"
-      />
+        v-if="activeNewsItem !== null" />
       <Component
         :is="dynamicComponents.drawerNewsList"
         v-if="selectedCounty !== null && activeNewsItem === null"
-        :showFilter="false"
-      />
+        :showFilter="false" />
     </Drawer>
 
     <ToggleButtons
       :items="newsSources"
-      :toggleActive="toggleNewsSource"
-    />
+      :toggleActive="toggleNewsSource" />
   </div>
 </template>
 

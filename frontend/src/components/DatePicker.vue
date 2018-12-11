@@ -1,8 +1,7 @@
 <template>
   <div
     id="date-picker"
-    class="full-shadow flex-col"
-  >
+    class="flex-col">
     <DatePickerHeader />
     <DatePickerCalendar />
     <DatePickerFooter />

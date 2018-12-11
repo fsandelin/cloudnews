@@ -4,15 +4,13 @@
       <i
         v-if="selectedCity"
         class="material-icons back"
-        @click="selectCity(null)"
-      >
+        @click="selectCity(null)">
         reply
       </i>
       <i
         v-else-if="selectedMunicipality"
         class="material-icons back"
-        @click="selectMunicipality(null)"
-      >
+        @click="selectMunicipality(null)">
         reply
       </i>
       <p class="title">
@@ -21,8 +19,7 @@
     </div>
     <NewsList
       :filteredNewsList="filteredNewsList"
-      :showFilter="showFilter"
-    />
+      :showFilter="showFilter" />
   </div>
 </template>
 

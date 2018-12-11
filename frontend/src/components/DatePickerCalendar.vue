@@ -5,8 +5,7 @@
       <div
         v-for="weekDay in weekDays"
         :key="weekDay"
-        class="day flex-col"
-      >
+        class="day flex-col">
         {{ weekDay[0] }}
       </div>
     </div>
@@ -15,8 +14,7 @@
         <div
           v-for="weekNumber in weekNumbers"
           :key="weekNumber"
-          class="week flex-col"
-        >
+          class="week flex-col">
           {{ weekNumber }}
         </div>
       </div>
@@ -24,8 +22,7 @@
         <div
           v-for="row in daysByRow"
           :key="daysByRow.indexOf(row)"
-          class="row flex-row"
-        >
+          class="row flex-row">
           <div
             v-for="date in row"
             :key="date.day+date.month+date.year"
@@ -35,8 +32,7 @@
                       'in-between-selected': (sameDates(date, startDate) || sameDates(date, endDate)) || dateBetween(date, startDate, endDate) }"
             @mouseenter="toggleHoverDate(date)"
             @mouseleave="toggleHoverDate(date)"
-            @click="selectDate(date)"
-          >
+            @click="selectDate(date)">
             {{ date.day }}
           </div>
         </div>

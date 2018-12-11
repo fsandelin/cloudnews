@@ -8,8 +8,7 @@
     class="news-item flex-col light-border-bottom"
     @mouseenter="toggleHover(news)"
     @mouseleave="toggleHover(news)"
-    @click="itemClicked(news)"
-  >
+    @click="itemClicked(news)">
     <p class="title flex-col">
       {{ news.title }}
     </p>

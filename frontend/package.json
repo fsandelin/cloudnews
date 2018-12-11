@@ -10,7 +10,8 @@
     "dev-prod": "cross-env NODE_ENV=production webpack-dev-server --open --hot",
     "dev-analyse": "cross-env NODE_ENV=production ANALYSE=true webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack -p --progress --hide-modules && rm -r ../backend/app/public && mv public ../backend/app/",
-    "build-windows": "cross-env NODE_ENV=production webpack -p --progress --hide-modules"
+    "build-windows": "cross-env NODE_ENV=production webpack -p --progress --hide-modules",
+    "lint": "eslint --fix --ext .vue,.js src"
   },
   "dependencies": {
     "d3-geo": "^1.11.3",

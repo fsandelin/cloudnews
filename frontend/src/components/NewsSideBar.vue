@@ -1,14 +1,12 @@
 <template>
   <div
     id="news-sidebar"
-    class="right-shadow"
-  >
+    class="right-shadow">
     <div class="header flex-col bottom-shadow light-border-bottom">
       <img
         class="logo"
         :src="logoWithText"
-        :alt="logoWithTextAlt"
-      >
+        :alt="logoWithTextAlt">
     </div>
     <Newslist :showFilter="showFilter" />
   </div>
