@@ -1,7 +1,3 @@
-export const newsSources = [
-  'svt', 'twitter', 'polisen'
-]
-
 export const socketEvents = {
   NEWS: 'news',
   NEWS_LIST: 'news_list',
@@ -9,8 +5,8 @@ export const socketEvents = {
   COMPLETE_REQUEST: 'complete_request'
 }
 
-export const socketBaseUrl = 'http://localhost:5001/'
-export const socketServiceUrl = `${socketBaseUrl}?services=`
+export const baseUrl = 'http://localhost:5001/'
+export const socketServiceUrl = `${baseUrl}?services=`
 
 export const months = {
   JANUARY: 'January',

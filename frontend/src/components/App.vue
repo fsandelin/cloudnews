@@ -82,10 +82,12 @@ export default {
     }
   },
   created: function () {
+    this.fetchAvailableNewsSources()
     fakeNewsList.map(newsItem => this.addNews(newsItem))
   },
   methods: {
     ...mapActions([
+      'fetchAvailableNewsSources',
       'addNews',
       'toggleDrawer',
       'toggleNewsSource'

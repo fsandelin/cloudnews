@@ -14,6 +14,7 @@
     "lint": "eslint --fix --ext .vue,.js src"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "d3-geo": "^1.11.3",
     "d3-selection": "^1.3.2",
     "d3-zoom": "^1.7.3",
