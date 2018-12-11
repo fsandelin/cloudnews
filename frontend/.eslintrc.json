@@ -3,5 +3,8 @@
     "rules": {
         "vue/attribute-hyphenation": ["warning", "never", { "ignore": ["custom-prop"] } ],
         "vue/require-prop-types": []
+    },
+    "env": {
+        "jest": true
     }
 }

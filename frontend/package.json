@@ -10,7 +10,25 @@
     "dev-prod": "cross-env NODE_ENV=production webpack-dev-server --open --hot",
     "dev-analyse": "cross-env NODE_ENV=production ANALYSE=true webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack -p --progress --hide-modules && rm -r ../backend/app/public && mv public ../backend/app/",
-    "build-windows": "cross-env NODE_ENV=production webpack -p --progress --hide-modules"
+    "build-windows": "cross-env NODE_ENV=production webpack -p --progress --hide-modules",
+    "test": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "vue-jest",
+      "^.+\\.js$": "./node_modules/babel-jest"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/components/*.{js,vue}",
+      "src/store/**/*.{js,vue}",
+      "!**/node_modules/**"
+    ]
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -29,7 +47,9 @@
     "not ie <= 8"
   ],
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "^6.26.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
@@ -44,8 +64,10 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.0.0",
     "file-loader": "^1.1.4",
+    "jest": "^23.6.0",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
+    "vue-jest": "^3.0.1",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
