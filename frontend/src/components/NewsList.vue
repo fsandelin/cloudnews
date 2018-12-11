@@ -4,8 +4,7 @@
       v-for="news in (filteredNewsList ? filteredNewsList : newsList)"
       :key="news.id"
       :news="news"
-      :showFilter="showFilter"
-    />
+      :showFilter="showFilter" />
   </ul>
 </template>
 

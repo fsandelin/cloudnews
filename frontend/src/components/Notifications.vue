@@ -5,8 +5,7 @@
       :fontSize="fontSize"
       :yOffset="yOffset"
       :lineWidth="lineWidth"
-      :strokeWidth="strokeWidth"
-    />
+      :strokeWidth="strokeWidth" />
 
     <NotificationsMunicipality
       :calculateNewsLengthForObjects="calculateNewsLengthForObjects"
@@ -14,8 +13,7 @@
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
-      :lineWidth="lineWidth"
-    />
+      :lineWidth="lineWidth" />
 
     <NotificationsCounty
       :calculateNewsLengthForObjects="calculateNewsLengthForObjects"
@@ -23,14 +21,12 @@
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
-      :strokeWidth="strokeWidth"
-    />
+      :strokeWidth="strokeWidth" />
 
     <NotificationsCountry
       :circleSize="circleSize"
       :fontSize="fontSize"
-      :yOffset="yOffset"
-    />
+      :yOffset="yOffset" />
   </g>
 </template>
 
@@ -51,7 +47,13 @@ export default {
   computed: {
     ...mapGetters([
       'zoomValue'
-    ])
+    ]),
+    lineWidth: function () {
+      return 1.0 * (1 / Math.max(this.zoomValue / 2.5, 1.0))
+    },
+    strokeWidth: function () {
+      return 1.0 * (1 / Math.max(this.zoomValue / 2.5, 1.0))
+    }
   },
   methods: {
     updateNewsLengthForObjects: function (list, lenList, refs, refPrefix) {
@@ -79,9 +81,6 @@ export default {
       Velocity(el, { r: r * 1.5 }, { duration: 80 })
       Velocity(el, { r: r }, { duration: 40 })
     },
-    lineWidth: function () {
-      return 1.0 * (1 / Math.max(this.zoomValue / 2.5, 1.0))
-    },
     circleSize: function (length) {
       return Math.min(12, (10 + (length / 7))) * (1 / Math.max(this.zoomValue / 1.5, 1.0))
     },
@@ -90,9 +89,6 @@ export default {
     },
     yOffset: function (length) {
       return Math.min(13, (11 + (length / 7)) / 3) * (1 / Math.max(this.zoomValue / 1.5, 1.0))
-    },
-    strokeWidth: function () {
-      return 1.0 * (1 / Math.max(this.zoomValue / 2.5, 1.0))
     }
   }
 }

@@ -2,8 +2,7 @@
   <div
     id="date-picker-toggler"
     class="full-shadow"
-    @click="toggleDatePicker"
-  >
+    @click="toggleDatePicker">
     <div class="flex-row">
       <p>{{ prettifyDateObject(newsStartDate) }}</p>
       <p v-if="newsEndDate !== null">

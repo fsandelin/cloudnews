@@ -1,8 +1,8 @@
 import { months as m } from './constants'
 
-Date.prototype.getWeek = function () {
-  const target = new Date(this.valueOf())
-  const dayNr = (this.getDay() + 6) % 7
+const getWeek = (date) => {
+  const target = new Date(date.valueOf())
+  const dayNr = (date.getDate() + 6) % 7
   target.setDate(target.getDate() - dayNr + 3)
   const firstThursday = target.valueOf()
   target.setMonth(0, 1)
@@ -11,7 +11,6 @@ Date.prototype.getWeek = function () {
   }
   return 1 + Math.ceil((firstThursday - target) / 604800000)
 }
-
 export const cleanString = s => s.trim().toLowerCase()
 
 export const numToMonth = num => m[Object.keys(m)[num - 1]]
@@ -103,7 +102,7 @@ export const dateIsAfterOrEqual = (date, comparedTo) => {
 
 export const weekNumsForMonth = (year, month) => {
   const firstDayOfMonth = new Date(year, month - 1, 1)
-  const startWeek = firstDayOfMonth.getWeek()
+  const startWeek = getWeek(firstDayOfMonth)
   let weeks = []
   for (let i = startWeek; i < startWeek + 6; i++) {
     weeks = [ ...weeks, i === 53 ? 1 : i ]

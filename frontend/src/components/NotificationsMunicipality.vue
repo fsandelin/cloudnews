@@ -4,15 +4,13 @@
       v-for="municipality of newsByMunicipality"
       :key="'municipalityNoticication-'+municipality.name"
       class="municipalityNoticication"
-      @click="municipalityClick(municipality)"
-    >
+      @click="municipalityClick(municipality)">
       <!--LINES-->
       <Transition
         :css="false"
         @beforeEnter="(el, done) => lineBeforeEnter(el, done, municipality)"
         @enter="(el, done) => lineEnter(el, done, municipality)"
-        @leave="(el, done) => lineLeave(el, done, municipality)"
-      >
+        @leave="(el, done) => lineLeave(el, done, municipality)">
         <line
           v-show="municipality.active"
           :ref="'municipalityLine'+municipality.name"
@@ -21,8 +19,7 @@
           :y1="municipality.countyY+'px'"
           :x2="municipality.x+'px'"
           :y2="municipality.y+'px'"
-          :stroke-width="lineWidth()+'px'"
-        />
+          :stroke-width="lineWidth+'px'" />
       </Transition>
 
       <!--CIRCLES-->
@@ -30,8 +27,7 @@
         :css="false"
         @beforeEnter="(el, done) => circleBeforeEnter(el, done, municipality)"
         @enter="(el, done) => circleEnter(el, done, municipality)"
-        @leave="(el, done) => circleLeave(el, done, municipality)"
-      >
+        @leave="(el, done) => circleLeave(el, done, municipality)">
         <circle
           v-show="municipality.active"
           :ref="'newsNotification-'+municipality.name"
@@ -39,8 +35,7 @@
           class="municipality-circle"
           :cx="municipality.x+'px'"
           :cy="municipality.y+'px'"
-          :r="circleSize(municipality.news.length)+'px'"
-        />
+          :r="circleSize(municipality.news.length)+'px'" />
       </Transition>
 
       <!--TEXT-->
@@ -48,8 +43,7 @@
         :css="false"
         @beforeEnter="(el, done) => textBeforeEnter(el, done, municipality)"
         @enter="(el, done) => textEnter(el, done, municipality)"
-        @leave="(el, done) => textLeave(el, done, municipality)"
-      >
+        @leave="(el, done) => textLeave(el, done, municipality)">
         <text
           v-show="municipality.active"
           :ref="'newsNotificationText-'+municipality.name+municipality.news.id"
@@ -59,8 +53,7 @@
           :x="municipality.x+'px'"
           :y="municipality.y+'px'"
           :dy="yOffset(municipality.news.length)+'px'"
-          :font-size="fontSize(municipality.news.length)+'px'"
-        >
+          :font-size="fontSize(municipality.news.length)+'px'">
           {{ municipality.news.length }}
         </text>
       </Transition>
