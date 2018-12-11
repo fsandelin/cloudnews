@@ -2,7 +2,7 @@
   <g id="notificationsCity">
     <g
       v-for="city of newsByCity"
-      :key="'cityNotification-'+city.name"
+      :key="city.name+'-'+city.municipality+'-'+city.county"
       class="cityNotification"
       @click="cityClick(city)"
     >
@@ -16,7 +16,7 @@
         <line
           v-show="city.active"
           :ref="'cityLine'+city.name"
-          :key="'cityLine'+city.name"
+          :key="'cityLine'+'-'+city.name+'-'+city.municipality+'-'+city.county"
           :x1="city.municipalityX+'px'"
           :y1="city.municipalityY+'px'"
           :x2="city.x+'px'"
@@ -35,7 +35,7 @@
         <circle
           v-show="city.active"
           :ref="'newsNotification-'+city.name"
-          :key="'newsNotification-'+city.name"
+          :key="'newsNotification'+'-'+city.name+'-'+city.municipality+'-'+city.county"
           class="city-circle"
           :cx="city.x+'px'"
           :cy="city.y+'px'"
