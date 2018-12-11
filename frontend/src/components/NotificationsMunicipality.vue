@@ -94,7 +94,6 @@ export default {
   },
   mounted: function () {
     this.previousMunicipalityNewsLength = this.calculateNewsLengthForObjects(this.newsByMunicipality)
-    console.log(this.circleSize, this.fontSize, this.yOffset, this.lineWidth, this.calculateNewsLengthForObjects, this.updateNewsLengthForObjects)
   },
   methods: {
     ...mapActions([
