@@ -21,7 +21,7 @@
           :y1="municipality.countyY+'px'"
           :x2="municipality.x+'px'"
           :y2="municipality.y+'px'"
-          :stroke-width="lineWidth()+'px'"
+          :stroke-width="lineWidth+'px'"
         />
       </Transition>
 

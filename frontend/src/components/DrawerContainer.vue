@@ -4,10 +4,7 @@
     class="bottom-shadow flex-col"
   >
     <slot />
-    <DrawerHandle
-      :isOpen="isOpen"
-      :toggleDrawer="toggleDrawer"
-    />
+    <DrawerHandle />
   </div>
 </template>
 
@@ -15,11 +12,10 @@
 import DrawerHandle from './DrawerHandle'
 
 export default {
-  name: 'Drawer',
+  name: 'DrawerContainer',
   components: {
     'DrawerHandle': DrawerHandle
-  },
-  props: ['toggleDrawer', 'isOpen']
+  }
 }
 </script>
 

@@ -1,16 +1,16 @@
 <template>
   <div id="main-section">
-    <Map />
+    <MapSVG />
   </div>
 </template>
 
 <script>
-import Map from './Map'
+import MapSVG from './MapSVG'
 
 export default {
   name: 'MainSection',
   components: {
-    'Map': Map
+    'MapSVG': MapSVG
   }
 }
 </script>

@@ -14,10 +14,7 @@
 
     <MainSection />
 
-    <Drawer
-      :isOpen="drawerIsOpen"
-      :toggleDrawer="toggleDrawer"
-    >
+    <DrawerContainer>
       <Component
         :is="dynamicComponents.drawerNewsItemComponent"
         v-if="activeNewsItem !== null"
@@ -27,7 +24,7 @@
         v-if="selectedCounty !== null && activeNewsItem === null"
         :showFilter="false"
       />
-    </Drawer>
+    </DrawerContainer>
 
     <ToggleButtons
       :items="newsSources"
@@ -42,7 +39,7 @@ import DatePicker from './DatePicker'
 import DatePickerToggler from './DatePickerToggler'
 import DrawerNewsItem from './DrawerNewsItem'
 import NewsSideBar from './NewsSideBar'
-import Drawer from './Drawer'
+import DrawerContainer from './DrawerContainer'
 import DrawerNewsList from './DrawerNewsList'
 import ToggleButtons from './ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
@@ -56,7 +53,7 @@ export default {
     'DatePickerToggler': DatePickerToggler,
     'drawernewsitem': DrawerNewsItem,
     'NewsSideBar': NewsSideBar,
-    'Drawer': Drawer,
+    'DrawerContainer': DrawerContainer,
     'drawernewslist': DrawerNewsList,
     'ToggleButtons': ToggleButtons
   },
@@ -72,14 +69,10 @@ export default {
   computed: {
     ...mapGetters([
       'activeNewsItem',
-      'activeNewsItemId',
       'selectedCounty',
       'newsSources',
       'showDatePicker'
-    ]),
-    drawerIsOpen: function () {
-      return this.activeNewsItemId !== null || this.selectedCounty !== null
-    }
+    ])
   },
   created: function () {
     this.fetchAvailableNewsSources()
@@ -89,7 +82,6 @@ export default {
     ...mapActions([
       'fetchAvailableNewsSources',
       'addNews',
-      'toggleDrawer',
       'toggleNewsSource'
     ])
   }
