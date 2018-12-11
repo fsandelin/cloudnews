@@ -1,6 +1,6 @@
 import { months as m } from './constants'
 
-const getWeek = (date) => {
+export const getWeek = (date) => {
   const target = new Date(date.valueOf())
   const dayNr = (date.getDate() + 6) % 7
   target.setDate(target.getDate() - dayNr + 3)

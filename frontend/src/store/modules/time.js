@@ -146,7 +146,7 @@ const mutations = {
   moveCalendar (state, { month = state.currentMonth, year = state.currentYear }) {
     state.currentMonth = month
     state.currentYear = year
-    state.weekNumbers = weekNumsForMonth(state.currentYear, state.currentMonth + 1)
+    state.weekNumbers = weekNumsForMonth(state.currentYear, state.currentMonth)
   },
   selectDate (state, { startDate = state.startDate, endDate = state.endDate }) {
     state.startDate = startDate
