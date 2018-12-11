@@ -10,8 +10,14 @@
   .header {
     height: 100px;
     background-color: $darkblue;
-    color: $white;
     padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $darkgreen;
+      transition: .3s;
+      box-shadow: 0px 6px 10px -2px $shadowblack;
+    }
 
     img {
       width: 250px;

@@ -1,14 +1,15 @@
 <template>
   <div id="app">
     <NewsSideBar :showFilter="true" />
-    <PopUpContainer
-      v-if="false">
+
+    <PopUpContainer v-if="showPopUp">
+      <AboutPage v-if="showAboutPage" />
       <DatePicker v-if="showDatePicker" />
     </PopUpContainer>
 
     <DatePickerToggler />
 
-    <MainSection />
+    <MapSVG />
 
     <DrawerContainer
       :isOpen="drawerIsOpen">
@@ -28,7 +29,8 @@
 </template>
 
 <script>
-import MainSection from './MainSection'
+import AboutPage from './AboutPage'
+import MapSVG from './MapSVG'
 import PopUpContainer from './PopUpContainer'
 import DatePicker from './DatePicker'
 import DatePickerToggler from './DatePickerToggler'
@@ -43,7 +45,8 @@ import { fakeNewsList } from '../assets/FakeData'
 export default {
   name: 'App',
   components: {
-    'MainSection': MainSection,
+    'AboutPage': AboutPage,
+    'MapSVG': MapSVG,
     'PopUpContainer': PopUpContainer,
     'DatePicker': DatePicker,
     'DatePickerToggler': DatePickerToggler,
@@ -68,10 +71,14 @@ export default {
       'activeNewsItemId',
       'selectedCounty',
       'newsSources',
-      'showDatePicker'
+      'showDatePicker',
+      'showAboutPage'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
+    },
+    showPopUp: function () {
+      return this.showDatePicker || this.showAboutPage
     }
   },
   created: function () {

@@ -1,32 +1,34 @@
 <template>
-  <svg class="mapContainer">
-    <g class="map">
-      <g>
-        <path
-          v-for="country in countries"
-          :key="country.key"
-          class="country"
-          :d="country.path" />
-        <path
-          v-for="municipality in municipalities"
-          v-show="municipality.active"
-          :key="municipality.key"
-          class="municipality"
-          :class="{ active: municipality.name === selectedMunicipality }"
-          :d="municipality.path"
-          @click="municipalityClick(municipality)" />
-        <path
-          v-for="county in counties"
-          v-show="county.active"
-          :key="county.key"
-          class="county"
-          :d="county.path"
-          @click="countyClick(county)" />
+  <div id="map-svg-wrapper">
+    <svg class="mapContainer">
+      <g class="map">
+        <g>
+          <path
+            v-for="country in countries"
+            :key="country.key"
+            class="country"
+            :d="country.path" />
+          <path
+            v-for="municipality in municipalities"
+            v-show="municipality.active"
+            :key="municipality.key"
+            class="municipality"
+            :class="{ active: municipality.name === selectedMunicipality }"
+            :d="municipality.path"
+            @click="municipalityClick(municipality)" />
+          <path
+            v-for="county in counties"
+            v-show="county.active"
+            :key="county.key"
+            class="county"
+            :d="county.path"
+            @click="countyClick(county)" />
+        </g>
+        <MapCities />
+        <Notifications />
       </g>
-      <MapCities />
-      <Notifications />
-    </g>
-  </svg>
+    </svg>
+  </div>
 </template>
 
 <script>
@@ -73,4 +75,4 @@ export default {
 }
 </script>
 
-<style src="../styles/Map.scss" lang="scss" scoped></style>
+<style src="../styles/MapSVG.scss" lang="scss" scoped></style>
