@@ -37,7 +37,7 @@ import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'Map',
+  name: 'MapSVG',
   components: {
     'Notifications': Notifications,
     'MapCities': MapCities

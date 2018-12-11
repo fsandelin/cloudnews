@@ -19,7 +19,7 @@
           :y1="city.municipalityY+'px'"
           :x2="city.x+'px'"
           :y2="city.y+'px'"
-          :stroke-width="lineWidth()*0.70+'px'" />
+          :stroke-width="lineWidth*0.70+'px'" />
       </Transition>
 
       <!--CIRCLES-->

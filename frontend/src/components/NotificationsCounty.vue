@@ -11,7 +11,7 @@
         class="county-circle"
         :cx="county.x+'px'"
         :cy="county.y+'px'"
-        :stroke-width="strokeWidth()+'px'"
+        :stroke-width="strokeWidth+'px'"
         :r="circleSize(county.news.length)+'px'" />
       <text
         :key="'countyNewsNotificationText'+county.name"
