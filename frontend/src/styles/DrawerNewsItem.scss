@@ -5,7 +5,12 @@
   color: $darkgrey;
   padding: 0 30px;
 
+  p {
+    margin: 1em;
+  }
+
   .header {
+
     i {
       margin: auto 0;
       color: $darkgrey;
@@ -23,9 +28,7 @@
           cursor: not-allowed;
           color: $lightgrey;
         }
-
       }
-
     }
 
     .title {

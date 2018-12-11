@@ -3,8 +3,8 @@ import { event as d3Event } from 'd3-selection'
 
 export const sizeOfCurrentWindow = () => {
   const ratio = 2.1
-  const width = d3.select('#main-section').node().getBoundingClientRect().width
-  const height = d3.select('#main-section').node().getBoundingClientRect().height
+  const width = d3.select('#map-svg-wrapper').node().getBoundingClientRect().width
+  const height = d3.select('#map-svg-wrapper').node().getBoundingClientRect().height
   const size =
     width * ratio < height
       ? width / 500

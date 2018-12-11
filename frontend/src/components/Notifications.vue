@@ -5,8 +5,7 @@
       :fontSize="fontSize"
       :yOffset="yOffset"
       :lineWidth="lineWidth"
-      :strokeWidth="strokeWidth"
-    />
+      :strokeWidth="strokeWidth" />
 
     <NotificationsMunicipality
       :calculateNewsLengthForObjects="calculateNewsLengthForObjects"
@@ -14,8 +13,7 @@
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
-      :lineWidth="lineWidth"
-    />
+      :lineWidth="lineWidth" />
 
     <NotificationsCounty
       :calculateNewsLengthForObjects="calculateNewsLengthForObjects"
@@ -23,14 +21,12 @@
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
-      :strokeWidth="strokeWidth"
-    />
+      :strokeWidth="strokeWidth" />
 
     <NotificationsCountry
       :circleSize="circleSize"
       :fontSize="fontSize"
-      :yOffset="yOffset"
-    />
+      :yOffset="yOffset" />
   </g>
 </template>
 

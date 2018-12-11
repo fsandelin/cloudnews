@@ -1,0 +1,34 @@
+@import 'variables.scss';
+@import 'reset.scss';
+
+#about-page {
+  max-width: 400px;
+  padding: 20px 30px;
+
+  .header {
+    font-size: 20px;
+    margin-bottom: 10px;
+
+    p {
+      color: $darkgreen;
+      flex: 1;
+    }
+  }
+
+  .body {
+    text-align: justify;
+    color: $darkgrey;
+  }
+
+  .footer {
+    span {
+      cursor: pointer;
+      color: $shadowblack;
+      padding: 5px;
+
+      &:hover {
+        color: $darkgreen;
+      }
+    }
+  }
+}

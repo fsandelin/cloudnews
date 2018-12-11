@@ -6,8 +6,7 @@
     <div
       class="background flex-col"
       :class="{ active: item.active }"
-      @click="toggleActive(item)"
-    >
+      @click="toggleActive(item)">
       <div class="circle full-shadow" />
     </div>
   </div>

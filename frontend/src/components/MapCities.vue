@@ -2,27 +2,23 @@
   <g id="cityLocations">
     <TransitionGroup
       name="fade"
-      tag="g"
-    >
+      tag="g">
       <g
         v-for="city in mapCities"
-        :key="city.name+'-'+city.municipality+'-'+city.county"
-      >
+        :key="city.name+'-'+city.municipality+'-'+city.county">
         <circle
           :key="'circle-'+city.name+'-'+city.municipality+'-'+city.county"
           class="city"
           :cx="city.x+'px'"
           :cy="city.y+'px'"
-          :r="radius+'px'"
-        />
+          :r="radius+'px'" />
         <text
           :key="'text-'+city.name+'-'+city.municipality+'-'+city.county"
           class="city"
           :x="city.x+'px'"
           :y="city.y+'px'"
           :dx="fontSize/2+'px'"
-          :font-size="fontSize+'px'"
-        >
+          :font-size="fontSize+'px'">
           {{ city.name }}
         </text>
       </g>

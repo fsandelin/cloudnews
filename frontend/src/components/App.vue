@@ -1,40 +1,37 @@
 <template>
   <div id="app">
-    <NewsSideBar
-      :showFilter="true"
-    />
+    <NewsSideBar :showFilter="true" />
 
-    <DatePicker
-      v-if="showDatePicker"
-    />
+    <PopUpContainer v-if="showPopUp">
+      <AboutPage v-if="showAboutPage" />
+      <DatePicker v-if="showDatePicker" />
+    </PopUpContainer>
 
-    <DatePickerToggler
-      v-if="!showDatePicker"
-    />
+    <DatePickerToggler />
 
-    <MainSection />
+    <MapSVG />
 
-    <DrawerContainer>
+    <DrawerContainer
+      :isOpen="drawerIsOpen">
       <Component
         :is="dynamicComponents.drawerNewsItemComponent"
-        v-if="activeNewsItem !== null"
-      />
+        v-if="activeNewsItem !== null" />
       <Component
         :is="dynamicComponents.drawerNewsList"
         v-if="selectedCounty !== null && activeNewsItem === null"
-        :showFilter="false"
-      />
+        :showFilter="false" />
     </DrawerContainer>
 
     <ToggleButtons
       :items="newsSources"
-      :toggleActive="toggleNewsSource"
-    />
+      :toggleActive="toggleNewsSource" />
   </div>
 </template>
 
 <script>
-import MainSection from './MainSection'
+import AboutPage from './AboutPage'
+import MapSVG from './MapSVG'
+import PopUpContainer from './PopUpContainer'
 import DatePicker from './DatePicker'
 import DatePickerToggler from './DatePickerToggler'
 import DrawerNewsItem from './DrawerNewsItem'
@@ -48,7 +45,9 @@ import { fakeNewsList } from '../assets/FakeData'
 export default {
   name: 'App',
   components: {
-    'MainSection': MainSection,
+    'AboutPage': AboutPage,
+    'MapSVG': MapSVG,
+    'PopUpContainer': PopUpContainer,
     'DatePicker': DatePicker,
     'DatePickerToggler': DatePickerToggler,
     'drawernewsitem': DrawerNewsItem,
@@ -69,10 +68,18 @@ export default {
   computed: {
     ...mapGetters([
       'activeNewsItem',
+      'activeNewsItemId',
       'selectedCounty',
       'newsSources',
-      'showDatePicker'
-    ])
+      'showDatePicker',
+      'showAboutPage'
+    ]),
+    drawerIsOpen: function () {
+      return this.activeNewsItemId !== null || this.selectedCounty !== null
+    },
+    showPopUp: function () {
+      return this.showDatePicker || this.showAboutPage
+    }
   },
   created: function () {
     this.fetchAvailableNewsSources()
@@ -82,6 +89,7 @@ export default {
     ...mapActions([
       'fetchAvailableNewsSources',
       'addNews',
+      'toggleDrawer',
       'toggleNewsSource'
     ])
   }
