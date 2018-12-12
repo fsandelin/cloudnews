@@ -21,8 +21,9 @@ function availableServices(req, res) {
     console.log('Got request to news-service');
     if (err) {
       res.status(500).send('Could not get the services resources from the responsible node');
+    } else {
+      res.json(body);
     }
-    res.json(body);
   });
 }
 

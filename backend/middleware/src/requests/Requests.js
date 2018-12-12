@@ -31,7 +31,7 @@ function removeClientsRequest(clientId) {
     }
   }
   for (const requestId in requestsToRemove) {
-    delete requests[requestId];
+    removeRequest(requestId);
   }
 }
 

@@ -23,13 +23,11 @@ function getPreviousDay(date) {
 }
 
 function getIncludedTimespans(newFrom, newUntil, timespans) {
-  let tentFrom = null;
-  let tentUntil = null;
   let placedFrom = false;
   const includedTimespans = [];
-  for (let i = 0; i < timespans.length; i += 1) {
-    tentFrom = new Date(timespans[i].from);
-    tentUntil = new Date(timespans[i].until);
+  for (const timespan in timespans) {
+    const tentFrom = new Date(timespan.from);
+    const tentUntil = new Date(timespan.until);
     if (!placedFrom) {
       if (newFrom > getNextDay(tentUntil)) {
         continue;
@@ -41,7 +39,7 @@ function getIncludedTimespans(newFrom, newUntil, timespans) {
       if (newUntil < getPreviousDay(tentFrom)) {
         break;
       }
-      includedTimespans.push(timespans[i]);
+      includedTimespans.push(timespan);
     }
   }
   return includedTimespans;
@@ -52,20 +50,8 @@ function getNewTimespan(inputFrom, inputUntil, timespans) {
   const firstFrom = new Date(timespans[0].from);
   const lastUntil = new Date(timespans[timespans.length - 1].until);
 
-  let newFrom = null;
-  let newUntil = null;
-
-  if (firstFrom < inputFrom) {
-    newFrom = firstFrom;
-  } else {
-    newFrom = inputFrom;
-  }
-
-  if (lastUntil > inputUntil) {
-    newUntil = lastUntil;
-  } else {
-    newUntil = inputUntil;
-  }
+  const newFrom = (firstFrom < inputFrom) ? firstFrom : inputFrom;
+  const newUntil = (lastUntil > inputUntil) ? lastUntil : inputUntil;
 
   return { from: newFrom, until: newUntil };
 }
