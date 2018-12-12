@@ -69,9 +69,6 @@ function updateRequestCompletion(request) {
 
 // Add a request to the requests-object and check the request for completion.
 function addRequest(requestId, requestedResource) {
-  // setInterval(() => {
-  //  console.log(requests);
-  // }, 5000);
   requestedResource.completed = false;
   requestedResource.sent = false;
   requestedResource.scraping = false;
