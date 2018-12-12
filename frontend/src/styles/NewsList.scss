@@ -1,7 +1,7 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-ul {
+.scroller {
   flex: 1;
   overflow-y: scroll;
 }
