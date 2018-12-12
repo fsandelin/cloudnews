@@ -5,5 +5,6 @@ module.exports = {
         "no-underscore-dangle": "off", 
         "guard-for-in": "off", 
         "no-restricted-syntax": "off",
+        "no-use-before-define": "off"
     }
 };
