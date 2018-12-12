@@ -8,6 +8,7 @@ const config = {
   },
   host: process.env.HOST,
   port: process.env.PORT,
+  articles_collection_prefix: 'articles_',
   middlewareInfo: {
     baseURL: `${process.env.MIDDLEWARE_HOST}:${process.env.MIDDLEWARE_PORT}`,
     completeRequestRoute: '/internal/complete_request',
@@ -19,6 +20,7 @@ const config = {
   },
   databaseName: 'cloudnews',
   scraperMetaCollectionName: 'prefetched',
+  pageSize: 31,
 };
 
 module.exports = config;
