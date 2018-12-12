@@ -4,7 +4,6 @@ const RouteHandler = require('./RouteHandler');
 const router = express.Router();
 
 router.post('/fill_timespan', (req, res) => {
-  console.log('Should fill timespan============================================================================================================================================');
   RouteHandler.fillTimeSpan(req, res);
 });
 
@@ -18,6 +17,10 @@ router.get('/available_services', (req, res) => {
 
 router.post('/live_news', (req, res) => {
   RouteHandler.liveNews(req, res);
+});
+
+router.get('/get_news', (req, res) => {
+  RouteHandler.getNews(req, res);
 });
 
 module.exports = router;
