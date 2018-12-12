@@ -1,37 +1,27 @@
+const bodyParser = require('body-parser');
+const externalApp = require('express')();
+const externalServer = require('http').Server(externalApp);
+const externalIo = require('socket.io')(externalServer);
 
-require('dotenv').config();
+const internalApp = require('express')();
+const Clients = require('./src/client/Clients');
+const config = require('./src/config/config');
 
-const winston = require('winston');
+Clients.initSocket(externalIo);
 
-const app = require('express')();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const internalRoutes = require('./src/microservices/MicroserviceRoutes');
+const externalRoutes = require('./src/client/ExternalRoutes');
 
-const MicroserviceHandler = require('./src/MicroserviceHandler');
-const routes = require('./src/Routes');
+require('./src/client/ExternalEvents').applyEventListeners(externalIo);
 
-require('./src/SocketEvents').applyEventListeners(io);
+externalApp.use('/api', externalRoutes);
 
-const { WS_PORT, SERVER_PORT } = process.env;
+internalApp.use(bodyParser.json({ limit: '10mb', extended: true }));
+internalApp.use('/internal', internalRoutes);
 
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'middleware_root.log' }),
-  ],
+
+internalApp.listen(config.internalPort, () => {
+  console.log(`Running the internal server on ${config.internalPort}`);
 });
-
-app.use('/api', routes);
-
-const ms = new MicroserviceHandler((service, data) => {
-  if (Array.isArray(data)) {
-    io.to(service).emit('news_list', data);
-  } else {
-    io.to(service).emit('news', data);
-  }
-});
-
-
-ms.listen(SERVER_PORT);
-server.listen(WS_PORT);
-logger.info(`Listening for sockets and API requests on: ${WS_PORT}`);
+externalServer.listen(config.externalPort);
+// logger.info(`Listening for sockets and API requests on: ${config.externalPort}`);
