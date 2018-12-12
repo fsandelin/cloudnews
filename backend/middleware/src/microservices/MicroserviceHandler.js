@@ -2,7 +2,7 @@ const Requests = require('../requests/Requests');
 const Clients = require('../client/Clients');
 
 function completeRequest(req, res) {
-  const { requestId, articles } = req.body;
+  const { requestId } = req.body;
   const timespanRequest = Requests.getRequest(requestId);
   if (!timespanRequest) {
     console.log(`Cannot find request ${requestId}. Could it have already been completed?`);
@@ -11,11 +11,8 @@ function completeRequest(req, res) {
   }
   const { clientId } = timespanRequest;
   const client = Clients.getClient(clientId);
-  const message = {
-    requestId,
-    articles,
-  };
-  client.socket.emit('complete_request', message);
+
+  client.socket.emit('complete_request', requestId);
   Requests.removeRequest(requestId);
 
   res.status(200).send('Successfully completed request ');
