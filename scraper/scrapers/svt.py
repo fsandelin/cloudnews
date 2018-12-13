@@ -208,9 +208,12 @@ def get_request(url):
 def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50): 
     params_struct = params + param_limit + str(amount) + param_page + str(page)
     url = URL_API + region + params_struct
-    r = get_request(url)
+    response = get_request(url)
     
-    region_news = r.json(encoding='utf-16')
+
+    response = get_request(url, param_payload)
+    
+    region_news = response.json(encoding='utf-16')
 
     region_news = reform_api_news(region_news['auto']['content'])
     return region_news
@@ -218,9 +221,9 @@ def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
 def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
     params_struct = params + param_limit + str(amount) + param_page + str(page)
     url = URL_API + region + params_struct 
-    r = get_request(url)
+    response = get_request(url)
     
-    region_news = r.json(encoding='utf-16')
+    region_news = response.json(encoding='utf-16')
 
     return region_news
 
@@ -353,7 +356,7 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     else:
         end_page_found = True
 
-    
+    print("Start and end page", start_page, end_page)
     start_pages = range(start_page, start_page + workers)
     end_pages = range(end_page, end_page + workers)
     i = 0
@@ -544,10 +547,6 @@ class Page:
         self.url_call = URL_API + region + params_struct
         self.tries = 5
         self.news = None
-
-    @retry(Exception, tries=10, delay=1, backoff=2)
-    def request_url(self):
-        r = requests.get(url=self.url_call)
 
     def request_news(self):
         if self.tries > 0:
