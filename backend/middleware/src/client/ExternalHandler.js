@@ -48,8 +48,9 @@ function getNews(req, res) {
     }
     if (response.statusCode === 204) {
       res.sendStatus(204);
+    } else {
+      res.json(response.body);
     }
-    res.json(response.body);
   });
 }
 

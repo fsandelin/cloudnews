@@ -1,7 +1,8 @@
 import {
   cleanString,
-  dateIsBefore,
-  convertDateStringToDateObj
+  convertDateStringToDateObj,
+  dateIsBeforeOrEqual,
+  dateIsAfterOrEqual
 } from '../helpers'
 
 const state = {
@@ -11,8 +12,14 @@ const state = {
 }
 
 const getters = {
-  newsList: state => {
-    return state.newsList
+  newsList: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => {
+      const currentStartDate = rootGetters.newsStartDate
+      const currentEndDate = rootGetters.newsEndDate
+
+      if (!currentEndDate) return dateIsAfterOrEqual(news.datetime, currentStartDate)
+      return dateIsAfterOrEqual(news.datetime, currentStartDate) && dateIsBeforeOrEqual(news.datetime, currentEndDate)
+    })
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
     if (rootState.locations.selectedCity !== null) return getters.filterNewsSelectedCity
@@ -21,22 +28,19 @@ const getters = {
     return []
   },
   filterNewsSelectedCounty: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty))
+    return getters.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty))
   },
   filterNewsSelectedMunicipality: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality))
+    return getters.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality))
   },
   filterNewsSelectedCity: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
-  },
-  selectedCountyNews: (state, getters, rootState) => {
-    return state.newsList.filter(({ location }) => (location.county === rootState.locations.selectedCounty))
+    return getters.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
   },
   newsByCounty: (state, getters, rootState) => {
     return rootState.locations.counties.map(county => {
       return {
         ...county,
-        news: state.newsList.filter(({ location }) => {
+        news: getters.newsList.filter(({ location }) => {
           return location.county === county.name
         })
       }
@@ -46,7 +50,7 @@ const getters = {
     return rootState.locations.municipalities.map(municipality => {
       return {
         ...municipality,
-        news: state.newsList.filter(({ location }) => location.municipality === municipality.name)
+        news: getters.newsList.filter(({ location }) => location.municipality === municipality.name)
       }
     }).filter(({ news }) => news.length > 0)
       .map(municipality => {
@@ -62,7 +66,7 @@ const getters = {
     return rootState.locations.cities.map(city => {
       return {
         ...city,
-        news: state.newsList.filter(({ location }) => location.city === city.name)
+        news: getters.newsList.filter(({ location }) => location.city === city.name)
       }
     }).filter(({ news }) => news.length > 0)
       .map(city => {
@@ -77,24 +81,20 @@ const getters = {
   activeNewsItemId: state => {
     return state.activeNewsItemId
   },
-  activeNewsItem: state => {
-    const newsItem = state.newsList.find(item => item.id === state.activeNewsItemId)
+  activeNewsItem: (state, getters) => {
+    const newsItem = getters.newsList.find(item => item.id === state.activeNewsItemId)
     return newsItem !== undefined && 'id' in newsItem ? newsItem : null
   }
 }
 
 const actions = {
   addNews: ({ state, commit, rootGetters, rootState }, news) => {
-    if (state.newsList.find(x => x.id === news.id)) return
+    if (rootGetters.newsList.find(x => x.id === news.id)) return
 
     news = {
       ...news,
       datetime: convertDateStringToDateObj(news.datetime)
     }
-
-    if (dateIsBefore(news.datetime, rootState.time.newsStartDate)) return
-    if (rootState.time.newsEndDate !== null &&
-        dateIsBefore(rootState.time.newsEndDate, news.datetime)) return
 
     let location = { ...news.location }
     for (const key of Object.keys(location)) {
@@ -134,7 +134,7 @@ const actions = {
     commit('addNews', { ...news, location })
   },
   addNewsList: ({ dispatch }, newsList) => {
-    newsList.articles.map(news => dispatch('addNews', news))
+    newsList.map(news => dispatch('addNews', news))
   },
   setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id)
 }

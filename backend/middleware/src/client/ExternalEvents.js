@@ -5,7 +5,7 @@ const config = require('../config/config');
 const Clients = require('./Clients');
 const Requests = require('../requests/Requests');
 
-const availableServices = ['tt', 'svt', 'twitter', 'polisen'];
+const availableServices = ['svt', 'twitter', 'polisen'];
 
 // Define logging
 const logger = winston.createLogger({

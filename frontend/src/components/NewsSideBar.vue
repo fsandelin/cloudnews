@@ -1,14 +1,14 @@
 <template>
   <div
     id="news-sidebar"
-    class="right-shadow"
-  >
-    <div class="header flex-col bottom-shadow light-border-bottom">
+    class="right-shadow">
+    <div
+      class="header flex-col bottom-shadow light-border-bottom"
+      @click="toggleAboutPage">
       <img
         class="logo"
         :src="logoWithText"
-        :alt="logoWithTextAlt"
-      >
+        :alt="logoWithTextAlt">
     </div>
     <Newslist :showFilter="showFilter" />
   </div>
@@ -17,6 +17,7 @@
 <script>
 import NewsList from './NewsList'
 import LogoWithText from '../assets/LogoWithText.png'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Sidebar',
@@ -34,6 +35,11 @@ export default {
       logoWithText: LogoWithText,
       logoWithTextAlt: 'LogoWithText'
     }
+  },
+  methods: {
+    ...mapActions([
+      'toggleAboutPage'
+    ])
   }
 }
 </script>

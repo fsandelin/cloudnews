@@ -3,8 +3,8 @@ import { event as d3Event } from 'd3-selection'
 
 export const sizeOfCurrentWindow = () => {
   const ratio = 2.1
-  const width = d3.select('#main-section').node().getBoundingClientRect().width
-  const height = d3.select('#main-section').node().getBoundingClientRect().height
+  const width = d3.select('#map-svg-wrapper').node().getBoundingClientRect().width
+  const height = d3.select('#map-svg-wrapper').node().getBoundingClientRect().height
   const size =
     width * ratio < height
       ? width / 500
@@ -17,7 +17,7 @@ let currentZoom = null
 export const mapZoom = (setZoomValue) => {
   return d3
     .zoom()
-    .scaleExtent([0.45, 50])
+    .scaleExtent([0.33, 50])
     .on('zoom', () => {
       d3.select('.map').attr('transform', d3Event.transform)
       if (d3Event.transform.k !== currentZoom) {

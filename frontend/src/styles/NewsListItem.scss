@@ -5,6 +5,7 @@
   height: 60px;
   padding: 20px;
   cursor: pointer;
+  background-color: $white;
 
   &.active, &.hover, &.filter {
     color: $white;
@@ -24,10 +25,10 @@
 
   .title {
     font-size: 16px;
+    overflow: hidden;
   }
 
   .subtitle {
     font-size: 10px;
   }
-
 }

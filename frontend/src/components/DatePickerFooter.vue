@@ -2,18 +2,15 @@
   <div class="footer flex-row">
     <div
       class="flex-row start-date"
-      :class="{ active: startDate !== null }"
-    >
+      :class="{ active: startDate !== null }">
       <i
         class="material-icons"
-        @click="startDate !== null ? selectDate(startDate) : null"
-      >
+        @click="startDate !== null ? selectDate(startDate) : null">
         replay
       </i>
       <p
         class="flex-col"
-        @click="startDate !== null ? moveCalendarToDate(startDate) : null"
-      >
+        @click="startDate !== null ? moveCalendarToDate(startDate) : null">
         <span>Start date</span>
         <span class="date">
           {{ prettifyDateObject(startDate) }}
@@ -21,13 +18,16 @@
       </p>
     </div>
     <div
+      class="flex-col today"
+      @click="moveCalendarToCurrentMonth">
+      <p>today</p>
+    </div>
+    <div
       class="flex-row end-date"
-      :class="{ active: endDate !== null }"
-    >
+      :class="{ active: endDate !== null }">
       <p
         class="flex-col"
-        @click="endDate !== null ? moveCalendarToDate(endDate) : null"
-      >
+        @click="endDate !== null ? moveCalendarToDate(endDate) : null">
         <span>End date</span>
         <span class="date">
           {{ prettifyDateObject(endDate) }}
@@ -35,8 +35,7 @@
       </p>
       <i
         class="material-icons"
-        @click="endDate !== null ? selectDate(endDate) : null"
-      >
+        @click="endDate !== null ? selectDate(endDate) : null">
         replay
       </i>
     </div>
@@ -60,7 +59,8 @@ export default {
       'moveCalendarBackwards',
       'moveCalendarForwards',
       'selectDate',
-      'moveCalendarToDate'
+      'moveCalendarToDate',
+      'moveCalendarToCurrentMonth'
     ]),
     prettifyDateObject: function (dateObj) {
       return prettifyDateObject(dateObj)

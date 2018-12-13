@@ -4,8 +4,14 @@
 #active-news-item {
   color: $darkgrey;
   padding: 0 30px;
+  word-break: break-all;
+
+  p {
+    margin: 1em;
+  }
 
   .header {
+
     i {
       margin: auto 0;
       color: $darkgrey;
@@ -23,9 +29,7 @@
           cursor: not-allowed;
           color: $lightgrey;
         }
-
       }
-
     }
 
     .title {

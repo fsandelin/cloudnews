@@ -4,8 +4,7 @@
       v-for="item in items"
       :key="item.name"
       :item="item"
-      :toggleActive="toggleActive"
-    />
+      :toggleActive="toggleActive" />
   </div>
 </template>
 

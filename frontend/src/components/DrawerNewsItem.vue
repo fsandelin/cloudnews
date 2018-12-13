@@ -3,8 +3,7 @@
     <div class="header flex-row">
       <i
         class="material-icons back"
-        @click="setActiveNewsItemId(null)"
-      >
+        @click="setActiveNewsItemId(null)">
         reply
       </i>
       <p class="title">
@@ -13,8 +12,7 @@
       <i
         class="material-icons url"
         :class="{ exists: activeNewsItem.url }"
-        @click="() => activeNewsItem.url ? openLink() : null"
-      >
+        @click="() => activeNewsItem.url ? openLink() : null">
         {{ activeNewsItem.url ? 'link' : 'link_off' }}
       </i>
     </div>
@@ -23,8 +21,7 @@
     </p>
     <img
       v-if="activeNewsItem.imgurl"
-      :src="activeNewsItem.imgurl"
-    >
+      :src="activeNewsItem.imgurl">
   </div>
 </template>
 

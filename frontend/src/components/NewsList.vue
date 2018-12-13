@@ -1,22 +1,26 @@
 <template>
-  <ul>
+  <VirtualList
+    class="scroller"
+    :remain="14"
+    :size="101">
     <NewslistItem
-      v-for="news in (filteredNewsList ? filteredNewsList : newsList)"
-      :key="news.id"
-      :news="news"
-      :showFilter="showFilter"
-    />
-  </ul>
+      v-for="item in (filteredNewsList ? filteredNewsList : newsList)"
+      :key="item.id"
+      :news="item"
+      :showFilter="showFilter" />
+  </VirtualList>
 </template>
 
 <script>
 import NewsListItem from './NewsListItem'
+import virtualList from 'vue-virtual-scroll-list'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Newslist',
   components: {
-    'NewslistItem': NewsListItem
+    'NewslistItem': NewsListItem,
+    'VirtualList': virtualList
   },
   props: {
     'filteredNewsList': {

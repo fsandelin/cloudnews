@@ -5,8 +5,23 @@
   height: 50px;
   color: $lightgrey;
 
+  .today {
+    p {
+      color: $darkblue;
+      cursor: pointer;
+      font-size: 12px;
+
+      &:hover {
+        color: $darkgreen;
+      }
+    }
+  }
+
   div {
     margin: 0 5px;
+  }
+
+  .start-date, .end-date {
 
     &.active {
       cursor: pointer;
