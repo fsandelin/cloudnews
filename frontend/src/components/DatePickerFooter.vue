@@ -18,6 +18,11 @@
       </p>
     </div>
     <div
+      class="flex-col today"
+      @click="moveCalendarToCurrentMonth">
+      <p>today</p>
+    </div>
+    <div
       class="flex-row end-date"
       :class="{ active: endDate !== null }">
       <p
@@ -54,7 +59,8 @@ export default {
       'moveCalendarBackwards',
       'moveCalendarForwards',
       'selectDate',
-      'moveCalendarToDate'
+      'moveCalendarToDate',
+      'moveCalendarToCurrentMonth'
     ]),
     prettifyDateObject: function (dateObj) {
       return prettifyDateObject(dateObj)

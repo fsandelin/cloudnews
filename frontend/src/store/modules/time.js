@@ -7,7 +7,6 @@ import {
   getDaysForMonth,
   getNumArrayBetweenNums,
   dateIsBefore,
-  weekNumsForMonth,
   sameDates,
   prettifyDateObject
 } from '../helpers'
@@ -19,7 +18,6 @@ const state = {
   currentYear: today.getFullYear(),
   currentMonth: today.getMonth() + 1,
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
-  weekNumbers: weekNumsForMonth(today.getFullYear(), today.getMonth() + 1),
   startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
   newsStartDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
@@ -31,7 +29,6 @@ const getters = {
   currentYear: state => state.currentYear,
   currentMonth: state => state.currentMonth,
   weekDays: state => state.weekDays,
-  weekNumbers: state => state.weekNumbers,
   startDate: state => state.startDate,
   endDate: state => state.endDate,
   newsStartDate: state => state.newsStartDate,
@@ -71,11 +68,14 @@ const getters = {
   },
   daysByRow: (state, getters) => {
     const dates = getters.getDaysToDisplay
-    return state.weekNumbers.map((_, i) => dates.slice(i * 7, i * 7 + 7))
+    return Array.apply(null, Array(6)).map((_, i) => dates.slice(i * 7, i * 7 + 7))
   }
 }
 
 const actions = {
+  moveCalendarToCurrentMonth: ({ dispatch }) => {
+    dispatch('moveCalendarToDate', { year: today.getFullYear(), month: today.getMonth() + 1 })
+  },
   moveCalendarToDate: ({ commit }, date) => {
     commit('moveCalendar', { month: date.month, year: date.year })
   },
@@ -146,7 +146,6 @@ const mutations = {
   moveCalendar (state, { month = state.currentMonth, year = state.currentYear }) {
     state.currentMonth = month
     state.currentYear = year
-    state.weekNumbers = weekNumsForMonth(state.currentYear, state.currentMonth)
   },
   selectDate (state, { startDate = state.startDate, endDate = state.endDate }) {
     state.startDate = startDate

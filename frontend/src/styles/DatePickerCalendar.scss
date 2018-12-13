@@ -12,65 +12,51 @@
     color: $darkgrey;
 
     .day {
-      width: 30px;
+      flex: 1;
       height: 100%;
     }
   }
 
-  .wrapper {
+  .days {
     flex: 1;
+    color: $white;
 
-    .week-numbers {
-      width: 30px;
-      color: $lightgrey;
+    .row {
+      height: 25px;
 
-      .week {
+      .day {
         flex: 1;
-      }
-    }
+        cursor: pointer;
 
-    .days {
-      flex: 1;
-      color: $white;
+        &.active {
+          background-color: $darkgreen;
+          color: $white;
+        }
 
-      .row {
-        height: 25px;
+        &:not(.active):not(:hover) {
+          &.current-month {
+            color: $darkblue;
+          }
 
-        .day {
-          flex: 1;
-          cursor: pointer;
+          &:not(.current-month) {
+            color: $superlightblue;
+          }
 
-          &.active {
+          &.in-between-selected {
             background-color: $darkgreen;
             color: $white;
           }
 
-          &:not(.active):not(:hover) {
-            &.current-month {
-              color: $darkblue;
-            }
-
-            &:not(.current-month) {
-              color: $superlightblue;
-            }
-
-            &.in-between-selected {
-              background-color: $darkgreen;
-              color: $white;
-            }
-
-            &.in-between-hover:not(.in-between-selected) {
-              background-color: $lightgrey;
-              color: $white;
-            }
-          }
-
-
-          &:hover {
-            background-color: $lightgreen;
+          &.in-between-hover:not(.in-between-selected) {
+            background-color: $lightgrey;
             color: $white;
-            box-shadow: 3px 3px 5px -2px $shadowblack;
           }
+        }
+
+        &:hover {
+          background-color: $lightgreen;
+          color: $white;
+          box-shadow: 3px 3px 5px -2px $shadowblack;
         }
       }
     }

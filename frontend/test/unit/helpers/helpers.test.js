@@ -1,16 +1,5 @@
 import * as helpers from '../../../src/store/helpers'
 
-test('getWeek gets the correct week', () => {
-  expect(helpers.getWeek(new Date(2018, 11, 10, 12, 0, 0, 0))).toBe(50)
-  expect(helpers.getWeek(new Date(2019, 11, 10, 12, 0, 0, 0))).toBe(50)
-  expect(helpers.getWeek(new Date(2045, 5, 13, 12, 0, 0, 0))).toBe(24)
-  expect(helpers.getWeek(new Date(2018, 3, 1, 12, 0, 0, 0))).toBe(14)
-  expect(helpers.getWeek(new Date(1990, 11, 24, 12, 0, 0, 0))).toBe(52)
-  expect(helpers.getWeek(new Date(2019, 1, 6, 12, 0, 0, 0))).toBe(6)
-  expect(helpers.getWeek(new Date(2019, 0, 7, 12, 0, 0, 0))).toBe(2)
-  expect(helpers.getWeek(new Date(2019, 0, 1, 12, 0, 0, 0))).toBe(1)
-})
-
 test('clearnString cleans strings correctly', () => {
   expect(helpers.cleanString(' kiruna KoMmun  ')).toBe('kiruna kommun')
   expect(helpers.cleanString('         ')).toBe('')

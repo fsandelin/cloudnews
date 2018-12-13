@@ -1,9 +1,10 @@
 <template>
   <div
     id="news-sidebar"
-    class="right-shadow"
-    @click="toggleAboutPage">
-    <div class="header flex-col bottom-shadow light-border-bottom">
+    class="right-shadow">
+    <div
+      class="header flex-col bottom-shadow light-border-bottom"
+      @click="toggleAboutPage">
       <img
         class="logo"
         :src="logoWithText"
