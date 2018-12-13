@@ -3,38 +3,38 @@ kind: Deployment
 metadata:
   name: nginx-node-svc
 spec:
-  selector:
-    matchLabels:
-      run: nginx-node-svc
   replicas: 1
   template:
     metadata:
       labels:
-        run: nginx-node-svc
+        app: nginx-node
     spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
       - name: nginx-node-svc
         image: nginx-node:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
+        env:
+          - name: NODE_PORT
+            value: '5000'
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-node-svc
   labels:
-    run: nginx-node-svc
+    app: nginx-node-svc
   namespace: default
 spec:
   ports:
-  - port: 8080
-    targetPort: 80
+  - port: 80
+    targetPort: 8080
     protocol: TCP
-    name: http
   selector:
-    run: nginx-node-svc
+    app: nginx-node
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -45,13 +45,14 @@ spec:
   template:
     metadata:
       labels:
-        app: news-service-svc
+        app: news-service
     spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
       - name: news-service-svc
         image: news-service:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 3000
         env:
@@ -73,8 +74,7 @@ metadata:
   namespace: default
 spec:
   selector:
-    app: news-service-svc
-  type: ClusterIP
+    app: news-service
   ports:
   - port: 3000
     protocol: TCP
@@ -90,13 +90,14 @@ spec:
   template:
     metadata:
       labels:
-        app: middleware-svc
+        app: middleware
     spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
       - name: middleware-svc
         image: middleware:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 3001
         - containerPort: 5001
@@ -115,8 +116,7 @@ metadata:
   namespace: default
 spec:
   selector:
-    app: middleware-svc
-  type: LoadBalancer
+    app: middleware
   ports:
   - port: 3001
     protocol: TCP
@@ -136,13 +136,14 @@ spec:
   template:
     metadata:
       labels:
-        app: twitter-svc
+        app: twitter
     spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
       - name: twitter-svc
-        image: twitter:latest
+        image: twitter-service:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 4003
         env:
@@ -160,8 +161,7 @@ metadata:
   namespace: default
 spec:
   selector:
-    app: twitter-svc
-  type: ClusterIP
+    app: twitter
   ports:
   - port: 4003
     protocol: TCP
@@ -177,13 +177,14 @@ spec:
   template:
     metadata:
       labels:
-        app: polisen-svc
+        app: polisen
     spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
       - name: polisen-svc
-        image: polisen:latest
+        image: polisen-service:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 4002
         env:
@@ -201,11 +202,9 @@ metadata:
   namespace: default
 spec:
   selector:
-    app: polisen-svc
-  type: ClusterIP
+    app: polisen
   ports:
   - port: 4002
     protocol: TCP
     targetPort: 4002
     name: polisen-port
----
