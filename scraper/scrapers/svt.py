@@ -12,6 +12,7 @@ from time import sleep
 from dateutil import parser
 from datetime import datetime, date, time, timedelta
 from bs4 import BeautifulSoup
+from .retry_decorator import retry
 #from flask import jsonify
 
 import pytz
@@ -61,12 +62,16 @@ def check_svt_name(name):
 
     return name
 
+@retry(Exception, tries=10, delay=1, backoff=2)
+def get_url(url):
+    return urlopen(url)
+
 def get_news(url, region, response = None, print_thing = False):
 
 
     # Initiate the Beautiful soup
     if response is None:
-        response = urlopen(url)
+        response = get_url(url)
         content = response.read()
     else:
         content = response.read()
@@ -86,12 +91,10 @@ def get_news(url, region, response = None, print_thing = False):
 
     # Time 
     time = main.find('time')
-    #if print_thing:
-     #   print(time)
+    
     if time is not None:
         date = time['datetime']
     else:
-        #print(main)
         print(str(datetime.now()), str(datetime(1970, 1, 1)))
         date = str(datetime(1970, 1, 1))
 
@@ -154,7 +157,6 @@ class News:
     def get_news(self):
         return self.news
 
-
 def reform_api_news(svt_news_list):
     cloud_news = []
 
@@ -199,9 +201,14 @@ def reform_api_news_scrape(svt_news_list):
 
     return cloud_news
 
+@retry(Exception, tries=10, delay=0.1, backoff=1.5)
+def get_request(url):
+    return requests.get(url=url)
+
 def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50): 
-    params_struct = params + param_limit + str(amount) + param_page + str(page)   
-    r = requests.get(url = URL_API + region + params_struct)
+    params_struct = params + param_limit + str(amount) + param_page + str(page)
+    url = URL_API + region + params_struct
+    r = get_request(url)
     
     region_news = r.json(encoding='utf-16')
 
@@ -209,8 +216,9 @@ def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
     return region_news
 
 def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
-    params_struct = params + param_limit + str(amount) + param_page + str(page)   
-    r = requests.get(url = URL_API + region + params_struct)
+    params_struct = params + param_limit + str(amount) + param_page + str(page)
+    url = URL_API + region + params_struct 
+    r = get_request(url)
     
     region_news = r.json(encoding='utf-16')
 
@@ -286,6 +294,27 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
 
     return response_list
 
+def check_in_page(time_to_check, news_list):
+    if check_time(news_list[FIRST], AFTER, time_to_check) and check_time(news_list[LAST], BEFORE, time_to_check):
+        return True
+    else:
+        return False
+
+def check_if_pages(from_, until_, region):
+    # Find if the from and until is in the first 3 pages
+
+    start_page = None
+    end_page = None
+
+    for i in range(1,5):
+        news_list = get_api_news_region(region, page=i)
+        if start_page is None and check_in_page(from_, news_list):
+            start_page = i
+        if end_page is None and check_in_page(until_, news_list):
+            end_page = i
+
+    return (start_page, end_page)
+
 def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
 
     workers = 5
@@ -306,12 +335,25 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     time_diff_start = get_time_diff(obj_list[0], until_)
     time_diff_end = get_time_diff(obj_list[0], from_)
 
-    start_page = math.floor(time_diff_start/days_per_page)
-    end_page = math.floor(time_diff_end/days_per_page)
-
-    sleep(1)
     end_page_found = False
     start_page_found = False
+
+    start_page, end_page = check_if_pages(from_, until_, region)
+    print("Start and endPage", start_page, end_page)
+    if start_page is not None and end_page is not None:
+        return (start_page, end_page)
+
+    if start_page is None:
+        start_page = math.floor(time_diff_start/days_per_page)
+    else:
+        start_page_found = True
+    
+    if end_page is None:
+        end_page = math.floor(time_diff_end/days_per_page)
+    else:
+        end_page_found = True
+
+    
     start_pages = range(start_page, start_page + workers)
     end_pages = range(end_page, end_page + workers)
     i = 0
@@ -502,6 +544,10 @@ class Page:
         self.url_call = URL_API + region + params_struct
         self.tries = 5
         self.news = None
+
+    @retry(Exception, tries=10, delay=1, backoff=2)
+    def request_url(self):
+        r = requests.get(url=self.url_call)
 
     def request_news(self):
         if self.tries > 0:
