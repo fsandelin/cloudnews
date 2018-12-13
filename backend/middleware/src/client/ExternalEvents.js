@@ -1,13 +1,11 @@
-require('dotenv').config();
 const uuid = require('uuid/v4');
 const winston = require('winston');
 const rq = require('request');
+const config = require('../config/config');
+const Clients = require('./Clients');
+const Requests = require('../requests/Requests');
 
 const availableServices = ['svt', 'twitter', 'polisen'];
-const { NEWS_SERVICE_HOST, NEWS_SERVICE_PORT } = process.env;
-
-const clients = {};
-const requests = {};
 
 // Define logging
 const logger = winston.createLogger({
@@ -18,6 +16,7 @@ const logger = winston.createLogger({
 });
 
 function applyEventListeners(io) {
+  Clients.initSocket(io);
   io.use((socket, next) => {
     const servicesString = socket.handshake.query.services;
     const services = servicesString.split('+').map(service => service.trim());
@@ -33,35 +32,32 @@ function applyEventListeners(io) {
     else next(new Error('Service not found.'));
   });
 
+  // connection
   io.on('connection', (socket) => {
-    logger.info('Someone connected');
+    console.log('Someone connected');
     const servicesString = socket.handshake.query.services;
     const services = servicesString.split('+').map(service => service.trim());
     const clientId = uuid();
 
-    clients[clientId] = {
-      socket,
-      services,
-    };
+    Clients.addClient(clientId, socket, services);
+
     logger.info(`Joining the following services: ${services}`);
     services.forEach((service) => {
       if (availableServices.includes(service)) {
+        console.log(`Joining ${service}`);
         socket.join(service);
       }
     });
 
+    // disconnect
     socket.on('disconnect', () => {
-      delete clients[socket.id];
-      logger.info('Client disconnected');
-      logger.debug(clients);
+      Clients.removeClient(clientId);
+      Requests.removeClientsRequest(clientId);
     });
 
+    // timespan_request
     socket.on('timespan_request', (requestedResource) => {
       const requestId = uuid();
-      const request = {
-        requestId,
-        clientId,
-      };
       let requestedResourceParsed = null;
       try {
         requestedResourceParsed = JSON.parse(requestedResource);
@@ -72,26 +68,26 @@ function applyEventListeners(io) {
       }
       if (isNaN(Date.parse(requestedResourceParsed.from)) || isNaN(Date.parse(requestedResourceParsed.until))) {
         console.log('Incorrect dates');
-        clients[clientId].socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
+        Clients.getSocket(clientId).socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
         return;
       }
-
-      request.requestedResource = requestedResourceParsed;
-      requests[requestId] = request;
-      logger.info(requests);
+      Requests.addRequest(requestId, clientId, requestedResourceParsed);
+      console.log('Should now post request to news-service');
       rq.post({
-        url: `http://${NEWS_SERVICE_HOST}:${NEWS_SERVICE_PORT}/api/request/timespan`,
-        body: request,
+        url: `http://${config.newsServiceInfo.baseURL}${config.newsServiceInfo.timespanRoute}`,
+        body: Requests.getRequest(requestId),
         json: true,
       }, (error, response) => {
         if (error) {
           console.log('Got an error when posting to news-service');
-          logger.error(`Received an error when trying to post request to news-service: ${error}`);
-          delete requests[requestId];
-          logger.error(`Removed request with id: ${requestId}`);
+          console.log(`Received an error when trying to post request to news-service: ${error}`);
+          Requests.removeRequest(requestId);
+          console.log(`Removed request with id: ${requestId}`);
         } else if (response.statusCode === 200) {
-          logger.info('Successfully posted request');
-          logger.info(`There are ${Object.keys(requests).length} unfullfilled requests`);
+          console.log('Successfully posted request');
+          console.log(`There are ${Requests.getRequestsCount()} unfullfilled requests`);
+        } else {
+          console.log(response.statusCode);
         }
       });
     });
@@ -100,6 +96,4 @@ function applyEventListeners(io) {
 
 module.exports = {
   applyEventListeners,
-  clients,
-  requests,
 };
