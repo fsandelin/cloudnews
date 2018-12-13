@@ -12,4 +12,8 @@ router.get('/available_services', cors(), (request, response) => {
   ClientHandler.availableServices(request, response);
 });
 
+router.get('/news', cors(), (request, response) => {
+  ClientHandler.getNews(request, response);
+});
+
 module.exports = router;

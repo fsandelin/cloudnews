@@ -3,7 +3,7 @@ const config = require('./config/config');
 const db = require('./database/DatabaseInterface');
 const { addRequest, checkRequestsCompletion } = require('./Requests');
 
-const AVAILABLE_SERVICES = ['svt', 'tt', 'polisen'];
+const AVAILABLE_SERVICES = ['svt', 'twitter', 'polisen'];
 
 // /api/fill_timespan
 function fillTimeSpan(request, response) {

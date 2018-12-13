@@ -7,7 +7,10 @@ import {
 } from '../webSocketConnection'
 import { socketServiceUrl } from '../constants'
 import { prettifyDateObject } from '../helpers'
-import { getAvailableServices } from '../httpRequests'
+import {
+  getAvailableServices,
+  requestData
+} from '../httpRequests'
 
 let socketConnections = []
 
@@ -78,6 +81,9 @@ const actions = {
       unsubscribeToHistoricalNews(sc.socket)
       subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, until)
     })
+  },
+  makeNewsRequest: ({ dispatch }, { service, from, until, pageNumber = 0 }) => {
+    requestData(dispatch, 'addNewsList', 'makeNewsRequest')({ service, from, until, pageNumber })
   }
 }
 
