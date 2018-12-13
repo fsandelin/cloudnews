@@ -14,6 +14,7 @@ const config = {
     baseURL: `${process.env.NEWS_SERVICE_HOST}:${process.env.NEWS_SERVICE_PORT}`,
     timespanRoute: '/api/request/timespan',
     availableServicesRoute: '/api/available_services',
+    getNewsRoute: '/api/news',
   },
 };
 
