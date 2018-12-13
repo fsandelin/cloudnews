@@ -161,11 +161,46 @@ function getArticles(service, from_, until_, callback) {
     from_ = from.toISOString();
     until_ = until.toISOString();
 
-    const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
+    const collectionName = `${config.articles_collection_prefix}${service}`;
     const db = client.db(config.databaseName);
     db.collection(collectionName).find({
       $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
     }).toArray(callback);
+  });
+}
+
+function getEntriesPaged(service, from_, until_, pageNumber = 1, callback = () => {}) {
+  dbConnection.connect((error, client) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    const until = new Date(until_);
+    until_ = until.toISOString();
+
+    const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
+    const db = client.db(config.databaseName);
+
+    const query = {
+      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
+    };
+    const sorter = {
+      datetime: 1,
+    };
+    console.log(from_);
+    console.log(until_);
+
+    db.collection(collectionName).find(query).sort(sorter).skip(config.pageSize * pageNumber)
+      .limit(config.pageSize)
+      .toArray()
+      .then((page) => {
+        callback(page);
+      })
+      .catch((exception) => {
+        console.log(exception);
+        callback();
+      });
   });
 }
 
@@ -232,4 +267,5 @@ module.exports = {
   getArticles,
   getMissingTimespans,
   fillTimeSpan,
+  getEntriesPaged,
 };

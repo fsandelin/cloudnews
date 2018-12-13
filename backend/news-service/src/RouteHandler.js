@@ -61,9 +61,25 @@ function liveNews(request, response) {
   });
 }
 
+function getNews(req, res) {
+  const {
+    service, from, until, pageNumber,
+  } = req.query;
+  db.getEntriesPaged(service, from, until, pageNumber, (entries) => {
+    if (entries) {
+      if (entries.length === 0) {
+        res.sendStatus(204);
+      } else {
+        res.json(entries);
+      }
+    } else res.sendStatus(500);
+  });
+}
+
 module.exports = {
   fillTimeSpan,
   requestTimespan,
   availableServices,
   liveNews,
+  getNews,
 };
