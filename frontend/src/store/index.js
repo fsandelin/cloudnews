@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import locations from './modules/locations'
 import news from './modules/news'
 import gui from './modules/gui'
-import sockets from './modules/sockets'
+import connections from './modules/connections'
 import time from './modules/time'
 
 Vue.use(Vuex)
@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     locations,
     news,
     gui,
-    sockets,
+    connections,
     time
   },
   strict: process.env.NODE_ENV !== 'production'
