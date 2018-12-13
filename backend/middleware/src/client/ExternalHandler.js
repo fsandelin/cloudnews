@@ -27,7 +27,34 @@ function availableServices(req, res) {
   });
 }
 
+function getNews(req, res) {
+  const {
+    service, from, until, pageNumber,
+  } = req.query;
+  const options = {
+    qs: {
+      service,
+      from,
+      until,
+      pageNumber,
+    },
+    json: true,
+    url: `http://${config.newsServiceInfo.baseURL}${config.newsServiceInfo.getNewsRoute}`,
+  };
+  rq.get(options, (error, response) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+    if (response.statusCode === 204) {
+      res.sendStatus(204);
+    }
+    res.json(response.body);
+  });
+}
+
 module.exports = {
   timespan,
   availableServices,
+  getNews,
 };

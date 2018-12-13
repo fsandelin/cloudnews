@@ -11,4 +11,8 @@ router.get('/available_services', (request, response) => {
   ClientHandler.availableServices(request, response);
 });
 
+router.get('/news', (request, response) => {
+  ClientHandler.getNews(request, response);
+});
+
 module.exports = router;
