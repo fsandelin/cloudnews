@@ -37,6 +37,7 @@ const getters = {
     return getters.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
   },
   newsByCounty: (state, getters, rootState) => {
+    console.log('newsByCounty')
     return rootState.locations.counties.map(county => {
       return {
         ...county,
@@ -47,6 +48,7 @@ const getters = {
     }).filter(({ news }) => news.length > 0)
   },
   newsByMunicipality: (state, getters, rootState) => {
+    console.log('newsByMunicipality')
     return rootState.locations.municipalities.map(municipality => {
       return {
         ...municipality,
@@ -63,20 +65,29 @@ const getters = {
       })
   },
   newsByCity: (state, getters, rootState) => {
-    return rootState.locations.cities.map(city => {
+    console.log('newsByCity')
+    const citiesWithNews = getters.newsList.reduce((newsById, news) => {
+      const id = news.locationIds.cityId
+      if (id === '' || id === undefined) return { ...newsById }
+      const newsObject = newsById[id]
+
+      return {
+        ...newsById,
+        [id]: newsObject === undefined ? [news] : [ ...newsObject, news ]
+      }
+    }, {})
+    console.log(citiesWithNews)
+    return Object.keys(citiesWithNews).map(id => {
+      const city = getters.cityById(id)
+      const municipality = getters.municipalityByName(city.municipality)
+
       return {
         ...city,
-        news: getters.newsList.filter(({ location }) => location.city === city.name)
+        municipalityX: municipality.x,
+        municipalityY: municipality.y,
+        news: citiesWithNews[id]
       }
-    }).filter(({ news }) => news.length > 0)
-      .map(city => {
-        const municipality = getters.municipalityByName(city.municipality)
-        return {
-          ...city,
-          municipalityX: municipality.x,
-          municipalityY: municipality.y
-        }
-      })
+    })
   },
   activeNewsItemId: state => {
     return state.activeNewsItemId
@@ -96,6 +107,7 @@ const actions = {
       datetime: convertDateStringToDateObj(news.datetime)
     }
 
+    let locationIds = {}
     let location = { ...news.location }
     for (const key of Object.keys(location)) {
       location[key] = cleanString(location[key])
@@ -110,6 +122,10 @@ const actions = {
         county: city.county,
         country: 'sweden'
       }
+      locationIds = {
+        ...locationIds,
+        cityId: city.id
+      }
     }
 
     const municipality = rootGetters.municipalityByName(location.municipality)
@@ -120,6 +136,10 @@ const actions = {
         county: municipality.county,
         country: 'sweden'
       }
+      locationIds = {
+        ...locationIds,
+        municipalityId: municipality.id
+      }
     }
 
     const county = rootGetters.countyByName(location.county)
@@ -129,9 +149,13 @@ const actions = {
         county: county.name,
         country: 'sweden'
       }
+      locationIds = {
+        ...locationIds,
+        countyId: county.id
+      }
     }
 
-    commit('addNews', { ...news, location })
+    commit('addNews', { ...news, location, locationIds })
   },
   addNewsList: ({ dispatch }, newsList) => {
     newsList.articles.map(news => dispatch('addNews', news))

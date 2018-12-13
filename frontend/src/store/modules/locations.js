@@ -46,11 +46,20 @@ const getters = {
   countyByName: state => (name = '') => {
     return state.counties.find(county => cleanString(county.name) === cleanString(name))
   },
+  countyByid: state => (id) => {
+    return state.counties[id]
+  },
   municipalityByName: (state) => (name = '') => {
     return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name))
   },
+  municipalityById: (state) => (id) => {
+    return state.municipalities[id]
+  },
   cityByName: (state) => (name = '') => {
     return state.cities.find(city => cleanString(city.name) === cleanString(name))
+  },
+  cityById: (state) => (id) => {
+    return state.cities[id]
   }
 }
 
