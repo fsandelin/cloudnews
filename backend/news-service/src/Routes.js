@@ -19,7 +19,7 @@ router.post('/live_news', (req, res) => {
   RouteHandler.liveNews(req, res);
 });
 
-router.get('/get_news', (req, res) => {
+router.get('/news', (req, res) => {
   RouteHandler.getNews(req, res);
 });
 
