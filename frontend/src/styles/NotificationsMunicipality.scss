@@ -1,23 +1,24 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-svg.mapContainer g.map .municipalityNoticication{
-  circle {
-    &.municipality-circle {
-      fill: $white;
-    }
-  }
 
-  text {
-    &.municipality-number {
-      fill: $black;
-      font-weight: bolder;
-      pointer-events: none;
-      border-radius: 12px;
-    }
+circle {
+  &.municipality-circle {
+    fill: $white;
   }
+}
 
-  line {
+text {
+  &.municipality-number {
+    fill: $black;
+    font-weight: bolder;
+    pointer-events: none;
+    border-radius: 12px;
+  }
+}
+
+line {
+  &.municipality-line {
     stroke: $white;
     pointer-events: none;
   }

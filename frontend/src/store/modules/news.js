@@ -37,7 +37,6 @@ const getters = {
     return getters.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
   },
   newsByCounty: (state, getters, rootState) => {
-    console.log('newsByCounty')
     return rootState.locations.counties.map(county => {
       return {
         ...county,
@@ -48,7 +47,6 @@ const getters = {
     }).filter(({ news }) => news.length > 0)
   },
   newsByMunicipality: (state, getters, rootState) => {
-    console.log('newsByMunicipality')
     return rootState.locations.municipalities.map(municipality => {
       return {
         ...municipality,
@@ -65,7 +63,6 @@ const getters = {
       })
   },
   newsByCity: (state, getters, rootState) => {
-    console.log('newsByCity')
     const citiesWithNews = getters.newsList.reduce((newsById, news) => {
       const id = news.locationIds.cityId
       if (id === '' || id === undefined) return { ...newsById }
@@ -76,7 +73,6 @@ const getters = {
         [id]: newsObject === undefined ? [news] : [ ...newsObject, news ]
       }
     }, {})
-    console.log(citiesWithNews)
     return Object.keys(citiesWithNews).map(id => {
       const city = getters.cityById(id)
       const municipality = getters.municipalityByName(city.municipality)

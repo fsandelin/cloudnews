@@ -1,27 +1,29 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
-svg.mapContainer g.map .cityNotification{
-  circle {
-    &.city-circle {
-      fill: $black;
-    }
-  }
 
-  text {
-    &.city-number {
-      fill: $white;
-      font-weight: bolder;
-      pointer-events: none;
-    }
+circle {
+  &.city-circle {
+    fill: $black;
   }
+}
 
-  line {
+text {
+  &.city-number {
+    fill: $white;
+    font-weight: bolder;
+    pointer-events: none;
+  }
+}
+
+line {
+  &.city-line {
     stroke: $black;
     pointer-events: none;
   }
-  
 }
+  
+
 
 svg.mapContainer g.map .cityNotification:hover{
   circle {

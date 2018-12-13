@@ -1,19 +1,25 @@
 <template>
   <g id="notifications">
     <NotificationsCity
+      v-for="city in activeCities"
+      :key="'cityNotification'+city.name"
+      :city="city"
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
       :lineWidth="lineWidth"
-      :strokeWidth="strokeWidth" />
+      :strokeWidth="strokeWidth"
+      @onClick="cityClick(city)" />
 
     <NotificationsMunicipality
-      :calculateNewsLengthForObjects="calculateNewsLengthForObjects"
-      :updateNewsLengthForObjects="updateNewsLengthForObjects"
+      v-for="municipality in activeMunicipalities"
+      :key="'municipalityNoticication-'+municipality.name"
+      :municipality="municipality"
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
-      :lineWidth="lineWidth" />
+      :lineWidth="lineWidth"
+      @click="municipalityClick(municipality)" />
 
     <NotificationsCounty
       :calculateNewsLengthForObjects="calculateNewsLengthForObjects"
@@ -35,7 +41,7 @@ import NotificationsCity from './NotificationsCity'
 import NotificationsMunicipality from './NotificationsMunicipality'
 import NotificationsCounty from './NotificationsCounty'
 import Velocity from 'velocity-animate'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Notifications',
@@ -46,8 +52,16 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'zoomValue'
+      'zoomValue',
+      'newsByCity',
+      'newsByMunicipality'
     ]),
+    activeCities: function () {
+      return this.newsByCity.filter(city => city.active)
+    },
+    activeMunicipalities: function () {
+      return this.newsByMunicipality.filter(city => city.active)
+    },
     lineWidth: function () {
       return 1.0 * (1 / Math.max(this.zoomValue / 2.5, 1.0))
     },
@@ -56,6 +70,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'cityClick',
+      'municipalityClick'
+    ]),
     updateNewsLengthForObjects: function (list, lenList, refs, refPrefix) {
       list.map(obj => {
         if (!(lenList.map(m => m.name).includes(obj.name))) {
