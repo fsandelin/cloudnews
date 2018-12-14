@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import d3 from '../helpers/d3Importer.js'
-import { mapZoom, transitionToCounty, initialZoom } from '../helpers/d3Zoom'
-import Notifications from './Notifications/Notifications'
+import d3 from '../../helpers/d3Importer.js'
+import { mapZoom, transitionToCounty, initialZoom } from '../../helpers/d3Zoom'
+import Notifications from '../Notifications/Notifications'
 import MapCities from './MapCities'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -75,4 +75,4 @@ export default {
 }
 </script>
 
-<style src="../styles/MapSVG.scss" lang="scss" scoped></style>
+<style src="./MapSVG.scss" lang="scss" scoped></style>

@@ -30,7 +30,7 @@
 
 <script>
 import AboutPage from './AboutPage'
-import MapSVG from './MapSVG'
+import MapSVG from './Map/MapSVG'
 import PopUpContainer from './PopUpContainer'
 import DatePicker from './DatePicker/DatePicker'
 import DatePickerToggler from './DatePicker/DatePickerToggler'

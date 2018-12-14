@@ -82,4 +82,4 @@ export default {
 }
 </script>
 
-<style src="../styles/MapCities.scss" lang="scss" scoped></style>
+<style src="./MapCities.scss" lang="scss" scoped></style>
