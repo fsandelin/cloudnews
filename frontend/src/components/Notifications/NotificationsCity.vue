@@ -41,7 +41,12 @@ export default {
     const circle = this.$refs['cityCircle-' + this.city.name]
     const text = this.$refs['cityText-' + this.city.name]
 
-    animations.lineBeforeEnter(line, this.city.municipalityX, this.city.municipalityY, this.city.municipalityX, this.city.municipalityY)
+    animations.lineBeforeEnter(
+      line,
+      this.city.municipalityX,
+      this.city.municipalityY,
+      this.city.municipalityX,
+      this.city.municipalityY)
     animations.lineEnter(line, this.city.x, this.city.y)
     animations.circleBeforeEnter(circle, this.city.municipalityX, this.city.municipalityY)
     animations.circleEnter(circle, this.city.x, this.city.y)
@@ -53,7 +58,12 @@ export default {
     const circle = this.$refs['cityCircle-' + this.city.name]
     const text = this.$refs['cityText-' + this.city.name]
 
-    animations.lineLeave(line, this.city.municipalityX, this.city.municipalityY, this.city.municipalityX, this.city.municipalityY)
+    animations.lineLeave(
+      line,
+      this.city.municipalityX,
+      this.city.municipalityY,
+      this.city.municipalityX,
+      this.city.municipalityY)
     animations.circleLeave(circle, this.city.municipalityX, this.city.municipalityY)
     animations.textLeave(text, this.city.municipalityX, this.city.municipalityY)
   }
