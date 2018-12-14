@@ -33,5 +33,5 @@ export default {
 }
 </script>
 
-<style src="../styles/AboutPage.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./AboutPage.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

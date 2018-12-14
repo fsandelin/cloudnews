@@ -15,5 +15,5 @@ export default {
 }
 </script>
 
-<style src="../styles/PopUpContainer.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./PopUpContainer.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>
