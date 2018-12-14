@@ -1,8 +1,8 @@
 require('dotenv').config();
 const app = require('express')();
 const bodyParser = require('body-parser');
-const { dateIsGiven, getDateRange } = './misc';
-const { createNewsRequestsFromDates, sendNewsRequests } = './news';
+const { dateIsGiven, getDateRange } = './helpers/misc';
+const { createNewsRequestsFromDates, sendNewsRequests } = './helpers/news';
 
 const { APP_PORT } = process.env;
 app.use(bodyParser.json({ extended: true }));
