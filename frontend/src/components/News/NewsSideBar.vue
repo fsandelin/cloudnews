@@ -16,7 +16,7 @@
 
 <script>
 import NewsList from './NewsList'
-import LogoWithText from '../assets/LogoWithText.png'
+import LogoWithText from '../../assets/LogoWithText.png'
 import { mapActions } from 'vuex'
 
 export default {
@@ -44,5 +44,5 @@ export default {
 }
 </script>
 
-<style src="../styles/NewsSideBar.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./NewsSideBar.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

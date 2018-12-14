@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import NewsList from '../NewsList'
+import NewsList from '../News/NewsList'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
