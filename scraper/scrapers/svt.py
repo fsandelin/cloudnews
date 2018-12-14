@@ -298,10 +298,8 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
     return response_list
 
 def check_in_page(time_to_check, news_list):
-    if check_time(news_list[FIRST], AFTER, time_to_check) and check_time(news_list[LAST], BEFORE, time_to_check):
-        return True
-    else:
-        return False
+    return check_time(news_list[FIRST], AFTER, time_to_check) and check_time(news_list[LAST], BEFORE, time_to_check):
+    
 
 def check_if_pages(from_, until_, region):
     # Find if the from and until is in the first 3 pages
@@ -356,7 +354,7 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     else:
         end_page_found = True
 
-    print("Start and end page", start_page, end_page)
+    
     start_pages = range(start_page, start_page + workers)
     end_pages = range(end_page, end_page + workers)
     i = 0
