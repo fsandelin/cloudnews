@@ -42,4 +42,3 @@ export default {
 </script>
 
 <style src="./DrawerHandle.scss" lang="scss" scoped></style>
-<style src="../../styles/Commons.scss" lang="scss" scoped></style>

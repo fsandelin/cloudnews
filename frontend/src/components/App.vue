@@ -95,5 +95,4 @@ export default {
 }
 </script>
 
-<style src="../styles/App.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./App.scss" lang="scss" scoped></style>

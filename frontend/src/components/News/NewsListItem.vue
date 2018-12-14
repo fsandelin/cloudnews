@@ -79,4 +79,3 @@ export default {
 </script>
 
 <style src="./NewsListItem.scss" lang="scss" scoped></style>
-<style src="../../styles/Commons.scss" lang="scss" scoped></style>
