@@ -1,7 +1,7 @@
 const flatten = (arr) => [].concat.apply([], arr);
 
 const findStringInText = (str, strList) => {
-  return strList.find(s => str.toLowerCase().includes(s.toLowerCase())) || '';
+  return strList.find(s => str.toLowerCase().includes(s.toLowerCase()));
 };
 
 const dateIsGiven = (body) => {
