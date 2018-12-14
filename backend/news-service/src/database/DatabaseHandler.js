@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const logger = require('../logger');
 require('dotenv').config();
 
 const uri = `${process.env.DB_HOST}:${process.env.DB_PORT}/cloudnews?replicaSet=rs`;
@@ -12,8 +13,9 @@ function connect(callback) {
   if (state.db) {
     return callback(null, state.db);
   }
-
+  logger.debug('Establishing connection with MongoDB');
   MongoClient.connect(uri, (err, db) => {
+    if (err) logger.error(err);
     state.db = db;
     return callback(err, db);
   });
@@ -35,9 +37,13 @@ function closeSession() {
 
 function close(callback) {
   if (state.db) {
+    logger.debug('Closing connection to MongoDB');
     state.db.close((error, result) => {
-      state.db = null;
-      return callback(error);
+      if (error) {
+        logger.error(error);
+        state.db = null;
+        return callback();
+      }
     });
   }
 }
