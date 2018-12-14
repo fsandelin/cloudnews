@@ -38,7 +38,7 @@ import DrawerContainer from './Drawer/DrawerContainer'
 import DrawerNewsItem from './Drawer/DrawerNewsItem'
 import DrawerNewsList from './Drawer/DrawerNewsList'
 import NewsSideBar from './News/NewsSideBar'
-import ToggleButtons from './ToggleButtons'
+import ToggleButtons from './ToggleButtons/ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
 import { fakeNewsList } from '../assets/FakeData'
 
