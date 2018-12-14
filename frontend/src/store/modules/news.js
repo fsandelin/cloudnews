@@ -102,9 +102,9 @@ const actions = {
     newsList = newsList.map(news => {
       let locationIds = {}
       let location = { ...news.location }
-      for (const key of Object.keys(location)) {
+      Object.keys(location).forEach(function (key) {
         location[key] = cleanString(location[key])
-      }
+      })
 
       const city = rootGetters.cityByName(location.city)
       if (city) {
