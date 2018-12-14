@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import NewsList from './NewsList'
+import NewsList from '../NewsList'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -55,5 +55,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DrawerNewsList.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DrawerNewsList.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

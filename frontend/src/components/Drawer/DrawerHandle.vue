@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import DrawerArrows from '../assets/DrawerArrows.png'
+import DrawerArrows from '../../assets/DrawerArrows.png'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -41,5 +41,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DrawerHandle.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DrawerHandle.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

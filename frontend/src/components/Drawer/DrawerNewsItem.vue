@@ -50,5 +50,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DrawerNewsItem.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DrawerNewsItem.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>
