@@ -60,4 +60,4 @@ export default {
 }
 </script>
 
-<style src="../styles/NotificationsCounty.scss" lang="scss" scoped></style>
+<style src="./NotificationsCounty.scss" lang="scss" scoped></style>

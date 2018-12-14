@@ -34,7 +34,7 @@
 <script>
 import d3 from '../helpers/d3Importer.js'
 import { mapZoom, transitionToCounty, initialZoom } from '../helpers/d3Zoom'
-import Notifications from './Notifications'
+import Notifications from './Notifications/Notifications'
 import MapCities from './MapCities'
 import { mapGetters, mapActions } from 'vuex'
 

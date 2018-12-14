@@ -112,4 +112,4 @@ export default {
 }
 </script>
 
-<style src="../styles/Notifications.scss" lang="scss" scoped></style>
+<style src="./Notifications.scss" lang="scss" scoped></style>

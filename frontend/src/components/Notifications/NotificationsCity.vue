@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import * as animations from '../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/veloCityAnimate.js'
 
 export default {
   name: 'NotificationsCity',
@@ -60,4 +60,4 @@ export default {
 }
 </script>
 
-<style src="../styles/NotificationsCity.scss" lang="scss" scoped></style>
+<style src="./NotificationsCity.scss" lang="scss" scoped></style>
