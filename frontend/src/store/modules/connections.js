@@ -4,13 +4,13 @@ import {
   subscribeToHistoricalNews,
   unsubscribeToLiveNews,
   unsubscribeToHistoricalNews
-} from '../webSocketConnection'
-import { socketServiceUrl } from '../constants'
-import { prettifyDateObject } from '../helpers'
+} from '../../helpers/webSocketConnection'
+import { socketServiceUrl } from '../../helpers/constants'
+import { prettifyDateObject } from '../../helpers/misc'
 import {
   getAvailableServices,
   requestData
-} from '../httpRequests'
+} from '../../helpers/httpRequests'
 
 let socketConnections = []
 

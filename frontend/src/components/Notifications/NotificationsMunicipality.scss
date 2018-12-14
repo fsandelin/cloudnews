@@ -1,0 +1,33 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+circle {
+  &.municipality-circle {
+    fill: $white;
+  }
+}
+
+text {
+  &.municipality-number {
+    fill: $black;
+    font-weight: bolder;
+    pointer-events: none;
+    border-radius: 12px;
+  }
+}
+
+line {
+  &.municipality-line {
+    stroke: $white;
+    pointer-events: none;
+  }
+}
+
+svg.mapContainer g.map .municipalityNoticication:hover{
+  circle {
+    &.municipality-circle {
+      fill: $grey;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+.footer {
+  height: 50px;
+  color: $lightgrey;
+
+  .today {
+    p {
+      color: $darkblue;
+      cursor: pointer;
+      font-size: 12px;
+
+      &:hover {
+        color: $darkgreen;
+      }
+    }
+  }
+
+  div {
+    margin: 0 5px;
+  }
+
+  .start-date, .end-date {
+
+    &.active {
+      cursor: pointer;
+
+      >:not(:hover) {
+        color: $darkblue;
+      }
+
+      >:hover {
+        color: $darkgreen;
+      }
+    }
+
+    &:not(.active) {
+      cursor: not-allowed;
+    }
+
+    p {
+      min-width: 62px;
+
+      span {
+        font-size: 10px;
+
+        &.date {
+          font-size: 12px;
+        }
+      }
+    }
+
+    i {
+      margin: auto 5px;
+      color: $lightgrey;
+    }
+
+    &.end-date {
+      i {
+        transform: scale(-1, 1);
+      }
+    }
+  }
+}

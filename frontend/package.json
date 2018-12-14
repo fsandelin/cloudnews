@@ -27,6 +27,7 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/components/*.{js,vue}",
+      "src/helpers/*.{js,vue}",
       "src/store/**/*.{js,vue}",
       "!**/node_modules/**"
     ]
