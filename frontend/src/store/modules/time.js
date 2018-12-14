@@ -45,7 +45,7 @@ const getters = {
     const currentDaysToFill = getNumArrayBetweenNums(1, daysForCurrentMonth + 1)
       .map(i => ({ year: state.currentYear, month: state.currentMonth, day: i }))
 
-    const weekDay = new Date(state.currentYear, state.currentMonth, 1).getDay()
+    const weekDay = new Date(state.currentYear, state.currentMonth - 1, 1).getDay()
     const numPreviousDaysToFill = weekDay === 0 ? 7 : weekDay
 
     const daysForPreviousMonth = state.currentMonth === 0
