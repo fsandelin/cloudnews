@@ -16,7 +16,7 @@ const formatNews = (news) => {
   };
 };
 
-const getNewsFromNewsList = (newsList) => {
+const formatNewsList = (newsList) => {
   return newsList.reduce((newsListFormated, news) => {
     if (isNotSummary(news)) {
       newsListFormated.push(formatNews(news));
@@ -43,10 +43,10 @@ const sendNewsRequests = (newsRequests, from, until) => {
   axios.all(newsRequests)
     .then(results => {
       const newsList = flatten(results.map(r => r.data));
-      const news = getNewsFromNewsList(newsList);
-      console.log('Number of news:', news.length);
+      const newsListFormated = formatNewsList(newsList);
+      console.log('Number of news:', newsListFormated.length);
       const timespan = { from: stripTimeOfDate(from), until: stripTimeOfDate(until) };
-      sendNewsToNewsService(news, timespan);
+      sendNewsToNewsService(newsListFormated, timespan);
     })
     .catch(error => {
       console.log(error);
