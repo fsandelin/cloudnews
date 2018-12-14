@@ -4,9 +4,11 @@ describe('gui getters', () => {
   describe('getters.zoomValue', () => {
     // TODO: add tests
   })
+
   describe('getters.showDatePicker', () => {
     // TODO: add tests
   })
+
   describe('getters.showAboutPage', () => {
     // TODO: add tests
   })
