@@ -2,9 +2,9 @@ const counties = require('./assets/counties.json');
 const municipalities = require('./assets/municipalities.json');
 const { findStringInText } = require('./misc');
 
-const municipalityWithSuffixOrEmptyString = (municipality) => {
-  if (municipality === undefined || municipality === '') {
-    return '';
+const municipalityWithSuffix = (municipality) => {
+  if (municipality === undefined) {
+    return null;
   }
   if (municipalities[municipality + ' kommun'] !== undefined) {
     return municipality + ' kommun';
@@ -15,35 +15,38 @@ const municipalityWithSuffixOrEmptyString = (municipality) => {
   if (municipality === 'Falun') {
     return 'Falu kommun';
   }
+  return null;
+};
+
+const createLocationObject = (county, municipality, city) => {
+  return {
+    country: 'Sweden',
+    county: county || '',
+    municipality: municipality || '',
+    city: city || ''
+  };
 };
 
 const findLocationForMunicipalityNews = (news) => {
-  const municipality = municipalityWithSuffixOrEmptyString(news.location.name);
-  if (municipality === '') return {};
+  const municipality = municipalityWithSuffix(news.location.name);
+  if (municipality === undefined) return createLocationObject();
 
   const { county, cities } = municipalities[municipality];
   const city = findStringInText(news.summary, cities);
 
-  return {
-    country: 'Sweden',
-    county: county,
-    municipality: municipality,
-    city: city
-  };
+  return createLocationObject(county, municipality, city)
 };
 
-const formatMunicipalityStrings = (municipalities) => Object.keys(municipalities).map((c) => c.substr(0, c.length - 7)); // Remove ' kommun'
+const formatMunicipalityStrings = (municipalities) => {
+  return Object.keys(municipalities).map((c) => c.substr(0, c.length - 7)); // Remove ' kommun'
+};
 
 const findLocationForCountyNews = (news) => {
   const municipalityList = formatMunicipalityStrings(counties[county_temp]);
-  const municipality = municipalityWithSuffixOrEmptyString(findStringInText(news.summary, municipalityList));
+  const municipalityWithoutSuffix = findStringInText(news.summary, municipalityList);
+  const municipality = municipalityWithSuffix(municipalityWithoutSuffix);
 
-  return {
-    country: 'Sweden',
-    county: news.location.name,
-    municipality: municipality,
-    city: ''
-  };
+  return createLocationObject(news.location.name, municipality);
 };
 
 const findLocation = (news) => {
@@ -53,12 +56,7 @@ const findLocation = (news) => {
   if (news.location.name.substr(-6) === 'kommun') {
     return findLocationForMunicipalityNews(news);
   }
-  return {
-    country: 'Sweden',
-    county: '',
-    municipality: '',
-    city: ''
-  };
+  return createLocationObject();
 };
 
 module.exports = {
