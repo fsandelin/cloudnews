@@ -44,7 +44,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { prettifyDateObject } from '../helpers/misc'
+import { prettifyDateObject } from '../../helpers/misc'
 
 export default {
   name: 'DatePickerFooter',
@@ -69,5 +69,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DatePickerFooter.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DatePickerFooter.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

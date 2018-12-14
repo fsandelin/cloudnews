@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { prettifyDateObject } from '../helpers/misc'
+import { prettifyDateObject } from '../../helpers/misc'
 
 export default {
   name: 'Datepickertoggler',
@@ -38,5 +38,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DatePickerToggler.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DatePickerToggler.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

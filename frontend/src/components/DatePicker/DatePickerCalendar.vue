@@ -33,7 +33,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { sameDates } from '../helpers/misc'
+import { sameDates } from '../../helpers/misc'
 
 export default {
   name: 'DatePickerCalendar',
@@ -60,5 +60,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DatePickerCalendar.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DatePickerCalendar.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>

@@ -23,5 +23,5 @@ export default {
 }
 </script>
 
-<style src="../styles/DatePicker.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./DatePicker.scss" lang="scss" scoped></style>
+<style src="../../styles/Commons.scss" lang="scss" scoped></style>
