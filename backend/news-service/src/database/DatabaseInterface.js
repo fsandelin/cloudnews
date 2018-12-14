@@ -1,82 +1,6 @@
 const dbConnection = require('./DatabaseHandler');
-require('dotenv').config();
-
-const dbName = process.env.DATABASE_NAME;
-
-const scraperMetaCollection = 'prefetched';
-
-function compareDates(a, b) {
-  const dA = new Date(a.from);
-  const dB = new Date(b.from);
-  if (dA < dB) {
-    return -1;
-  }
-  if (dA > dB) {
-    return 1;
-  }
-  return 0;
-}
-
-function getNextDay(date) {
-  const nextDay = new Date(date);
-  nextDay.setDate(nextDay.getDate() + 1);
-  return nextDay;
-}
-
-function getPreviousDay(date) {
-  const nextDay = new Date(date);
-  nextDay.setDate(nextDay.getDate() - 1);
-  return nextDay;
-}
-
-function getIncludedTimespans(newFrom, newUntil, timespans) {
-  let tentFrom = null;
-  let tentUntil = null;
-  let placedFrom = false;
-  const includedTimespans = [];
-  for (let i = 0; i < timespans.length; i += 1) {
-    tentFrom = new Date(timespans[i].from);
-    tentUntil = new Date(timespans[i].until);
-    if (!placedFrom) {
-      if (newFrom > getNextDay(tentUntil)) {
-        continue;
-      } else {
-        placedFrom = true;
-      }
-    }
-    if (placedFrom) {
-      if (newUntil < getPreviousDay(tentFrom)) {
-        break;
-      }
-      includedTimespans.push(timespans[i]);
-    }
-  }
-  return includedTimespans;
-}
-
-function getNewTimespan(inputFrom, inputUntil, timespans) {
-  if (timespans.length === 0) return { from: inputFrom, until: inputUntil };
-  const includedTimespans = getIncludedTimespans(inputFrom, inputUntil, timespans);
-  const firstFrom = new Date(timespans[0].from);
-  const lastUntil = new Date(timespans[timespans.length - 1].until);
-
-  let newFrom = null;
-  let newUntil = null;
-
-  if (firstFrom < inputFrom) {
-    newFrom = firstFrom;
-  } else {
-    newFrom = inputFrom;
-  }
-
-  if (lastUntil > inputUntil) {
-    newUntil = lastUntil;
-  } else {
-    newUntil = inputUntil;
-  }
-
-  return { from: newFrom, until: newUntil };
-}
+const { getIncludedTimespans, getNewTimespan, compareDates } = require('../utils');
+const config = require('../config/config');
 
 function fillTimeSpan(service, news, timespan, callback, retries = 5) {
   // Todo
@@ -89,7 +13,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
       console.log(error);
     }
     const session = dbConnection.getSession();
-    const db = client.db(dbName);
+    const db = client.db(config.databaseName);
     try {
       session.startTransaction();
     } catch (mongoError) {
@@ -186,7 +110,7 @@ function pushArticles(service, articles, callback) {
       callback(error);
       return;
     }
-    const db = client.db(dbName);
+    const db = client.db(config.databaseName);
     const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     db.listCollections({}, { nameOnly: true }).toArray((error, docs) => {
       if (docs.indexOf(collectionName) > -1) {
@@ -237,11 +161,46 @@ function getArticles(service, from_, until_, callback) {
     from_ = from.toISOString();
     until_ = until.toISOString();
 
-    const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
-    const db = client.db(dbName);
+    const collectionName = `${config.articles_collection_prefix}${service}`;
+    const db = client.db(config.databaseName);
     db.collection(collectionName).find({
       $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
     }).toArray(callback);
+  });
+}
+
+function getEntriesPaged(service, from_, until_, pageNumber = 1, callback = () => {}) {
+  dbConnection.connect((error, client) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    const until = new Date(until_);
+    until_ = until.toISOString();
+
+    const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
+    const db = client.db(config.databaseName);
+
+    const query = {
+      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
+    };
+    const sorter = {
+      datetime: 1,
+    };
+    console.log(from_);
+    console.log(until_);
+
+    db.collection(collectionName).find(query).sort(sorter).skip(config.pageSize * pageNumber)
+      .limit(config.pageSize)
+      .toArray()
+      .then((page) => {
+        callback(page);
+      })
+      .catch((exception) => {
+        console.log(exception);
+        callback();
+      });
   });
 }
 
@@ -289,11 +248,11 @@ function computeMissingSpans(service, serviceTimespans, requestFrom, requestUnti
 function getMissingTimespans(requestedResource, callback) {
   const { service, from, until } = requestedResource;
   dbConnection.connect((error, client) => {
-    const db = client.db(dbName);
+    const db = client.db(config.databaseName);
     const query = {
       service,
     };
-    db.collection(scraperMetaCollection).findOne(query, (err, results) => {
+    db.collection(config.scraperMetaCollectionName).findOne(query, (err, results) => {
       if (results === undefined) {
         // should create an entry for service
       }
@@ -308,4 +267,5 @@ module.exports = {
   getArticles,
   getMissingTimespans,
   fillTimeSpan,
+  getEntriesPaged,
 };

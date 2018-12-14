@@ -2,7 +2,13 @@ import io from 'socket.io-client'
 import { socketEvents as se } from './constants'
 
 export const createWebSocket = url => {
-  return io(url)
+  const socket = io(url, {
+    'reconnection': true,
+    'reconnectionDelay': 1000,
+    'reconnectionDelayMax': 5000,
+    'reconnectionAttempts': 5
+  })
+  return socket
 }
 
 export const subscribeToLiveNews = dispatch => socket => {
@@ -24,8 +30,8 @@ export const subscribeToHistoricalNews = dispatch => (socket, service, from, unt
     'until': until
   }))
 
-  socket.on(se.COMPLETE_REQUEST, (data) => {
-    dispatch('addNewsList', data)
+  socket.on(se.COMPLETE_REQUEST, _ => {
+    dispatch('makeNewsRequest', { service, from, until })
   })
 }
 

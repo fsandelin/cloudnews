@@ -4,6 +4,7 @@
 #active-news-item {
   color: $darkgrey;
   padding: 0 30px;
+  word-break: break-all;
 
   p {
     margin: 1em;
