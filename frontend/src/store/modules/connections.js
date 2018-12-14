@@ -4,13 +4,13 @@ import {
   subscribeToHistoricalNews,
   unsubscribeToLiveNews,
   unsubscribeToHistoricalNews
-} from '../webSocketConnection'
-import { socketServiceUrl } from '../constants'
-import { prettifyDateObject } from '../helpers'
+} from '../../helpers/webSocketConnection'
+import { socketServiceUrl } from '../../helpers/constants'
+import { prettifyDateObject } from '../../helpers/misc'
 import {
   getAvailableServices,
   requestData
-} from '../httpRequests'
+} from '../../helpers/httpRequests'
 
 let socketConnections = []
 
@@ -73,13 +73,16 @@ const actions = {
 
     commit('deactivateNewsSource', source)
   },
-  makeSocketTimeSpanRequest: ({ dispatch }, { from, until }) => {
+  makeSocketTimeSpanRequest: ({ dispatch, rootState }, { from, until }) => {
     socketConnections.map(sc => {
+      unsubscribeToHistoricalNews(sc.socket)
       if (!until.includes('?')) {
         unsubscribeToLiveNews(sc.socket)
+        subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, until)
+      } else {
+        const today = rootState.time.today
+        subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, today)
       }
-      unsubscribeToHistoricalNews(sc.socket)
-      subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, until)
     })
   },
   makeNewsRequest: ({ dispatch }, { service, from, until, pageNumber = 0 }) => {

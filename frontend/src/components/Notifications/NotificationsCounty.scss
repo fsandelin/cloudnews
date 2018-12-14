@@ -1,0 +1,30 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+svg.mapContainer g.map .countyNotification {
+
+  circle {
+    &.county-circle {
+      stroke: $white;
+      fill: $darkblue;
+    }
+  }
+
+  text {
+    &.county-number {
+      fill: $white;
+      pointer-events: none;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+  }
+}
+
+svg.mapContainer g.map .countyNotification:hover {
+  circle {
+    &.county-circle {
+      fill: $lightblue;
+    }
+  }
+}

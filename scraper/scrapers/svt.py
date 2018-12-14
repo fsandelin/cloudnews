@@ -19,7 +19,7 @@ import pytz
 UTC=pytz.UTC
 
 import asyncio
-import concurrent.futures 
+import concurrent.futures
 
 from multiprocessing import Pool
 
@@ -41,13 +41,13 @@ else:
     from scrapers.util.location_search import search_cloud_news
     from scrapers.util.time_checks import *
 
-    
+
 
 BEFORE = True
 AFTER = False
 
 
-    
+
 
 
 def check_svt_name(name):
@@ -56,7 +56,7 @@ def check_svt_name(name):
 
     if name == 'Sörmland':
         return 'Södermanland'
-    
+
     if name == 'Öst':
         return 'Östergötland'
 
@@ -89,9 +89,9 @@ def get_news(url, region, response = None, print_thing = False):
     # Media of the news
     pict = main.find(attrs={"class" : "lp_track_artikelbild"})
 
-    # Time 
+    # Time
     time = main.find('time')
-    
+
     if time is not None:
         date = time['datetime']
     else:
@@ -116,7 +116,7 @@ def get_news(url, region, response = None, print_thing = False):
         news['body']  = body.text
     if dt is not None:
         news['datetime']  = dt
-    if img_url is not None:  
+    if img_url is not None:
         news['imgurl'] = img_url
 
     region = check_svt_name(region)
@@ -132,7 +132,7 @@ class News:
 
     def __init__(self, url, region_name):
         self.url = url
-        self.region_name = region_name   
+        self.region_name = region_name
         self.tries = 5
         self.retry = False
         self.news = None
@@ -185,7 +185,7 @@ def reform_api_news(svt_news_list):
         if 'image'              in svt_news:
             news['imgurl']      = svt_news['image']['url']
 
-        
+
         news['id'] = str(uuid.uuid4())
         news['source']  = 'svt'
         cloud_news.append(news)
@@ -205,14 +205,14 @@ def reform_api_news_scrape(svt_news_list):
 def get_request(url):
     return requests.get(url=url)
 
-def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50): 
+def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
     params_struct = params + param_limit + str(amount) + param_page + str(page)
     url = URL_API + region + params_struct
     response = get_request(url)
-    
+
 
     response = get_request(url, param_payload)
-    
+
     region_news = response.json(encoding='utf-16')
 
     region_news = reform_api_news(region_news['auto']['content'])
@@ -220,9 +220,9 @@ def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
 
 def get_api_object(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
     params_struct = params + param_limit + str(amount) + param_page + str(page)
-    url = URL_API + region + params_struct 
+    url = URL_API + region + params_struct
     response = get_request(url)
-    
+
     region_news = response.json(encoding='utf-16')
 
     return region_news
@@ -231,7 +231,7 @@ def check_start_page(until_, region, page):
     news_list = get_api_news_region(region=region, page=page)
     found = False
     value = -1
-    if len(news_list) == 0: 
+    if len(news_list) == 0:
         print("its empty")
         return(found, value, page, "start")
     if check_time(news_list[FIRST], BEFORE, until_):
@@ -252,7 +252,7 @@ def check_end_page(from_, region, page):
     news_list = get_api_news_region(region=region, page=page)
     found = False
     value = 1
-    if len(news_list) == 0: 
+    if len(news_list) == 0:
         print("its empty")
         return(found, value, page, "end")
     if check_time(news_list[LAST], AFTER, from_):
@@ -276,8 +276,8 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
         loop = asyncio.get_event_loop()
         futures = [
             loop.run_in_executor(
-                executor, 
-                check_start_page, 
+                executor,
+                check_start_page,
                 until_,
                 region,
                 i
@@ -285,7 +285,7 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
             for i in start_pages
         ] + [
             loop.run_in_executor(
-                executor, 
+                executor,
                 check_end_page,
                 from_,
                 region,
@@ -298,8 +298,8 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
     return response_list
 
 def check_in_page(time_to_check, news_list):
-    return check_time(news_list[FIRST], AFTER, time_to_check) and check_time(news_list[LAST], BEFORE, time_to_check):
-    
+    return check_time(news_list[FIRST], AFTER, time_to_check) and check_time(news_list[LAST], BEFORE, time_to_check)
+
 
 def check_if_pages(from_, until_, region):
     # Find if the from and until is in the first 3 pages
@@ -348,13 +348,13 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
         start_page = math.floor(time_diff_start/days_per_page)
     else:
         start_page_found = True
-    
+
     if end_page is None:
         end_page = math.floor(time_diff_end/days_per_page)
     else:
         end_page_found = True
 
-    
+
     start_pages = range(start_page, start_page + workers)
     end_pages = range(end_page, end_page + workers)
     i = 0
@@ -363,7 +363,7 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         responses = loop.run_until_complete(page_threads(from_, until_, region, start_pages, end_pages, workers))
-        
+
         start_movement = 0
         end_movement = 0
 
@@ -417,8 +417,8 @@ async def news_threads(from_, until_, region, page_range):
         loop = asyncio.get_event_loop()
         futures = [
             loop.run_in_executor(
-                executor, 
-                get_news_threads, 
+                executor,
+                get_news_threads,
                 from_,
                 until_,
                 region,
@@ -472,7 +472,7 @@ def get_news_region(from_, until_, region, use_web = False):
     time_diff = get_time_diff(obj_list[0], until_)
     start_page = math.floor(time_diff/days_per_page)
 
-    # page 1 is the starting page, anything lower also works but is redundant        
+    # page 1 is the starting page, anything lower also works but is redundant
     if start_page < 1:
         start_page = 1
 
@@ -509,7 +509,7 @@ def get_news_region(from_, until_, region, use_web = False):
         else:
             page_nmr += 1
             selected_news += filter(lambda x: check_time_range(x, from_, until_), news_list)
-    
+
 
 
     news_list = [ele for ele in selected_news if 'Nyheter från dagen' not in ele['title']]
@@ -539,7 +539,7 @@ def get_news_selected_regions(from_, until_, regions=used_regions):
 
 
 class Page:
-    
+
     def __init__(self, region, page_nmr):
         params_struct = params + param_limit + str(50) + param_page + str(page_nmr)
         self.url_call = URL_API + region + params_struct
@@ -551,12 +551,12 @@ class Page:
 
             self.tries -= 1
             r = requests.get(url = self.url_call)
-            
+
             if r.status_code == 200:
                 self.complete = True
                 region_news = r.json()
                 self.news = reform_api_news(region_news['auto']['content'])
-            
+
             elif r.status_code == 503:
                 self.complete = False
 
@@ -576,4 +576,3 @@ class Page:
 
 
 
-        

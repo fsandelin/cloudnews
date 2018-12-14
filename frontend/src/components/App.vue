@@ -11,8 +11,7 @@
 
     <MapSVG />
 
-    <DrawerContainer
-      :isOpen="drawerIsOpen">
+    <DrawerContainer :isOpen="drawerIsOpen">
       <Component
         :is="dynamicComponents.drawerNewsItemComponent"
         v-if="activeNewsItem !== null" />
@@ -29,16 +28,16 @@
 </template>
 
 <script>
-import AboutPage from './AboutPage'
-import MapSVG from './MapSVG'
-import PopUpContainer from './PopUpContainer'
-import DatePicker from './DatePicker'
-import DatePickerToggler from './DatePickerToggler'
-import DrawerNewsItem from './DrawerNewsItem'
-import NewsSideBar from './NewsSideBar'
-import DrawerContainer from './DrawerContainer'
-import DrawerNewsList from './DrawerNewsList'
-import ToggleButtons from './ToggleButtons'
+import AboutPage from './About/AboutPage'
+import DatePicker from './DatePicker/DatePicker'
+import DatePickerToggler from './DatePicker/DatePickerToggler'
+import DrawerContainer from './Drawer/DrawerContainer'
+import DrawerNewsItem from './Drawer/DrawerNewsItem'
+import DrawerNewsList from './Drawer/DrawerNewsList'
+import MapSVG from './Map/MapSVG'
+import NewsSideBar from './News/NewsSideBar'
+import PopUpContainer from './PopUp/PopUpContainer'
+import ToggleButtons from './ToggleButtons/ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
 import { fakeNewsList } from '../assets/FakeData'
 
@@ -96,5 +95,4 @@ export default {
 }
 </script>
 
-<style src="../styles/App.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./App.scss" lang="scss" scoped></style>

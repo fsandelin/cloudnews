@@ -27,6 +27,7 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/components/*.{js,vue}",
+      "src/helpers/*.{js,vue}",
       "src/store/**/*.{js,vue}",
       "!**/node_modules/**"
     ]
@@ -74,6 +75,6 @@
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-dev-server": "^3.0.0"
+    "webpack-dev-server": "^2.9.1"
   }
 }
