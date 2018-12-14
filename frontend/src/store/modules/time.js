@@ -1,7 +1,7 @@
 import {
   weekDays as wd,
   TOTAL_DAYS_TO_SHOW
-} from '../constants'
+} from '../../helpers/constants'
 import {
   numToMonth,
   getDaysForMonth,
@@ -9,7 +9,7 @@ import {
   dateIsBefore,
   sameDates,
   prettifyDateObject
-} from '../helpers'
+} from '../../helpers/misc'
 
 const today = new Date()
 

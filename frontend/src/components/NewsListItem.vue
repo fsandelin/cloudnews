@@ -21,8 +21,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { mapZoom, longTransitionToCounty } from '../store/d3Zoom'
-import { prettifyDateObject } from '../store/helpers'
+import { mapZoom, longTransitionToCounty } from '../helpers/d3Zoom'
+import { prettifyDateObject } from '../helpers/misc'
 
 export default {
   name: 'NewsListItem',

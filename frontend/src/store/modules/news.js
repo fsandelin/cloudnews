@@ -3,7 +3,7 @@ import {
   convertDateStringToDateObj,
   dateIsBeforeOrEqual,
   dateIsAfterOrEqual
-} from '../helpers'
+} from '../../helpers/misc'
 
 const state = {
   newsList: [],

@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import d3 from '../store/d3Importer.js'
+import d3 from '../helpers/d3Importer.js'
+import { mapZoom, transitionToCounty, initialZoom } from '../helpers/d3Zoom'
 import Notifications from './Notifications'
 import MapCities from './MapCities'
-import { mapZoom, transitionToCounty, initialZoom } from '../store/d3Zoom'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {

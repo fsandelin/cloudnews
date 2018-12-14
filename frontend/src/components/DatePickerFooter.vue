@@ -44,7 +44,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { prettifyDateObject } from '../store/helpers'
+import { prettifyDateObject } from '../helpers/misc'
 
 export default {
   name: 'DatePickerFooter',

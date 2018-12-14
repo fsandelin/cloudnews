@@ -2,7 +2,7 @@ import europeCountries from '../../assets/meta-info-europe-countries.min.json'
 import swedishCounties from '../../assets/meta-info-sweden-counties.min.json'
 import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.min.json'
 import swedishCities from '../../assets/meta-info-sweden-cities.min.json'
-import { cleanString } from '../helpers'
+import { cleanString } from '../../helpers/misc'
 
 const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== 'sweden'),

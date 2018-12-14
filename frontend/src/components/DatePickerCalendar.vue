@@ -33,7 +33,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { sameDates } from '../store/helpers'
+import { sameDates } from '../helpers/misc'
 
 export default {
   name: 'DatePickerCalendar',

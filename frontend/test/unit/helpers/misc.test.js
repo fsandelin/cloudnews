@@ -1,4 +1,4 @@
-import * as helpers from '../../../src/store/helpers'
+import * as helpers from '../../../src/helpers/misc'
 
 test('clearnString cleans strings correctly', () => {
   expect(helpers.cleanString(' kiruna KoMmun  ')).toBe('kiruna kommun')
