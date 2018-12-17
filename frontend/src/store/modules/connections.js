@@ -47,7 +47,7 @@ const actions = {
     const url = `${socketServiceUrl}${source.name}`
 
     const from = dateObjToISO(rootState.time.newsStartDate, true)
-    const until = dateObjToISO(rootState.time.newsEndDate, true)
+    const until = dateObjToISO(rootState.time.newsEndDate, false)
     const today = dateObjToISO(rootState.time.today, false)
 
     const socket = createWebSocket(url)
