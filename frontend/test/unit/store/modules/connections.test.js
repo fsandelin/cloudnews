@@ -2,7 +2,9 @@ import store from '../../../../src/store'
 
 describe('connections getters', () => {
   describe('getters.newsSources', () => {
-    // TODO: add tests
+    test('Initial getters.newsSources is an empty array', () => {
+      expect(store.getters.newsSources).toEqual([])
+    })
   })
 })
 

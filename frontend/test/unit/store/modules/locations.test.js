@@ -2,7 +2,9 @@ import store from '../../../../src/store'
 
 describe('locations getters', () => {
   describe('getters.countries', () => {
-    // TODO: add tests
+    test('Initial getters.countries is has length of 50', () => {
+      expect(store.getters.countries.length).toEqual(50)
+    })
   })
 
   describe('getters.counties', () => {

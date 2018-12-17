@@ -8,7 +8,9 @@ describe('news getters', () => {
   })
 
   describe('getters.filteredNewsList', () => {
-    // TODO: add tests
+    test('Initial getters.filteredNewsList is an empty array', () => {
+      expect(store.getters.filteredNewsList).toEqual([])
+    })
   })
 
   describe('getters.filterNewsSelectedCounty', () => {

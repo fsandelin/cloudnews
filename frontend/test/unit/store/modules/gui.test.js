@@ -2,7 +2,9 @@ import store from '../../../../src/store'
 
 describe('gui getters', () => {
   describe('getters.zoomValue', () => {
-    // TODO: add tests
+    test('Initial getters.zoomValue is 1', () => {
+      expect(store.getters.zoomValue).toEqual(1)
+    })
   })
 
   describe('getters.showDatePicker', () => {

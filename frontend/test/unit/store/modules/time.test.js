@@ -2,7 +2,9 @@ import store from '../../../../src/store'
 
 describe('time getters', () => {
   describe('getters.currentYear', () => {
-    // TODO: add tests
+    test('Initial getters.currentYear is this year', () => {
+      expect(store.getters.currentYear).toEqual(new Date().getFullYear())
+    })
   })
 
   describe('getters.currentMonth', () => {
