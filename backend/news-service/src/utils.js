@@ -1,3 +1,5 @@
+const logger = require('./logger');
+
 function compareDates(a, b) {
   const dA = new Date(a.from);
   const dB = new Date(b.from);
@@ -23,8 +25,11 @@ function getPreviousDay(date) {
 }
 
 function getIncludedTimespans(newFrom, newUntil, timespans) {
+  logger.debug(`from: ${newFrom}, until: ${newUntil}, database: ${JSON.stringify(timespans)}`);
   let placedFrom = false;
   const includedTimespans = [];
+  newFrom = new Date(newFrom);
+  newUntil = new Date(newUntil);
   for (const timespan in timespans) {
     const tentFrom = new Date(timespan.from);
     const tentUntil = new Date(timespan.until);
@@ -56,10 +61,22 @@ function getNewTimespan(inputFrom, inputUntil, timespans) {
   return { from: newFrom, until: newUntil };
 }
 
+
+function parseRequestedResource(requestedResource) {
+  try {
+    const requestedResourceParsed = JSON.parse(requestedResource);
+    requestedResourceParsed.from = new Date(requestedResourceParsed.from);
+    requestedResourceParsed.until = new Date(requestedResourceParsed.until);
+  } catch (exception) {
+    throw exception;
+  }
+}
+
 module.exports = {
   compareDates,
   getNextDay,
   getPreviousDay,
   getIncludedTimespans,
   getNewTimespan,
+  parseRequestedResource,
 };

@@ -95,73 +95,74 @@ const getters = {
 }
 
 const actions = {
-  setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
-  addNews: ({ dispatch }, news) => dispatch('addNewsList', [ news ]),
-  addNewsList: ({ commit, rootGetters }, newsList) => {
-    newsList = newsList.filter((news, index, newsList) => !rootGetters.newsList.find(x => x.id === news.id))
-    newsList = newsList.map(news => {
-      let locationIds = {}
-      let location = { ...news.location }
-      Object.keys(location).forEach(function (key) {
-        location[key] = cleanString(location[key])
-      })
+  addNews: ({ state, commit, rootGetters, rootState }, news) => {
+    if (rootGetters.newsList.find(x => x.id === news.id)) return
 
-      const city = rootGetters.cityByName(location.city)
-      if (city) {
-        location = {
-          ...location,
-          city: city.name,
-          municipality: city.municipality,
-          county: city.county,
-          country: 'sweden'
-        }
-        locationIds = {
-          ...locationIds,
-          cityId: city.id
-        }
-      }
+    news = {
+      ...news,
+      datetime: convertDateStringToDateObj(news.datetime)
+    }
 
-      const municipality = rootGetters.municipalityByName(location.municipality)
-      if (municipality) {
-        location = {
-          ...location,
-          municipality: municipality.name,
-          county: municipality.county,
-          country: 'sweden'
-        }
-        locationIds = {
-          ...locationIds,
-          municipalityId: municipality.id
-        }
-      }
+    let locationIds = {}
+    let location = { ...news.location }
 
-      const county = rootGetters.countyByName(location.county)
-      if (county) {
-        location = {
-          ...location,
-          county: county.name,
-          country: 'sweden'
-        }
-        locationIds = {
-          ...locationIds,
-          countyId: county.id
-        }
-      }
-
-      return {
-        ...news,
-        location,
-        locationIds,
-        datetime: convertDateStringToDateObj(news.datetime)
-      }
+    Object.keys(location).forEach(key => {
+      location[key] = cleanString(location[key])
     })
-    commit('addNews', newsList)
-  }
+
+    const city = rootGetters.cityByName(location.city)
+    if (city) {
+      location = {
+        ...location,
+        city: city.name,
+        municipality: city.municipality,
+        county: city.county,
+        country: 'sweden'
+      }
+      locationIds = {
+        ...locationIds,
+        cityId: city.id
+      }
+    }
+
+    const municipality = rootGetters.municipalityByName(location.municipality)
+    if (municipality) {
+      location = {
+        ...location,
+        municipality: municipality.name,
+        county: municipality.county,
+        country: 'sweden'
+      }
+      locationIds = {
+        ...locationIds,
+        municipalityId: municipality.id
+      }
+    }
+
+    const county = rootGetters.countyByName(location.county)
+    if (county) {
+      location = {
+        ...location,
+        county: county.name,
+        country: 'sweden'
+      }
+      locationIds = {
+        ...locationIds,
+        countyId: county.id
+      }
+    }
+
+    commit('addNews', { ...news, location, locationIds })
+  },
+  addNewsList: ({ dispatch }, newsList) => {
+    newsList.map(news => dispatch('addNews', news))
+  },
+  setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id)
 }
 
 const mutations = {
   addNews (state, news) {
-    state.newsList = [ ...news, ...state.newsList ]
+    state.newsList = [ news, ...state.newsList ]
   },
   setActiveNewsItemId (state, id) {
     state.activeNewsItemId = id

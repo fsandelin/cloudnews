@@ -1,4 +1,4 @@
-import d3 from './importerD3.js'
+import d3 from './d3Importer.js'
 import { event as d3Event } from 'd3-selection'
 
 export const sizeOfCurrentWindow = () => {

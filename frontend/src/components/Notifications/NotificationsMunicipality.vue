@@ -34,43 +34,11 @@
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/velocityAnimate.js'
 
 export default {
   name: 'NotificationsMunicipality',
-  props: {
-    'municipality': {
-      type: Object,
-      required: true
-    },
-    'lineWidth': {
-      type: Number,
-      required: true
-    },
-    'circleSize': {
-      type: Function,
-      required: true
-    },
-    'fontSize': {
-      type: Function,
-      required: true
-    },
-    'yOffset': {
-      type: Function,
-      required: true
-    }
-  },
-  computed: {
-    size: function () {
-      return this.municipality.news.length
-    }
-  },
-  watch: {
-    size: function () {
-      const circle = this.$refs['municipalityCircle-' + this.municipality.name]
-      animations.blobAnimateCircle(circle)
-    }
-  },
+  props: ['circleSize', 'fontSize', 'yOffset', 'lineWidth', 'municipality'],
   mounted: function () {
     const line = this.$refs['municipalityLine-' + this.municipality.name]
     const circle = this.$refs['municipalityCircle-' + this.municipality.name]

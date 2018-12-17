@@ -1,64 +1,61 @@
 <template>
   <g id="notificationsCounty">
-    <circle
-      :ref="'countyCircle-'+county.name"
-      :key="'countyCircle-'+county.name"
-      class="county-circle"
-      :cx="county.x+'px'"
-      :cy="county.y+'px'"
-      :stroke-width="strokeWidth+'px'"
-      :r="circleSize(county.news.length)+'px'" />
-    <text
-      :ref="'cityText-'+county.name"
-      :key="'cityText-'+county.name"
-      class="county-number"
-      text-anchor="middle"
-      :x="county.x+'px'"
-      :y="county.y+'px'"
-      :dy="yOffset(county.news.length)+'px'"
-      :font-size="fontSize(county.news.length)+'px'">
-      {{ county.news.length }}
-    </text>
+    <g
+      v-for="county of newsByCounty"
+      :key="'countyNotification-'+county.name"
+      class="countyNotification"
+      @click="countyClick(county)">
+      <circle
+        :ref="'countyNewsNotification-'+county.name"
+        :key="'countyNewsNotification-'+county.name"
+        class="county-circle"
+        :cx="county.x+'px'"
+        :cy="county.y+'px'"
+        :stroke-width="strokeWidth+'px'"
+        :r="circleSize(county.news.length)+'px'" />
+      <text
+        :key="'countyNewsNotificationText'+county.name"
+        class="county-number"
+        text-anchor="middle"
+        :x="county.x+'px'"
+        :y="county.y+'px'"
+        :dy="yOffset(county.news.length)+'px'"
+        :font-size="fontSize(county.news.length)+'px'">
+        {{ county.news.length }}
+      </text>
+    </g>
   </g>
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'NotificationsCounty',
-  props: {
-    'county': {
-      type: Object,
-      required: true
-    },
-    'strokeWidth': {
-      type: Number,
-      required: true
-    },
-    'circleSize': {
-      type: Function,
-      required: true
-    },
-    'fontSize': {
-      type: Function,
-      required: true
-    },
-    'yOffset': {
-      type: Function,
-      required: true
+  props: ['circleSize', 'fontSize', 'yOffset', 'calculateNewsLengthForObjects', 'updateNewsLengthForObjects', 'strokeWidth'],
+  data: function () {
+    return {
+      previousCountyNewsLength: []
     }
   },
   computed: {
-    size: function () {
-      return this.county.news.length
-    }
+    ...mapGetters([
+      'newsByCounty',
+      'zoomValue'
+    ])
   },
   watch: {
-    size: function () {
-      const circle = this.$refs['countyCircle-' + this.county.name]
-      animations.blobAnimateCircle(circle)
+    newsByCounty: function (newsByCounty) {
+      this.updateNewsLengthForObjects(newsByCounty, this.previousCountyNewsLength, this.$refs, 'countyNewsNotification-')
     }
+  },
+  mounted: function () {
+    this.previousCountyNewsLength = this.calculateNewsLengthForObjects(this.newsByCounty)
+  },
+  methods: {
+    ...mapActions([
+      'countyClick'
+    ])
   }
 }
 </script>

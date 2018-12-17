@@ -9,12 +9,12 @@ function scrapeNeededTimespans(neededTimespans) {
     json: true,
   };
   logger.debug(`Sending scraping-request to SVT for the timespan: ${neededTimespans}.`);
-  rq.post(options, (error, response) => {
+  rq.post(options, (error) => {
     if (error) {
       logger.error('Got an error when requesting a scraping campaign from svt.');
       logger.error(error);
     } else {
-      logger.debug('Successfully requested a scraping campaign from polisen.');
+      logger.debug('Successfully requested a scraping campaign from svt.');
     }
   });
 }

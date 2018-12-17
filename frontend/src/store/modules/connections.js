@@ -6,7 +6,7 @@ import {
   unsubscribeToHistoricalNews
 } from '../../helpers/webSocketConnection'
 import { socketServiceUrl } from '../../helpers/constants'
-import { dateObjToISO } from '../../helpers/misc'
+import { prettifyDateObject } from '../../helpers/misc'
 import {
   getAvailableServices,
   requestData
@@ -46,14 +46,14 @@ const actions = {
   activateNewsSource: ({ rootState, dispatch, commit }, source) => {
     const url = `${socketServiceUrl}${source.name}`
 
-    const from = dateObjToISO(rootState.time.newsStartDate, true)
-    const until = dateObjToISO(rootState.time.newsEndDate, false)
-    const today = dateObjToISO(rootState.time.today, false)
+    const from = prettifyDateObject(rootState.time.newsStartDate)
+    const until = prettifyDateObject(rootState.time.newsEndDate)
 
     const socket = createWebSocket(url)
 
     if (until.includes('?')) {
       subscribeToLiveNews(dispatch)(socket)
+      const today = rootState.time.today
       subscribeToHistoricalNews(dispatch)(socket, source.name, from, today)
     } else {
       subscribeToHistoricalNews(dispatch)(socket, source.name, from, until)

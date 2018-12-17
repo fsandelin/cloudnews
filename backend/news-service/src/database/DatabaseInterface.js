@@ -7,8 +7,8 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
   logger.debug('Filling timespan');
   const prefetchedCollectionName = 'prefetched';
   const articlesCollectionName = `articles_${service}`;
-  const newFrom = new Date(timespan.from);
-  const newUntil = new Date(timespan.until);
+  // const timespan.from = new Date(timespan.from);
+  // const timespan.until = new Date(timespan.until);
   dbConnection.connect((error, client) => {
     logger.debug('Creating a session');
     const session = dbConnection.getSession();
@@ -42,9 +42,8 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
         return;
       }
       timespans.sort(compareDates);
-
-      const includedTimespans = getIncludedTimespans(newFrom, newUntil, timespans);
-      const newTimespan = getNewTimespan(newFrom, newUntil, includedTimespans);
+      const includedTimespans = getIncludedTimespans(timespan.from, timespan.until, timespans);
+      const newTimespan = getNewTimespan(timespan.from, timespan.until, includedTimespans);
       if (news.length !== 0) {
         logger.debug('Inserting news into database.');
         db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
@@ -61,6 +60,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
               logger.error('Tried to insert entities into databse which share URL');
             }
           }
+          logger.debug(`Should remove timespans: ${JSON.stringify(includedTimespans)}`)
           const query = {
             service,
           };
@@ -75,7 +75,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
             if (error1) {
               logger.error(error1);
             } else {
-              logger.debug(`Removed old timespans from prefetched collections for service: ${service}`);
+              logger.debug(`Removed old timespans from prefetched collections for service: ${service}, with results: ${JSON.stringify(result2)}`);
             }
             db.collection(prefetchedCollectionName).update(query, update2, { session }, (error2, result3) => {
               if (error2) {
@@ -127,7 +127,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
 }
 
 // Gets all articles for a given service in a given timespan and calls callback on it.
-function getArticles(service, from_, until_, callback) {
+function getArticles(service, from, until, callback) {
   logger.debug('getArticles()');
   if (!service) {
     service = 'svt';
@@ -138,15 +138,9 @@ function getArticles(service, from_, until_, callback) {
       callback(error, null);
     }
 
-    from_ = from_.replace(' ', '+');
-    until_ = until_.replace(' ', '+');
-
-    const from = new Date(from_);
-    const until = new Date(until_);
-
-    until.setHours(23, 59, 59, 999);
-    from_ = from.toISOString();
-    until_ = until.toISOString();
+    // until.setHours(23, 59, 59, 999);
+    const from_ = from.toISOString();
+    const until_ = until.toISOString();
 
     const collectionName = `${config.articles_collection_prefix}${service}`;
     const db = client.db(config.databaseName);
@@ -160,15 +154,15 @@ function getArticles(service, from_, until_, callback) {
   });
 }
 
-function getEntriesPaged(service, from_, until_, pageNumber = 1, callback = () => {}) {
+function getEntriesPaged(service, from, until, pageNumber = 1, callback = () => {}) {
   logger.debug('getEntriesPaged()');
   dbConnection.connect((error, client) => {
     if (error) {
       return;
     }
 
-    const until = new Date(until_);
-    until_ = until.toISOString();
+    const until_ = until.toISOString();
+    const from_ = from.toISOString();
 
     const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     const db = client.db(config.databaseName);
@@ -179,8 +173,6 @@ function getEntriesPaged(service, from_, until_, pageNumber = 1, callback = () =
     const sorter = {
       datetime: 1,
     };
-    console.log(from_);
-    console.log(until_);
     logger.debug(`Getting article-page #${pageNumber} for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
     db.collection(collectionName).find(query).sort(sorter).skip(config.pageSize * pageNumber)
       .limit(config.pageSize)

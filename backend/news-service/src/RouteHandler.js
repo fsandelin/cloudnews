@@ -16,6 +16,9 @@ function fillTimeSpan(request, response) {
   if (service === undefined || news === undefined || timespan === undefined) {
     logger.error('Someone sent an invalid request.');
     response.status(400).send('Please send a valid request');
+  } else {
+    timespan.from = new Date(timespan.from);
+    timespan.until = new Date(timespan.until);
   }
   db.fillTimeSpan(service, news, timespan, (error) => {
     if (error) {
@@ -31,9 +34,11 @@ function fillTimeSpan(request, response) {
 // /api/request/timespan
 function requestTimespan(request, response) {
   const { requestId, requestedResource } = request.body;
-  logger.debug(`Got a request for: ${requestedResource}`);
+  logger.debug(`Got a request for: ${JSON.stringify(requestedResource)}`);
   if (requestedResource) {
     response.sendStatus(200);
+    requestedResource.from = new Date(requestedResource.from);
+    requestedResource.until = new Date(requestedResource.until);
     addRequest(requestId, requestedResource);
   } else {
     logger.error('Got a request without a requestedResource');
@@ -53,7 +58,7 @@ function liveNews(request, response) {
     json: true,
   };
   logger.debug(`Sending livenews to middleware from ${request.body.service}`);
-  rq.post(options, (error_, response_) => {
+  rq.post(options, (error_) => {
     if (error_) {
       logger.error('Failed to send live news to middleware.');
       logger.error(error_);
@@ -67,9 +72,16 @@ function liveNews(request, response) {
 
 function getNews(req, res) {
   const {
-    service, from, until, pageNumber,
+    service, pageNumber,
   } = req.query;
-  logger.debug(`Getting news page #${pageNumber} for ${service} in the timespan from ${from} until ${until}`);
+
+  let {
+    from, until,
+  } = req.query;
+
+  from = new Date(from);
+  until = new Date(until);
+  logger.debug(`Getting news page #${pageNumber} for ${service} in the timespan from ${from.toISOString()} until ${until.toISOString()}`);
   db.getEntriesPaged(service, from, until, pageNumber, (entries) => {
     if (entries) {
       if (entries.length === 0) {

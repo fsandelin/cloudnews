@@ -8,8 +8,7 @@ import {
   getNumArrayBetweenNums,
   dateIsBefore,
   sameDates,
-  prettifyDateObject,
-  dateObjToISO
+  prettifyDateObject
 } from '../../helpers/misc'
 
 const today = new Date()
@@ -127,8 +126,8 @@ const actions = {
       currentYear: state.newsStartDate.year,
       currentMonth: state.newsStartDate.month
     })
-    const from = dateObjToISO(state.startDate, true)
-    const until = dateObjToISO(state.endDate, false)
+    const from = prettifyDateObject(state.startDate)
+    const until = prettifyDateObject(state.endDate)
     dispatch('makeSocketTimeSpanRequest', { from, until })
   },
   discardNewDates: ({ state, commit }) => {
