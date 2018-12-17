@@ -5,20 +5,21 @@ describe('gui getters', () => {
     test('Initial getters.zoomValue is 1', () => {
       expect(store.getters.zoomValue).toEqual(1)
     })
-    test('Initial getters.showDatePicker is false', () => {
-      expect(store.getters.showDatePicker).toEqual(false)
-    })
     test('Initial getters.showAboutPage is false', () => {
       expect(store.getters.showAboutPage).toEqual(false)
     })
   })
 
   describe('getters.showDatePicker', () => {
-    // TODO: add tests
+    test('Initial getters.showDatePicker is false', () => {
+      expect(store.getters.showDatePicker).toEqual(false)
+    })
   })
 
   describe('getters.showAboutPage', () => {
-    // TODO: add tests
+    test('Initial getters.showAboutPage is false', () => {
+      expect(store.getters.showAboutPage).toEqual(false)
+    })
   })
 })
 
