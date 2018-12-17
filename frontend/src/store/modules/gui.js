@@ -21,11 +21,11 @@ const actions = {
       commit('openDrawer')
     }
   },
-  toggleActive: ({ rootState, dispatch }, news) => {
+  toggleActive: ({ rootGetters, dispatch }, news) => {
     dispatch('setActiveNewsItemId', news.id)
-    if (news.location.county !== '') dispatch('selectCounty', news.location.county)
-    if (news.location.municipality !== '') dispatch('selectMunicipality', news.location.municipality)
-    if (news.location.city !== '') dispatch('selectCity', news.location.city)
+    if (news.location.county !== '') dispatch('selectCounty', rootGetters.countyById(news.locationIds.countyId))
+    if (news.location.municipality !== '') dispatch('selectMunicipality', rootGetters.municipalityById(news.locationIds.municipalityId))
+    if (news.location.city !== '') dispatch('selectCity', rootGetters.cityById(news.locationIds.cityId))
   }
 }
 

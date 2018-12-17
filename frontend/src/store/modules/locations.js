@@ -11,11 +11,17 @@ const state = {
   cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
   mapCities: [],
   selectedCounty: null,
+  selectedCountyId: null,
   selectedMunicipality: null,
+  selectedMunicipalityId: null,
   selectedCity: null,
+  selectedCityId: null,
   previousSelectedCounty: null,
+  previousSelectedCountyId: null,
   previousSelectedMunicipality: null,
-  previousSelectedCity: null
+  previousSelectedMunicipalityId: null,
+  previousSelectedCity: null,
+  previousSelectedCityId: null
 }
 
 const getters = {
@@ -37,16 +43,34 @@ const getters = {
   selectedCounty: state => {
     return state.selectedCounty
   },
+  selectedCountyId: state => {
+    return state.selectedCountyId
+  },
   selectedMunicipality: state => {
     return state.selectedMunicipality
+  },
+  selectedMunicipalityId: state => {
+    return state.selectedMunicipalityId
   },
   selectedCity: state => {
     return state.selectedCity
   },
+  selectedCityId: state => {
+    return state.selectedCityId
+  },
+  activeCounties: state => {
+    return state.counties.filter(county => county.id === state.selectedCountyId)
+  },
+  activeMunicipalities: state => {
+    return state.municipalities.filter(municipality => municipality.county === state.selectedCounty)
+  },
+  activeCities: state => {
+    return state.cities.filter(city => city.municipality === state.selectedMunicipality)
+  },
   countyByName: state => (name = '') => {
     return state.counties.find(county => cleanString(county.name) === cleanString(name))
   },
-  countyByid: state => (id) => {
+  countyById: state => (id) => {
     return state.counties[id]
   },
   municipalityByName: (state) => (name = '') => {
@@ -69,60 +93,66 @@ const actions = {
   selectCity: ({ commit }, cityName) => commit('selectCity', cityName),
   setActiveMapCitiesBasedOnPopulation: ({ commit }, population) => commit('setActiveMapCitiesBasedOnPopulation', population),
   countyClick: ({ dispatch }, county) => {
-    dispatch('selectCounty', county.name)
+    dispatch('selectCounty', county)
     dispatch('selectMunicipality', null)
     dispatch('selectCity', null)
     dispatch('setActiveNewsItemId', null)
   },
   municipalityClick: ({ dispatch }, municipality) => {
-    dispatch('selectMunicipality', municipality.name)
+    dispatch('selectMunicipality', municipality)
     dispatch('selectCity', null)
     dispatch('setActiveNewsItemId', null)
   },
   cityClick: ({ dispatch }, city) => {
-    dispatch('selectCity', city.name)
+    dispatch('selectCity', city)
     dispatch('setActiveNewsItemId', null)
   }
 }
 
 const mutations = {
-  selectCounty (state, countyName) {
-    state.selectedCounty = countyName
-
-    state.counties = state.counties.map(county => ({ ...county, active: !(county.name === countyName) }))
-    state.municipalities = state.municipalities.map(municipality => ({ ...municipality, active: municipality.county === countyName }))
+  selectCounty (state, county) {
+    state.selectedCounty = county !== null ? county.name : null
+    state.selectedCountyId = county !== null ? county.id : null
   },
-  selectMunicipality (state, municipalityName) {
-    state.selectedMunicipality = municipalityName
-
-    state.cities = state.cities.map(city => ({ ...city, active: city.municipality === municipalityName }))
+  selectMunicipality (state, municipality) {
+    state.selectedMunicipality = municipality !== null ? municipality.name : null
+    state.selectedMunicipalityId = municipality !== null ? municipality.id : null
   },
-  selectCity (state, cityName) {
-    state.selectedCity = cityName
+  selectCity (state, city) {
+    state.selectedCity = city !== null ? city.name : null
+    state.selectedCityId = city !== null ? city.id : null
   },
   openDrawer (state) {
     state.selectedCounty = state.previousSelectedCounty
+    state.selectedCountyId = state.previousSelectedCountyId
     state.previousSelectedCounty = null
-    state.selectedMunicipality = state.previousSelectedMunicipality
-    state.previousSelectedMunicipality = null
-    state.selectedCity = state.previousSelectedCity
-    state.previousSelectedCity = null
+    state.previousSelectedCountyId = null
 
-    state.counties = state.counties.map(county => ({ ...county, active: !(county.name === state.selectedCounty) }))
-    state.municipalities = state.municipalities.map(municipality => ({ ...municipality, active: municipality.county === state.selectedCounty }))
-    state.cities = state.cities.map(city => ({ ...city, active: city.municipality === state.selectedMunicipality }))
+    state.selectedMunicipality = state.previousSelectedMunicipality
+    state.selectedMunicipalityId = state.previousSelectedMunicipalityId
+    state.previousSelectedMunicipality = null
+    state.previousSelectedMunicipalityId = null
+
+    state.selectedCity = state.previousSelectedCity
+    state.selectedCityId = state.previousSelectedCityId
+    state.previousSelectedCity = null
+    state.previousSelectedCityId = null
   },
   closeDrawer (state) {
-    state.counties = state.counties.map(county => ({ ...county, active: true }))
-    state.municipalities = state.municipalities.map(municipality => ({ ...municipality, active: false }))
-    state.cities = state.cities.map(city => ({ ...city, active: false }))
-
     state.previousSelectedCounty = state.selectedCounty
+    state.previousSelectedCountyId = state.selectedCountyId
     state.selectedCounty = null
+    state.selectedCountyId = null
+
     state.previousSelectedMunicipality = state.selectedMunicipality
+    state.previousSelectedMunicipalityId = state.selectedMunicipalityId
     state.selectedMunicipality = null
+    state.selectedMunicipalityId = null
+
     state.previousSelectedCity = state.selectedCity
+    state.previousSelectedCityId = state.selectedCityId
     state.selectedCity = null
+    state.selectedCityId = null
   },
   toggleActive (state) {
     state.selectedCounty = null

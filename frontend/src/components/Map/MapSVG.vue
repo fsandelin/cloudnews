@@ -2,20 +2,14 @@
   <div id="map-svg-wrapper">
     <svg class="mapContainer">
       <g class="map">
-        <g>
+        <g id="countryPaths">
           <path
             v-for="country in countries"
             :key="country.key"
             class="country"
             :d="country.path" />
-          <path
-            v-for="municipality in municipalities"
-            v-show="municipality.active"
-            :key="municipality.key"
-            class="municipality"
-            :class="{ active: municipality.name === selectedMunicipality }"
-            :d="municipality.path"
-            @click="municipalityClick(municipality)" />
+        </g>
+        <g id="countyPaths">
           <path
             v-for="county in counties"
             v-show="county.active"
@@ -23,6 +17,15 @@
             class="county"
             :d="county.path"
             @click="countyClick(county)" />
+        </g>
+        <g id="municipalitieyPaths">
+          <path
+            v-for="municipality in activeMunicipalities"
+            :key="municipality.key"
+            class="municipality"
+            :class="{ active: municipality.name === selectedMunicipality }"
+            :d="municipality.path"
+            @click="municipalityClick(municipality)" />
         </g>
         <MapCities />
         <Notifications />
@@ -53,16 +56,16 @@ export default {
     ...mapGetters([
       'countries',
       'counties',
-      'municipalities',
+      'activeMunicipalities',
       'cities',
       'zoomValue',
-      'selectedCounty',
       'selectedMunicipality',
-      'countyByName'
+      'selectedCountyId',
+      'countyById'
     ])
   },
   mounted: function () {
-    d3.select('.mapContainer').call(this.mapZoom).on('dblclick.zoom', () => transitionToCounty(this.mapZoom, (this.countyByName(this.selectedCounty))))
+    d3.select('.mapContainer').call(this.mapZoom).on('dblclick.zoom', () => transitionToCounty(this.mapZoom, (this.countyById(this.selectedCountyId))))
     initialZoom(this.mapZoom)
   },
   methods: {
