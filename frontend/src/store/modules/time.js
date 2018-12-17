@@ -127,8 +127,8 @@ const actions = {
       currentYear: state.newsStartDate.year,
       currentMonth: state.newsStartDate.month
     })
-    const from = dateObjToISO(state.startDate)
-    const until = dateObjToISO(state.endDate)
+    const from = dateObjToISO(state.startDate, true)
+    const until = dateObjToISO(state.endDate, false)
     dispatch('makeSocketTimeSpanRequest', { from, until })
   },
   discardNewDates: ({ state, commit }) => {
