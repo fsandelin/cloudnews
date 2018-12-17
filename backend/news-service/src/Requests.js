@@ -6,9 +6,6 @@ const logger = require('./logger');
 
 const requests = {};
 
-// Add a request to the requests-object and check the request for completion.
-
-
 // Should do some api calls to scrape missing timespans for a given service
 function scrapeRequestedResources(neededTimespans, service = 'polisen') {
   try {
@@ -83,6 +80,8 @@ function checkRequestsCompletion() {
 
 function addRequest(requestId, requestedResource) {
   logger.debug(`Adding request ${requestId}`);
+  requestedResource.from = new Date(requestedResource.from);
+  requestedResource.until = new Date(requestedResource.until);
   requestedResource.completed = false;
   requestedResource.sent = false;
   requestedResource.scraping = false;

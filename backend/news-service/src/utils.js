@@ -56,10 +56,22 @@ function getNewTimespan(inputFrom, inputUntil, timespans) {
   return { from: newFrom, until: newUntil };
 }
 
+
+function parseRequestedResource(requestedResource) {
+  try {
+    const requestedResourceParsed = JSON.parse(requestedResource);
+    requestedResourceParsed.from = new Date(requestedResourceParsed.from);
+    requestedResourceParsed.until = new Date(requestedResourceParsed.until);
+  } catch (exception) {
+    throw exception;
+  }
+}
+
 module.exports = {
   compareDates,
   getNextDay,
   getPreviousDay,
   getIncludedTimespans,
   getNewTimespan,
+  parseRequestedResource,
 };

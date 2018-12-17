@@ -4,6 +4,7 @@ const rq = require('request');
 const config = require('../config/config');
 const Clients = require('./Clients');
 const Requests = require('../requests/Requests');
+const { parseRequestedResource } = require('../utils');
 
 const availableServices = ['svt', 'twitter', 'polisen'];
 
@@ -60,17 +61,14 @@ function applyEventListeners(io) {
       const requestId = uuid();
       let requestedResourceParsed = null;
       try {
-        requestedResourceParsed = JSON.parse(requestedResource);
+        requestedResourceParsed = parseRequestedResource(requestedResource);
         requestedResourceParsed.completed = false;
       } catch (exception) {
-        console.log('Cannot parse requestedResources, probably wrong format');
-        return;
-      }
-      if (isNaN(Date.parse(requestedResourceParsed.from)) || isNaN(Date.parse(requestedResourceParsed.until))) {
-        console.log('Incorrect dates');
+        console.log(`Cannot parse requestedResources, probably wrong format: ${JSON.stringify(requestedResource)}`);
         Clients.getSocket(clientId).socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
         return;
       }
+
       Requests.addRequest(requestId, clientId, requestedResourceParsed);
       console.log('Should now post request to news-service');
       rq.post({
