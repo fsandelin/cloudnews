@@ -6,7 +6,18 @@ export const cleanString = s => {
     : null
 }
 
-export const numToMonth = num => m[Object.keys(m)[num - 1]]
+export const variableIsAPositiveInteger = variable => {
+  return !isNaN(variable) &&
+    parseInt(Number(variable)) == variable && // intentional comparison with '=='
+    !isNaN(parseInt(variable, 10)) &&
+    variable >= 0
+}
+
+export const numToMonth = num => {
+  return variableIsAPositiveInteger(num)
+    ? m[Object.keys(m)[num - 1]]
+    : null
+}
 
 export const getDaysForMonth = (year, month) => new Date(year, month + 1, 0).getDate()
 

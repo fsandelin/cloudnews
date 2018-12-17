@@ -8,31 +8,57 @@ describe('time getters', () => {
   })
 
   describe('getters.currentMonth', () => {
-    // TODO: add tests
+    test('Initial getters.currentMonth is this month', () => {
+      expect(store.getters.currentMonth).toEqual(new Date().getMonth() + 1)
+    })
   })
 
   describe('getters.weekDays', () => {
-    // TODO: add tests
+    test('Initial getters.weekDays is this an array of the weekdays', () => {
+      expect(store.getters.weekDays).toEqual(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'])
+    })
   })
 
   describe('getters.startDate', () => {
-    // TODO: add tests
+    test('Initial getters.startDate is this today', () => {
+      const date = new Date()
+      const today = {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      }
+      expect(store.getters.startDate).toEqual(today)
+    })
   })
 
   describe('getters.endDate', () => {
-    // TODO: add tests
+    test('Initial getters.endDate is null', () => {
+      expect(store.getters.endDate).toEqual(null)
+    })
   })
 
   describe('getters.newsStartDate', () => {
-    // TODO: add tests
+    test('Initial getters.newsStartDate is this today', () => {
+      const date = new Date()
+      const today = {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      }
+      expect(store.getters.newsStartDate).toEqual(today)
+    })
   })
 
   describe('getters.newsEndDate', () => {
-    // TODO: add tests
+    test('Initial getters.newsEndDate is null', () => {
+      expect(store.getters.newsEndDate).toEqual(null)
+    })
   })
 
   describe('getters.hoverDate', () => {
-    // TODO: add tests
+    test('Initial getters.hoverDate is null', () => {
+      expect(store.getters.hoverDate).toEqual(null)
+    })
   })
 
   describe('getters.dateBetween', () => {
@@ -40,7 +66,9 @@ describe('time getters', () => {
   })
 
   describe('getters.numToMonth', () => {
-    // TODO: add tests
+    test('Initial getters.numToMonth with null num is null', () => {
+      expect(store.getters.numToMonth(null)).toEqual(null)
+    })
   })
 
   describe('getters.getDaysToDisplay', () => {

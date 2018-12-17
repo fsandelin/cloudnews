@@ -2,7 +2,10 @@ import europeCountries from '../../assets/meta-info-europe-countries.min.json'
 import swedishCounties from '../../assets/meta-info-sweden-counties.min.json'
 import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.min.json'
 import swedishCities from '../../assets/meta-info-sweden-cities.min.json'
-import { cleanString } from '../../helpers/misc'
+import {
+  cleanString,
+  variableIsAPositiveInteger
+} from '../../helpers/misc'
 
 const state = {
   countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== 'sweden'),
@@ -47,7 +50,7 @@ const getters = {
     return state.counties.find(county => cleanString(county.name) === cleanString(name))
   },
   countyById: state => (id = -1) => {
-    return !isNaN(id) && parseInt(Number(id)) === id && !isNaN(parseInt(id, 10)) && id >= 0
+    return variableIsAPositiveInteger(id)
       ? state.counties[id]
       : null
   },
@@ -55,7 +58,7 @@ const getters = {
     return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name))
   },
   municipalityById: (state) => (id = -1) => {
-    return !isNaN(id) && parseInt(Number(id)) === id && !isNaN(parseInt(id, 10)) && id >= 0
+    return variableIsAPositiveInteger(id)
       ? state.municipalities[id]
       : null
   },
@@ -63,7 +66,7 @@ const getters = {
     return state.cities.find(city => cleanString(city.name) === cleanString(name))
   },
   cityById: (state) => (id = -1) => {
-    return !isNaN(id) && parseInt(Number(id)) === id && !isNaN(parseInt(id, 10)) && id >= 0
+    return variableIsAPositiveInteger(id)
       ? state.cities[id]
       : null
   }
