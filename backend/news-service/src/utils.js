@@ -25,12 +25,12 @@ function getPreviousDay(date) {
 }
 
 function getIncludedTimespans(newFrom, newUntil, timespans) {
-  logger.debug(`from: ${newFrom}, until: ${newUntil}, database: ${JSON.stringify(timespans)}`);
   let placedFrom = false;
   const includedTimespans = [];
   newFrom = new Date(newFrom);
   newUntil = new Date(newUntil);
-  for (const timespan in timespans) {
+  logger.debug(`from: ${newFrom.toISOString()}, until: ${newUntil.toISOString()}, database: ${JSON.stringify(timespans)}`);
+  for (const timespan of timespans) {
     const tentFrom = new Date(timespan.from);
     const tentUntil = new Date(timespan.until);
     if (!placedFrom) {
@@ -67,6 +67,7 @@ function parseRequestedResource(requestedResource) {
     const requestedResourceParsed = JSON.parse(requestedResource);
     requestedResourceParsed.from = new Date(requestedResourceParsed.from);
     requestedResourceParsed.until = new Date(requestedResourceParsed.until);
+    return requestedResourceParsed;
   } catch (exception) {
     throw exception;
   }
