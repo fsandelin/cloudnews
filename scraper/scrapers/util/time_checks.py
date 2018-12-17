@@ -13,9 +13,7 @@ BEFORE = True
 AFTER = False
 
 def check_time(news, choice, time_date):
-    news_dt = parser.parse(news['datetime'])
-    news_dt = news_dt.replace(tzinfo=stockholm)
-    time_date = time_date.replace(tzinfo=stockholm)   
+    news_dt = parser.parse(news['datetime'])  
 
     if choice == BEFORE:
         return news_dt < time_date
@@ -24,9 +22,6 @@ def check_time(news, choice, time_date):
 
 def check_time_range(news, from_, until_):
     news_dt = parser.parse(news['datetime'])
-    news_dt = news_dt.replace(tzinfo=stockholm)          
-    from_ = from_.replace(tzinfo=stockholm)
-    until_ = until_.replace(tzinfo=stockholm)
 
     return (news_dt > from_ and news_dt < until_)
 

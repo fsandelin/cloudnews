@@ -34,7 +34,7 @@ function fillTimeSpan(request, response) {
 // /api/request/timespan
 function requestTimespan(request, response) {
   const { requestId, requestedResource } = request.body;
-  logger.debug(`Got a request for: ${requestedResource}`);
+  logger.debug(`Got a request for: ${JSON.stringify(requestedResource)}`);
   if (requestedResource) {
     response.sendStatus(200);
     requestedResource.from = new Date(requestedResource.from);

@@ -42,7 +42,6 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
         return;
       }
       timespans.sort(compareDates);
-
       const includedTimespans = getIncludedTimespans(timespan.from, timespan.until, timespans);
       const newTimespan = getNewTimespan(timespan.from, timespan.until, includedTimespans);
       if (news.length !== 0) {
@@ -61,6 +60,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
               logger.error('Tried to insert entities into databse which share URL');
             }
           }
+          logger.debug(`Should remove timespans: ${JSON.stringify(includedTimespans)}`)
           const query = {
             service,
           };
@@ -75,7 +75,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
             if (error1) {
               logger.error(error1);
             } else {
-              logger.debug(`Removed old timespans from prefetched collections for service: ${service}`);
+              logger.debug(`Removed old timespans from prefetched collections for service: ${service}, with results: ${JSON.stringify(result2)}`);
             }
             db.collection(prefetchedCollectionName).update(query, update2, { session }, (error2, result3) => {
               if (error2) {

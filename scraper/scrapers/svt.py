@@ -331,7 +331,6 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     items = int(items)
     max_pages = math.ceil(items / 50)
 
-    print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
     region_name = start_obj['auto']['content'][0]['sectionDisplayName']
     obj_list = start_obj['auto']['content']
 
@@ -447,7 +446,6 @@ def get_news_region_thread(from_, until_, region):
     start_page, end_page = get_start_end_page(from_, until_, region)
 
     page_range = range(start_page, end_page + 1)
-    print("Region:", region, "page_range:", page_range)
     loop = asyncio.get_event_loop()
     news_list = loop.run_until_complete(news_threads(from_, until_, region, page_range))
 

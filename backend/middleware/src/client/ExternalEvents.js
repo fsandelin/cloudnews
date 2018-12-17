@@ -64,6 +64,7 @@ function applyEventListeners(io) {
         requestedResourceParsed = parseRequestedResource(requestedResource);
         requestedResourceParsed.completed = false;
       } catch (exception) {
+        console.log(exception);
         console.log(`Cannot parse requestedResources, probably wrong format: ${JSON.stringify(requestedResource)}`);
         Clients.getSocket(clientId).socket.emit('warning', 'Unable to parse the requested dates, please do things right!');
         return;

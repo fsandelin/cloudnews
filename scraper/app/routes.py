@@ -31,10 +31,7 @@ def get_date_ranges_thread():
         from_ = parser.parse(from_)
         until_ = parser.parse(until_)
         
-        from_ = datetime.combine(from_.date(), datetime.min.time())
-        until_ = datetime.combine(until_.date(), datetime.max.time())
-
-        from_ = from_.replace(tzinfo=stockholm)
+        print("from:", from_, "until:", until_)
 
         process = Process(target=thread_get_news, args=(from_, until_))
         process.start()

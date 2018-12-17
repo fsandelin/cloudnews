@@ -40,7 +40,7 @@ function getNews(req, res) {
     qs: {
       service,
       from: from_.toISOString(),
-      until: until.toISOString(),
+      until: until_.toISOString(),
       pageNumber,
     },
     json: true,

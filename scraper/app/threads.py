@@ -33,6 +33,8 @@ def post_timespan(from_, until_, news_list, service="svt"):
 
     pages = list(chunks(news_list, size))
 
+    print("from:", from_.isoformat(), "until:", until_.isoformat())
+
     for page in pages:
 
         body = {}
