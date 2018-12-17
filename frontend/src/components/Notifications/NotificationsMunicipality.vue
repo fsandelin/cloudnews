@@ -1,7 +1,8 @@
 <template>
-  <g id="notificationsMunicipality">
+  <g
+    id="notificationsMunicipality"
+    @click="municipalityClick(municipality)">
     <line
-      v-show="municipality.active"
       :ref="'municipalityLine-'+municipality.name"
       :key="'municipalityLine-'+municipality.name"
       class="municipality-line"
@@ -11,7 +12,6 @@
       :y2="municipality.y+'px'"
       :stroke-width="lineWidth+'px'" />
     <circle
-      v-show="municipality.active"
       :ref="'municipalityCircle-'+municipality.name"
       :key="'municipalityCircle-'+municipality.name"
       class="municipality-circle"
@@ -19,7 +19,6 @@
       :cy="municipality.y+'px'"
       :r="circleSize(municipality.news.length)+'px'" />
     <text
-      v-show="municipality.active"
       :ref="'municipalityText-'+municipality.name"
       :key="'municipalityText-'+municipality.name"
       class="municipality-number"
@@ -34,7 +33,8 @@
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/velocityAnimate.js'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NotificationsMunicipality',
@@ -88,19 +88,10 @@ export default {
     animations.textBeforeEnter(text, this.municipality.countyX, this.municipality.countyY)
     animations.textEnter(text, this.municipality.x, this.municipality.y)
   },
-  beforeDestroyed: function () {
-    const line = this.$refs['municipalityLine-' + this.municipality.name]
-    const circle = this.$refs['municipalityCircle-' + this.municipality.name]
-    const text = this.$refs['municipalityText-' + this.municipality.name]
-
-    animations.lineLeave(
-      line,
-      this.municipality.countyX,
-      this.municipality.countyY,
-      this.municipality.countyX,
-      this.municipality.countyY)
-    animations.circleLeave(circle, this.municipality.countyX, this.municipality.countyY)
-    animations.textLeave(text, this.municipality.countyX, this.municipality.countyY)
+  methods: {
+    ...mapActions([
+      'municipalityClick'
+    ])
   }
 }
 </script>

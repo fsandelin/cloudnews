@@ -1,17 +1,17 @@
 <template>
   <g id="notifications">
     <NotificationsCity
-      v-for="city in activeCities"
+      v-for="city in activeCityNotifications"
       :key="'cityNotification'+city.name"
       :city="city"
       :circleSize="circleSize"
       :fontSize="fontSize"
       :yOffset="yOffset"
       :lineWidth="lineWidth"
-      @onClick="cityClick(city)" />
+      @click="cityClick(city)" />
 
     <NotificationsMunicipality
-      v-for="municipality in activeMunicipalities"
+      v-for="municipality in activeMunicipalitiyNotifications"
       :key="'municipalityNoticication-'+municipality.name"
       :municipality="municipality"
       :circleSize="circleSize"
@@ -50,13 +50,15 @@ export default {
       'zoomValue',
       'newsByCity',
       'newsByMunicipality',
-      'newsByCounty'
+      'newsByCounty',
+      'selectedCounty',
+      'selectedMunicipality'
     ]),
-    activeCities: function () {
-      return this.newsByCity.filter(city => city.active)
+    activeCityNotifications: function () {
+      return this.newsByCity.filter(city => city.municipality === this.selectedMunicipality)
     },
-    activeMunicipalities: function () {
-      return this.newsByMunicipality.filter(city => city.active)
+    activeMunicipalitiyNotifications: function () {
+      return this.newsByMunicipality.filter(municipality => municipality.county === this.selectedCounty)
     },
     lineWidth: function () {
       return 1.0 * (1 / Math.max(this.zoomValue / 2.5, 1.0))

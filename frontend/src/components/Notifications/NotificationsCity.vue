@@ -1,5 +1,7 @@
 <template>
-  <g id="notificationsCity">
+  <g
+    id="notificationsCity"
+    @click="cityClick(city)">
     <line
       :ref="'cityLine-'+city.name"
       :key="'cityLine-'+city.name"
@@ -31,7 +33,8 @@
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/velocityAnimate.js'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NotificationsCity',
@@ -85,19 +88,10 @@ export default {
     animations.textBeforeEnter(text, this.city.municipalityX, this.city.municipalityY)
     animations.textEnter(text, this.city.x, this.city.y)
   },
-  beforeDestroyed: function () {
-    const line = this.$refs['cityLine-' + this.city.name]
-    const circle = this.$refs['cityCircle-' + this.city.name]
-    const text = this.$refs['cityText-' + this.city.name]
-
-    animations.lineLeave(
-      line,
-      this.city.municipalityX,
-      this.city.municipalityY,
-      this.city.municipalityX,
-      this.city.municipalityY)
-    animations.circleLeave(circle, this.city.municipalityX, this.city.municipalityY)
-    animations.textLeave(text, this.city.municipalityX, this.city.municipalityY)
+  methods: {
+    ...mapActions([
+      'cityClick'
+    ])
   }
 }
 </script>

@@ -1,5 +1,7 @@
 <template>
-  <g id="notificationsCounty">
+  <g
+    id="notificationsCounty"
+    @click="countyClick(county)">
     <circle
       :ref="'countyCircle-'+county.name"
       :key="'countyCircle-'+county.name"
@@ -9,8 +11,8 @@
       :stroke-width="strokeWidth+'px'"
       :r="circleSize(county.news.length)+'px'" />
     <text
-      :ref="'cityText-'+county.name"
-      :key="'cityText-'+county.name"
+      :ref="'countyText-'+county.name"
+      :key="'countyText-'+county.name"
       class="county-number"
       text-anchor="middle"
       :x="county.x+'px'"
@@ -23,7 +25,8 @@
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/velocityAnimate.js'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NotificationsCounty',
@@ -59,6 +62,11 @@ export default {
       const circle = this.$refs['countyCircle-' + this.county.name]
       animations.blobAnimateCircle(circle)
     }
+  },
+  methods: {
+    ...mapActions([
+      'countyClick'
+    ])
   }
 }
 </script>

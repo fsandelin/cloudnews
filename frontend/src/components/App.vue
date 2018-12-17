@@ -80,7 +80,7 @@ export default {
       return this.showDatePicker || this.showAboutPage
     }
   },
-  created: function () {
+  mounted: function () {
     this.fetchAvailableNewsSources()
     this.addNewsList(fakeNewsList)
   },
