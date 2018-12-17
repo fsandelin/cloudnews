@@ -14,35 +14,51 @@ describe('news getters', () => {
   })
 
   describe('getters.filterNewsSelectedCounty', () => {
-    // TODO: add tests
+    test('Initial getters.filterNewsSelectedCounty is an empty array', () => {
+      expect(store.getters.filterNewsSelectedCounty).toEqual([])
+    })
   })
 
   describe('getters.filterNewsSelectedMunicipality', () => {
-    // TODO: add tests
+    test('Initial getters.filterNewsSelectedMunicipality is an empty array', () => {
+      expect(store.getters.filterNewsSelectedMunicipality).toEqual([])
+    })
   })
 
   describe('getters.filterNewsSelectedCity', () => {
-    // TODO: add tests
+    test('Initial getters.filterNewsSelectedCity is an empty array', () => {
+      expect(store.getters.filterNewsSelectedCity).toEqual([])
+    })
   })
 
   describe('getters.newsByCounty', () => {
-    // TODO: add tests
+    test('Initial getters.newsByCounty is an empty array', () => {
+      expect(store.getters.newsByCounty).toEqual([])
+    })
   })
 
   describe('getters.newsByMunicipality', () => {
-    // TODO: add tests
+    test('Initial getters.newsByMunicipality is an empty array', () => {
+      expect(store.getters.newsByMunicipality).toEqual([])
+    })
   })
 
   describe('getters.newsByCity', () => {
-    // TODO: add tests
+    test('Initial getters.newsByCity is an empty array', () => {
+      expect(store.getters.newsByCity).toEqual([])
+    })
   })
 
   describe('getters.activeNewsItemId', () => {
-    // TODO: add tests
+    test('Initial getters.activeNewsItemId is null', () => {
+      expect(store.getters.activeNewsItemId).toEqual(null)
+    })
   })
 
   describe('getters.activeNewsItem', () => {
-    // TODO: add tests
+    test('Initial getters.activeNewsItem is null', () => {
+      expect(store.getters.activeNewsItem).toEqual(null)
+    })
   })
 })
 
