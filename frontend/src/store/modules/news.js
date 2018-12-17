@@ -12,7 +12,7 @@ const state = {
 }
 
 const getters = {
-  newsList: (state, getters, rootState, rootGetters) => {
+  newsList: (state, _getters, _rootState, rootGetters) => {
     return state.newsList.filter(news => {
       const currentStartDate = rootGetters.newsStartDate
       const currentEndDate = rootGetters.newsEndDate
@@ -21,22 +21,22 @@ const getters = {
       return dateIsAfterOrEqual(news.datetime, currentStartDate) && dateIsBeforeOrEqual(news.datetime, currentEndDate)
     })
   },
-  filteredNewsList: (state, getters, rootState, rootGetters) => {
+  filteredNewsList: (_state, getters, rootState, _rootGetters) => {
     if (rootState.locations.selectedCity !== null) return getters.filterNewsSelectedCity
     if (rootState.locations.selectedMunicipality !== null) return getters.filterNewsSelectedMunicipality
     if (rootState.locations.selectedCounty !== null) return getters.filterNewsSelectedCounty
     return []
   },
-  filterNewsSelectedCounty: (state, getters, rootState, rootGetters) => {
+  filterNewsSelectedCounty: (_state, getters, rootState, _rootGetters) => {
     return getters.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty))
   },
-  filterNewsSelectedMunicipality: (state, getters, rootState, rootGetters) => {
+  filterNewsSelectedMunicipality: (_state, getters, rootState, _rootGetters) => {
     return getters.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality))
   },
-  filterNewsSelectedCity: (state, getters, rootState, rootGetters) => {
+  filterNewsSelectedCity: (_state, getters, rootState, _rootGetters) => {
     return getters.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
   },
-  newsByCounty: (state, getters, rootState) => {
+  newsByCounty: (_state, getters, _rootState) => {
     const countyWithNews = getters.newsList.reduce((newsById, news) => {
       const id = news.locationIds.countyId
       if (id === '' || id === undefined) return { ...newsById }
@@ -57,7 +57,7 @@ const getters = {
       }
     })
   },
-  newsByMunicipality: (state, getters, rootState) => {
+  newsByMunicipality: (_state, getters, _rootState) => {
     const municipalityWithNews = getters.newsList.reduce((newsById, news) => {
       const id = news.locationIds.municipalityId
       if (id === '' || id === undefined) return { ...newsById }
@@ -81,7 +81,7 @@ const getters = {
       }
     })
   },
-  newsByCity: (state, getters, rootState) => {
+  newsByCity: (_state, getters, _rootState) => {
     const citiesWithNews = getters.newsList.reduce((newsById, news) => {
       const id = news.locationIds.cityId
       if (id === '' || id === undefined) return { ...newsById }
@@ -116,7 +116,7 @@ const actions = {
   setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
   addNews: ({ dispatch }, news) => dispatch('addNewsList', [ news ]),
   addNewsList: ({ commit, rootGetters }, newsList) => {
-    newsList = newsList.filter((news, index, newsList) => !rootGetters.newsList.find(x => x.id === news.id))
+    newsList = newsList.filter((news) => !rootGetters.newsList.find(x => x.id === news.id))
     newsList = newsList.map(news => {
       let locationIds = {}
       let location = { ...news.location }
