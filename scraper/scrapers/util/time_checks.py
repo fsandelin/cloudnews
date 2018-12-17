@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import json
 
 import pytz
-UTC=pytz.UTC
+stockholm=pytz.timezone('Europe/Stockholm')
 EARLIER = True
 LATER = False
 
@@ -14,8 +14,8 @@ AFTER = False
 
 def check_time(news, choice, time_date):
     news_dt = parser.parse(news['datetime'])
-    news_dt = news_dt.replace(tzinfo=UTC)
-    time_date = time_date.replace(tzinfo=UTC)   
+    news_dt = news_dt.replace(tzinfo=stockholm)
+    time_date = time_date.replace(tzinfo=stockholm)   
 
     if choice == BEFORE:
         return news_dt < time_date
@@ -24,9 +24,9 @@ def check_time(news, choice, time_date):
 
 def check_time_range(news, from_, until_):
     news_dt = parser.parse(news['datetime'])
-    news_dt = news_dt.replace(tzinfo=UTC)
-    from_ = from_.replace(tzinfo=UTC)
-    until_ = until_.replace(tzinfo=UTC)   
+    news_dt = news_dt.replace(tzinfo=stockholm)          
+    from_ = from_.replace(tzinfo=stockholm)
+    until_ = until_.replace(tzinfo=stockholm)
 
     return (news_dt > from_ and news_dt < until_)
 
@@ -36,7 +36,7 @@ def get_time_diff(first_item, last_item):
     # datetime is the key we use
 
     if isinstance(first_item, datetime):
-        first_dt = first_item.replace(tzinfo=UTC) 
+        first_dt = first_item.replace(tzinfo=stockholm) 
 
     elif 'published' in first_item:
         first_dt = parser.parse(first_item['published'])
@@ -45,7 +45,7 @@ def get_time_diff(first_item, last_item):
         first_dt = parser.parse(first_item['datetime'])
     
     if isinstance(last_item, datetime):
-        last_dt = last_item.replace(tzinfo=UTC) 
+        last_dt = last_item.replace(tzinfo=stockholm) 
 
     elif 'published' in last_item:
         last_dt = parser.parse(last_item['published'])

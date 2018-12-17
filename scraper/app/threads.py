@@ -38,7 +38,7 @@ def post_timespan(from_, until_, news_list, service="svt"):
         body = {}
 
         body['service'] = service
-        body['timespan'] = {'from' : str(from_), 'until' : str(until_)}
+        body['timespan'] = {'from' : from_.isoformat(), 'until' : until_.isoformat()}
         body['news'] = page
         print("Size of body:", len(body['news']))
         try:
@@ -53,7 +53,7 @@ def post_livenews(from_, until_, news_list, service="svt"):
     body = {}
 
     body['service'] = service
-    body['timespan'] = {'from' : str(from_), 'until' : str(until_)}
+    body['timespan'] = {'from' : from_.isoformat(), 'until' : until_.isoformat()}
     body['news'] = news_list
 
     try:
