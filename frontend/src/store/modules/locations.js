@@ -46,20 +46,26 @@ const getters = {
   countyByName: state => (name = '') => {
     return state.counties.find(county => cleanString(county.name) === cleanString(name))
   },
-  countyByid: state => (id) => {
-    return state.counties[id]
+  countyById: state => (id = -1) => {
+    return !isNaN(id) && parseInt(Number(id)) === id && !isNaN(parseInt(id, 10)) && id >= 0
+      ? state.counties[id]
+      : null
   },
   municipalityByName: (state) => (name = '') => {
     return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name))
   },
-  municipalityById: (state) => (id) => {
-    return state.municipalities[id]
+  municipalityById: (state) => (id = -1) => {
+    return !isNaN(id) && parseInt(Number(id)) === id && !isNaN(parseInt(id, 10)) && id >= 0
+      ? state.municipalities[id]
+      : null
   },
   cityByName: (state) => (name = '') => {
     return state.cities.find(city => cleanString(city.name) === cleanString(name))
   },
-  cityById: (state) => (id) => {
-    return state.cities[id]
+  cityById: (state) => (id = -1) => {
+    return !isNaN(id) && parseInt(Number(id)) === id && !isNaN(parseInt(id, 10)) && id >= 0
+      ? state.cities[id]
+      : null
   }
 }
 

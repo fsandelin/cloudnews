@@ -1,6 +1,10 @@
 import { months as m } from './constants'
 
-export const cleanString = s => s.trim().toLowerCase()
+export const cleanString = s => {
+  return typeof s === 'string' || s instanceof String
+    ? s.trim().toLowerCase()
+    : null
+}
 
 export const numToMonth = num => m[Object.keys(m)[num - 1]]
 
