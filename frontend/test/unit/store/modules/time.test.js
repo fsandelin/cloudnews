@@ -1,5 +1,24 @@
 import store from '../../../../src/store'
 
+// const today
+const today = new Date()
+const todayObj = {
+  year: today.getFullYear(),
+  month: today.getMonth() + 1,
+  day: today.getDate()
+}
+
+beforeEach(() => {
+  store.commit('saveDates', {
+    startDate: todayObj,
+    endDate: null,
+    newsStartDate: todayObj,
+    newsEndDate: null,
+    currentYear: todayObj.year,
+    currentMonth: todayObj.month
+  })
+})
+
 describe('time getters', () => {
   describe('getters.currentYear', () => {
     test('Initial getters.currentYear is this year', () => {
@@ -21,13 +40,7 @@ describe('time getters', () => {
 
   describe('getters.startDate', () => {
     test('Initial getters.startDate is this today', () => {
-      const date = new Date()
-      const today = {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate()
-      }
-      expect(store.getters.startDate).toEqual(today)
+      expect(store.getters.startDate).toEqual(todayObj)
     })
   })
 
@@ -39,13 +52,7 @@ describe('time getters', () => {
 
   describe('getters.newsStartDate', () => {
     test('Initial getters.newsStartDate is this today', () => {
-      const date = new Date()
-      const today = {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1,
-        day: date.getDate()
-      }
-      expect(store.getters.newsStartDate).toEqual(today)
+      expect(store.getters.newsStartDate).toEqual(todayObj)
     })
   })
 
@@ -72,6 +79,24 @@ describe('time getters', () => {
   })
 
   describe('getters.getDaysToDisplay', () => {
+    const someDate = new Date('2016-01-01')
+    const someDateObj = {
+      year: someDate.getFullYear(),
+      month: someDate.getMonth() + 1,
+      day: someDate.getDate()
+    }
+    store.commit('saveDates', {
+      startDate: someDateObj,
+      endDate: null,
+      newsStartDate: someDateObj,
+      newsEndDate: null,
+      currentYear: someDateObj.year,
+      currentMonth: someDateObj.month
+    })
+    test('getters.getDaysToDisplay for 2016-01-1 have length 42', () => {
+      expect(store.getters.getDaysToDisplay.length).toEqual(42)
+    })
+
     // TODO: add tests
   })
 
