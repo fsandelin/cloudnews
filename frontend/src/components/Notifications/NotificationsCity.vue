@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/velocityAnimate.js'
 
 export default {
   name: 'NotificationsCity',
