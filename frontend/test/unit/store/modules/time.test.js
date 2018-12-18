@@ -79,25 +79,39 @@ describe('time getters', () => {
   })
 
   describe('getters.getDaysToDisplay', () => {
-    const someDate = new Date('2016-01-01')
-    const someDateObj = {
-      year: someDate.getFullYear(),
-      month: someDate.getMonth() + 1,
-      day: someDate.getDate()
-    }
-    store.commit('saveDates', {
-      startDate: someDateObj,
-      endDate: null,
-      newsStartDate: someDateObj,
-      newsEndDate: null,
-      currentYear: someDateObj.year,
-      currentMonth: someDateObj.month
-    })
-    test('getters.getDaysToDisplay for 2016-01-1 have length 42', () => {
+    test('Initial getters.getDaysToDisplay return 42 days', () => {
       expect(store.getters.getDaysToDisplay.length).toEqual(42)
     })
 
-    // TODO: add tests
+    test('getters.getDaysToDisplay for 2018-02-01: day numbers and months are correct', () => {
+      const someDate = new Date('2018-02-01')
+      const someDateObj = {
+        year: someDate.getFullYear(),
+        month: someDate.getMonth() + 1,
+        day: someDate.getDate()
+      }
+      store.commit('saveDates', {
+        startDate: someDateObj,
+        endDate: null,
+        newsStartDate: someDateObj,
+        newsEndDate: null,
+        currentYear: someDateObj.year,
+        currentMonth: someDateObj.month
+      })
+
+      const dayNumbers = [29, 30, 31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+      store.getters.getDaysToDisplay.map((day, i) => {
+        expect(day.day).toEqual(dayNumbers[i])
+        if (i < 3) {
+          expect(day.month).toEqual(1)
+        } else if (i > 30) {
+          expect(day.month).toEqual(3)
+        } else {
+          expect(day.month).toEqual(2)
+        }
+      })
+    })
   })
 
   describe('getters.daysByRow', () => {

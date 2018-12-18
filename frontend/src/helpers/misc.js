@@ -19,7 +19,7 @@ export const numToMonth = num => {
     : null
 }
 
-export const getDaysForMonth = (year, month) => new Date(year, month + 1, 0).getDate()
+export const getDaysForMonth = (year, month) => new Date(year, month, 0).getDate()
 
 export const getNumArrayBetweenNums = (start, end) => {
   let arr = []
