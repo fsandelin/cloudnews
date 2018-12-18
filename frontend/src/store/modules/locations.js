@@ -5,13 +5,13 @@
 import { cleanString } from '../../helpers/misc'
 
 const state = {
-  countries: null,
-  counties: null,
-  municipalities: null,
-  cities: null,
-  mapCountyNameId: null,
-  mapMunicipalityNameId: null,
-  mapCityNameId: null,
+  countries: [],
+  counties: [],
+  municipalities: [],
+  cities: [],
+  mapCountyNameId: {},
+  mapMunicipalityNameId: {},
+  mapCityNameId: {},
   mapCities: [],
   selectedCounty: null,
   selectedCountyId: null,
@@ -65,11 +65,9 @@ const getters = {
     return state.counties.filter(county => county.id === state.selectedCountyId)
   },
   activeMunicipalities: state => {
-    if (state.municipalities === null) return []
     return state.municipalities.filter(municipality => municipality.county === state.selectedCounty)
   },
   activeCities: state => {
-    if (state.cities === null) return []
     return state.cities.filter(city => city.municipality === state.selectedMunicipality)
   },
   countyByName: (state, getters) => (name = '') => {
@@ -196,7 +194,6 @@ const mutations = {
     state.selectedCity = null
   },
   setActiveMapCitiesBasedOnPopulation (state, population) {
-    if (state.cities === null) return
     state.mapCities = state.cities.filter(city => city.population > population)
   }
 }
