@@ -36,10 +36,14 @@ function requestTimespan(request, response) {
   const { requestId, requestedResource } = request.body;
   logger.debug(`Got a request for: ${JSON.stringify(requestedResource)}`);
   if (requestedResource) {
-    response.sendStatus(200);
     requestedResource.from = new Date(requestedResource.from);
     requestedResource.until = new Date(requestedResource.until);
+    if (requestedResource.until >= Date.now()) {
+      response.setStatus(400).send('You have requested things newer than the current time, plz dont.');
+      return;
+    }
     addRequest(requestId, requestedResource);
+    response.sendStatus(200);
   } else {
     logger.error('Got a request without a requestedResource');
     response.sendStatus(400);

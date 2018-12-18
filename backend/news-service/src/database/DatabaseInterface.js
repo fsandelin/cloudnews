@@ -7,8 +7,12 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
   logger.debug('Filling timespan');
   const prefetchedCollectionName = 'prefetched';
   const articlesCollectionName = `articles_${service}`;
-  // const timespan.from = new Date(timespan.from);
-  // const timespan.until = new Date(timespan.until);
+
+  if (timespan.until > Date.now() || timespan.from >= timespan.until) {
+    callback('The timespan you have provided is invalid.');
+    return;
+  }
+
   dbConnection.connect((error, client) => {
     logger.debug('Creating a session');
     const session = dbConnection.getSession();
@@ -60,7 +64,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
               logger.error('Tried to insert entities into databse which share URL');
             }
           }
-          logger.debug(`Should remove timespans: ${JSON.stringify(includedTimespans)}`)
+          logger.debug(`Should remove timespans: ${JSON.stringify(includedTimespans)}`);
           const query = {
             service,
           };
