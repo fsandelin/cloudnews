@@ -1,14 +1,17 @@
-import europeCountries from '../../assets/meta-info-europe-countries.min.json'
-import swedishCounties from '../../assets/meta-info-sweden-counties.min.json'
-import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.min.json'
-import swedishCities from '../../assets/meta-info-sweden-cities.min.json'
+// import europeCountries from '../../assets/meta-info-europe-countries.min.json'
+// import swedishCounties from '../../assets/meta-info-sweden-counties.min.json'
+// import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.min.json'
+// import swedishCities from '../../assets/meta-info-sweden-cities.min.json'
 import { cleanString } from '../../helpers/misc'
 
 const state = {
-  countries: europeCountries.map(x => ({ ...x, name: cleanString(x.name), active: true })).filter(({ name }) => name !== 'sweden'),
-  counties: swedishCounties.map(x => ({ ...x, name: cleanString(x.name), active: true })),
-  municipalities: swedishMunicipalities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
-  cities: swedishCities.map(x => ({ ...x, name: cleanString(x.name), active: false })),
+  countries: null,
+  counties: null,
+  municipalities: null,
+  cities: null,
+  mapCountyNameId: null,
+  mapMunicipalityNameId: null,
+  mapCityNameId: null,
   mapCities: [],
   selectedCounty: null,
   selectedCountyId: null,
@@ -62,25 +65,30 @@ const getters = {
     return state.counties.filter(county => county.id === state.selectedCountyId)
   },
   activeMunicipalities: state => {
+    if (state.municipalities === null) return []
     return state.municipalities.filter(municipality => municipality.county === state.selectedCounty)
   },
   activeCities: state => {
+    if (state.cities === null) return []
     return state.cities.filter(city => city.municipality === state.selectedMunicipality)
   },
-  countyByName: state => (name = '') => {
-    return state.counties.find(county => cleanString(county.name) === cleanString(name))
+  countyByName: (state, getters) => (name = '') => {
+    const countyId = state.mapCountyNameId[cleanString(name)]
+    return countyId === null ? null : getters.countyById(countyId)
   },
   countyById: state => (id) => {
     return state.counties[id]
   },
-  municipalityByName: (state) => (name = '') => {
-    return state.municipalities.find(municipality => cleanString(municipality.name) === cleanString(name))
+  municipalityByName: (state, getters) => (name = '') => {
+    const municipalityId = state.mapMunicipalityNameId[cleanString(name)]
+    return municipalityId === null ? null : getters.municipalityById(municipalityId)
   },
   municipalityById: (state) => (id) => {
     return state.municipalities[id]
   },
-  cityByName: (state) => (name = '') => {
-    return state.cities.find(city => cleanString(city.name) === cleanString(name))
+  cityByName: (state, getters) => (name = '') => {
+    const cityId = state.mapCityNameId[cleanString(name)]
+    return cityId === null ? null : getters.cityById(cityId)
   },
   cityById: (state) => (id) => {
     return state.cities[id]
@@ -88,6 +96,10 @@ const getters = {
 }
 
 const actions = {
+  setCountries: ({ commit }, countries) => commit('setCountries', countries),
+  setCounties: ({ commit }, counties) => commit('setCounties', counties),
+  setMunicipalities: ({ commit }, municipalities) => commit('setMunicipalities', municipalities),
+  setCities: ({ commit }, cities) => commit('setCities', cities),
   selectCounty: ({ commit }, countyName) => commit('selectCounty', countyName),
   selectMunicipality: ({ commit }, municipalityName) => commit('selectMunicipality', municipalityName),
   selectCity: ({ commit }, cityName) => commit('selectCity', cityName),
@@ -110,6 +122,30 @@ const actions = {
 }
 
 const mutations = {
+  setCountries (state, countries) {
+    state.countries = countries.filter(({ name }) => name !== 'sweden')
+  },
+  setCounties (state, counties) {
+    state.counties = counties
+    state.mapCountyNameId = counties.reduce((map, county) => {
+      map[county.name] = county.id
+      return map
+    }, {})
+  },
+  setMunicipalities (state, municipalities) {
+    state.municipalities = municipalities
+    state.mapMunicipalityNameId = municipalities.reduce((map, municipality) => {
+      map[municipality.name] = municipality.id
+      return map
+    }, {})
+  },
+  setCities (state, cities) {
+    state.cities = cities
+    state.mapCityNameId = cities.reduce((map, city) => {
+      map[city.name] = city.id
+      return map
+    }, {})
+  },
   selectCounty (state, county) {
     state.selectedCounty = county !== null ? county.name : null
     state.selectedCountyId = county !== null ? county.id : null
@@ -160,6 +196,7 @@ const mutations = {
     state.selectedCity = null
   },
   setActiveMapCitiesBasedOnPopulation (state, population) {
+    if (state.cities === null) return
     state.mapCities = state.cities.filter(city => city.population > population)
   }
 }
