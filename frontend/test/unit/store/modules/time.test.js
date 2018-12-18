@@ -132,7 +132,45 @@ describe('time getters', () => {
   })
 
   describe('getters.daysByRow', () => {
-    // TODO: add tests
+    test('getters.daysByRow give correct number of rows and days per row', () => {
+      expect(store.getters.daysByRow.length).toEqual(6)
+
+      store.getters.daysByRow.map(row => {
+        expect(row.length).toEqual(7)
+      })
+    })
+
+    test('getters.daysByRow for 2018-02-01: give correct day numbers per row', () => {
+      const someDate = new Date('2018-02-01')
+      const someDateObj = {
+        year: someDate.getFullYear(),
+        month: someDate.getMonth() + 1,
+        day: someDate.getDate()
+      }
+      store.commit('saveDates', {
+        startDate: someDateObj,
+        endDate: null,
+        newsStartDate: someDateObj,
+        newsEndDate: null,
+        currentYear: someDateObj.year,
+        currentMonth: someDateObj.month
+      })
+
+      const dayNumberRows = [
+        [29, 30, 31, 1, 2, 3, 4],
+        [5, 6, 7, 8, 9, 10, 11],
+        [12, 13, 14, 15, 16, 17, 18],
+        [19, 20, 21, 22, 23, 24, 25],
+        [26, 27, 28, 1, 2, 3, 4],
+        [5, 6, 7, 8, 9, 10, 11]
+      ]
+
+      store.getters.daysByRow.map((row, rowIdx) => {
+        row.map((day, dayIdx) => {
+          expect(day.day).toEqual(dayNumberRows[rowIdx][dayIdx])
+        })
+      })
+    })
   })
 })
 
