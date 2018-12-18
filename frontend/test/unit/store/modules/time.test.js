@@ -69,7 +69,24 @@ describe('time getters', () => {
   })
 
   describe('getters.dateBetween', () => {
-    // TODO: add tests
+    test('Initial getters.dateBetween returns true when a date is between two dates', () => {
+      const dateBefore = {
+        year: 2017,
+        month: 2,
+        day: 28
+      }
+      const dateBetween = {
+        year: 2017,
+        month: 3,
+        day: 1
+      }
+      const dateAfter = {
+        year: 2018,
+        month: 1,
+        day: 1
+      }
+      expect(store.getters.dateBetween(dateBetween, dateBefore, dateAfter)).toEqual(true)
+    })
   })
 
   describe('getters.numToMonth', () => {
