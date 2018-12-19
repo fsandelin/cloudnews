@@ -112,10 +112,19 @@ const getters = {
   }
 }
 
+let numberRetries = 0
+
 const actions = {
   setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
   addNews: ({ dispatch }, news) => dispatch('addNewsList', [ news ]),
-  addNewsList: ({ commit, rootGetters }, newsList) => {
+  addNewsList: ({ commit, rootGetters, dispatch }, newsList) => {
+    if (!rootGetters.mapLoaded) {
+      numberRetries += 1
+      if (numberRetries > 1000) return
+      return setTimeout(() => dispatch('addNewsList', newsList), numberRetries * 100)
+    }
+
+    numberRetries = 0
     newsList = newsList.filter((news) => !rootGetters.newsList.find(x => x.id === news.id))
     newsList = newsList.map(news => {
       const datetime = convertDateStringToDateObj(news.datetime)

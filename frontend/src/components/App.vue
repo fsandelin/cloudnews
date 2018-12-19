@@ -22,6 +22,7 @@
     </DrawerContainer>
 
     <ToggleButtons
+      :v-if="mapLoaded"
       :items="newsSources"
       :toggleActive="toggleNewsSource" />
   </div>
@@ -39,7 +40,6 @@ import NewsSideBar from './News/NewsSideBar'
 import PopUpContainer from './PopUp/PopUpContainer'
 import ToggleButtons from './ToggleButtons/ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
-import { fakeNewsList } from '../assets/FakeData'
 import * as jsonLoader from '../helpers/jsonLoader'
 
 export default {
@@ -95,10 +95,6 @@ export default {
     jsonLoader.getEuropeCountries().then((value) => {
       this.setCountries(value.data)
     })
-
-    setTimeout(() => {
-      this.addNewsList(fakeNewsList)
-    }, 2000)
   },
   methods: {
     ...mapActions([
@@ -108,7 +104,8 @@ export default {
       'setCountries',
       'setCounties',
       'setMunicipalities',
-      'setCities'
+      'setCities',
+      'mapLoaded'
     ])
   }
 }

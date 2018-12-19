@@ -5,6 +5,10 @@
 import { cleanString } from '../../helpers/misc'
 
 const state = {
+  countriesLoaded: false,
+  countiesLoaded: false,
+  municipalitiesLoaded: false,
+  citiesLoaded: false,
   countries: [],
   counties: [],
   municipalities: [],
@@ -28,6 +32,9 @@ const state = {
 }
 
 const getters = {
+  mapLoaded: state => {
+    return state.countriesLoaded && state.countiesLoaded && state.municipalitiesLoaded && state.citiesLoaded
+  },
   countries: state => {
     return state.countries
   },
@@ -122,6 +129,7 @@ const actions = {
 const mutations = {
   setCountries (state, countries) {
     state.countries = countries.filter(({ name }) => name !== 'sweden')
+    state.countriesLoaded = true
   },
   setCounties (state, counties) {
     state.counties = counties
@@ -129,6 +137,7 @@ const mutations = {
       map[county.name] = county.id
       return map
     }, {})
+    state.countiesLoaded = true
   },
   setMunicipalities (state, municipalities) {
     state.municipalities = municipalities
@@ -136,6 +145,7 @@ const mutations = {
       map[municipality.name] = municipality.id
       return map
     }, {})
+    state.municipalitiesLoaded = true
   },
   setCities (state, cities) {
     state.cities = cities
@@ -143,6 +153,7 @@ const mutations = {
       map[city.name] = city.id
       return map
     }, {})
+    state.citiesLoaded = true
   },
   selectCounty (state, county) {
     state.selectedCounty = county !== null ? county.name : null

@@ -16,7 +16,6 @@ module.exports = {
       { from: './src/assets/meta-info-sweden-counties.min.json', to: 'meta-info-sweden-counties.min.json' },
       { from: './src/assets/meta-info-sweden-municipalities.min.json', to: 'meta-info-sweden-municipalities.min.json' },
       { from: './src/assets/meta-info-sweden-cities.min.json', to: 'meta-info-sweden-cities.min.json' }
-
     ])
   ],
   module: {
