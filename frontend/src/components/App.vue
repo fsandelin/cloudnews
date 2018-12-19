@@ -41,6 +41,7 @@ import PopUpContainer from './PopUp/PopUpContainer'
 import ToggleButtons from './ToggleButtons/ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
 import * as jsonLoader from '../helpers/jsonLoader'
+
 export default {
   name: 'App',
   components: {
