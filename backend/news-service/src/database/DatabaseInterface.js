@@ -177,7 +177,7 @@ function getEntriesPaged(service, from, until, pageNumber = 1, callback = () => 
       datetime: 1,
     };
     logger.debug(`Getting article-page #${pageNumber} for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
-    db.collection(collectionName).find(query).sort(sorter).skip(config.pageSize * pageNumber)
+    db.collection(collectionName).find(query, { _id: false }).sort(sorter).skip(config.pageSize * pageNumber)
       .limit(config.pageSize)
       .toArray()
       .then((page) => {
@@ -194,7 +194,7 @@ function getEntriesPaged(service, from, until, pageNumber = 1, callback = () => 
 
 // Returns an array of timespans that are missing to fulfill a requested timespan for a given service and timespans already available.
 function computeMissingSpans(service, serviceTimespans, requestFrom, requestUntil) {
-  logger.debug('computeMissingTimespans()');
+  logger.debug(`computeMissingTimespans() for service: ${service}, serviceTimespans: ${JSON.stringify(serviceTimespans)}, requestFrom: ${requestFrom.toISOString()}, requestUntil: ${requestUntil.toISOString()}`);
   const missingTimespans = [];
   let tentFrom = new Date(requestFrom);
   const until = new Date(requestUntil);
@@ -213,11 +213,11 @@ function computeMissingSpans(service, serviceTimespans, requestFrom, requestUnti
         missingTimespans.push({ service, from: tentFrom, until });
         return missingTimespans;
       }
-      missingTimespans.push({ service, from: tentFrom, until: new Date(currentDateFrom.setDate(currentDateFrom.getDate() - 1)) });
+      missingTimespans.push({ service, from: tentFrom, until: currentDateFrom });
       if (until <= currentDateUntil) {
         return missingTimespans;
       }
-      tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
+      tentFrom = currentDateUntil;
       continue;
     }
     if (tentFrom >= currentDateFrom) {
@@ -227,7 +227,7 @@ function computeMissingSpans(service, serviceTimespans, requestFrom, requestUnti
       if (until <= currentDateUntil) {
         return missingTimespans;
       }
-      tentFrom = new Date(currentDateUntil.setDate(currentDateUntil.getDate() + 1));
+      tentFrom = currentDateUntil;
     }
   }
   missingTimespans.push({ service, from: tentFrom, until });
@@ -249,7 +249,6 @@ function getMissingTimespans(requestedResource, callback) {
     db.collection(config.scraperMetaCollectionName).findOne(query, { _id: false }, (err, results) => {
       if (results === undefined) {
         logger.warn(`No meta-collection entry for service: ${service}`);
-        // should create an entry for service
       }
       const needed = computeMissingSpans(service, results, from, until);
       callback(needed);
