@@ -1,4 +1,5 @@
 const cities = require('./../assets/cities.json');
+const uuid = require('uuid/v4');
 
 const tweetIsFromASwedishCity = (place) => {
   return (place !== null && place.country_code === 'SE' && place.place_type === 'city' && cities[place.name] !== undefined);
@@ -25,7 +26,7 @@ const formatTweet = (tweet) => {
   };
 };
 
-module.exporst = {
+module.exports = {
   tweetIsFromASwedishCity,
   formatTweet
 };

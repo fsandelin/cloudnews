@@ -1,8 +1,7 @@
-require('dotenv').config();
 const Twitter = require('Twitter');
 const axios = require('axios');
-const newsServiceUrl = require('./helpers/constants');
-const boundingBoxCoordinatesAroundSweden = require('./helpers/constants');
+const { newsServiceUrl } = require('./helpers/constants');
+const { boundingBoxCoordinatesAroundSweden } = require('./helpers/constants');
 const { twitterAccessTokenKey, twitterAccessTokenSecret, twitterConsumerKey, twitterConsumerSecret } = require('./helpers/constants');
 const { tweetIsFromASwedishCity, formatTweet } = require('./helpers/misc');
 
