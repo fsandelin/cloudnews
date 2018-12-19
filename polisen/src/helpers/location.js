@@ -1,5 +1,5 @@
-const counties = require('./assets/counties.json');
-const municipalities = require('./assets/municipalities.json');
+const counties = require('./../assets/counties.json');
+const municipalities = require('./../assets/municipalities.json');
 const { findStringInText } = require('./misc');
 
 const municipalityWithSuffix = (municipality) => {
