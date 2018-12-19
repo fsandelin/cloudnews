@@ -12,13 +12,17 @@ from time import sleep
 
 from multiprocessing import Process
 
+from pytz import timezone
+
+stockholm = timezone('Europe/Stockholm')
+
 @app.route('/getnews/daterange/thread', methods=['POST'])
 def get_date_ranges_thread():
 
     content = request.get_json()
 
     news_list = []
-
+    
     for timespan in content:
         print(timespan)
 
@@ -27,8 +31,7 @@ def get_date_ranges_thread():
         from_ = parser.parse(from_)
         until_ = parser.parse(until_)
         
-        from_ = datetime.combine(from_.date(), datetime.min.time())
-        until_ = datetime.combine(until_.date(), datetime.max.time())
+        print("from:", from_, "until:", until_)
 
         process = Process(target=thread_get_news, args=(from_, until_))
         process.start()

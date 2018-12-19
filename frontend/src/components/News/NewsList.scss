@@ -1,0 +1,9 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+.scroller {
+  flex: 1;
+  overflow-y: scroll;
+  height: 100% !important;
+}

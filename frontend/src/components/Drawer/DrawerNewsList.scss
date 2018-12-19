@@ -1,0 +1,31 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+#drawer-news-list {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    color: $white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 30px;
+    text-transform: capitalize;
+    min-height: 50px;
+    background-color: $darkblue;
+
+    i, .title {
+      margin: auto 0;
+    }
+
+    i:hover {
+      color: $darkgreen;
+    }
+
+    .title {
+      flex: 1;
+      padding: 0;
+    }
+  }
+}

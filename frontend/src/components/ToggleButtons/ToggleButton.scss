@@ -1,0 +1,49 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+.toggle-button {
+  .text {
+    color: $darkgrey;
+    font-weight: bold;
+  }
+
+  .background, .circle {
+    height: 30px;
+    background-color: $white;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .background {
+      box-shadow: 0px 0px 2px 0px $shadowblack;
+      transition: 0.2s;
+    }
+  }
+  .background {
+    width: 60px;
+    border: 1px solid $lightgrey;
+    box-sizing: border-box;
+    margin: 0 auto;
+
+    .circle {
+      transition: 0.3s;
+      width: 28px;
+    }
+
+    &.active {
+      background-color: $darkgreen;
+
+      .circle {
+        margin-left: 31px;
+      }
+    }
+
+    &:not(.active) {
+      .circle {
+        margin-left: 0px;
+      }
+    }
+  }
+}

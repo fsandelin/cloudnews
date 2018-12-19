@@ -1,0 +1,12 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+#drawer {
+  width: 400px;
+  max-height: 80%;
+  right: 40px;
+  margin-left: auto;
+  background-color: $white;
+  position: absolute;
+}

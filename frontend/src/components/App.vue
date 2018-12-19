@@ -1,61 +1,68 @@
 <template>
   <div id="app">
-    <newssidebar
-      v-bind:showFilter="true"
-    ></newssidebar>
+    <NewsSideBar :showFilter="true" />
 
-    <datepicker v-if="showDatePicker"></datepicker>
-    <datepickertoggler v-if="!showDatePicker"></datepickertoggler>
+    <PopUpContainer v-if="showPopUp">
+      <AboutPage v-if="showAboutPage" />
+      <DatePicker v-if="showDatePicker" />
+    </PopUpContainer>
 
-    <mainsection></mainsection>
+    <DatePickerToggler />
 
-    <drawer
-      v-bind:isOpen="drawerIsOpen"
-      v-bind:toggleDrawer="toggleDrawer">
-      <component
-        v-if="activeNewsItem !== null"
-        v-bind:is="dynamicComponents.drawerNewsItemComponent">
-      </component>
+    <MapSVG />
 
-      <component
-        v-if="selectedCounty !== null && this.activeNewsItem === null"
-        v-bind:showFilter="false"
-        v-bind:is="dynamicComponents.drawerNewsList">
-      </component>
-    </drawer>
+    <DrawerContainer :isOpen="drawerIsOpen">
+      <Component
+        :is="dynamicComponents.drawerNewsItemComponent"
+        v-if="activeNewsItem !== null" />
+      <Component
+        :is="dynamicComponents.drawerNewsList"
+        v-if="selectedCounty !== null && activeNewsItem === null"
+        :showFilter="false" />
+    </DrawerContainer>
 
-    <togglebuttons
-      v-bind:items="newsSources"
-      v-bind:toggleActive="toggleNewsSource">
-    </togglebuttons>
+    <ToggleButtons
+      :items="newsSources"
+      :toggleActive="toggleNewsSource" />
   </div>
 </template>
 
 <script>
-import Main from './Main'
-import DatePicker from './DatePicker'
-import DatePickerToggler from './DatePickerToggler'
-import DrawerNewsItem from './DrawerNewsItem'
-import NewsSideBar from './NewsSideBar'
-import Drawer from './Drawer'
-import DrawerNewsList from './DrawerNewsList'
-import ToggleButtons from './ToggleButtons'
-import { mapGetters, mapActions } from 'vuex';
+import AboutPage from './About/AboutPage'
+import DatePicker from './DatePicker/DatePicker'
+import DatePickerToggler from './DatePicker/DatePickerToggler'
+import DrawerContainer from './Drawer/DrawerContainer'
+import DrawerNewsItem from './Drawer/DrawerNewsItem'
+import DrawerNewsList from './Drawer/DrawerNewsList'
+import MapSVG from './Map/MapSVG'
+import NewsSideBar from './News/NewsSideBar'
+import PopUpContainer from './PopUp/PopUpContainer'
+import ToggleButtons from './ToggleButtons/ToggleButtons'
+import { mapGetters, mapActions } from 'vuex'
 import { fakeNewsList } from '../assets/FakeData'
 
 export default {
-  name: 'app',
+  name: 'App',
+  components: {
+    'AboutPage': AboutPage,
+    'MapSVG': MapSVG,
+    'PopUpContainer': PopUpContainer,
+    'DatePicker': DatePicker,
+    'DatePickerToggler': DatePickerToggler,
+    'drawernewsitem': DrawerNewsItem,
+    'NewsSideBar': NewsSideBar,
+    'DrawerContainer': DrawerContainer,
+    'drawernewslist': DrawerNewsList,
+    'ToggleButtons': ToggleButtons
+  },
   data () {
     return {
       dynamicComponents: {
         drawerNewsItemComponent: 'drawernewsitem',
         newsListComponent: 'newslist',
         drawerNewsList: 'drawernewslist'
-      },
+      }
     }
-  },
-  created: function () {
-    fakeNewsList.map(newsItem => this.addNews(newsItem))
   },
   computed: {
     ...mapGetters([
@@ -63,31 +70,29 @@ export default {
       'activeNewsItemId',
       'selectedCounty',
       'newsSources',
-      'showDatePicker'
+      'showDatePicker',
+      'showAboutPage'
     ]),
     drawerIsOpen: function () {
-      return this.activeNewsItemId !== null || this.selectedCounty !== null
+      return this.activeNewsItemId !== null || this.selectedCounty !== null
+    },
+    showPopUp: function () {
+      return this.showDatePicker || this.showAboutPage
     }
+  },
+  created: function () {
+    this.fetchAvailableNewsSources()
+    fakeNewsList.map(newsItem => this.addNews(newsItem))
   },
   methods: {
     ...mapActions([
+      'fetchAvailableNewsSources',
       'addNews',
       'toggleDrawer',
-      'toggleNewsSource',
-    ]),
-  },
-  components: {
-    'mainsection': Main,
-    'datepicker': DatePicker,
-    'datepickertoggler': DatePickerToggler,
-    'drawernewsitem': DrawerNewsItem,
-    'newssidebar': NewsSideBar,
-    'drawer': Drawer,
-    'drawernewslist': DrawerNewsList,
-    'togglebuttons': ToggleButtons
+      'toggleNewsSource'
+    ])
   }
 }
 </script>
 
-<style src="../styles/App.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./App.scss" lang="scss" scoped></style>

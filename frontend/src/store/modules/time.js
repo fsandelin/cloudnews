@@ -1,27 +1,27 @@
 import {
   weekDays as wd,
   TOTAL_DAYS_TO_SHOW
-} from '../constants'
+} from '../../helpers/constants'
 import {
   numToMonth,
   getDaysForMonth,
   getNumArrayBetweenNums,
   dateIsBefore,
-  weekNumsForMonth,
   sameDates,
-  prettifyDateObject
-} from '../helpers'
+  prettifyDateObject,
+  dateObjToISO
+} from '../../helpers/misc'
 
 const today = new Date()
 
 const state = {
-  currentYear: today.getFullYear() - 1,
+  today: prettifyDateObject({ year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() }),
+  currentYear: today.getFullYear(),
   currentMonth: today.getMonth() + 1,
   weekDays: [ wd.MONDAY, wd.TUESDAY, wd.WEDNESDAY, wd.THURSDAY, wd.FRIDAY, wd.SATURDAY, wd.SUNDAY ],
-  weekNumbers: weekNumsForMonth(today.getFullYear() - 1, today.getMonth() + 1),
-  startDate: { year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() },
+  startDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   endDate: null,
-  newsStartDate: { year: today.getFullYear() - 1, month: today.getMonth() + 1, day: today.getDate() },
+  newsStartDate: { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() },
   newsEndDate: null,
   hoverDate: null
 }
@@ -30,7 +30,6 @@ const getters = {
   currentYear: state => state.currentYear,
   currentMonth: state => state.currentMonth,
   weekDays: state => state.weekDays,
-  weekNumbers: state => state.weekNumbers,
   startDate: state => state.startDate,
   endDate: state => state.endDate,
   newsStartDate: state => state.newsStartDate,
@@ -47,7 +46,7 @@ const getters = {
     const currentDaysToFill = getNumArrayBetweenNums(1, daysForCurrentMonth + 1)
       .map(i => ({ year: state.currentYear, month: state.currentMonth, day: i }))
 
-    const weekDay = new Date(state.currentYear, state.currentMonth, 1).getDay()
+    const weekDay = new Date(state.currentYear, state.currentMonth - 1, 1).getDay()
     const numPreviousDaysToFill = weekDay === 0 ? 7 : weekDay
 
     const daysForPreviousMonth = state.currentMonth === 0
@@ -60,18 +59,24 @@ const getters = {
     const numNextDaysToFill = TOTAL_DAYS_TO_SHOW - (daysForCurrentMonth + numPreviousDaysToFill)
 
     const nextDaysToFill = getNumArrayBetweenNums(1, numNextDaysToFill + 2)
-      .map(i => ({ year: state.currentMonth === 12 ? state.currentYear + 1 : state.currentYear,
-                   month: state.currentMonth === 12 ? 1 : state.currentMonth + 1, day: i }))
+      .map(i => ({
+        year: state.currentMonth === 12 ? state.currentYear + 1 : state.currentYear,
+        month: state.currentMonth === 12 ? 1 : state.currentMonth + 1,
+        day: i
+      }))
 
     return [ ...previousDaysToFill, ...currentDaysToFill, ...nextDaysToFill ]
   },
   daysByRow: (state, getters) => {
     const dates = getters.getDaysToDisplay
-    return state.weekNumbers.map((_, i) => dates.slice(i * 7, i * 7 + 7))
+    return Array.apply(null, Array(6)).map((_, i) => dates.slice(i * 7, i * 7 + 7))
   }
 }
 
 const actions = {
+  moveCalendarToCurrentMonth: ({ dispatch }) => {
+    dispatch('moveCalendarToDate', { year: today.getFullYear(), month: today.getMonth() + 1 })
+  },
   moveCalendarToDate: ({ commit }, date) => {
     commit('moveCalendar', { month: date.month, year: date.year })
   },
@@ -122,9 +127,9 @@ const actions = {
       currentYear: state.newsStartDate.year,
       currentMonth: state.newsStartDate.month
     })
-    const from = prettifyDateObject(state.startDate)
-    const to = prettifyDateObject(state.endDate)
-    dispatch('makeSocketTimeSpanRequest', { from, to })
+    const from = dateObjToISO(state.startDate, true)
+    const until = dateObjToISO(state.endDate, false)
+    dispatch('makeSocketTimeSpanRequest', { from, until })
   },
   discardNewDates: ({ state, commit }) => {
     commit('saveDates', {
@@ -142,7 +147,6 @@ const mutations = {
   moveCalendar (state, { month = state.currentMonth, year = state.currentYear }) {
     state.currentMonth = month
     state.currentYear = year
-    state.weekNumbers = weekNumsForMonth(state.currentYear, state.currentMonth + 1)
   },
   selectDate (state, { startDate = state.startDate, endDate = state.endDate }) {
     state.startDate = startDate
