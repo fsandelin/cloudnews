@@ -83,18 +83,10 @@ export default {
   },
   mounted: function () {
     this.fetchAvailableNewsSources()
-    jsonLoader.getSwedishCities().then((value) => {
-      this.setCities(value.data)
-    })
-    jsonLoader.getSwedishMunicipalities().then((value) => {
-      this.setMunicipalities(value.data)
-    })
-    jsonLoader.getSwedishCounties().then((value) => {
-      this.setCounties(value.data)
-    })
-    jsonLoader.getEuropeCountries().then((value) => {
-      this.setCountries(value.data)
-    })
+    jsonLoader.getSwedishCities().then(value => this.setCities(value.data))
+    jsonLoader.getSwedishMunicipalities().then(value => this.setMunicipalities(value.data))
+    jsonLoader.getSwedishCounties().then(value => this.setCounties(value.data))
+    jsonLoader.getEuropeCountries().then(value => this.setCountries(value.data))
   },
   methods: {
     ...mapActions([

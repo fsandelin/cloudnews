@@ -1,7 +1,3 @@
-// import europeCountries from '../../assets/meta-info-europe-countries.min.json'
-// import swedishCounties from '../../assets/meta-info-sweden-counties.min.json'
-// import swedishMunicipalities from '../../assets/meta-info-sweden-municipalities.min.json'
-// import swedishCities from '../../assets/meta-info-sweden-cities.min.json'
 import { cleanString } from '../../helpers/misc'
 
 const state = {
@@ -33,7 +29,10 @@ const state = {
 
 const getters = {
   mapLoaded: state => {
-    return state.countriesLoaded && state.countiesLoaded && state.municipalitiesLoaded && state.citiesLoaded
+    return state.countriesLoaded &&
+           state.countiesLoaded &&
+           state.municipalitiesLoaded &&
+           state.citiesLoaded
   },
   countries: state => {
     return state.countries
@@ -133,25 +132,25 @@ const mutations = {
   },
   setCounties (state, counties) {
     state.counties = counties
-    state.mapCountyNameId = counties.reduce((map, county) => {
-      map[county.name] = county.id
-      return map
+    state.mapCountyNameId = counties.reduce((accumulator, county) => {
+      accumulator[county.name] = county.id
+      return accumulator
     }, {})
     state.countiesLoaded = true
   },
   setMunicipalities (state, municipalities) {
     state.municipalities = municipalities
-    state.mapMunicipalityNameId = municipalities.reduce((map, municipality) => {
-      map[municipality.name] = municipality.id
-      return map
+    state.mapMunicipalityNameId = municipalities.reduce((accumulator, municipality) => {
+      accumulator[municipality.name] = municipality.id
+      return accumulator
     }, {})
     state.municipalitiesLoaded = true
   },
   setCities (state, cities) {
     state.cities = cities
-    state.mapCityNameId = cities.reduce((map, city) => {
-      map[city.name] = city.id
-      return map
+    state.mapCityNameId = cities.reduce((accumulator, city) => {
+      accumulator[city.name] = city.id
+      return accumulator
     }, {})
     state.citiesLoaded = true
   },
