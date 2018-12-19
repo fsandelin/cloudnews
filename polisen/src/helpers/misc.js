@@ -13,7 +13,7 @@ const stripTimeOfDate = (date) => date.substr(0, 10);
 const getDateRange = (from, until) => {
   const dates = [];
   for (const date = new Date(until); date >= new Date(from); date.setDate(date.getDate() - 1)) {
-    dates.push(stripTimeOfDate(date.toISOString()));
+    dates.push(date.toISOString());
   }
   return dates;
 };
