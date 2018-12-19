@@ -42,7 +42,10 @@ const formatMunicipalityStrings = (municipalities) => {
 };
 
 const findLocationForCountyNews = (news) => {
-  const municipalityList = formatMunicipalityStrings(counties[news.location.name]);
+  const municipalities = counties[news.location.name];
+  if (municipalities === undefined) return createLocationObject();
+
+  const municipalityList = formatMunicipalityStrings(municipalities);
   const municipalityWithoutSuffix = findStringInText(news.summary, municipalityList);
   const municipality = municipalityWithSuffix(municipalityWithoutSuffix);
 
