@@ -56,7 +56,7 @@ const sendNewsRequests = (newsRequests, from, until) => {
 const getNewsFromPolisen = (date) => {
   return axios.get(apiUrl, {
     params: {
-      datetime: date // If date is null all 500 news will be returned.
+      datetime: stripTimeOfDate(date) // If date is null all 500 news will be returned.
     }
   });
 };
