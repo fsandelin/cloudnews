@@ -1,10 +1,25 @@
 import { months as m } from './constants'
 
-export const cleanString = s => s.trim().toLowerCase()
+export const cleanString = s => {
+  return typeof s === 'string' || s instanceof String
+    ? s.trim().toLowerCase()
+    : null
+}
 
-export const numToMonth = num => m[Object.keys(m)[num - 1]]
+export const variableIsAPositiveInteger = variable => {
+  return !isNaN(variable) && // intentional comparison with '=='
+    parseInt(Number(variable)) == variable && // eslint-disable-line eqeqeq
+    !isNaN(parseInt(variable, 10)) &&
+    variable >= 0
+}
 
-export const getDaysForMonth = (year, month) => new Date(year, month + 1, 0).getDate()
+export const numToMonth = num => {
+  return variableIsAPositiveInteger(num)
+    ? m[Object.keys(m)[num - 1]]
+    : null
+}
+
+export const getDaysForMonth = (year, month) => new Date(year, month, 0).getDate()
 
 export const getNumArrayBetweenNums = (start, end) => {
   let arr = []

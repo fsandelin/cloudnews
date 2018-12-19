@@ -1,4 +1,7 @@
-import { cleanString } from '../../helpers/misc'
+import {
+  cleanString,
+  variableIsAPositiveInteger
+} from '../../helpers/misc'
 
 const state = {
   countriesLoaded: false,
@@ -73,6 +76,11 @@ const getters = {
   activeMunicipalities: state => {
     return state.municipalities.filter(municipality => municipality.county === state.selectedCounty)
   },
+  countyById: state => (id = -1) => {
+    return variableIsAPositiveInteger(id)
+      ? state.counties[id]
+      : null
+  },
   activeCities: state => {
     return state.cities.filter(city => city.municipality === state.selectedMunicipality)
   },
@@ -80,22 +88,23 @@ const getters = {
     const countyId = state.mapCountyNameId[cleanString(name)]
     return countyId === null ? null : getters.countyById(countyId)
   },
-  countyById: state => (id) => {
-    return state.counties[id]
-  },
   municipalityByName: (state, getters) => (name = '') => {
     const municipalityId = state.mapMunicipalityNameId[cleanString(name)]
     return municipalityId === null ? null : getters.municipalityById(municipalityId)
   },
-  municipalityById: (state) => (id) => {
-    return state.municipalities[id]
+  municipalityById: (state) => (id = -1) => {
+    return variableIsAPositiveInteger(id)
+      ? state.municipalities[id]
+      : null
   },
   cityByName: (state, getters) => (name = '') => {
     const cityId = state.mapCityNameId[cleanString(name)]
     return cityId === null ? null : getters.cityById(cityId)
   },
-  cityById: (state) => (id) => {
-    return state.cities[id]
+  cityById: (state) => (id = -1) => {
+    return variableIsAPositiveInteger(id)
+      ? state.cities[id]
+      : null
   }
 }
 
