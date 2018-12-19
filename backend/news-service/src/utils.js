@@ -31,17 +31,17 @@ function getIncludedTimespans(newFrom, newUntil, timespans) {
   newUntil = new Date(newUntil);
   logger.debug(`from: ${newFrom.toISOString()}, until: ${newUntil.toISOString()}, database: ${JSON.stringify(timespans)}`);
   for (const timespan of timespans) {
-    const tentFrom = new Date(timespan.from);
-    const tentUntil = new Date(timespan.until);
+    const tentativeFrom = new Date(timespan.from);
+    const tentativeUntil = new Date(timespan.until);
     if (!placedFrom) {
-      if (newFrom > getNextDay(tentUntil)) {
+      if (newFrom > getNextDay(tentativeUntil)) {
         continue;
       } else {
         placedFrom = true;
       }
     }
     if (placedFrom) {
-      if (newUntil < getPreviousDay(tentFrom)) {
+      if (newUntil < getPreviousDay(tentativeFrom)) {
         break;
       }
       includedTimespans.push(timespan);

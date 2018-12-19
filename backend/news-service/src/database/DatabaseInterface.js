@@ -142,15 +142,14 @@ function getArticles(service, from, until, callback) {
       callback(error, null);
     }
 
-    // until.setHours(23, 59, 59, 999);
-    const from_ = from.toISOString();
-    const until_ = until.toISOString();
+    const fromISO = from.toISOString();
+    const untilISO = until.toISOString();
 
     const collectionName = `${config.articles_collection_prefix}${service}`;
     const db = client.db(config.databaseName);
-    logger.debug(`Getting articles for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+    logger.debug(`Getting articles for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
     db.collection(collectionName).find({
-      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
+      $and: [{ datetime: { $gte: fromISO } }, { datetime: { $lte: untilISO } }],
     }).toArray((data) => {
       logger.debug('Managed to get articles');
       callback(data);
@@ -165,28 +164,28 @@ function getEntriesPaged(service, from, until, pageNumber = 1, callback = () => 
       return;
     }
 
-    const until_ = until.toISOString();
-    const from_ = from.toISOString();
+    const untilISO = until.toISOString();
+    const fromISO = from.toISOString();
 
     const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     const db = client.db(config.databaseName);
 
     const query = {
-      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
+      $and: [{ datetime: { $gte: fromISO } }, { datetime: { $lte: untilISO } }],
     };
     const sorter = {
       datetime: 1,
     };
-    logger.debug(`Getting article-page #${pageNumber} for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+    logger.debug(`Getting article-page #${pageNumber} for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
     db.collection(collectionName).find(query).sort(sorter).skip(config.pageSize * pageNumber)
       .limit(config.pageSize)
       .toArray()
       .then((page) => {
-        logger.debug(`Fetched page #${pageNumber} from database for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+        logger.debug(`Fetched page #${pageNumber} from database for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
         callback(page);
       })
       .catch((exception) => {
-        logger.error(`Got an error when getting page #${pageNumber} for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+        logger.error(`Got an error when getting page #${pageNumber} for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
         logger.error(exception);
         callback();
       });

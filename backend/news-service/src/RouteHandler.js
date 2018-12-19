@@ -38,7 +38,7 @@ function requestTimespan(request, response) {
   if (requestedResource) {
     requestedResource.from = new Date(requestedResource.from);
     requestedResource.until = new Date(requestedResource.until);
-    if (requestedResource.until >= Date.now()) {
+    if (requestedResource.until > Date.now()) {
       response.setStatus(400).send('You have requested things newer than the current time, plz dont.');
       return;
     }
