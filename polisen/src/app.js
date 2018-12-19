@@ -1,10 +1,9 @@
-require('dotenv').config();
 const app = require('express')();
 const bodyParser = require('body-parser');
-const { dateIsGiven, getDateRange } = './helpers/misc';
-const { createNewsRequestsFromDates, sendNewsRequests } = './helpers/news';
+const { dateIsGiven, getDateRange } = require('./helpers/misc');
+const { createNewsRequestsFromDates, sendNewsRequests } = require('./helpers/news');
+const { appPort } = require('./helpers/constants');
 
-const { APP_PORT } = process.env;
 app.use(bodyParser.json({ extended: true }));
 
 app.post('/api/polisens_nyheter', (req, res) => {
@@ -22,6 +21,6 @@ app.post('/api/polisens_nyheter', (req, res) => {
   }
 });
 
-app.listen(APP_PORT, () => {
-  console.log(`police-news-service listening on ${APP_PORT}`);
+app.listen(appPort, () => {
+  console.log(`police-news-service listening on ${appPort}`);
 });

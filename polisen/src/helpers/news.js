@@ -3,6 +3,7 @@ const { flatten, stripTimeOfDate } = require('./misc');
 const { findLocation } = require('./location');
 const { newsServiceUrl } = require('./constants');
 const { apiUrl } = require('./constants');
+const uuid = require('uuid/v4');
 
 const isNotSummary = (news) => (news['summary'].substr(14) !== 'Sammanfattning');
 
@@ -45,7 +46,7 @@ const sendNewsRequests = (newsRequests, from, until) => {
       const newsList = flatten(results.map(r => r.data));
       const newsListFormated = formatNewsList(newsList);
       console.log('Number of news:', newsListFormated.length);
-      const timespan = { from: stripTimeOfDate(from), until: stripTimeOfDate(until) };
+      const timespan = { from: from, until: until };
       sendNewsToNewsService(newsListFormated, timespan);
     })
     .catch(error => {
@@ -56,7 +57,7 @@ const sendNewsRequests = (newsRequests, from, until) => {
 const getNewsFromPolisen = (date) => {
   return axios.get(apiUrl, {
     params: {
-      datetime: stripTimeOfDate(date) // If date is null all 500 news will be returned.
+      datetime: (date === null) ? null : stripTimeOfDate(date) // If date is null all 500 news will be returned.
     }
   });
 };

@@ -19,9 +19,9 @@ const getDateRange = (from, until) => {
 };
 
 module.exports = {
-  flatten,
-  findStringInText,
-  dateIsGiven,
-  stripTimeOfDate,
-  getDateRange
+  flatten: flatten,
+  findStringInText: findStringInText,
+  dateIsGiven: dateIsGiven,
+  stripTimeOfDate: stripTimeOfDate,
+  getDateRange: getDateRange
 };
