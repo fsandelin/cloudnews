@@ -4,14 +4,27 @@
 #drawer-news-list {
   display: flex;
   flex-direction: column;
-  min-height: 0;
 
-  .title {
+  .header {
     color: $white;
-    background-color: $darkblue;
     font-size: 20px;
     font-weight: bold;
-    padding: 15px 0;
+    padding: 0 30px;
     text-transform: capitalize;
+    min-height: 50px;
+    background-color: $darkblue;
+
+    i, .title {
+      margin: auto 0;
+    }
+
+    i:hover {
+      color: $darkgreen;
+    }
+
+    .title {
+      flex: 1;
+      padding: 0;
+    }
   }
 }

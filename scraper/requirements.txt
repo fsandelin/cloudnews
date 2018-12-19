@@ -1,0 +1,7 @@
+Flask==1.0.2
+requests==2.20.1
+beautifulsoup4==4.6.3
+bs4==0.0.1
+python-dateutil==2.7.5
+python-dotenv==0.9.1
+pytz==2018.7
