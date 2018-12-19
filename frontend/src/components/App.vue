@@ -72,7 +72,8 @@ export default {
       'selectedCounty',
       'newsSources',
       'showDatePicker',
-      'showAboutPage'
+      'showAboutPage',
+      'mapLoaded'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
@@ -96,8 +97,7 @@ export default {
       'setCountries',
       'setCounties',
       'setMunicipalities',
-      'setCities',
-      'mapLoaded'
+      'setCities'
     ])
   }
 }
