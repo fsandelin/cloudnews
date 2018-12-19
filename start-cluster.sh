@@ -1,3 +1,5 @@
+npm run --prefix frontend build
+
 minikube start
 eval $(minikube docker-env)
 
@@ -8,4 +10,4 @@ kubectl apply -f microservices.yaml
 kubectl get services
 
 kubectl port-forward svc/nginx-node-svc 80:80 &
-kubectl port-forward svc/middleware-svc 5001:5001 &
+kubectl port-forward svc/middleware-svc 8091:8091 &
