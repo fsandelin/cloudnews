@@ -1,5 +1,7 @@
 <template>
-  <g id="notificationsCity">
+  <g
+    id="notificationsCity"
+    @click="cityClick(city)">
     <line
       :ref="'cityLine-'+city.name"
       :key="'cityLine-'+city.name"
@@ -31,31 +33,65 @@
 </template>
 
 <script>
-import * as animations from '../../helpers/veloCityAnimate.js'
+import * as animations from '../../helpers/velocityAnimate.js'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NotificationsCity',
-  props: ['circleSize', 'fontSize', 'yOffset', 'lineWidth', 'city'],
+  props: {
+    'city': {
+      type: Object,
+      required: true
+    },
+    'lineWidth': {
+      type: Number,
+      required: true
+    },
+    'circleSize': {
+      type: Function,
+      required: true
+    },
+    'fontSize': {
+      type: Function,
+      required: true
+    },
+    'yOffset': {
+      type: Function,
+      required: true
+    }
+  },
+  computed: {
+    size: function () {
+      return this.city.news.length
+    }
+  },
+  watch: {
+    size: function () {
+      const circle = this.$refs['cityCircle-' + this.city.name]
+      animations.blobAnimateCircle(circle)
+    }
+  },
   mounted: function () {
     const line = this.$refs['cityLine-' + this.city.name]
     const circle = this.$refs['cityCircle-' + this.city.name]
     const text = this.$refs['cityText-' + this.city.name]
 
-    animations.lineBeforeEnter(line, this.city.municipalityX, this.city.municipalityY, this.city.municipalityX, this.city.municipalityY)
+    animations.lineBeforeEnter(
+      line,
+      this.city.municipalityX,
+      this.city.municipalityY,
+      this.city.municipalityX,
+      this.city.municipalityY)
     animations.lineEnter(line, this.city.x, this.city.y)
     animations.circleBeforeEnter(circle, this.city.municipalityX, this.city.municipalityY)
     animations.circleEnter(circle, this.city.x, this.city.y)
     animations.textBeforeEnter(text, this.city.municipalityX, this.city.municipalityY)
     animations.textEnter(text, this.city.x, this.city.y)
   },
-  beforeDestroyed: function () {
-    const line = this.$refs['cityLine-' + this.city.name]
-    const circle = this.$refs['cityCircle-' + this.city.name]
-    const text = this.$refs['cityText-' + this.city.name]
-
-    animations.lineLeave(line, this.city.municipalityX, this.city.municipalityY, this.city.municipalityX, this.city.municipalityY)
-    animations.circleLeave(circle, this.city.municipalityX, this.city.municipalityY)
-    animations.textLeave(text, this.city.municipalityX, this.city.municipalityY)
+  methods: {
+    ...mapActions([
+      'cityClick'
+    ])
   }
 }
 </script>

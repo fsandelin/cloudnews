@@ -2,26 +2,24 @@
 @import '../reset.scss';
 @import '../commons.scss';
 
-svg.mapContainer g.map .countyNotification {
 
-  circle {
-    &.county-circle {
-      stroke: $white;
-      fill: $darkblue;
-    }
-  }
-
-  text {
-    &.county-number {
-      fill: $white;
-      pointer-events: none;
-      border-radius: 12px;
-      font-weight: bold;
-    }
+circle {
+  &.county-circle {
+    stroke: $white;
+    fill: $darkblue;
   }
 }
 
-svg.mapContainer g.map .countyNotification:hover {
+text {
+  &.county-number {
+    fill: $white;
+    pointer-events: none;
+    border-radius: 12px;
+    font-weight: bold;
+  }
+}
+
+.countyNotification:hover {
   circle {
     &.county-circle {
       fill: $lightblue;

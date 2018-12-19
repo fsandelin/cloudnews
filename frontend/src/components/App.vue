@@ -22,6 +22,7 @@
     </DrawerContainer>
 
     <ToggleButtons
+      :v-if="mapLoaded"
       :items="newsSources"
       :toggleActive="toggleNewsSource" />
   </div>
@@ -39,7 +40,7 @@ import NewsSideBar from './News/NewsSideBar'
 import PopUpContainer from './PopUp/PopUpContainer'
 import ToggleButtons from './ToggleButtons/ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
-import { fakeNewsList } from '../assets/FakeData'
+import * as jsonLoader from '../helpers/jsonLoader'
 
 export default {
   name: 'App',
@@ -80,16 +81,23 @@ export default {
       return this.showDatePicker || this.showAboutPage
     }
   },
-  created: function () {
+  mounted: function () {
     this.fetchAvailableNewsSources()
-    fakeNewsList.map(newsItem => this.addNews(newsItem))
+    jsonLoader.getSwedishCities().then(value => this.setCities(value.data))
+    jsonLoader.getSwedishMunicipalities().then(value => this.setMunicipalities(value.data))
+    jsonLoader.getSwedishCounties().then(value => this.setCounties(value.data))
+    jsonLoader.getEuropeCountries().then(value => this.setCountries(value.data))
   },
   methods: {
     ...mapActions([
       'fetchAvailableNewsSources',
-      'addNews',
-      'toggleDrawer',
-      'toggleNewsSource'
+      'addNewsList',
+      'toggleNewsSource',
+      'setCountries',
+      'setCounties',
+      'setMunicipalities',
+      'setCities',
+      'mapLoaded'
     ])
   }
 }

@@ -2,26 +2,26 @@ import store from '../../../../src/store'
 
 describe('locations getters', () => {
   describe('getters.countries', () => {
-    test('Initial getters.countries has length of 50', () => {
-      expect(store.getters.countries.length).toEqual(50)
+    test('Initial getters.countries has length of 0', () => {
+      expect(store.getters.countries.length).toEqual(0)
     })
   })
 
   describe('getters.counties', () => {
-    test('Initial getters.counties has length of 21', () => {
-      expect(store.getters.counties.length).toEqual(21)
+    test('Initial getters.counties has length of 0', () => {
+      expect(store.getters.counties.length).toEqual(0)
     })
   })
 
   describe('getters.municipalities', () => {
-    test('Initial getters.municipalities has length of 290', () => {
-      expect(store.getters.municipalities.length).toEqual(290)
+    test('Initial getters.municipalities has length of 0', () => {
+      expect(store.getters.municipalities.length).toEqual(0)
     })
   })
 
   describe('getters.cities', () => {
-    test('Initial getters.cities has length of 1976', () => {
-      expect(store.getters.cities.length).toEqual(1976)
+    test('Initial getters.cities has length of 0', () => {
+      expect(store.getters.cities.length).toEqual(0)
     })
   })
 
@@ -50,8 +50,8 @@ describe('locations getters', () => {
   })
 
   describe('getters.countyByName', () => {
-    test('getters.countyByName with null name is undefined', () => {
-      expect(store.getters.countyByName(null)).toEqual(undefined)
+    test('getters.countyByName with null name is null', () => {
+      expect(store.getters.countyByName(null)).toEqual(null)
     })
   })
 
@@ -62,8 +62,8 @@ describe('locations getters', () => {
   })
 
   describe('getters.municipalityByName', () => {
-    test('Initial getters.municipalityByName with null name is undefined', () => {
-      expect(store.getters.municipalityByName(null)).toEqual(undefined)
+    test('Initial getters.municipalityByName with null name is null', () => {
+      expect(store.getters.municipalityByName(null)).toEqual(null)
     })
   })
 
@@ -74,8 +74,8 @@ describe('locations getters', () => {
   })
 
   describe('getters.cityByName', () => {
-    test('Initial getters.cityByName with null name is undefined', () => {
-      expect(store.getters.cityByName(null)).toEqual(undefined)
+    test('Initial getters.cityByName with null name is null', () => {
+      expect(store.getters.cityByName(null)).toEqual(null)
     })
   })
 
