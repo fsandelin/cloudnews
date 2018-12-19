@@ -1,7 +1,9 @@
+const logger = require('../logger');
+
 const requests = {};
 
 function addRequest(requestId, clientId, requestedResource) {
-  console.log('Adding request');
+  logger.debug(`Adding request ${requestId}`);
   requests[requestId] = {
     requestId,
     clientId,
@@ -10,10 +12,11 @@ function addRequest(requestId, clientId, requestedResource) {
 }
 
 function removeRequest(requestId) {
+  logger.debug(`Trying to remove request ${requestId}`);
   try {
     delete requests[requestId];
   } catch (e) {
-    console.log('Could not remove request, probably doesnt exist');
+    logger.error(`Could not remove request ${requestId}, probably doesnt exist (already removed)`);
   }
 }
 
@@ -22,6 +25,7 @@ function getRequest(requestId) {
 }
 
 function removeClientsRequest(clientId) {
+  logger.debug(`Removing all requests for client ${clientId}`);
   const requestsToRemove = [];
   for (const requestId in requests) {
     if (requests.hasOwnProperty(requestId)) {
@@ -30,6 +34,7 @@ function removeClientsRequest(clientId) {
       }
     }
   }
+  logger.debug(`Removing the following requests because client disconnected: ${JSON.stringify(requestsToRemove)}`);
   for (const requestId in requestsToRemove) {
     removeRequest(requestId);
   }

@@ -1,11 +1,15 @@
+const logger = require('../logger');
+
 const clients = {};
 let externalIo = null;
 
 function initSocket(io) {
+  logger.debug('Saving socketIO object to client-handler.');
   externalIo = io;
 }
 
 function addClient(clientId, socket, service) {
+  logger.debug(`Adding client: ${clientId}`);
   clients[clientId] = {
     socket,
     service,
@@ -13,10 +17,11 @@ function addClient(clientId, socket, service) {
 }
 
 function removeClient(clientId) {
+  logger.debug(`Removing client ${clientId}`);
   try {
     delete clients[clientId];
   } catch (e) {
-    console.log('Could not remove client, probably doesnt exist');
+    logger.error(`Could not remove client ${clientId}, probably doesnt exist (already removed).`);
   }
 }
 
