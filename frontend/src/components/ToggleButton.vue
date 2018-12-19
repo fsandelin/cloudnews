@@ -1,8 +1,8 @@
 <template>
-  <div class="toggle-button">
-    <span class="text">{{ item.name.toUpperCase() }}</span>
+  <div class="toggle-button flex-col">
+    <span class="text">{{ item.name }}</span>
     <div
-      class="background flex-centering"
+      class="background flex-col"
       v-bind:class="{ active: item.active }"
       v-on:click="toggleActive(item)">
       <div class="circle full-shadow"></div>

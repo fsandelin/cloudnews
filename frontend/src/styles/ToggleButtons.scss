@@ -7,11 +7,7 @@
   bottom: 10px;
   right: 40px;
 
-  &.flex-centering {
-    flex-direction: row;
-
-    * {
-      margin-left: 10px
-    }
+  * {
+    margin-left: 10px;
   }
 }

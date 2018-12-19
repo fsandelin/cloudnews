@@ -1,2 +1,32 @@
 @import 'variables.scss';
 @import 'reset.scss';
+
+svg.mapContainer g.map .cityNotification{
+  circle {
+    &.city-circle {
+      fill: $black;
+    }
+  }
+
+  text {
+    &.city-number {
+      fill: $white;
+      font-weight: bolder;
+      pointer-events: none;
+    }
+  }
+
+  line {
+    stroke: $black;
+    pointer-events: none;
+  }
+  
+}
+
+svg.mapContainer g.map .cityNotification:hover{
+  circle {
+    &.city-circle {
+      fill: $grey;
+    }
+  }
+}

@@ -1,321 +1,110 @@
 export const fakeNewsList = [
   {
-    id: 0, title: "News title 0", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 1, title: "Uppsalabor om Stefan Hannas uteslutning", lead: "Komplicerad fråga", active: false,
+    datetime: "2018-12-05 07:31",
+    url: "https://www.svt.se/nyheter/lokalt/uppsala/uppsalabor-om-stefan-hannas-uteslutning",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "kiruna",
-      city: ""
+      country: '',
+      county: '',
+      municipality: 'uppsala kommun',
+      city: 'Uppsala'
     }
   },
   {
-    id: 3423, title: "2131", lead: "abbbddd", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "tt",
-    location: {
-      country: "",
-      county: "norrbotten",
-      municipality: "",
-      city: ""
-    }
-  },
-  {
-    id: 2432, title: "avc", lead: "qweqwe", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 2, title: "Nya Enköpingsstyrets budget inte deras egen", lead: "SD gav stödet åt S och NE - \"De har samma prioriteringar som oss\"", active: false,
+    datetime: "2018-12-05 06:47",
+    url: "https://www.svt.se/nyheter/lokalt/uppsala/majoriteten-fick-inte-igenom-sin-budget-i-enkoping-sd-gav-stod-at-s-och-ne",
     source: "svt",
     location: {
-      country: "",
-      county: "norrbotten",
-      municipality: "",
-      city: ""
+      country: '',
+      county: '',
+      municipality: 'uppsala kommun',
+      city: 'enköping'
     }
   },
   {
-    id: 1, title: "News title 1", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 3, title: "Skidgymnasieeleven: Svårt att sluta med de farliga vallorna", lead: "Förbjuds i Norge", active: false,
+    datetime: "2018-12-05 06:00",
+    url: "https://www.svt.se/nyheter/lokalt/vasternorrland/skidgymnasieeleven-svart-att-sluta-med-de-farliga-vallorna",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "lekeberg",
-      city: ""
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'Sollefteå'
     }
   },
   {
-    id: 2, title: "News title 2", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 4, title: "Facket vill veta om olyckorna har ett samband", lead: "Flera olyckor med malmtransporter", active: false,
+    datetime: "2018-12-04 20:15",
+    url: "https://www.svt.se/nyheter/lokalt/norrbotten/efter-dodsolyckan-nu-rullar-malmtransporterna-igen",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "uppsala",
-      city: ""
+      country: '',
+      county: 'norrbottens län',
+      municipality: '',
+      city: ''
     }
   },
   {
-    id: 3, title: "News title 3", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 5, title: "Så ska flerspråkiga elever lära sig bättre svenska", lead: "Pilotprojektet testas i Malmöskola", active: false,
+    datetime: "2018-12-05 05:00",
+    url: "https://www.svt.se/nyheter/lokalt/skane/flersprakighet-ska-lyfta-larandet",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "Uppsala",
-      city: ""
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'malmö'
     }
   },
   {
-    id: 4, title: "News title 4", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 6, title: "First aid kit, Les big byrd och Jamie XX gästar Musikhjälpen", lead: "Maratoninsamlingen drar igång i Lund den 10 december", active: false,
+    datetime: "2018-12-05 07:00",
+    url: "https://www.svt.se/kultur/de-gastar-musikhjalpen",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "kiruna",
-      city: ""
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'lund'
     }
   },
   {
-    id: 5, title: "News title 5", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 7, title: "Stor trafikinsats i Halland under onsdagsnatten", lead: "Kontrollerade 785 fordon - flera myndigheter deltog", active: false,
+    datetime: "2018-12-05 07:29",
+    url: "https://www.svt.se/nyheter/lokalt/halland/stor-trafikinsats-i-halland-under-onsdagsnatten",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "kiruna",
-      city: ""
+      country: '',
+      county: 'hallands län',
+      municipality: '',
+      city: ''
     }
   },
   {
-    id: 6, title: "News title 6", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 8, title: "Så mycket skattepengar läggs på representation och konferenser", lead: "SVT:s reporter visar skillnaderna mellan Göteborgs stadsdelar", active: false,
+    datetime: "2018-12-05 06:00",
+    url: "https://www.svt.se/nyheter/lokalt/vast/sa-mycket-skattepengar-laggs-pa-representation-och-konferenser",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "pajala",
-      city: ""
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'göteborg'
     }
   },
   {
-    id: 7, title: "News title 7", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
+    id: 9, title: "Så ser världen ut 2050", lead: "Hör teknikentreprenören Nicklas Bergman om hur samhället kan förändras i grunden", active: false,
+    datetime: "2018-12-04 21:25",
+    url: "https://www.svt.se/nyheter/lokalt/vast/sa-ser-varlden-ut-2050",
     source: "svt",
     location: {
-      country: "",
-      county: "",
-      municipality: "kiruna",
-      city: ""
-    }
-  },
-  {
-    id: 8, title: "News title 8", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "piteå",
-      city: ""
-    }
-  },
-  {
-    id: 9, title: "News title 9", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "piteå",
-      city: ""
-    }
-  },
-  {
-    id: 10, title: "News title 10", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "tt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "piteå",
-      city: ""
-    }
-  },
-  {
-    id: 11, title: "News title 11", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "piteå",
-      city: ""
-    }
-  },
-  {
-    id: 12, title: "News title 12", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "kiruna",
-      city: ""
-    }
-  },
-  {
-    id: 13, title: "News title 13", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "ludvika",
-      city: ""
-    }
-  },
-  {
-    id: 14, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "ludvika",
-      city: ""
-    }
-  },
-  {
-    id: 15, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "ludvika",
-      city: ""
-    }
-  },
-  {
-    id: 16, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "ludvika",
-      city: ""
-    }
-  },
-  {
-    id: 17, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "ludvika",
-      city: ""
-    }
-  },
-  {
-    id: 18, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "ludvika",
-      city: ""
-    }
-  },
-  {
-    id: 19, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 20, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "tt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 21, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 22, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 23, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 24, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "tt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 25, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "tt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
-    }
-  },
-  {
-    id: 26, title: "News title 14", lead: "Lorem Ipsum is simply dummy text of the printing", active: false,
-    timestamp: "2018-04-24 13:44",
-    source: "svt",
-    location: {
-      country: "",
-      county: "",
-      municipality: "orsa",
-      city: ""
+      country: '',
+      county: '',
+      municipality: '',
+      city: 'göteborg'
     }
   }
 ]
