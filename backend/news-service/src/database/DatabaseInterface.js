@@ -29,7 +29,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
       logger.error(mongoError);
     }
 
-    db.collection(prefetchedCollectionName).findOne({ service }, { session }, (error3, result) => {
+    db.collection(prefetchedCollectionName).findOne({ service }, { session, _id: false }, (error3, result) => {
       logger.debug(`Got timespans available in the database for service: ${service}`);
       let timespans = null;
       try {
@@ -150,7 +150,7 @@ function getArticles(service, from, until, callback) {
     logger.debug(`Getting articles for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
     db.collection(collectionName).find({
       $and: [{ datetime: { $gte: fromISO } }, { datetime: { $lte: untilISO } }],
-    }).toArray((data) => {
+    }, { _id: false }).toArray((data) => {
       logger.debug('Managed to get articles');
       callback(data);
     });
@@ -246,7 +246,7 @@ function getMissingTimespans(requestedResource, callback) {
     const query = {
       service,
     };
-    db.collection(config.scraperMetaCollectionName).findOne(query, (err, results) => {
+    db.collection(config.scraperMetaCollectionName).findOne(query, { _id: false }, (err, results) => {
       if (results === undefined) {
         logger.warn(`No meta-collection entry for service: ${service}`);
         // should create an entry for service
