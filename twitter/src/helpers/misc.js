@@ -1,4 +1,4 @@
-const cities = require('./assets/cities.json');
+const cities = require('./../assets/cities.json');
 
 const tweetIsFromASwedishCity = (place) => {
   return (place !== null && place.country_code === 'SE' && place.place_type === 'city' && cities[place.name] !== undefined);
