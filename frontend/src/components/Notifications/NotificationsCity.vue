@@ -35,7 +35,6 @@
 <script>
 import * as animations from '../../helpers/velocityAnimate.js'
 import { mapActions } from 'vuex'
-
 export default {
   name: 'NotificationsCity',
   props: {
@@ -75,7 +74,6 @@ export default {
     const line = this.$refs['cityLine-' + this.city.name]
     const circle = this.$refs['cityCircle-' + this.city.name]
     const text = this.$refs['cityText-' + this.city.name]
-
     animations.lineBeforeEnter(
       line,
       this.city.municipalityX,

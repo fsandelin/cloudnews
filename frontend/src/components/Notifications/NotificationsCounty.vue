@@ -27,7 +27,6 @@
 <script>
 import * as animations from '../../helpers/velocityAnimate.js'
 import { mapActions } from 'vuex'
-
 export default {
   name: 'NotificationsCounty',
   props: {

@@ -37,7 +37,6 @@ import NotificationsCity from './NotificationsCity'
 import NotificationsMunicipality from './NotificationsMunicipality'
 import NotificationsCounty from './NotificationsCounty'
 import { mapGetters, mapActions } from 'vuex'
-
 export default {
   name: 'Notifications',
   components: {
