@@ -7,8 +7,12 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
   logger.debug('Filling timespan');
   const prefetchedCollectionName = 'prefetched';
   const articlesCollectionName = `articles_${service}`;
-  const newFrom = new Date(timespan.from);
-  const newUntil = new Date(timespan.until);
+
+  if (timespan.until > Date.now() || timespan.from >= timespan.until) {
+    callback('The timespan you have provided is invalid.');
+    return;
+  }
+
   dbConnection.connect((error, client) => {
     logger.debug('Creating a session');
     const session = dbConnection.getSession();
@@ -25,7 +29,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
       logger.error(mongoError);
     }
 
-    db.collection(prefetchedCollectionName).findOne({ service }, { session }, (error3, result) => {
+    db.collection(prefetchedCollectionName).findOne({ service }, { session, _id: false }, (error3, result) => {
       logger.debug(`Got timespans available in the database for service: ${service}`);
       let timespans = null;
       try {
@@ -42,9 +46,8 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
         return;
       }
       timespans.sort(compareDates);
-
-      const includedTimespans = getIncludedTimespans(newFrom, newUntil, timespans);
-      const newTimespan = getNewTimespan(newFrom, newUntil, includedTimespans);
+      const includedTimespans = getIncludedTimespans(timespan.from, timespan.until, timespans);
+      const newTimespan = getNewTimespan(timespan.from, timespan.until, includedTimespans);
       if (news.length !== 0) {
         logger.debug('Inserting news into database.');
         db.collection(articlesCollectionName).insertMany(news, { ordered: false }, (error4, result1) => {
@@ -61,6 +64,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
               logger.error('Tried to insert entities into databse which share URL');
             }
           }
+          logger.debug(`Should remove timespans: ${JSON.stringify(includedTimespans)}`);
           const query = {
             service,
           };
@@ -75,7 +79,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
             if (error1) {
               logger.error(error1);
             } else {
-              logger.debug(`Removed old timespans from prefetched collections for service: ${service}`);
+              logger.debug(`Removed old timespans from prefetched collections for service: ${service}, with results: ${JSON.stringify(result2)}`);
             }
             db.collection(prefetchedCollectionName).update(query, update2, { session }, (error2, result3) => {
               if (error2) {
@@ -127,7 +131,7 @@ function fillTimeSpan(service, news, timespan, callback, retries = 5) {
 }
 
 // Gets all articles for a given service in a given timespan and calls callback on it.
-function getArticles(service, from_, until_, callback) {
+function getArticles(service, from, until, callback) {
   logger.debug('getArticles()');
   if (!service) {
     service = 'svt';
@@ -138,59 +142,50 @@ function getArticles(service, from_, until_, callback) {
       callback(error, null);
     }
 
-    from_ = from_.replace(' ', '+');
-    until_ = until_.replace(' ', '+');
-
-    const from = new Date(from_);
-    const until = new Date(until_);
-
-    until.setHours(23, 59, 59, 999);
-    from_ = from.toISOString();
-    until_ = until.toISOString();
+    const fromISO = from.toISOString();
+    const untilISO = until.toISOString();
 
     const collectionName = `${config.articles_collection_prefix}${service}`;
     const db = client.db(config.databaseName);
-    logger.debug(`Getting articles for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+    logger.debug(`Getting articles for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
     db.collection(collectionName).find({
-      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
-    }).toArray((data) => {
+      $and: [{ datetime: { $gte: fromISO } }, { datetime: { $lte: untilISO } }],
+    }, { _id: false }).toArray((data) => {
       logger.debug('Managed to get articles');
       callback(data);
     });
   });
 }
 
-function getEntriesPaged(service, from_, until_, pageNumber = 1, callback = () => {}) {
+function getEntriesPaged(service, from, until, pageNumber = 1, callback = () => {}) {
   logger.debug('getEntriesPaged()');
   dbConnection.connect((error, client) => {
     if (error) {
       return;
     }
 
-    const until = new Date(until_);
-    until_ = until.toISOString();
+    const untilISO = until.toISOString();
+    const fromISO = from.toISOString();
 
     const collectionName = `${process.env.ARTICLES_PREFIX}${service}`;
     const db = client.db(config.databaseName);
 
     const query = {
-      $and: [{ datetime: { $gte: from_ } }, { datetime: { $lte: until_ } }],
+      $and: [{ datetime: { $gte: fromISO } }, { datetime: { $lte: untilISO } }],
     };
     const sorter = {
       datetime: 1,
     };
-    console.log(from_);
-    console.log(until_);
-    logger.debug(`Getting article-page #${pageNumber} for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+    logger.debug(`Getting article-page #${pageNumber} for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
     db.collection(collectionName).find(query).sort(sorter).skip(config.pageSize * pageNumber)
       .limit(config.pageSize)
       .toArray()
       .then((page) => {
-        logger.debug(`Fetched page #${pageNumber} from database for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+        logger.debug(`Fetched page #${pageNumber} from database for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
         callback(page);
       })
       .catch((exception) => {
-        logger.error(`Got an error when getting page #${pageNumber} for service: ${service} and timespan: from: ${from_} - until: ${until_}`);
+        logger.error(`Got an error when getting page #${pageNumber} for service: ${service} and timespan: from: ${fromISO} - until: ${untilISO}`);
         logger.error(exception);
         callback();
       });
@@ -251,7 +246,7 @@ function getMissingTimespans(requestedResource, callback) {
     const query = {
       service,
     };
-    db.collection(config.scraperMetaCollectionName).findOne(query, (err, results) => {
+    db.collection(config.scraperMetaCollectionName).findOne(query, { _id: false }, (err, results) => {
       if (results === undefined) {
         logger.warn(`No meta-collection entry for service: ${service}`);
         // should create an entry for service

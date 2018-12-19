@@ -1,3 +1,5 @@
+const logger = require('./logger');
+
 function compareDates(a, b) {
   const dA = new Date(a.from);
   const dB = new Date(b.from);
@@ -25,18 +27,21 @@ function getPreviousDay(date) {
 function getIncludedTimespans(newFrom, newUntil, timespans) {
   let placedFrom = false;
   const includedTimespans = [];
-  for (const timespan in timespans) {
-    const tentFrom = new Date(timespan.from);
-    const tentUntil = new Date(timespan.until);
+  newFrom = new Date(newFrom);
+  newUntil = new Date(newUntil);
+  logger.debug(`from: ${newFrom.toISOString()}, until: ${newUntil.toISOString()}, database: ${JSON.stringify(timespans)}`);
+  for (const timespan of timespans) {
+    const tentativeFrom = new Date(timespan.from);
+    const tentativeUntil = new Date(timespan.until);
     if (!placedFrom) {
-      if (newFrom > getNextDay(tentUntil)) {
+      if (newFrom > getNextDay(tentativeUntil)) {
         continue;
       } else {
         placedFrom = true;
       }
     }
     if (placedFrom) {
-      if (newUntil < getPreviousDay(tentFrom)) {
+      if (newUntil < getPreviousDay(tentativeFrom)) {
         break;
       }
       includedTimespans.push(timespan);
@@ -56,10 +61,23 @@ function getNewTimespan(inputFrom, inputUntil, timespans) {
   return { from: newFrom, until: newUntil };
 }
 
+
+function parseRequestedResource(requestedResource) {
+  try {
+    const requestedResourceParsed = JSON.parse(requestedResource);
+    requestedResourceParsed.from = new Date(requestedResourceParsed.from);
+    requestedResourceParsed.until = new Date(requestedResourceParsed.until);
+    return requestedResourceParsed;
+  } catch (exception) {
+    throw exception;
+  }
+}
+
 module.exports = {
   compareDates,
   getNextDay,
   getPreviousDay,
   getIncludedTimespans,
   getNewTimespan,
+  parseRequestedResource,
 };

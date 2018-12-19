@@ -209,10 +209,7 @@ def get_api_news_region(region="/nyheter/lokalt/uppsala/", page=0, amount=50):
     params_struct = params + param_limit + str(amount) + param_page + str(page)
     url = URL_API + region + params_struct
     response = get_request(url)
-
-
-    response = get_request(url, param_payload)
-
+    
     region_news = response.json(encoding='utf-16')
 
     region_news = reform_api_news(region_news['auto']['content'])
@@ -299,7 +296,7 @@ async def page_threads(from_, until_ , region, start_pages, end_pages, workers):
 
 def check_in_page(time_to_check, news_list):
     return check_time(news_list[FIRST], AFTER, time_to_check) and check_time(news_list[LAST], BEFORE, time_to_check)
-
+    
 
 def check_if_pages(from_, until_, region):
     # Find if the from and until is in the first 3 pages
@@ -307,12 +304,21 @@ def check_if_pages(from_, until_, region):
     start_page = None
     end_page = None
 
-    for i in range(1,5):
+    for i in range(1,4):
         news_list = get_api_news_region(region, page=i)
-        if start_page is None and check_in_page(from_, news_list):
+        if check_time(news_list[LAST], BEFORE, until_):
+            end_page = 1
+        if check_time(news_list[LAST], BEFORE, from_):
+            start_page = 1
+
+        if check_in_page(from_, news_list):
             start_page = i
-        if end_page is None and check_in_page(until_, news_list):
+        if check_in_page(until_, news_list):
             end_page = i
+        if start_page is None or end_page is None:
+            continue
+        else:
+            break
 
     return (start_page, end_page)
 
@@ -325,7 +331,6 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     items = int(items)
     max_pages = math.ceil(items / 50)
 
-    print( "{}{:20}{}{}".format("Region: ", start_obj['auto']['content'][0]['sectionDisplayName'], "pages: ", max_pages))
     region_name = start_obj['auto']['content'][0]['sectionDisplayName']
     obj_list = start_obj['auto']['content']
 
@@ -339,29 +344,34 @@ def get_start_end_page(from_, until_, region="/nyheter/lokalt/ost/"):
     end_page_found = False
     start_page_found = False
 
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
     start_page, end_page = check_if_pages(from_, until_, region)
-    print("Start and endPage", start_page, end_page)
+
     if start_page is not None and end_page is not None:
+        
         return (start_page, end_page)
 
     if start_page is None:
         start_page = math.floor(time_diff_start/days_per_page)
+        start_pages = range(start_page, start_page + workers)
     else:
         start_page_found = True
-
+        start_pages = []
+    
     if end_page is None:
         end_page = math.floor(time_diff_end/days_per_page)
+        end_pages = range(end_page, end_page + workers)
     else:
         end_page_found = True
+        end_pages = []
 
-
-    start_pages = range(start_page, start_page + workers)
-    end_pages = range(end_page, end_page + workers)
     i = 0
     while i < 20:
         i += 1
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
+        
+
         responses = loop.run_until_complete(page_threads(from_, until_, region, start_pages, end_pages, workers))
 
         start_movement = 0
@@ -436,7 +446,6 @@ def get_news_region_thread(from_, until_, region):
     start_page, end_page = get_start_end_page(from_, until_, region)
 
     page_range = range(start_page, end_page + 1)
-    print("Region:", region, "page_range:", page_range)
     loop = asyncio.get_event_loop()
     news_list = loop.run_until_complete(news_threads(from_, until_, region, page_range))
 
@@ -570,9 +579,3 @@ class Page:
 
     def get_news(self):
         return self.news
-
-
-
-
-
-
