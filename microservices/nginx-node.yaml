@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-node-svc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-node
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+      - name: nginx-node-svc
+        image: nginx-node:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+          - name: NODE_PORT
+            value: '5000'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-node-svc
+  labels:
+    app: nginx-node-svc
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: nginx-node
