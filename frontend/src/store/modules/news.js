@@ -112,64 +112,83 @@ const getters = {
   }
 }
 
+let numberRetries = 0
+
 const actions = {
   setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id),
   addNews: ({ dispatch }, news) => dispatch('addNewsList', [ news ]),
-  addNewsList: ({ commit, rootGetters }, newsList) => {
+  addNewsList: ({ commit, rootGetters, dispatch }, newsList) => {
+    if (!rootGetters.mapLoaded) {
+      numberRetries += 1
+      if (numberRetries > 1000) return
+      return setTimeout(() => dispatch('addNewsList', newsList), numberRetries * 100)
+    }
+
+    numberRetries = 0
     newsList = newsList.filter((news) => !rootGetters.newsList.find(x => x.id === news.id))
     newsList = newsList.map(news => {
-      let locationIds = {}
-      let location = { ...news.location }
+      const datetime = convertDateStringToDateObj(news.datetime)
+      const location = { ...news.location }
       Object.keys(location).forEach(function (key) {
         location[key] = cleanString(location[key])
       })
+
       const city = rootGetters.cityByName(location.city)
       if (city) {
-        location = {
-          ...location,
-          city: city.name,
-          municipality: city.municipality,
-          county: city.county,
-          country: 'sweden'
-        }
-        locationIds = {
-          ...locationIds,
-          cityId: city.id
+        return {
+          ...news,
+          datetime,
+          location: {
+            city: city.name,
+            municipality: city.municipality,
+            county: city.county,
+            country: 'sweden'
+          },
+          locationIds: {
+            cityId: city.id,
+            municipalityId: city.municipalityId,
+            countyId: city.countyId
+          }
         }
       }
 
       const municipality = rootGetters.municipalityByName(location.municipality)
       if (municipality) {
-        location = {
-          ...location,
-          municipality: municipality.name,
-          county: municipality.county,
-          country: 'sweden'
-        }
-        locationIds = {
-          ...locationIds,
-          municipalityId: municipality.id
+        return {
+          ...news,
+          datetime,
+          location: {
+            municipality: municipality.name,
+            county: municipality.county,
+            country: 'sweden'
+          },
+          locationIds: {
+            municipalityId: municipality.id,
+            countyId: municipality.countyId
+          }
         }
       }
 
       const county = rootGetters.countyByName(location.county)
       if (county) {
-        location = {
-          ...location,
-          county: county.name,
-          country: 'sweden'
-        }
-        locationIds = {
-          ...locationIds,
-          countyId: county.id
+        return {
+          ...news,
+          datetime,
+          location: {
+            county: county.name,
+            country: 'sweden'
+          },
+          locationIds: {
+            countyId: county.id
+          }
         }
       }
 
       return {
         ...news,
-        location,
-        locationIds,
-        datetime: convertDateStringToDateObj(news.datetime)
+        datetime,
+        location: { country: 'sweden' },
+        locationIds: { }
       }
     })
     commit('addNews', newsList)
