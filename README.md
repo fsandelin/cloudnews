@@ -22,7 +22,7 @@ To correctly setup a database, you need to run a replica set and be connected to
 ```
 run-rs --keep --mongod --dbpath <path/to/data/folder> &
 ```
-start the mongo-shell and make sure you use the database 'cloudnews' using 
+start the mongo-shell and make sure you use the database 'cloudnews' using the **primary node**.
 ```
  use cloudnews
 ```
