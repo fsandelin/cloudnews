@@ -122,3 +122,17 @@ export const prettifyDateObject = (dateObj) => {
 
   return `${year}-${month}-${day}`
 }
+
+export const dateObjToISO = (dateObj, startOfDay) => {
+  if (typeof dateObj === 'string' || dateObj instanceof String) {
+    if (dateObj.includes('?')) return dateObj
+
+    let dateWithTime = new Date(dateObj)
+    startOfDay
+      ? dateWithTime.setHours(0, 0, 0, 0)
+      : dateWithTime.setHours(23, 59, 59, 999)
+    return new Date(dateWithTime).toISOString()
+  } else {
+    return dateObjToISO(prettifyDateObject(dateObj), startOfDay)
+  }
+}

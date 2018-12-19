@@ -14,7 +14,7 @@
     </p>
     <p class="subtitle flex-col">
       <span>{{ news.source }}</span>
-      <span>{{ prettifyDateObject(news.datetime) }}</span>
+      <span>{{ prettifyDateObject(news.datetime).slice(0, 10) }}</span>
     </p>
   </li>
 </template>
