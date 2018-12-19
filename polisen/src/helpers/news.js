@@ -13,7 +13,8 @@ const formatNews = (news) => {
     title: news.type,
     body: news.summary,
     datetime: news.datetime,
-    location: findLocation(news)
+    location: findLocation(news),
+    url: news.url
   };
 };
 
