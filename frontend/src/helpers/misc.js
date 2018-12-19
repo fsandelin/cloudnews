@@ -7,8 +7,8 @@ export const cleanString = s => {
 }
 
 export const variableIsAPositiveInteger = variable => {
-  return !isNaN(variable) &&
-    parseInt(Number(variable)) == variable && // intentional comparison with '=='
+  return !isNaN(variable) && // intentional comparison with '=='
+    parseInt(Number(variable)) == variable && // eslint-disable-line eqeqeq
     !isNaN(parseInt(variable, 10)) &&
     variable >= 0
 }
