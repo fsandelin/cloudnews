@@ -12,16 +12,16 @@ function compareDates(a, b) {
   return 0;
 }
 
-function getNextDay(date) {
-  const nextDay = new Date(date);
-  nextDay.setDate(nextDay.getDate() + 1);
-  return nextDay;
+function getNextMillisecond(date) {
+  const nextMillisecond = new Date(date);
+  nextMillisecond.setMilliseconds(nextMillisecond.getMilliseconds + 1);
+  return nextMillisecond;
 }
 
-function getPreviousDay(date) {
-  const nextDay = new Date(date);
-  nextDay.setDate(nextDay.getDate() - 1);
-  return nextDay;
+function getPreviousMillisecond(date) {
+  const previousMillisecond = new Date(date);
+  previousMillisecond.setMilliseconds(previousMillisecond.getMilliseconds() - 1);
+  return previousMillisecond;
 }
 
 function getIncludedTimespans(newFrom, newUntil, timespans) {
@@ -34,14 +34,14 @@ function getIncludedTimespans(newFrom, newUntil, timespans) {
     const tentativeFrom = new Date(timespan.from);
     const tentativeUntil = new Date(timespan.until);
     if (!placedFrom) {
-      if (newFrom > getNextDay(tentativeUntil)) {
+      if (newFrom > getNextMillisecond(tentativeUntil)) {
         continue;
       } else {
         placedFrom = true;
       }
     }
     if (placedFrom) {
-      if (newUntil < getPreviousDay(tentativeFrom)) {
+      if (newUntil < getPreviousMillisecond(tentativeFrom)) {
         break;
       }
       includedTimespans.push(timespan);
@@ -75,8 +75,8 @@ function parseRequestedResource(requestedResource) {
 
 module.exports = {
   compareDates,
-  getNextDay,
-  getPreviousDay,
+  getNextMillisecond,
+  getPreviousMillisecond,
   getIncludedTimespans,
   getNewTimespan,
   parseRequestedResource,
