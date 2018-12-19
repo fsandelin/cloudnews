@@ -17,7 +17,7 @@
 # Check NODE_PORT variable is exist
 
 if [[ -z "${NODE_PORT}" ]]; then
-  NODE_PORT="3000"
+  NODE_PORT="5000"
 else
   NODE_PORT="${NODE_PORT}"
 fi

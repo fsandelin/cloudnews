@@ -64,7 +64,7 @@ ADD reverse-proxy/start.sh /start.sh
 RUN chmod 755 /start.sh
 
 # Expose Nginx port
-EXPOSE 8080
+EXPOSE 80
 
 # Run the startup script
 WORKDIR /
