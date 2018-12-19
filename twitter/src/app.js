@@ -17,11 +17,11 @@ const stream = client.stream('statuses/filter', { track: '', locations: bounding
 
 stream.on('data', tweet => {
   if (tweetIsFromASwedishCity(tweet.place)) {
-    const tweet = formatTweet(tweet);
+    const formatedTweet = formatTweet(tweet);
 
     axios.post(newsServiceUrl, {
       service: 'twitter',
-      news: tweet,
+      news: formatedTweet,
       timespan: {
         from: '',
         until: ''
