@@ -12,10 +12,15 @@ const state = {
 }
 
 const getters = {
-  newsList: (state, _getters, _rootState, rootGetters) => {
+  newsList: (state, _getters, rootState, rootGetters) => {
+    const activeNewsSources = rootGetters.activeNewsSources.map(source => source.name)
     return state.newsList.filter(news => {
       const currentStartDate = rootGetters.newsStartDate
       const currentEndDate = rootGetters.newsEndDate
+
+      if (activeNewsSources.filter(source => news.url.includes(source)).length < 1) {
+        return false
+      }
 
       if (!currentEndDate) return dateIsAfterOrEqual(news.datetime, currentStartDate)
       return dateIsAfterOrEqual(news.datetime, currentStartDate) && dateIsBeforeOrEqual(news.datetime, currentEndDate)
