@@ -14,7 +14,7 @@
     </p>
     <p class="subtitle flex-col">
       <span>{{ news.source }}</span>
-      <span>{{ prettifyDateObject(news.datetime) }}</span>
+      <span>{{ prettifyDateObject(news.datetime).slice(0, 10) }}</span>
     </p>
   </li>
 </template>
@@ -44,9 +44,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'countyByName',
+      'countyById',
       'activeNewsItemId',
       'selectedCounty',
+      'selectedCountyId',
       'selectedMunicipality',
       'selectedCity',
       'zoomValue'
@@ -63,10 +64,10 @@ export default {
       'setZoomValue'
     ]),
     itemClicked: function (news) {
-      const activeCountyBeforeClick = this.selectedCounty
+      const activeCountyIdBeforeClick = this.selectedCountyId
       this.toggleActive(news)
-      const activeCountyAfterClick = this.countyByName(news.location.county)
-      if (this.selectedCounty !== activeCountyBeforeClick) longTransitionToCounty(this.mapZoom, activeCountyAfterClick)
+      const activeCountyAfterClick = this.countyById(news.locationIds.countyId)
+      if (this.selectedCountyId !== activeCountyIdBeforeClick) longTransitionToCounty(this.mapZoom, activeCountyAfterClick)
     },
     toggleHover: function () {
       this.hover = !this.hover

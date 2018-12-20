@@ -72,3 +72,9 @@ export const textLeave = (el, x, y) => {
     opacity: 0 },
   { duration: 300 })
 }
+
+export const blobAnimateCircle = (el) => {
+  let r = parseFloat(el.attributes.getNamedItem('r').value, 10)
+  Velocity(el, { r: r * 1.5 }, { duration: 80 })
+  Velocity(el, { r: r }, { duration: 40 })
+}

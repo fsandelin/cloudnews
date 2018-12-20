@@ -30,6 +30,7 @@ stream.on('data', tweet => {
         console.log("Successfully sent news to news service!");
       })
       .catch(error => {
+        console.log('some error')
         console.log(error);
       });
   }

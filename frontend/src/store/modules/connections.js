@@ -6,7 +6,10 @@ import {
   unsubscribeToHistoricalNews
 } from '../../helpers/webSocketConnection'
 import { socketServiceUrl } from '../../helpers/constants'
-import { dateObjToISO } from '../../helpers/misc'
+import {
+  dateObjToISO,
+  dateIsBefore
+} from '../../helpers/misc'
 import {
   getAvailableServices,
   requestData
@@ -76,11 +79,27 @@ const actions = {
   makeSocketTimeSpanRequest: ({ dispatch, rootState }, { from, until }) => {
     socketConnections.map(sc => {
       unsubscribeToHistoricalNews(sc.socket)
+      const untilDate = new Date(until)
+      const today = rootState.time.today
+      const objUntil = {
+        year: untilDate.getFullYear(),
+        month: untilDate.getMonth() + 1,
+        day: untilDate.getDate()
+      }
+      const objToday = {
+        year: today.slice(0, 4),
+        month: today.slice(5, 7),
+        day: today.slice(8, 10)
+      }
       if (!until.includes('?')) {
-        unsubscribeToLiveNews(sc.socket)
+        if (dateIsBefore(objUntil, objToday)) {
+          unsubscribeToLiveNews(sc.socket)
+        } else {
+          unsubscribeToLiveNews(sc.socket)
+          subscribeToLiveNews(dispatch)(sc.socket)
+        }
         subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, until)
       } else {
-        const today = rootState.time.today
         subscribeToHistoricalNews(dispatch)(sc.socket, sc.source, from, today)
       }
     })
