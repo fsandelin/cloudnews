@@ -5,6 +5,7 @@
 circle {
   &.city {
     fill:$black;
+    pointer-events: none;
   }
 }
 
@@ -12,6 +13,7 @@ text {
   &.city {
     text-transform: capitalize;
     font-weight: bold;
+    pointer-events: none;
   }
 }
 
