@@ -1,4 +1,4 @@
-const Twitter = require('Twitter');
+const Twitter = require('twitter');
 const axios = require('axios');
 const { newsServiceUrl } = require('./helpers/constants');
 const { boundingBoxCoordinatesAroundSweden } = require('./helpers/constants');
