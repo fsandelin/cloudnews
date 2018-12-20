@@ -24,6 +24,10 @@ const state = {
 const getters = {
   newsSources: state => {
     return state.newsSources
+  },
+  activeNewsSources: state => {
+    return state.newsSources
+      .filter(source => source.active)
   }
 }
 
