@@ -1,0 +1,34 @@
+@import '../variables.scss';
+@import '../reset.scss';
+@import '../commons.scss';
+
+circle {
+  &.city-circle {
+    fill: $black;
+  }
+}
+
+text {
+  &.city-number {
+    fill: $white;
+    font-weight: bolder;
+    pointer-events: none;
+  }
+}
+
+line {
+  &.city-line {
+    stroke: $black;
+    pointer-events: none;
+  }
+}
+  
+
+
+svg.mapContainer g.map .cityNotification:hover{
+  circle {
+    &.city-circle {
+      fill: $grey;
+    }
+  }
+}

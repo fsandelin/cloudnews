@@ -1,79 +1,32 @@
 const express = require('express');
-const rq = require('request');
-const db = require('./controllers/DatabaseInterface');
-const { addRequest, checkRequestsCompletion } = require('./Requests');
+const RouteHandler = require('./RouteHandler');
+const logger = require('./logger');
 
 const router = express.Router();
 
-const {
-  MIDDLEWARE_HOST, MIDDLEWARE_PORT,
-} = process.env;
-
-const MIDDLEWARE_LIVE_URL = `http://${MIDDLEWARE_HOST}:${MIDDLEWARE_PORT}/live_news`;
-
 router.post('/fill_timespan', (req, res) => {
-  const {
-    service,
-    news,
-    timespan,
-  } = req.body;
-  if (service === undefined || news === undefined || timespan === undefined) res.status(400).send('Please send a valid request');
-  db.fillTimeSpan(service, news, timespan, (error) => {
-    if (error) {
-      res.status(500).send('Something went wrong, sorry about that.');
-    } else {
-      res.send('Seems to have done what you asked');
-      checkRequestsCompletion();
-    }
-  });
-});
-
-router.post('/new_articles', (req, res) => {
-  const { service } = req.query;
-  db.pushArticles(service, req.body.articles, (error) => {
-    if (error) {
-      res.status(500).send(`500 internal server error: ${error}`);
-    } else {
-      res.send('Successfully added things!');
-    }
-  });
-});
-
-router.get('/run_check', (req, res) => {
-  res.send('ok');
-  checkRequestsCompletion();
+  logger.debug('Got a request to endpoint /fill_timespan');
+  RouteHandler.fillTimeSpan(req, res);
 });
 
 router.post('/request/timespan', (req, res) => {
-  const { requestId, requestedResource } = req.body;
-  if (requestedResource) {
-    res.sendStatus(200);
-    addRequest(requestId, requestedResource);
-  } else {
-    res.sendStatus(400);
-  }
+  logger.debug('Got a request to endpoint /request/timespan');
+  RouteHandler.requestTimespan(req, res);
 });
 
 router.get('/available_services', (req, res) => {
-  const availableServices = ['svt', 'tt', 'polisen'];
-  res.json(availableServices);
+  logger.debug('Got a request to endpoint /available_services');
+  RouteHandler.availableServices(req, res);
 });
 
 router.post('/live_news', (req, res) => {
-  const options = {
-    url: MIDDLEWARE_LIVE_URL,
-    body: req.body,
-    json: true,
-  };
-  rq.post(options, (error, response) => {
-    if (error) {
-      console.log('Failed to send live news to middleware.');
-      res.sendStatus(500);
-    } else {
-      res.send('Successful');
-    }
-  });
+  logger.debug('Got a request to endpoint /live_news');
+  RouteHandler.liveNews(req, res);
 });
 
+router.get('/news', (req, res) => {
+  logger.debug('Got a request to endpoint /news');
+  RouteHandler.getNews(req, res);
+});
 
 module.exports = router;

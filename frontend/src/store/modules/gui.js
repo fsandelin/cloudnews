@@ -1,16 +1,19 @@
 const state = {
   zoomValue: 1,
-  showDatePicker: false
+  showDatePicker: false,
+  showAboutPage: false
 }
 
 const getters = {
   zoomValue: state => state.zoomValue,
-  showDatePicker: state => state.showDatePicker
+  showDatePicker: state => state.showDatePicker,
+  showAboutPage: state => state.showAboutPage
 }
 
 const actions = {
   setZoomValue: ({ commit }, value) => commit('setZoomValue', value),
   toggleDatePicker: ({ commit }) => commit('toggleDatePicker'),
+  toggleAboutPage: ({ commit }) => commit('toggleAboutPage'),
   toggleDrawer: ({ rootState, commit }) => {
     if (rootState.news.activeNewsItemId !== null || rootState.locations.selectedCounty !== null) {
       commit('closeDrawer')
@@ -32,6 +35,9 @@ const mutations = {
   },
   toggleDatePicker (state) {
     state.showDatePicker = !state.showDatePicker
+  },
+  toggleAboutPage (state) {
+    state.showAboutPage = !state.showAboutPage
   }
 }
 

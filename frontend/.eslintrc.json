@@ -2,6 +2,13 @@
     "extends": ["standard", "plugin:vue/recommended"],
     "rules": {
         "vue/attribute-hyphenation": ["warning", "never", { "ignore": ["custom-prop"] } ],
-        "vue/require-prop-types": []
+        "vue/require-prop-types": [],
+        "vue/html-closing-bracket-newline": ["error", {
+            "singleline": "never",
+            "multiline": "never"
+        }]
+    },
+    "env": {
+        "jest": true
     }
 }

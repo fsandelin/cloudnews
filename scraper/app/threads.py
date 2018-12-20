@@ -14,24 +14,39 @@ from scrapers.svt import get_news_selected_regions, get_api_object, get_start_en
 
 import asyncio
 import concurrent.futures
-
+from math import floor
 from multiprocessing import Pool
 
+
+# Create a function called "chunks" with two arguments, l and n:
+def chunks(l, n):
+    # For item i in a range that is a length of l,
+    for i in range(0, len(l), n):
+        # Create an index range for l of n items:
+        yield l[i:i+n]
 
 def post_timespan(from_, until_, news_list, service="svt"):
 
     URL = "http://localhost:3000/api/fill_timespan"
 
-    body = {}
+    size = 150
 
-    body['service'] = service
-    body['timespan'] = {'from' : str(from_), 'until' : str(until_)}
-    body['news'] = news_list
+    pages = list(chunks(news_list, size))
 
-    try:
-        requests.post(URL, json = body)
-    except requests.RequestException as e:
-        print(e)
+    print("from:", from_.isoformat(), "until:", until_.isoformat())
+
+    for page in pages:
+
+        body = {}
+
+        body['service'] = service
+        body['timespan'] = {'from' : from_.isoformat(), 'until' : until_.isoformat()}
+        body['news'] = page
+        print("Size of body:", len(body['news']))
+        try:
+            requests.post(URL, json = body)
+        except requests.RequestException as e:
+            print(e)
 
 def post_livenews(from_, until_, news_list, service="svt"):
 
@@ -40,7 +55,7 @@ def post_livenews(from_, until_, news_list, service="svt"):
     body = {}
 
     body['service'] = service
-    body['timespan'] = {'from' : str(from_), 'until' : str(until_)}
+    body['timespan'] = {'from' : from_.isoformat(), 'until' : until_.isoformat()}
     body['news'] = news_list
 
     try:

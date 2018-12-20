@@ -1,8 +1,9 @@
 import {
   cleanString,
-  dateIsBefore,
-  convertDateStringToDateObj
-} from '../helpers'
+  convertDateStringToDateObj,
+  dateIsBeforeOrEqual,
+  dateIsAfterOrEqual
+} from '../../helpers/misc'
 
 const state = {
   newsList: [],
@@ -11,8 +12,14 @@ const state = {
 }
 
 const getters = {
-  newsList: state => {
-    return state.newsList
+  newsList: (state, getters, rootState, rootGetters) => {
+    return state.newsList.filter(news => {
+      const currentStartDate = rootGetters.newsStartDate
+      const currentEndDate = rootGetters.newsEndDate
+
+      if (!currentEndDate) return dateIsAfterOrEqual(news.datetime, currentStartDate)
+      return dateIsAfterOrEqual(news.datetime, currentStartDate) && dateIsBeforeOrEqual(news.datetime, currentEndDate)
+    })
   },
   filteredNewsList: (state, getters, rootState, rootGetters) => {
     if (rootState.locations.selectedCity !== null) return getters.filterNewsSelectedCity
@@ -21,22 +28,19 @@ const getters = {
     return []
   },
   filterNewsSelectedCounty: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty))
+    return getters.newsList.filter(news => (news.location.county === rootState.locations.selectedCounty))
   },
   filterNewsSelectedMunicipality: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality))
+    return getters.newsList.filter(news => (news.location.municipality === rootState.locations.selectedMunicipality))
   },
   filterNewsSelectedCity: (state, getters, rootState, rootGetters) => {
-    return state.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
-  },
-  selectedCountyNews: (state, getters, rootState) => {
-    return state.newsList.filter(({ location }) => (location.county === rootState.locations.selectedCounty))
+    return getters.newsList.filter(news => (news.location.city === rootState.locations.selectedCity))
   },
   newsByCounty: (state, getters, rootState) => {
     return rootState.locations.counties.map(county => {
       return {
         ...county,
-        news: state.newsList.filter(({ location }) => {
+        news: getters.newsList.filter(({ location }) => {
           return location.county === county.name
         })
       }
@@ -46,7 +50,7 @@ const getters = {
     return rootState.locations.municipalities.map(municipality => {
       return {
         ...municipality,
-        news: state.newsList.filter(({ location }) => location.municipality === municipality.name)
+        news: getters.newsList.filter(({ location }) => location.municipality === municipality.name)
       }
     }).filter(({ news }) => news.length > 0)
       .map(municipality => {
@@ -59,47 +63,52 @@ const getters = {
       })
   },
   newsByCity: (state, getters, rootState) => {
-    return rootState.locations.cities.map(city => {
+    const citiesWithNews = getters.newsList.reduce((newsById, news) => {
+      const id = news.locationIds.cityId
+      if (id === '' || id === undefined) return { ...newsById }
+      const newsObject = newsById[id]
+
+      return {
+        ...newsById,
+        [id]: newsObject === undefined ? [news] : [ ...newsObject, news ]
+      }
+    }, {})
+    return Object.keys(citiesWithNews).map(id => {
+      const city = getters.cityById(id)
+      const municipality = getters.municipalityByName(city.municipality)
+
       return {
         ...city,
-        news: state.newsList.filter(({ location }) => location.city === city.name)
+        municipalityX: municipality.x,
+        municipalityY: municipality.y,
+        news: citiesWithNews[id]
       }
-    }).filter(({ news }) => news.length > 0)
-      .map(city => {
-        const municipality = getters.municipalityByName(city.municipality)
-        return {
-          ...city,
-          municipalityX: municipality.x,
-          municipalityY: municipality.y
-        }
-      })
+    })
   },
   activeNewsItemId: state => {
     return state.activeNewsItemId
   },
-  activeNewsItem: state => {
-    const newsItem = state.newsList.find(item => item.id === state.activeNewsItemId)
+  activeNewsItem: (state, getters) => {
+    const newsItem = getters.newsList.find(item => item.id === state.activeNewsItemId)
     return newsItem !== undefined && 'id' in newsItem ? newsItem : null
   }
 }
 
 const actions = {
   addNews: ({ state, commit, rootGetters, rootState }, news) => {
-    if (state.newsList.find(x => x.id === news.id)) return
+    if (rootGetters.newsList.find(x => x.id === news.id)) return
 
     news = {
       ...news,
       datetime: convertDateStringToDateObj(news.datetime)
     }
 
-    if (dateIsBefore(news.datetime, rootState.time.newsStartDate)) return
-    if (rootState.time.newsEndDate !== null &&
-        dateIsBefore(rootState.time.newsEndDate, news.datetime)) return
-
+    let locationIds = {}
     let location = { ...news.location }
-    for (const key of Object.keys(location)) {
+
+    Object.keys(location).forEach(key => {
       location[key] = cleanString(location[key])
-    }
+    })
 
     const city = rootGetters.cityByName(location.city)
     if (city) {
@@ -109,6 +118,10 @@ const actions = {
         municipality: city.municipality,
         county: city.county,
         country: 'sweden'
+      }
+      locationIds = {
+        ...locationIds,
+        cityId: city.id
       }
     }
 
@@ -120,6 +133,10 @@ const actions = {
         county: municipality.county,
         country: 'sweden'
       }
+      locationIds = {
+        ...locationIds,
+        municipalityId: municipality.id
+      }
     }
 
     const county = rootGetters.countyByName(location.county)
@@ -129,12 +146,16 @@ const actions = {
         county: county.name,
         country: 'sweden'
       }
+      locationIds = {
+        ...locationIds,
+        countyId: county.id
+      }
     }
 
-    commit('addNews', { ...news, location })
+    commit('addNews', { ...news, location, locationIds })
   },
   addNewsList: ({ dispatch }, newsList) => {
-    newsList.articles.map(news => dispatch('addNews', news))
+    newsList.map(news => dispatch('addNews', news))
   },
   setActiveNewsItemId: ({ commit }, id) => commit('setActiveNewsItemId', id)
 }

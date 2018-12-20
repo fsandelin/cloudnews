@@ -1,62 +1,57 @@
 <template>
   <div id="app">
-    <NewsSideBar
-      :showFilter="true"
-    />
+    <NewsSideBar :showFilter="true" />
 
-    <DatePicker
-      v-if="showDatePicker"
-    />
+    <PopUpContainer v-if="showPopUp">
+      <AboutPage v-if="showAboutPage" />
+      <DatePicker v-if="showDatePicker" />
+    </PopUpContainer>
 
-    <DatePickerToggler
-      v-if="!showDatePicker"
-    />
+    <DatePickerToggler />
 
-    <MainSection />
+    <MapSVG />
 
-    <Drawer
-      :isOpen="drawerIsOpen"
-      :toggleDrawer="toggleDrawer"
-    >
+    <DrawerContainer :isOpen="drawerIsOpen">
       <Component
         :is="dynamicComponents.drawerNewsItemComponent"
-        v-if="activeNewsItem !== null"
-      />
+        v-if="activeNewsItem !== null" />
       <Component
         :is="dynamicComponents.drawerNewsList"
         v-if="selectedCounty !== null && activeNewsItem === null"
-        :showFilter="false"
-      />
-    </Drawer>
+        :showFilter="false" />
+    </DrawerContainer>
 
     <ToggleButtons
       :items="newsSources"
-      :toggleActive="toggleNewsSource"
-    />
+      :toggleActive="toggleNewsSource" />
   </div>
 </template>
 
 <script>
-import MainSection from './MainSection'
-import DatePicker from './DatePicker'
-import DatePickerToggler from './DatePickerToggler'
-import DrawerNewsItem from './DrawerNewsItem'
-import NewsSideBar from './NewsSideBar'
-import Drawer from './Drawer'
-import DrawerNewsList from './DrawerNewsList'
-import ToggleButtons from './ToggleButtons'
+import AboutPage from './About/AboutPage'
+import DatePicker from './DatePicker/DatePicker'
+import DatePickerToggler from './DatePicker/DatePickerToggler'
+import DrawerContainer from './Drawer/DrawerContainer'
+import DrawerNewsItem from './Drawer/DrawerNewsItem'
+import DrawerNewsList from './Drawer/DrawerNewsList'
+import MapSVG from './Map/MapSVG'
+import NewsSideBar from './News/NewsSideBar'
+import PopUpContainer from './PopUp/PopUpContainer'
+import ToggleButtons from './ToggleButtons/ToggleButtons'
 import { mapGetters, mapActions } from 'vuex'
 import { fakeNewsList } from '../assets/FakeData'
 
 export default {
   name: 'App',
   components: {
-    'MainSection': MainSection,
+    'AboutPage': AboutPage,
+    'MapSVG': MapSVG,
+    'PopUpContainer': PopUpContainer,
     'DatePicker': DatePicker,
     'DatePickerToggler': DatePickerToggler,
     'drawernewsitem': DrawerNewsItem,
     'NewsSideBar': NewsSideBar,
-    'Drawer': Drawer,
+    'DrawerContainer': DrawerContainer,
     'drawernewslist': DrawerNewsList,
     'ToggleButtons': ToggleButtons
   },
@@ -75,17 +70,23 @@ export default {
       'activeNewsItemId',
       'selectedCounty',
       'newsSources',
-      'showDatePicker'
+      'showDatePicker',
+      'showAboutPage'
     ]),
     drawerIsOpen: function () {
       return this.activeNewsItemId !== null || this.selectedCounty !== null
+    },
+    showPopUp: function () {
+      return this.showDatePicker || this.showAboutPage
     }
   },
   created: function () {
+    this.fetchAvailableNewsSources()
     fakeNewsList.map(newsItem => this.addNews(newsItem))
   },
   methods: {
     ...mapActions([
+      'fetchAvailableNewsSources',
       'addNews',
       'toggleDrawer',
       'toggleNewsSource'
@@ -94,5 +95,4 @@ export default {
 }
 </script>
 
-<style src="../styles/App.scss" lang="scss" scoped></style>
-<style src="../styles/Commons.scss" lang="scss" scoped></style>
+<style src="./App.scss" lang="scss" scoped></style>
