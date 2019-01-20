@@ -15,8 +15,18 @@ const config = {
     liveNewsRoute: '/internal/live_news',
   },
   scrapers: {
-    polisenBaseURL: `${process.env.POLISEN_HOST}:${process.env.POLISEN_PORT}`,
-    svtBaseUrl: `${process.env.SVT_HOST}:${process.env.SVT_PORT}`,
+    polisen: {
+      serviceName: 'polisen',
+      baseUrl: `${process.env.POLISEN_HOST}:${process.env.POLISEN_PORT}`,
+    },
+    svt: {
+      serviceName: 'svt',
+      baseUrl: `${process.env.SVT_HOST}:${process.env.SVT_PORT}`,
+    },
+    twitter: {
+      serviceName: 'twitter',
+      baseUrl: `${process.env.TWITTER_HOST}:${process.env.TWITTER_PORT}`,
+    },
   },
   databaseName: 'cloudnews',
   scraperMetaCollectionName: 'prefetched',
