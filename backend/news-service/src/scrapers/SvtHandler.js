@@ -4,7 +4,7 @@ const logger = require('../logger');
 
 function scrapeNeededTimespans(neededTimespans) {
   const options = {
-    url: `http://${config.scrapers.svtBaseUrl}/getnews/daterange/thread`,
+    url: `http://${config.scrapers.svt.baseUrl}/getnews/daterange/thread`,
     body: neededTimespans,
     json: true,
   };
