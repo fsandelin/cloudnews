@@ -1,9 +1,21 @@
 const Twitter = require('twitter');
 const axios = require('axios');
+const express = require('express')
 const { newsServiceUrl } = require('./helpers/constants');
 const { boundingBoxCoordinatesAroundSweden } = require('./helpers/constants');
 const { twitterAccessTokenKey, twitterAccessTokenSecret, twitterConsumerKey, twitterConsumerSecret } = require('./helpers/constants');
 const { tweetIsFromASwedishCity, formatTweet } = require('./helpers/misc');
+
+const config = require('./config/config.js')
+const app = express();
+
+app.get('/api/heartbeat', (req, res) => {
+  res.sendStatus(200);
+})
+
+app.listen(config.port, () => {
+  console.log(`Listening on port ${config.port}`)
+})
 
 const client = new Twitter({
   consumer_key: twitterConsumerKey,
@@ -27,15 +39,15 @@ stream.on('data', tweet => {
       }
     })
       .then(() => {
-        console.log("Successfully sent news to news service!");
+        //console.log("Successfully sent news to news service!");
       })
       .catch(error => {
-        console.log('some error')
-        console.log(error);
+        console.log('Got an error sending to news-service')
+        //console.log(error);
       });
   }
 });
 
 stream.on('error', (error) => {
-  console.log('error', error);
+  console.log('Got an error');
 });
