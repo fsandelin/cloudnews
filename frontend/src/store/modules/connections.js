@@ -36,12 +36,14 @@ const actions = {
     getAvailableServices(dispatch, 'saveAvailableNewsSources')
   },
   saveAvailableNewsSources: ({ commit }, fetchedNewsSources) => {
-    const newsSources = fetchedNewsSources
-      .slice(1, fetchedNewsSources.length - 1)
-      .toLowerCase().trim().split(',')
-      .map(source => source.slice(1, source.length - 1))
-      .map(source => ({ name: source, active: false }))
-    commit('saveAvailableNewsSources', newsSources)
+    if (fetchedNewsSources.length > 0) {
+      const newsSources = fetchedNewsSources
+        .slice(1, fetchedNewsSources.length - 1)
+        .toLowerCase().trim().split(',')
+        .map(source => source.slice(1, source.length - 1))
+        .map(source => ({ name: source, active: false }))
+      commit('saveAvailableNewsSources', newsSources)
+    }
   },
   toggleNewsSource: ({ dispatch, state }, source) => {
     if (state.newsSources.find(s => s.name === source.name && s.active)) {
