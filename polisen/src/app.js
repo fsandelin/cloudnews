@@ -21,6 +21,10 @@ app.post('/api/polisens_nyheter', (req, res) => {
   }
 });
 
+app.get('/api/heartbeat', (req, res) => {
+  res.sendStatus(200); 
+})
+
 app.listen(appPort, () => {
   console.log(`police-news-service listening on ${appPort}`);
 });
