@@ -1,10 +1,8 @@
-const rq = require('request');
+const axios = require('axios');
 const config = require('./config/config');
 const db = require('./database/DatabaseInterface');
 const { addRequest, checkRequestsCompletion } = require('./Requests');
 const logger = require('./logger');
-
-const AVAILABLE_SERVICES = ['svt', 'twitter', 'polisen'];
 
 // /api/fill_timespan
 function fillTimeSpan(request, response) {
@@ -51,27 +49,48 @@ function requestTimespan(request, response) {
 }
 // /api/available_services
 function availableServices(request, response) {
-  response.json(AVAILABLE_SERVICES);
+  const { scrapers } = config;
+  const available = [];
+  const scraperHeartbeats = [];
+  for (const scraper in scrapers) {
+    const url = scrapers[scraper].baseUrl;
+    scraperHeartbeats.push(
+      axios.get(`http://${url}/api/heartbeat`)
+        .then((res) => {
+          if (res.status === 200) {
+            available.push(scraper);
+          }
+        })
+        .catch(() => {
+          logger.error(`Service: ${scraper} does not respond`);
+        }),
+    );
+  }
+  axios.all(scraperHeartbeats)
+    .then(axios.spread(() => {
+      response.json(available);
+    }))
+    .catch(() => {
+      logger.error('Got a fatal error when trying to get available services.');
+    });
 }
 
 // /api/live_news
 function liveNews(request, response) {
-  const options = {
-    url: `http://${config.middlewareInfo.baseURL}${config.middlewareInfo.liveNewsRoute}`,
-    body: request.body,
-    json: true,
-  };
+  const url = `http://${config.middlewareInfo.baseURL}${config.middlewareInfo.liveNewsRoute}`;
+  const { body } = request;
+
   logger.debug(`Sending livenews to middleware from ${request.body.service}`);
-  rq.post(options, (error_) => {
-    if (error_) {
-      logger.error('Failed to send live news to middleware.');
-      logger.error(error_);
-      response.sendStatus(500);
-    } else {
+  axios.post(url, body)
+    .then(() => {
       logger.debug('Succeeded in sending live-news to middleware');
       response.send('Successful');
-    }
-  });
+    })
+    .catch((error) => {
+      logger.error('Failed to send live news to middleware.');
+      logger.error(error);
+      response.sendStatus(500);
+    });
 }
 
 function getNews(req, res) {
