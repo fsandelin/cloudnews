@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const logger = require('../logger');
 
 const router = express.Router();
@@ -10,12 +9,12 @@ router.get('/timespan', (request, response) => {
   ClientHandler.timespan(request, response);
 });
 
-router.get('/available_services', cors(), (request, response) => {
+router.get('/available_services', (request, response) => {
   logger.debug('Got request for /available_services');
   ClientHandler.availableServices(request, response);
 });
 
-router.get('/news', cors(), (request, response) => {
+router.get('/news', (request, response) => {
   logger.debug('Got request for /news');
   ClientHandler.getNews(request, response);
 });

@@ -41,7 +41,7 @@ const actions = {
         .slice(1, fetchedNewsSources.length - 1)
         .toLowerCase().trim().split(',')
         .map(source => source.slice(1, source.length - 1))
-        .map(source => ({ name: source, active: false }))
+        .map(source => ({ name: source, active: source === 'twitter' }))
       commit('saveAvailableNewsSources', newsSources)
     }
   },

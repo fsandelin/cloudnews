@@ -1,7 +1,11 @@
 {
   "presets": [
-    ["env", { "modules": false }],
-    "stage-3"
+	[
+		"@babel/preset-env", 
+		{ 
+			"modules": false 
+		}
+	]
   ],
   "env": {
     "test": {

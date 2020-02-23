@@ -1,16 +1,17 @@
 var path = require('path')
 var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
-  entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './public/dist'),
+    path: path.resolve(__dirname, './build/dist'),
     publicPath: '/dist/',
     filename: 'build.js'
   },
   plugins: [
+	new VueLoaderPlugin(),
     new CopyWebpackPlugin([
       { from: './src/assets/meta-info-europe-countries.min.json', to: 'meta-info-europe-countries.min.json' },
       { from: './src/assets/meta-info-sweden-counties.min.json', to: 'meta-info-sweden-counties.min.json' },
@@ -20,32 +21,10 @@ module.exports = {
   ],
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
-        ]
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
+      { test: /\.css$/, use: ['vue-style-loader', 'css-loader'] },
+      { test: /\.scss$/, use: ['vue-style-loader', 'css-loader', 'sass-loader'] },
+      { test: /\.sass$/, use: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax'] },
+      { test: /\.vue$/, loader: 'vue-loader',
         options: {
           loaders: {
             // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
@@ -62,16 +41,10 @@ module.exports = {
               'sass-loader?indentedSyntax'
             ]
           }
-          // other vue-loader options go here
         }
       },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
@@ -103,7 +76,8 @@ if (process.env.ANALYSE === 'true') {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = 'source-map';
+  module.exports.mode = 'production';
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new CopyWebpackPlugin([
@@ -114,12 +88,6 @@ if (process.env.NODE_ENV === 'production') {
       'process.env': {
         NODE_ENV: '"production"',
         SOCKET_CONNECTION: '"true"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
       }
     }),
     new webpack.LoaderOptionsPlugin({

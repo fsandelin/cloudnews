@@ -5,7 +5,7 @@ export const socketEvents = {
   COMPLETE_REQUEST: 'complete_request'
 }
 
-export const baseUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:5001/' : 'http://back.cloudnews.student.it.uu.se:8091/'
+export const baseUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:5001/' : 'https://cloudnews.sandelin.dev/app/'
 export const socketServiceUrl = `${baseUrl}?services=`
 
 export const months = {

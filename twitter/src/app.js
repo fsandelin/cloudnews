@@ -42,7 +42,7 @@ stream.on('data', tweet => {
         //console.log("Successfully sent news to news service!");
       })
       .catch(error => {
-        console.log('Got an error sending to news-service')
+		console.log('Got an error sending to news-service');
         //console.log(error);
       });
   }

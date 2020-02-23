@@ -8,18 +8,18 @@ export const createWebSocket = url => {
     'reconnectionDelayMax': 5000,
     'reconnectionAttempts': 5
   })
-  return socket
+  return socket;
 }
 
 export const subscribeToLiveNews = dispatch => socket => {
-  const liveEvents = [
-    { event: se.NEWS, action: 'addNews' },
-    { event: se.NEWS_LIST, action: 'addNewsList' }
-  ]
-  liveEvents.map(({ event, action }) => {
-    socket.on(event, (data) => {
-      dispatch(action, data)
-    })
+	const liveEvents = [
+		{ event: se.NEWS, action: 'addNews' },
+		{ event: se.NEWS_LIST, action: 'addNewsList' }
+	];
+	liveEvents.map(({ event, action }) => {
+		socket.on(event, (data) => {
+			dispatch(action, data)
+		})
   })
 }
 
