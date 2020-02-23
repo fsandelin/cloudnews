@@ -9,8 +9,7 @@ const formatTweet = (tweet) => {
   const city = tweet.place.name;
   const { county, municipality } = cities[city];
   const datetime = new Date(tweet.created_at).toISOString().substr(0, 10);
-  const url = 'https://twitter.com/statuses/' + tweet.id_str;
-
+  const url = `https://twitter.com/${tweet.user.id_str}/status/${tweet.id_str}`;
   return {
     id: uuid(),
     title: tweet.user.screen_name,

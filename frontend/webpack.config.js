@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
     filename: 'build.js'
   },
   plugins: [
+	new VueLoaderPlugin(),
     new CopyWebpackPlugin([
       { from: './src/assets/meta-info-europe-countries.min.json', to: 'meta-info-europe-countries.min.json' },
       { from: './src/assets/meta-info-sweden-counties.min.json', to: 'meta-info-sweden-counties.min.json' },
