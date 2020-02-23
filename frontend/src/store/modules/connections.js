@@ -5,7 +5,7 @@ import {
   unsubscribeToLiveNews,
   unsubscribeToHistoricalNews
 } from '../../helpers/webSocketConnection'
-import { socketServiceUrl } from '../../helpers/constants'
+import { socketServiceServer } from '../../helpers/constants'
 import {
   dateObjToISO,
   dateIsBefore
@@ -41,7 +41,7 @@ const actions = {
         .slice(1, fetchedNewsSources.length - 1)
         .toLowerCase().trim().split(',')
         .map(source => source.slice(1, source.length - 1))
-        .map(source => ({ name: source, active: source === 'twitter' }))
+        .map(source => ({ name: source, active: false }))
       commit('saveAvailableNewsSources', newsSources)
     }
   },
@@ -53,13 +53,13 @@ const actions = {
     }
   },
   activateNewsSource: ({ rootState, dispatch, commit }, source) => {
-    const url = `${socketServiceUrl}${source.name}`
+    const url = `${socketServiceServer}`
 
     const from = dateObjToISO(rootState.time.newsStartDate, true)
     const until = dateObjToISO(rootState.time.newsEndDate, false)
     const today = dateObjToISO(rootState.time.today, false)
 
-    const socket = createWebSocket(url)
+    const socket = createWebSocket(url, {'services': source.name})
 
     if (until.includes('?')) {
       subscribeToLiveNews(dispatch)(socket)
@@ -70,7 +70,7 @@ const actions = {
 
     socketConnections = [
       ...socketConnections,
-      { source: source.name, socket }
+	  { source: source.name, socket }
     ]
 
     commit('activateNewsSource', source)

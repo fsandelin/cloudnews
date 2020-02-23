@@ -5,8 +5,10 @@ export const socketEvents = {
   COMPLETE_REQUEST: 'complete_request'
 }
 
-export const baseUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:5001/' : 'https://cloudnews.sandelin.dev/app/'
-export const socketServiceUrl = `${baseUrl}?services=`
+const serverUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:5001/' : 'https://cloudnews.sandelin.dev/';
+export const baseUrl = process.env.NODE_ENV !== 'production' ? serverUrl : `${serverUrl}app/`;
+export const socketServiceServer = `${serverUrl}`
+export const socketServicePath = process.env.NODE_ENV !== 'production' ? '' : `/app`;
 
 export const months = {
   JANUARY: 'January',

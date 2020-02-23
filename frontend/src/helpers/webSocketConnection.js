@@ -1,14 +1,15 @@
 import io from 'socket.io-client'
-import { socketEvents as se } from './constants'
+import { socketEvents as se, socketServicePath } from './constants'
 
-export const createWebSocket = url => {
-  const socket = io(url, {
-    'reconnection': true,
-    'reconnectionDelay': 1000,
-    'reconnectionDelayMax': 5000,
-    'reconnectionAttempts': 5
-  })
-  return socket;
+export const createWebSocket = (url, qParams) => {
+	const socket = io(url, {
+		'path': `${socketServicePath}/socket.io`,
+		query: qParams,
+		'reconnectionDelay': 1000,
+		'reconnectionDelayMax': 5000,
+		'reconnectionAttempts': 5,
+	});
+	return socket;
 }
 
 export const subscribeToLiveNews = dispatch => socket => {
